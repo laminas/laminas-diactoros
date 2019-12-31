@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ## 1.0.0 - TBD
 
-First stable release, and first release as `zend-diactoros`.
+First stable release, and first release as `laminas-diactoros`.
 
 ### Added
 
