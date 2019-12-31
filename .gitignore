@@ -1,6 +1,8 @@
 .tmp/
-doc/html/
-vendor/
-zf-mkdoc-theme/
+/composer.lock
+/doc/html/
+/laminas-mkdoc-theme.tgz
+/laminas-mkdoc-theme/
+/phpunit.xml
 /test/TestAsset/.cache/
-phpunit.xml
+/vendor/

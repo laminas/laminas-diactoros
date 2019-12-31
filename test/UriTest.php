@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
 declare(strict_types=1);
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
 use InvalidArgumentException;
+use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\Uri;
 
 use function sprintf;
 
@@ -67,10 +68,10 @@ class UriTest extends TestCase
     public function testWithUserInfoReturnsNewInstanceWithProvidedUserAndPassword()
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        $new = $uri->withUserInfo('matthew', 'zf2');
+        $new = $uri->withUserInfo('matthew', 'laminas');
         $this->assertNotSame($uri, $new);
-        $this->assertSame('matthew:zf2', $new->getUserInfo());
-        $this->assertSame('https://matthew:zf2@local.example.com:3001/foo?bar=baz#quz', (string) $new);
+        $this->assertSame('matthew:laminas', $new->getUserInfo());
+        $this->assertSame('https://matthew:laminas@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
     public function testWithUserInfoThrowExceptionIfPasswordIsNotString()
@@ -119,10 +120,10 @@ class UriTest extends TestCase
     public function testWithHostReturnsNewInstanceWithProvidedHost()
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        $new = $uri->withHost('framework.zend.com');
+        $new = $uri->withHost('getlaminas.org');
         $this->assertNotSame($uri, $new);
-        $this->assertSame('framework.zend.com', $new->getHost());
-        $this->assertSame('https://user:pass@framework.zend.com:3001/foo?bar=baz#quz', (string) $new);
+        $this->assertSame('getlaminas.org', $new->getHost());
+        $this->assertSame('https://user:pass@getlaminas.org:3001/foo?bar=baz#quz', (string) $new);
     }
 
     public function testWithHostReturnsSameInstanceWithProvidedHostIsSameAsBefore()
