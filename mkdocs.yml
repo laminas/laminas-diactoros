@@ -1,40 +1,15 @@
 docs_dir: docs/book
 site_dir: docs/html
 extra:
-  current_version: v2
-  versions:
-    - v2
-    - v1
+    current_version: v2
+    versions: [v2, v1]
+    project: Components
+    project_url: 'https://docs.laminas.dev'
 nav:
-  - Home: index.md
-  - v2:
-    - Overview: v2/overview.md
-    - Installation: v2/install.md
-    - Usage: v2/usage.md
-    - Reference:
-      - Factories: v2/factories.md
-      - "Custom Responses": v2/custom-responses.md
-      - Serialization: v2/serialization.md
-      - API: v2/api.md
-    - Migration:
-      - "Migration to Version 2": v2/migration.md
-  - v1:
-    - Overview: v1/overview.md
-    - Installation: v1/install.md
-    - Usage: v1/usage.md
-    - Reference:
-      - "Custom Responses": v1/custom-responses.md
-      - "Emitting Responses": v1/emitting-responses.md
-      - Serialization: v1/serialization.md
-      - API: v1/api.md
-  - "_hidden-legacy-page-links":
-    - "_overview": overview.md
-    - "_installation": install.md
-    - "_usage": usage.md
-    - "_reference-custom-responses": custom-responses.md
-    - "_reference-emitting-responses": emitting-responses.md
-    - "_reference-serialization": serialization.md
-    - "_reference-api": api.md
+    - { Home: index.md }
+    - { v2: [{ Overview: v2/overview.md }, { Installation: v2/install.md }, { Usage: v2/usage.md }, { Reference: [{ Factories: v2/factories.md }, { 'Custom Responses': v2/custom-responses.md }, { Serialization: v2/serialization.md }, { API: v2/api.md }] }, { Migration: [{ 'Migration to Version 2': v2/migration.md }] }] }
+    - { v1: [{ Overview: v1/overview.md }, { Installation: v1/install.md }, { Usage: v1/usage.md }, { Reference: [{ 'Custom Responses': v1/custom-responses.md }, { 'Emitting Responses': v1/emitting-responses.md }, { Serialization: v1/serialization.md }, { API: v1/api.md }] }] }
+    - { _hidden-legacy-page-links: [{ _overview: overview.md }, { _installation: install.md }, { _usage: usage.md }, { _reference-custom-responses: custom-responses.md }, { _reference-emitting-responses: emitting-responses.md }, { _reference-serialization: serialization.md }, { _reference-api: api.md }] }
 site_name: laminas-diactoros
-site_description: "PSR-7 HTTP message implementations"
-repo_url: "https://github.com/laminas/laminas-diactoros"
+site_description: 'PSR-7 HTTP message implementations'
+repo_url: 'https://github.com/laminas/laminas-diactoros'
