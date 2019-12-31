@@ -1,13 +1,14 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
 declare(strict_types=1);
 
-namespace Zend\Diactoros;
+namespace Laminas\Diactoros;
 
 use Psr\Http\Message\StreamInterface;
 
@@ -18,7 +19,7 @@ use const SEEK_SET;
  *
  * Wrapper for default Stream class, representing subpart (starting from given offset) of initial stream.
  * It can be used to avoid copying full stream, conserving memory.
- * @example see Zend\Diactoros\AbstractSerializer::splitStream()
+ * @example see Laminas\Diactoros\AbstractSerializer::splitStream()
  */
 final class RelativeStream implements StreamInterface
 {
