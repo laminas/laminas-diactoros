@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#355](https://github.com/zendframework/zend-diactoros/pull/355) adds `phpdbg` to the list of accepted non-SAPI enviornments for purposes
+- [zendframework/zend-diactoros#355](https://github.com/zendframework/zend-diactoros/pull/355) adds `phpdbg` to the list of accepted non-SAPI enviornments for purposes
   of calling `UploadedFile::moveTo()`.
 
 ## 2.1.1 - 2019-01-05
@@ -45,13 +45,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#349](https://github.com/zendframework/zend-diactoros/pull/349) fixes an issue when marshaling headers with values of `0` or `0` from the SAPI, ensuring they are detected and injected into the ServerRequest properly.
+- [zendframework/zend-diactoros#349](https://github.com/zendframework/zend-diactoros/pull/349) fixes an issue when marshaling headers with values of `0` or `0` from the SAPI, ensuring they are detected and injected into the ServerRequest properly.
 
 ## 2.1.0 - 2018-12-20
 
 ### Added
 
-- [#345](https://github.com/zendframework/zend-diactoros/pull/345) adds support for PHP 7.3.
+- [zendframework/zend-diactoros#345](https://github.com/zendframework/zend-diactoros/pull/345) adds support for PHP 7.3.
 
 ### Changed
 
@@ -89,7 +89,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#349](https://github.com/zendframework/zend-diactoros/pull/349) fixes an issue when marshaling headers with values of `0` or `0` from the
+- [zendframework/zend-diactoros#349](https://github.com/zendframework/zend-diactoros/pull/349) fixes an issue when marshaling headers with values of `0` or `0` from the
   SAPI, ensuring they are detected and injected into the ServerRequest properly.
 
 ## 2.0.2 - 2018-12-20
@@ -112,7 +112,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#344](https://github.com/zendframework/zend-diactoros/pull/344) provides a fix to ensure that headers with a value of "0" are retained.
+- [zendframework/zend-diactoros#344](https://github.com/zendframework/zend-diactoros/pull/344) provides a fix to ensure that headers with a value of "0" are retained.
 
 ## 2.0.1 - 2018-12-03
 
@@ -134,7 +134,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#337](https://github.com/zendframework/zend-diactoros/pull/337) ensures that the `ServerRequestFactory::createServerRequest()` method
+- [zendframework/zend-diactoros#337](https://github.com/zendframework/zend-diactoros/pull/337) ensures that the `ServerRequestFactory::createServerRequest()` method
   creates a `php://temp` stream instead of a `php::input` stream, in compliance
   with the PSR-17 specification.
 
@@ -142,48 +142,48 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#326](https://github.com/zendframework/zend-diactoros/pull/326) adds [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP Message Factory implementations, including:
+- [zendframework/zend-diactoros#326](https://github.com/zendframework/zend-diactoros/pull/326) adds [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP Message Factory implementations, including:
 
-  - `Zend\Diactoros\RequestFactory`
-  - `Zend\Diactoros\ResponseFactory`
-  - `Zend\Diactoros\ServerRequestFactory`
-  - `Zend\Diactoros\StreamFactory`
-  - `Zend\Diactoros\UploadedFileFactory`
-  - `Zend\Diactoros\UriFactory`
+  - `Laminas\Diactoros\RequestFactory`
+  - `Laminas\Diactoros\ResponseFactory`
+  - `Laminas\Diactoros\ServerRequestFactory`
+  - `Laminas\Diactoros\StreamFactory`
+  - `Laminas\Diactoros\UploadedFileFactory`
+  - `Laminas\Diactoros\UriFactory`
 
   These factories may be used to produce the associated instances; we encourage
   users to rely on the PSR-17 factory interfaces to allow exchanging PSR-7
   implementations within their applications.
 
-- [#328](https://github.com/zendframework/zend-diactoros/pull/328) adds a package-level exception interface, `Zend\Diactoros\Exception\ExceptionInterface`,
+- [zendframework/zend-diactoros#328](https://github.com/zendframework/zend-diactoros/pull/328) adds a package-level exception interface, `Laminas\Diactoros\Exception\ExceptionInterface`,
   and several implementations for specific exceptions raised within the package.
   These include:
 
-  - `Zend\Diactoros\Exception\DeserializationException` (extends `UnexpectedValueException`)
-  - `Zend\Diactoros\Exception\InvalidArgumentException` (extends `InvalidArgumentException`)
-  - `Zend\Diactoros\Exception\InvalidStreamPointerPositionException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\SerializationException` (extends `UnexpectedValueException`)
-  - `Zend\Diactoros\Exception\UnreadableStreamException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\UnrecognizedProtocolVersionException` (extends `UnexpectedValueException`)
-  - `Zend\Diactoros\Exception\UnrewindableStreamException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\UnseekableStreamException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\UntellableStreamException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\UnwritableStreamException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\UploadedFileAlreadyMovedException` (extends `RuntimeException`)
-  - `Zend\Diactoros\Exception\UploadedFileErrorException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\DeserializationException` (extends `UnexpectedValueException`)
+  - `Laminas\Diactoros\Exception\InvalidArgumentException` (extends `InvalidArgumentException`)
+  - `Laminas\Diactoros\Exception\InvalidStreamPointerPositionException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\SerializationException` (extends `UnexpectedValueException`)
+  - `Laminas\Diactoros\Exception\UnreadableStreamException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\UnrecognizedProtocolVersionException` (extends `UnexpectedValueException`)
+  - `Laminas\Diactoros\Exception\UnrewindableStreamException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\UnseekableStreamException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\UntellableStreamException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\UnwritableStreamException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\UploadedFileAlreadyMovedException` (extends `RuntimeException`)
+  - `Laminas\Diactoros\Exception\UploadedFileErrorException` (extends `RuntimeException`)
 
 ### Changed
 
-- [#329](https://github.com/zendframework/zend-diactoros/pull/329) adds return type hints and scalar parameter type hints wherever possible.
+- [zendframework/zend-diactoros#329](https://github.com/zendframework/zend-diactoros/pull/329) adds return type hints and scalar parameter type hints wherever possible.
   The changes were done to help improve code quality, in part by reducing manual
   type checking. If you are extending any classes, you may need to update your
   signatures; check the signatures of the class(es) you are extending for changes.
 
-- [#162](https://github.com/zendframework/zend-diactoros/pull/162) modifies `Serializer\Request` such that it now no longer raises an `UnexpectedValueException` via its `toString()` method
+- [zendframework/zend-diactoros#162](https://github.com/zendframework/zend-diactoros/pull/162) modifies `Serializer\Request` such that it now no longer raises an `UnexpectedValueException` via its `toString()` method
   when an unexpected HTTP method is encountered; this can be done safely, as the value can never
   be invalid due to other changes in the same patch.
 
-- [#162](https://github.com/zendframework/zend-diactoros/pull/162) modifies `RequestTrait` such that it now invalidates non-string method arguments to either
+- [zendframework/zend-diactoros#162](https://github.com/zendframework/zend-diactoros/pull/162) modifies `RequestTrait` such that it now invalidates non-string method arguments to either
   the constructor or `withMethod()`, raising an `InvalidArgumentException` for any that do not validate.
 
 ### Deprecated
@@ -192,20 +192,20 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#308](https://github.com/zendframework/zend-diactoros/pull/308) removes the following methods from the `ServerRequestFactory` class:
-  - `normalizeServer()` (use `Zend\Diactoros\normalizeServer()` instead)
-  - `marshalHeaders()` (use `Zend\Diactoros\marshalHeadersFromSapi()` instead)
-  - `marshalUriFromServer()` (use `Zend\Diactoros\marshalUriFromSapi()` instead)
+- [zendframework/zend-diactoros#308](https://github.com/zendframework/zend-diactoros/pull/308) removes the following methods from the `ServerRequestFactory` class:
+  - `normalizeServer()` (use `Laminas\Diactoros\normalizeServer()` instead)
+  - `marshalHeaders()` (use `Laminas\Diactoros\marshalHeadersFromSapi()` instead)
+  - `marshalUriFromServer()` (use `Laminas\Diactoros\marshalUriFromSapi()` instead)
   - `marshalRequestUri()` (use `Uri::getPath()` from the `Uri` instance returned by `marshalUriFromSapi()` instead)
   - `marshalHostAndPortFromHeaders()` (use `Uri::getHost()` and `Uri::getPort()` from the `Uri` instances returned by `marshalUriFromSapi()` instead)
   - `stripQueryString()` (use `explode("?", $path, 2)[0]` instead)
-  - `normalizeFiles()` (use `Zend\Diactoros\normalizeUploadedFiles()` instead)
+  - `normalizeFiles()` (use `Laminas\Diactoros\normalizeUploadedFiles()` instead)
 
-- [#295](https://github.com/zendframework/zend-diactoros/pull/295) removes `Zend\Diactoros\Server`. You can use the `RequestHandlerRunner` class from
-  [zendframework/zend-httphandlerrunner](https://docs.zendframework.com/zend-httphandlerrunner) to provide these capabilities instead.
+- [zendframework/zend-diactoros#295](https://github.com/zendframework/zend-diactoros/pull/295) removes `Laminas\Diactoros\Server`. You can use the `RequestHandlerRunner` class from
+  [laminas/laminas-httphandlerrunner](https://docs.laminas.dev/laminas-httphandlerrunner) to provide these capabilities instead.
 
-- [#295](https://github.com/zendframework/zend-diactoros/pull/295) removes `Zend\Diactoros\Response\EmitterInterface` and the various emitter implementations.
-  These can now be found in the package [zendframework/zend-httphandlerrunner](https://docs.zendframework.com/zend-httphandlerrunner/), which also provides
+- [zendframework/zend-diactoros#295](https://github.com/zendframework/zend-diactoros/pull/295) removes `Laminas\Diactoros\Response\EmitterInterface` and the various emitter implementations.
+  These can now be found in the package [laminas/laminas-httphandlerrunner](https://docs.laminas.dev/laminas-httphandlerrunner/), which also provides
   a PSR-7-implementation agnostic way of using them.
 
 ### Fixed
@@ -220,10 +220,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#325](https://github.com/zendframework/zend-diactoros/pull/325) changes the behavior of `ServerRequest::withParsedBody()`. Per
+- [zendframework/zend-diactoros#325](https://github.com/zendframework/zend-diactoros/pull/325) changes the behavior of `ServerRequest::withParsedBody()`. Per
 - PSR-7, it now no longer allows values other than `null`, arrays, or objects.
 
-- [#325](https://github.com/zendframework/zend-diactoros/pull/325) changes the behavior of each of `Request`, `ServerRequest`, and
+- [zendframework/zend-diactoros#325](https://github.com/zendframework/zend-diactoros/pull/325) changes the behavior of each of `Request`, `ServerRequest`, and
   `Response` in relation to the validation of header values. Previously, we
   allowed empty arrays to be provided via `withHeader()`; however, this was
   contrary to the PSR-7 specification. Empty arrays are no longer allowed.
@@ -238,10 +238,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#325](https://github.com/zendframework/zend-diactoros/pull/325) ensures that `Uri::withUserInfo()` no longer ignores values of
+- [zendframework/zend-diactoros#325](https://github.com/zendframework/zend-diactoros/pull/325) ensures that `Uri::withUserInfo()` no longer ignores values of
   `0` (numeric zero).
 
-- [#325](https://github.com/zendframework/zend-diactoros/pull/325) fixes how header values are merged when calling
+- [zendframework/zend-diactoros#325](https://github.com/zendframework/zend-diactoros/pull/325) fixes how header values are merged when calling
   `withAddedHeader()`, ensuring that array keys are ignored.
 
 ## 1.8.5 - 2018-08-10
@@ -264,7 +264,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#324](https://github.com/zendframework/zend-diactoros/pull/324) fixes a reference
+- [zendframework/zend-diactoros#324](https://github.com/zendframework/zend-diactoros/pull/324) fixes a reference
   to an undefined variable in the `ServerRequestFactory`, which made it
   impossible to fetch a specific header by name.
 
@@ -291,7 +291,7 @@ All notable changes to this project will be documented in this file, in reverse 
   use Psr\Http\Message\ResponseInterface;
   use Psr\Http\Message\ServerRequestInterface;
   use Psr\Http\Server\RequestHandlerInterface;
-  use Zend\Diactoros\Uri;
+  use Laminas\Diactoros\Uri;
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
   {
@@ -351,15 +351,15 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#321](https://github.com/zendframework/zend-diactoros/pull/321) updates the logic in `Uri::withPort()` to ensure that it checks that the
+- [zendframework/zend-diactoros#321](https://github.com/zendframework/zend-diactoros/pull/321) updates the logic in `Uri::withPort()` to ensure that it checks that the
   value provided is either an integer or a string integer, as only those values
   may be cast to integer without data loss.
 
-- [#320](https://github.com/zendframework/zend-diactoros/pull/320) adds checking within `Response` to ensure that the provided reason
+- [zendframework/zend-diactoros#320](https://github.com/zendframework/zend-diactoros/pull/320) adds checking within `Response` to ensure that the provided reason
   phrase is a string; an `InvalidArgumentException` is now raised if it is not. This change
   ensures the class adheres strictly to the PSR-7 specification.
 
-- [#319](https://github.com/zendframework/zend-diactoros/pull/319) provides a fix to `Zend\Diactoros\Response` that ensures that the status
+- [zendframework/zend-diactoros#319](https://github.com/zendframework/zend-diactoros/pull/319) provides a fix to `Laminas\Diactoros\Response` that ensures that the status
   code returned is _always_ an integer (and never a string containing an
   integer), thus ensuring it strictly adheres to the PSR-7 specification.
 
@@ -383,12 +383,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#318](https://github.com/zendframework/zend-diactoros/pull/318) fixes the logic for discovering whether an HTTPS scheme is in play
+- [zendframework/zend-diactoros#318](https://github.com/zendframework/zend-diactoros/pull/318) fixes the logic for discovering whether an HTTPS scheme is in play
   to be case insensitive when comparing header and SAPI values, ensuring no
   false negative lookups occur.
 
-- [#314](https://github.com/zendframework/zend-diactoros/pull/314) modifies error handling around opening a file resource within
-  `Zend\Diactoros\Stream::setStream()` to no longer use the second argument to
+- [zendframework/zend-diactoros#314](https://github.com/zendframework/zend-diactoros/pull/314) modifies error handling around opening a file resource within
+  `Laminas\Diactoros\Stream::setStream()` to no longer use the second argument to
   `set_error_handler()`, and instead check the error type in the handler itself;
   this fixes an issue when the handler is nested inside another error handler,
   which currently has buggy behavior within the PHP engine.
@@ -401,7 +401,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#313](https://github.com/zendframework/zend-diactoros/pull/313) changes the reason phrase associated with the status code 425
+- [zendframework/zend-diactoros#313](https://github.com/zendframework/zend-diactoros/pull/313) changes the reason phrase associated with the status code 425
   to "Too Early", corresponding to a new definition of the code as specified by the IANA.
 
 ### Deprecated
@@ -414,14 +414,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#312](https://github.com/zendframework/zend-diactoros/pull/312) fixes how the `normalizeUploadedFiles()` utility function handles nested trees of
+- [zendframework/zend-diactoros#312](https://github.com/zendframework/zend-diactoros/pull/312) fixes how the `normalizeUploadedFiles()` utility function handles nested trees of
   uploaded files, ensuring it detects them properly.
 
 ## 1.8.0 - 2018-06-27
 
 ### Added
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) adds the following functions under the `Zend\Diactoros` namespace, each of
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) adds the following functions under the `Laminas\Diactoros` namespace, each of
   which may be used to derive artifacts from SAPI supergloabls for the purposes
   of generating a `ServerRequest` instance:
   - `normalizeServer(array $server, callable $apacheRequestHeaderCallback = null) : array`
@@ -446,45 +446,45 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Deprecated
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::normalizeServer()`; the method is
-  no longer used internally, and users should instead use `Zend\Diactoros\normalizeServer()`,
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::normalizeServer()`; the method is
+  no longer used internally, and users should instead use `Laminas\Diactoros\normalizeServer()`,
   to which it proxies.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalHeaders()`; the method is
-  no longer used internally, and users should instead use `Zend\Diactoros\marshalHeadersFromSapi()`,
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalHeaders()`; the method is
+  no longer used internally, and users should instead use `Laminas\Diactoros\marshalHeadersFromSapi()`,
   to which it proxies.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalUriFromServer()`; the method
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalUriFromServer()`; the method
   is no longer used internally. Users should use `marshalUriFromSapi()` instead.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalRequestUri()`. the method is no longer
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalRequestUri()`. the method is no longer
   used internally, and currently proxies to `marshalUriFromSapi()`, pulling the
   discovered path from the `Uri` instance returned by that function. Users
   should use `marshalUriFromSapi()` instead.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalHostAndPortFromHeaders()`; the method
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::marshalHostAndPortFromHeaders()`; the method
   is no longer used internally, and currently proxies to `marshalUriFromSapi()`,
   pulling the discovered host and port from the `Uri` instance returned by that
   function. Users should use `marshalUriFromSapi()` instead.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::getHeader()`; the method is no longer
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::getHeader()`; the method is no longer
   used internally. Users should copy and paste the functionality into their own
   applications if needed, or rely on headers from a fully-populated `Uri`
   instance instead.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::stripQueryString()`; the method is no longer
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::stripQueryString()`; the method is no longer
   used internally, and users can mimic the functionality via the expression
   `$path = explode('?', $path, 2)[0];`.
 
-- [#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::normalizeFiles()`; the functionality
+- [zendframework/zend-diactoros#307](https://github.com/zendframework/zend-diactoros/pull/307) deprecates `ServerRequestFactory::normalizeFiles()`; the functionality
   is no longer used internally, and users can use `normalizeUploadedFiles()` as
   a replacement.
 
-- [#303](https://github.com/zendframework/zend-diactoros/pull/303) deprecates `Zend\Diactoros\Response\EmitterInterface` and its various implementations. These are now provided via the
-  [zendframework/zend-httphandlerrunner](https://docs.zendframework.com/zend-httphandlerrunner) package as 1:1 substitutions.
+- [zendframework/zend-diactoros#303](https://github.com/zendframework/zend-diactoros/pull/303) deprecates `Laminas\Diactoros\Response\EmitterInterface` and its various implementations. These are now provided via the
+  [laminas/laminas-httphandlerrunner](https://docs.laminas.dev/laminas-httphandlerrunner) package as 1:1 substitutions.
 
-- [#303](https://github.com/zendframework/zend-diactoros/pull/303) deprecates the `Zend\Diactoros\Server` class. Users are directed to the `RequestHandlerRunner` class from the
-  [zendframework/zend-httphandlerrunner](https://docs.zendframework.com/zend-httphandlerrunner) package as an alternative.
+- [zendframework/zend-diactoros#303](https://github.com/zendframework/zend-diactoros/pull/303) deprecates the `Laminas\Diactoros\Server` class. Users are directed to the `RequestHandlerRunner` class from the
+  [laminas/laminas-httphandlerrunner](https://docs.laminas.dev/laminas-httphandlerrunner) package as an alternative.
 
 ### Removed
 
@@ -514,7 +514,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#301](https://github.com/zendframework/zend-diactoros/pull/301) adds stricter comparisons within the `uri` class to ensure non-empty
+- [zendframework/zend-diactoros#301](https://github.com/zendframework/zend-diactoros/pull/301) adds stricter comparisons within the `uri` class to ensure non-empty
   values are not treated as empty.
 
 ## 1.7.1 - 2018-02-26
@@ -525,7 +525,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#293](https://github.com/zendframework/zend-diactoros/pull/293) updates
+- [zendframework/zend-diactoros#293](https://github.com/zendframework/zend-diactoros/pull/293) updates
   `Uri::getHost()` to cast the value via `strtolower()` before returning it.
   While this represents a change, it is fixing a bug in our implementation: 
   the PSR-7 specification for the method, which follows IETF RFC 3986 section
@@ -541,7 +541,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#290](https://github.com/zendframework/zend-diactoros/pull/290) fixes
+- [zendframework/zend-diactoros#290](https://github.com/zendframework/zend-diactoros/pull/290) fixes
   `Stream::getSize()` such that it checks that the result of `fstat` was
   succesful before attempting to return its `size` member; in the case of an
   error, it now returns `null`.
@@ -550,18 +550,18 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#285](https://github.com/zendframework/zend-diactoros/pull/285) adds a new
-  custom response type, `Zend\Diactoros\Response\XmlResponse`, for generating
+- [zendframework/zend-diactoros#285](https://github.com/zendframework/zend-diactoros/pull/285) adds a new
+  custom response type, `Laminas\Diactoros\Response\XmlResponse`, for generating
   responses representing XML. Usage is the same as with the `HtmlResponse` or
   `TextResponse`; the response generated will have a `Content-Type:
   application/xml` header by default.
 
-- [#280](https://github.com/zendframework/zend-diactoros/pull/280) adds the
+- [zendframework/zend-diactoros#280](https://github.com/zendframework/zend-diactoros/pull/280) adds the
   response status code/phrase pairing "103 Early Hints" to the
   `Response::$phrases` property. This is a new status proposed via
   [RFC 8297](https://datatracker.ietf.org/doc/rfc8297/).
 
-- [#279](https://github.com/zendframework/zend-diactoros/pull/279) adds explicit
+- [zendframework/zend-diactoros#279](https://github.com/zendframework/zend-diactoros/pull/279) adds explicit
   support for PHP 7.2; previously, we'd allowed build failures, though none
   occured; we now require PHP 7.2 builds to pass.
 
@@ -589,7 +589,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#273](https://github.com/zendframework/zend-diactoros/pull/273) updates each
+- [zendframework/zend-diactoros#273](https://github.com/zendframework/zend-diactoros/pull/273) updates each
   of the SAPI emitter implementations to emit the status line after emitting
   other headers; this is done to ensure that the status line is not overridden
   by PHP.
@@ -604,7 +604,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#273](https://github.com/zendframework/zend-diactoros/pull/273) modifies how
+- [zendframework/zend-diactoros#273](https://github.com/zendframework/zend-diactoros/pull/273) modifies how
   the `SapiEmitterTrait` calls `header()` to ensure that a response code is
   _always_ passed as the third argument; this is done to prevent PHP from
   silently overriding it.
@@ -617,15 +617,15 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#270](https://github.com/zendframework/zend-diactoros/pull/270) changes the
-  behavior of `Zend\Diactoros\Server`: it no longer creates an output buffer.
+- [zendframework/zend-diactoros#270](https://github.com/zendframework/zend-diactoros/pull/270) changes the
+  behavior of `Laminas\Diactoros\Server`: it no longer creates an output buffer.
 
-- [#270](https://github.com/zendframework/zend-diactoros/pull/270) changes the
+- [zendframework/zend-diactoros#270](https://github.com/zendframework/zend-diactoros/pull/270) changes the
   behavior of the two SAPI emitters in two backwards-incompatible ways:
 
   - They no longer auto-inject a `Content-Length` header. If you need this
-    functionality, zendframework/zend-expressive-helpers 4.1+ provides it via
-    `Zend\Expressive\Helper\ContentLengthMiddleware`.
+    functionality, mezzio/mezzio-helpers 4.1+ provides it via
+    `Mezzio\Helper\ContentLengthMiddleware`.
 
   - They no longer flush the output buffer. Instead, if headers have been sent,
     or the output buffer exists and has a non-zero length, the emitters raise an
@@ -651,10 +651,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#205](https://github.com/zendframework/zend-diactoros/pull/205) adds support
+- [zendframework/zend-diactoros#205](https://github.com/zendframework/zend-diactoros/pull/205) adds support
   for PHP 7.2.
 
-- [#250](https://github.com/zendframework/zend-diactoros/pull/250) adds a new
+- [zendframework/zend-diactoros#250](https://github.com/zendframework/zend-diactoros/pull/250) adds a new
   API to `JsonResponse` to avoid the need for decoding the response body in
   order to make changes to the underlying content. New methods include:
   - `getPayload()`: retrieve the unencoded payload.
@@ -666,22 +666,22 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#249](https://github.com/zendframework/zend-diactoros/pull/249) changes the
+- [zendframework/zend-diactoros#249](https://github.com/zendframework/zend-diactoros/pull/249) changes the
   behavior of the various `Uri::with*()` methods slightly: if the value
   represents no change, these methods will return the same instance instead of a
   new one.
 
-- [#248](https://github.com/zendframework/zend-diactoros/pull/248) changes the
+- [zendframework/zend-diactoros#248](https://github.com/zendframework/zend-diactoros/pull/248) changes the
   behavior of `Uri::getUserInfo()` slightly: it now (correctly) returns the
   percent-encoded values for the user and/or password, per RFC 3986 Section
   3.2.1. `withUserInfo()` will percent-encode values, using a mechanism that
   prevents double-encoding.
 
-- [#243](https://github.com/zendframework/zend-diactoros/pull/243) changes the
+- [zendframework/zend-diactoros#243](https://github.com/zendframework/zend-diactoros/pull/243) changes the
   exception messages thrown by `UploadedFile::getStream()` and `moveTo()` when
   an upload error exists to include details about the upload error.
 
-- [#233](https://github.com/zendframework/zend-diactoros/pull/233) adds a new
+- [zendframework/zend-diactoros#233](https://github.com/zendframework/zend-diactoros/pull/233) adds a new
   argument to `SapiStreamEmitter::emit`, `$maxBufferLevel` **between** the
   `$response` and `$maxBufferLength` arguments. This was done because the
   `Server::listen()` method passes only the response and `$maxBufferLevel` to
@@ -697,13 +697,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#205](https://github.com/zendframework/zend-diactoros/pull/205) and
-  [#243](https://github.com/zendframework/zend-diactoros/pull/243) **remove
+- [zendframework/zend-diactoros#205](https://github.com/zendframework/zend-diactoros/pull/205) and
+  [zendframework/zend-diactoros#243](https://github.com/zendframework/zend-diactoros/pull/243) **remove
   support for PHP versions prior to 5.6 as well as HHVM**.
 
 ### Fixed
 
-- [#248](https://github.com/zendframework/zend-diactoros/pull/248) fixes how the
+- [zendframework/zend-diactoros#248](https://github.com/zendframework/zend-diactoros/pull/248) fixes how the
   `Uri` class provides user-info within the URI authority; the value is now
   correctly percent-encoded , per RFC 3986 Section 3.2.1.
 
@@ -719,27 +719,27 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#260](https://github.com/zendframework/zend-diactoros/pull/260) removes
+- [zendframework/zend-diactoros#260](https://github.com/zendframework/zend-diactoros/pull/260) removes
   support for HHVM, as tests have failed against it for some time.
 
 ### Fixed
 
-- [#247](https://github.com/zendframework/zend-diactoros/pull/247) fixes the
+- [zendframework/zend-diactoros#247](https://github.com/zendframework/zend-diactoros/pull/247) fixes the
   `Stream` and `RelativeStream` `__toString()` method implementations to check
   if the stream `isSeekable()` before attempting to `rewind()` it, ensuring that
   the method does not raise exceptions (PHP does not allow exceptions in that
   method). In particular, this fixes an issue when using AWS S3 streams.
 
-- [#252](https://github.com/zendframework/zend-diactoros/pull/252) provides a
+- [zendframework/zend-diactoros#252](https://github.com/zendframework/zend-diactoros/pull/252) provides a
   fix to the `SapiEmitterTrait` to ensure that any `Set-Cookie` headers in the
   response instance do not override those set by PHP when a session is created
   and/or regenerated.
 
-- [#257](https://github.com/zendframework/zend-diactoros/pull/257) provides a
+- [zendframework/zend-diactoros#257](https://github.com/zendframework/zend-diactoros/pull/257) provides a
   fix for the `PhpInputStream::read()` method to ensure string content that
   evaluates as empty (including `0`) is still cached.
 
-- [#258](https://github.com/zendframework/zend-diactoros/pull/258) updates the
+- [zendframework/zend-diactoros#258](https://github.com/zendframework/zend-diactoros/pull/258) updates the
   `Uri::filterPath()` method to allow parens within a URI path, per [RFC 3986
   section 3.3](https://tools.ietf.org/html/rfc3986#section-3.3) (parens are
   within the character set "sub-delims").
@@ -748,19 +748,19 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#219](https://github.com/zendframework/zend-diactoros/pull/219) adds two new
-  classes, `Zend\Diactoros\Request\ArraySerializer` and
-  `Zend\Diactoros\Response\ArraySerializer`. Each exposes the static methods
+- [zendframework/zend-diactoros#219](https://github.com/zendframework/zend-diactoros/pull/219) adds two new
+  classes, `Laminas\Diactoros\Request\ArraySerializer` and
+  `Laminas\Diactoros\Response\ArraySerializer`. Each exposes the static methods
   `toArray()` and `fromArray()`, allowing de/serialization of messages from and
   to arrays.
 
-- [#236](https://github.com/zendframework/zend-diactoros/pull/236) adds two new
+- [zendframework/zend-diactoros#236](https://github.com/zendframework/zend-diactoros/pull/236) adds two new
   constants to the `Response` class: `MIN_STATUS_CODE_VALUE` and
   `MAX_STATUS_CODE_VALUE`.
 
 ### Changes
 
-- [#240](https://github.com/zendframework/zend-diactoros/pull/240) changes the
+- [zendframework/zend-diactoros#240](https://github.com/zendframework/zend-diactoros/pull/240) changes the
   behavior of `ServerRequestFactory::fromGlobals()` when no `$cookies` argument
   is present. Previously, it would use `$_COOKIES`; now, if a `Cookie` header is
   present, it will parse and use that to populate the instance instead.
@@ -769,7 +769,7 @@ All notable changes to this project will be documented in this file, in reverse 
   their names (PHP's built-in cookie handling renames these to replace `.` with
   `_`, which can lead to synchronization issues with clients).
 
-- [#235](https://github.com/zendframework/zend-diactoros/pull/235) changes the
+- [zendframework/zend-diactoros#235](https://github.com/zendframework/zend-diactoros/pull/235) changes the
   behavior of `Uri::__toString()` to better follow proscribed behavior in PSR-7.
   In particular, prior to this release, if a scheme was missing but an authority
   was present, the class was incorrectly returning a value that did not include
@@ -795,7 +795,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changes
 
-- [#241](https://github.com/zendframework/zend-diactoros/pull/241) changes the
+- [zendframework/zend-diactoros#241](https://github.com/zendframework/zend-diactoros/pull/241) changes the
   constraint by which the package provides `psr/http-message-implementation` to
   simply `1.0` instead of `~1.0.0`, to follow how other implementations provide
   PSR-7.
@@ -810,11 +810,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#161](https://github.com/zendframework/zend-diactoros/pull/161) adds
+- [zendframework/zend-diactoros#161](https://github.com/zendframework/zend-diactoros/pull/161) adds
   additional validations to header names and values to ensure no malformed values
   are provided.
 
-- [#234](https://github.com/zendframework/zend-diactoros/pull/234) fixes a
+- [zendframework/zend-diactoros#234](https://github.com/zendframework/zend-diactoros/pull/234) fixes a
   number of reason phrases in the `Response` instance, and adds automation from
   the canonical IANA sources to ensure any new phrases added are correct.
 
@@ -834,7 +834,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#226](https://github.com/zendframework/zend-diactoros/pull/226) fixed an
+- [zendframework/zend-diactoros#226](https://github.com/zendframework/zend-diactoros/pull/226) fixed an
   issue with the `SapiStreamEmitter` causing the response body to be cast
   to `(string)` and also be read as a readable stream, potentially producing
   double output.
@@ -855,8 +855,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#223](https://github.com/zendframework/zend-diactoros/issues/223)
-  [#224](https://github.com/zendframework/zend-diactoros/pull/224) fixed an issue
+- [zendframework/zend-diactoros#223](https://github.com/zendframework/zend-diactoros/issues/223)
+  [zendframework/zend-diactoros#224](https://github.com/zendframework/zend-diactoros/pull/224) fixed an issue
   with the `SapiStreamEmitter` consuming too much memory when producing output
   for readable bodies.
 
@@ -876,7 +876,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#222](https://github.com/zendframework/zend-diactoros/pull/222) fixes the
+- [zendframework/zend-diactoros#222](https://github.com/zendframework/zend-diactoros/pull/222) fixes the
   `SapiStreamEmitter`'s handling of the `Content-Range` header to properly only
   emit a range of bytes if the header value is in the form `bytes {first-last}/length`.
   This allows using other range units, such as `items`, without incorrectly
@@ -886,16 +886,16 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#208](https://github.com/zendframework/zend-diactoros/pull/208) adds several
-  missing response codes to `Zend\Diactoros\Response`, including:
+- [zendframework/zend-diactoros#208](https://github.com/zendframework/zend-diactoros/pull/208) adds several
+  missing response codes to `Laminas\Diactoros\Response`, including:
   - 226 ('IM used')
   - 308 ('Permanent Redirect')
   - 444 ('Connection Closed Without Response')
   - 499 ('Client Closed Request')
   - 510 ('Not Extended')
   - 599 ('Network Connect Timeout Error')
-- [#211](https://github.com/zendframework/zend-diactoros/pull/211) adds support
-  for UTF-8 characters in query strings handled by `Zend\Diactoros\Uri`.
+- [zendframework/zend-diactoros#211](https://github.com/zendframework/zend-diactoros/pull/211) adds support
+  for UTF-8 characters in query strings handled by `Laminas\Diactoros\Uri`.
 
 ### Deprecated
 
@@ -913,13 +913,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#170](https://github.com/zendframework/zend-diactoros/pull/170) prepared
-  documentation for publication at https://zendframework.github.io/zend-diactoros/
-- [#165](https://github.com/zendframework/zend-diactoros/pull/165) adds support
+- [zendframework/zend-diactoros#170](https://github.com/zendframework/zend-diactoros/pull/170) prepared
+  documentation for publication at https://docs.laminas.dev/laminas-diactoros/
+- [zendframework/zend-diactoros#165](https://github.com/zendframework/zend-diactoros/pull/165) adds support
   for Apache `REDIRECT_HTTP_*` header detection in the `ServerRequestFactory`.
-- [#166](https://github.com/zendframework/zend-diactoros/pull/166) adds support
+- [zendframework/zend-diactoros#166](https://github.com/zendframework/zend-diactoros/pull/166) adds support
   for UTF-8 characters in URI paths.
-- [#204](https://github.com/zendframework/zend-diactoros/pull/204) adds testing
+- [zendframework/zend-diactoros#204](https://github.com/zendframework/zend-diactoros/pull/204) adds testing
   against PHP 7.1 release-candidate builds.
 
 ### Deprecated
@@ -932,20 +932,20 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#186](https://github.com/zendframework/zend-diactoros/pull/186) fixes a typo
+- [zendframework/zend-diactoros#186](https://github.com/zendframework/zend-diactoros/pull/186) fixes a typo
   in a variable name within the `SapiStreamEmitter`.
-- [#200](https://github.com/zendframework/zend-diactoros/pull/200) updates the
+- [zendframework/zend-diactoros#200](https://github.com/zendframework/zend-diactoros/pull/200) updates the
   `SapiStreamEmitter` to implement a check for `isSeekable()` prior to attempts
   to rewind; this allows it to work with non-seekable streams such as the
   `CallbackStream`.
-- [#169](https://github.com/zendframework/zend-diactoros/pull/169) ensures that
+- [zendframework/zend-diactoros#169](https://github.com/zendframework/zend-diactoros/pull/169) ensures that
   response serialization always provides a `\r\n\r\n` sequence following the
   headers, even when no message body is present, to ensure it conforms with RFC
   7230.
-- [#175](https://github.com/zendframework/zend-diactoros/pull/175) updates the
+- [zendframework/zend-diactoros#175](https://github.com/zendframework/zend-diactoros/pull/175) updates the
   `Request` class to set the `Host` header from the URI host if no header is
   already present. (Ensures conformity with PSR-7 specification.)
-- [#197](https://github.com/zendframework/zend-diactoros/pull/197) updates the
+- [zendframework/zend-diactoros#197](https://github.com/zendframework/zend-diactoros/pull/197) updates the
   `Uri` class to ensure that string serialization does not include a colon after
   the host name if no port is present in the instance.
 
@@ -965,14 +965,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#160](https://github.com/zendframework/zend-diactoros/pull/160) fixes HTTP
+- [zendframework/zend-diactoros#160](https://github.com/zendframework/zend-diactoros/pull/160) fixes HTTP
   protocol detection in the `ServerRequestFactory` to work correctly with HTTP/2.
 
 ## 1.3.4 - 2016-03-17
 
 ### Added
 
-- [#119](https://github.com/zendframework/zend-diactoros/pull/119) adds the 451
+- [zendframework/zend-diactoros#119](https://github.com/zendframework/zend-diactoros/pull/119) adds the 451
   (Unavailable for Legal Reasons) status code to the `Response` class.
 
 ### Deprecated
@@ -985,19 +985,19 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#117](https://github.com/zendframework/zend-diactoros/pull/117) provides
+- [zendframework/zend-diactoros#117](https://github.com/zendframework/zend-diactoros/pull/117) provides
   validation of the HTTP protocol version.
-- [#127](https://github.com/zendframework/zend-diactoros/pull/127) now properly
+- [zendframework/zend-diactoros#127](https://github.com/zendframework/zend-diactoros/pull/127) now properly
   removes attributes with `null` values when calling `withoutAttribute()`.
-- [#132](https://github.com/zendframework/zend-diactoros/pull/132) updates the
+- [zendframework/zend-diactoros#132](https://github.com/zendframework/zend-diactoros/pull/132) updates the
   `ServerRequestFactory` to marshal the request path fragment, if present.
-- [#142](https://github.com/zendframework/zend-diactoros/pull/142) updates the
+- [zendframework/zend-diactoros#142](https://github.com/zendframework/zend-diactoros/pull/142) updates the
   exceptions thrown by `HeaderSecurity` to include the header name and/or
   value.
-- [#148](https://github.com/zendframework/zend-diactoros/pull/148) fixes several
+- [zendframework/zend-diactoros#148](https://github.com/zendframework/zend-diactoros/pull/148) fixes several
   stream operations to ensure they raise exceptions when the internal pointer
   is at an invalid position.
-- [#151](https://github.com/zendframework/zend-diactoros/pull/151) ensures
+- [zendframework/zend-diactoros#151](https://github.com/zendframework/zend-diactoros/pull/151) ensures
   URI fragments are properly encoded.
 
 ## 1.3.3 - 2016-01-04
@@ -1016,7 +1016,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#135](https://github.com/zendframework/zend-diactoros/pull/135) fixes the
+- [zendframework/zend-diactoros#135](https://github.com/zendframework/zend-diactoros/pull/135) fixes the
   behavior of `ServerRequestFactory::marshalHeaders()` to no longer omit
   `Cookie` headers from the aggregated headers. While the values are parsed and
   injected into the cookie params, it's useful to have access to the raw headers
@@ -1026,7 +1026,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#124](https://github.com/zendframework/zend-diactoros/pull/124) adds four
+- [zendframework/zend-diactoros#124](https://github.com/zendframework/zend-diactoros/pull/124) adds four
   more optional arguments to the `ServerRequest` constructor:
   - `array $cookies`
   - `array $queryParams`
@@ -1046,7 +1046,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#122](https://github.com/zendframework/zend-diactoros/pull/122) updates the
+- [zendframework/zend-diactoros#122](https://github.com/zendframework/zend-diactoros/pull/122) updates the
   `ServerRequestFactory` to retrieve the HTTP protocol version and inject it in
   the generated `ServerRequest`, which previously was not performed.
 
@@ -1066,10 +1066,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#113](https://github.com/zendframework/zend-diactoros/pull/113) fixes an
+- [zendframework/zend-diactoros#113](https://github.com/zendframework/zend-diactoros/pull/113) fixes an
   issue in the response serializer, ensuring that the status code in the
   deserialized response is an integer.
-- [#115](https://github.com/zendframework/zend-diactoros/pull/115) fixes an
+- [zendframework/zend-diactoros#115](https://github.com/zendframework/zend-diactoros/pull/115) fixes an
   issue in the various text-basd response types (`TextResponse`, `HtmlResponse`,
   and `JsonResponse`); due to the fact that the constructor was not
   rewinding the message body stream, `getContents()` was thus returning `null`,
@@ -1080,8 +1080,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#110](https://github.com/zendframework/zend-diactoros/pull/110) adds
-  `Zend\Diactoros\Response\SapiEmitterTrait`, which provides the following
+- [zendframework/zend-diactoros#110](https://github.com/zendframework/zend-diactoros/pull/110) adds
+  `Laminas\Diactoros\Response\SapiEmitterTrait`, which provides the following
   private method definitions:
   - `injectContentLength()`
   - `emitStatusLine()`
@@ -1090,7 +1090,7 @@ All notable changes to this project will be documented in this file, in reverse 
   - `filterHeader()`
   The `SapiEmitter` implementation has been updated to remove those methods and
   instead compose the trait.
-- [#111](https://github.com/zendframework/zend-diactoros/pull/111) adds
+- [zendframework/zend-diactoros#111](https://github.com/zendframework/zend-diactoros/pull/111) adds
   a new emitter implementation, `SapiStreamEmitter`; this emitter type will
   loop through the stream instead of emitting it in one go, and supports content
   ranges.
@@ -1123,13 +1123,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#101](https://github.com/zendframework/zend-diactoros/pull/101) fixes the
+- [zendframework/zend-diactoros#101](https://github.com/zendframework/zend-diactoros/pull/101) fixes the
   `withHeader()` implementation to ensure that if the header existed previously
   but using a different casing strategy, the previous version will be removed
   in the cloned instance.
-- [#103](https://github.com/zendframework/zend-diactoros/pull/103) fixes the
+- [zendframework/zend-diactoros#103](https://github.com/zendframework/zend-diactoros/pull/103) fixes the
   constructor of `Response` to ensure that null status codes are not possible.
-- [#99](https://github.com/zendframework/zend-diactoros/pull/99) fixes
+- [zendframework/zend-diactoros#99](https://github.com/zendframework/zend-diactoros/pull/99) fixes
   validation of header values submitted via request and response constructors as
   follows:
   - numeric (integer and float) values are now properly allowed (this solves
@@ -1143,17 +1143,17 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#88](https://github.com/zendframework/zend-diactoros/pull/88) updates the
+- [zendframework/zend-diactoros#88](https://github.com/zendframework/zend-diactoros/pull/88) updates the
   `SapiEmitter` to emit a `Content-Length` header with the content length as
   reported by the response body stream, assuming that
   `StreamInterface::getSize()` returns an integer.
-- [#77](https://github.com/zendframework/zend-diactoros/pull/77) adds a new
-  response type, `Zend\Diactoros\Response\TextResponse`, for returning plain
+- [zendframework/zend-diactoros#77](https://github.com/zendframework/zend-diactoros/pull/77) adds a new
+  response type, `Laminas\Diactoros\Response\TextResponse`, for returning plain
   text responses. By default, it sets the content type to `text/plain;
   charset=utf-8`; per the other response types, the signature is `new
   TextResponse($text, $status = 200, array $headers = [])`.
-- [#90](https://github.com/zendframework/zend-diactoros/pull/90) adds a new
-  `Zend\Diactoros\CallbackStream`, allowing you to back a stream with a PHP
+- [zendframework/zend-diactoros#90](https://github.com/zendframework/zend-diactoros/pull/90) adds a new
+  `Laminas\Diactoros\CallbackStream`, allowing you to back a stream with a PHP
   callable (such as a generator) to generate the message content. Its
   constructor accepts the callable: `$stream = new CallbackStream($callable);`
 
@@ -1167,7 +1167,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#77](https://github.com/zendframework/zend-diactoros/pull/77) updates the
+- [zendframework/zend-diactoros#77](https://github.com/zendframework/zend-diactoros/pull/77) updates the
   `HtmlResponse` to set the charset to utf-8 by default (if no content type
   header is provided at instantiation).
 
@@ -1175,9 +1175,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#98](https://github.com/zendframework/zend-diactoros/pull/98) adds
+- [zendframework/zend-diactoros#98](https://github.com/zendframework/zend-diactoros/pull/98) adds
   `JSON_UNESCAPED_SLASHES` to the default `json_encode` flags used by
-  `Zend\Diactoros\Response\JsonResponse`.
+  `Laminas\Diactoros\Response\JsonResponse`.
 
 ### Deprecated
 
@@ -1189,10 +1189,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#96](https://github.com/zendframework/zend-diactoros/pull/96) updates
+- [zendframework/zend-diactoros#96](https://github.com/zendframework/zend-diactoros/pull/96) updates
   `withPort()` to allow `null` port values (indicating usage of default for
   the given scheme).
-- [#91](https://github.com/zendframework/zend-diactoros/pull/91) fixes the
+- [zendframework/zend-diactoros#91](https://github.com/zendframework/zend-diactoros/pull/91) fixes the
   logic of `withUri()` to do a case-insensitive check for an existing `Host`
   header, replacing it with the new one.
 
@@ -1200,7 +1200,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#73](https://github.com/zendframework/zend-diactoros/pull/73) adds caching of
+- [zendframework/zend-diactoros#73](https://github.com/zendframework/zend-diactoros/pull/73) adds caching of
   the vendor directory to the Travis-CI configuration, to speed up builds.
 
 ### Deprecated
@@ -1213,19 +1213,19 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#71](https://github.com/zendframework/zend-diactoros/pull/71) fixes the
+- [zendframework/zend-diactoros#71](https://github.com/zendframework/zend-diactoros/pull/71) fixes the
   docblock of the `JsonResponse` constructor to typehint the `$data` argument
   as `mixed`.
-- [#73](https://github.com/zendframework/zend-diactoros/pull/73) changes the
+- [zendframework/zend-diactoros#73](https://github.com/zendframework/zend-diactoros/pull/73) changes the
   behavior in `Request` such that if it marshals a stream during instantiation,
   the stream is marked as writeable (specifically, mode `wb+`).
-- [#85](https://github.com/zendframework/zend-diactoros/pull/85) updates the
-  behavior of `Zend\Diactoros\Uri`'s various `with*()` methods that are
+- [zendframework/zend-diactoros#85](https://github.com/zendframework/zend-diactoros/pull/85) updates the
+  behavior of `Laminas\Diactoros\Uri`'s various `with*()` methods that are
   documented as accepting strings to raise exceptions on non-string input.
   Previously, several simply passed non-string input on verbatim, others
   normalized the input, and a few correctly raised the exceptions. Behavior is
   now consistent across each.
-- [#87](https://github.com/zendframework/zend-diactoros/pull/87) fixes
+- [zendframework/zend-diactoros#87](https://github.com/zendframework/zend-diactoros/pull/87) fixes
   `UploadedFile` to ensure that `moveTo()` works correctly in non-SAPI
   environments when the file provided to the constructor is a path.
 
@@ -1245,7 +1245,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#67](https://github.com/zendframework/zend-diactoros/pull/67) ensures that
+- [zendframework/zend-diactoros#67](https://github.com/zendframework/zend-diactoros/pull/67) ensures that
   the `Stream` class only accepts `stream` resources, not any resource.
 
 ## 1.1.1 - 2015-06-25
@@ -1264,7 +1264,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#64](https://github.com/zendframework/zend-diactoros/pull/64) fixes the
+- [zendframework/zend-diactoros#64](https://github.com/zendframework/zend-diactoros/pull/64) fixes the
   behavior of `JsonResponse` with regards to serialization of `null` and scalar
   values; the new behavior is to serialize them verbatim, without any casting.
 
@@ -1272,19 +1272,19 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#52](https://github.com/zendframework/zend-diactoros/pull/52),
-  [#58](https://github.com/zendframework/zend-diactoros/pull/58),
-  [#59](https://github.com/zendframework/zend-diactoros/pull/59), and
-  [#61](https://github.com/zendframework/zend-diactoros/pull/61) create several
+- [zendframework/zend-diactoros#52](https://github.com/zendframework/zend-diactoros/pull/52),
+  [zendframework/zend-diactoros#58](https://github.com/zendframework/zend-diactoros/pull/58),
+  [zendframework/zend-diactoros#59](https://github.com/zendframework/zend-diactoros/pull/59), and
+  [zendframework/zend-diactoros#61](https://github.com/zendframework/zend-diactoros/pull/61) create several
   custom response types for simplifying response creation:
 
-  - `Zend\Diactoros\Response\HtmlResponse` accepts HTML content via its
+  - `Laminas\Diactoros\Response\HtmlResponse` accepts HTML content via its
     constructor, and sets the `Content-Type` to `text/html`.
-  - `Zend\Diactoros\Response\JsonResponse` accepts data to serialize to JSON via
+  - `Laminas\Diactoros\Response\JsonResponse` accepts data to serialize to JSON via
     its constructor, and sets the `Content-Type` to `application/json`.
-  - `Zend\Diactoros\Response\EmptyResponse` allows creating empty, read-only
+  - `Laminas\Diactoros\Response\EmptyResponse` allows creating empty, read-only
     responses, with a default status code of 204.
-  - `Zend\Diactoros\Response\RedirectResponse` allows specifying a URI for the
+  - `Laminas\Diactoros\Response\RedirectResponse` allows specifying a URI for the
     `Location` header in the constructor, with a default status code of 302.
 
   Each also accepts an optional status code, and optional headers (which can
@@ -1297,13 +1297,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#43](https://github.com/zendframework/zend-diactoros/pull/43) removed both
+- [zendframework/zend-diactoros#43](https://github.com/zendframework/zend-diactoros/pull/43) removed both
   `ServerRequestFactory::marshalUri()` and `ServerRequestFactory::marshalHostAndPort()`,
   which were deprecated prior to the 1.0 release.
 
 ### Fixed
 
-- [#29](https://github.com/zendframework/zend-diactoros/pull/29) fixes request
+- [zendframework/zend-diactoros#29](https://github.com/zendframework/zend-diactoros/pull/29) fixes request
   method validation to allow any valid token as defined by [RFC
   7230](http://tools.ietf.org/html/rfc7230#appendix-B). This allows usage of
   custom request methods, vs a static, hard-coded list.
@@ -1324,7 +1324,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#60](https://github.com/zendframework/zend-diactoros/pull/60) fixes
+- [zendframework/zend-diactoros#60](https://github.com/zendframework/zend-diactoros/pull/60) fixes
   the behavior of `UploadedFile` when the `$errorStatus` provided at
   instantiation is not `UPLOAD_ERR_OK`. Prior to the fix, an
   `InvalidArgumentException` would occur at instantiation due to the fact that
@@ -1335,7 +1335,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 This is a security release.
 
-A patch has been applied to `Zend\Diactoros\Uri::filterPath()` that ensures that
+A patch has been applied to `Laminas\Diactoros\Uri::filterPath()` that ensures that
 paths can only begin with a single leading slash. This prevents the following
 potential security issues:
 
@@ -1349,13 +1349,13 @@ potential security issues:
   do not prepend the scheme and authority. Again, preventing a double slash
   corrects the vector.
 
-If you are using `Zend\Diactoros\Uri` for creating links, form targets, or
+If you are using `Laminas\Diactoros\Uri` for creating links, form targets, or
 redirect paths, and only using the path segment, we recommend upgrading
 immediately.
 
 ### Added
 
-- [#25](https://github.com/zendframework/zend-diactoros/pull/25) adds
+- [zendframework/zend-diactoros#25](https://github.com/zendframework/zend-diactoros/pull/25) adds
   documentation. Documentation is written in markdown, and can be converted to
   HTML using [bookdown](http://bookdown.io). New features now MUST include
   documentation for acceptance.
@@ -1370,13 +1370,13 @@ immediately.
 
 ### Fixed
 
-- [#51](https://github.com/zendframework/zend-diactoros/pull/51) fixes
+- [zendframework/zend-diactoros#51](https://github.com/zendframework/zend-diactoros/pull/51) fixes
   `MessageTrait::getHeaderLine()` to return an empty string instead of `null` if
   the header is undefined (which is the behavior specified in PSR-7).
-- [#57](https://github.com/zendframework/zend-diactoros/pull/57) fixes the
+- [zendframework/zend-diactoros#57](https://github.com/zendframework/zend-diactoros/pull/57) fixes the
   behavior of how the `ServerRequestFactory` marshals upload files when they are
   represented as a nested associative array.
-- [#49](https://github.com/zendframework/zend-diactoros/pull/49) provides several
+- [zendframework/zend-diactoros#49](https://github.com/zendframework/zend-diactoros/pull/49) provides several
   fixes that ensure that Diactoros complies with the PSR-7 specification:
   - `MessageInterface::getHeaderLine()` MUST return a string (that string CAN be
     empty). Previously, Diactoros would return `null`.
@@ -1388,7 +1388,7 @@ immediately.
   - The request MUST return a `UriInterface` instance from `getUri()`; that
     instance CAN be empty. Previously, Diactoros would return `null`; now it
     lazy-instantiates an empty `Uri` instance on initialization.
-- [ZF2015-05](http://framework.zend.com/security/advisory/ZF2015-05) was
+- [ZF2015-05](https://getlaminas.org/security/advisory/ZF2015-05) was
   addressed by altering `Uri::filterPath()` to prevent emitting a path prepended
   with multiple slashes.
 
@@ -1396,7 +1396,7 @@ immediately.
 
 ### Added
 
-- [#48](https://github.com/zendframework/zend-diactoros/pull/48) drops the
+- [zendframework/zend-diactoros#48](https://github.com/zendframework/zend-diactoros/pull/48) drops the
   minimum supported PHP version to 5.4, to allow an easier upgrade path for
   Symfony 2.7 users, and potential Drupal 8 usage.
 
@@ -1416,10 +1416,10 @@ immediately.
 
 ### Added
 
-- [#27](https://github.com/zendframework/zend-diactoros/pull/27) adds phonetic
+- [zendframework/zend-diactoros#27](https://github.com/zendframework/zend-diactoros/pull/27) adds phonetic
   pronunciation of "Diactoros" to the README file.
-- [#36](https://github.com/zendframework/zend-diactoros/pull/36) adds property
-  annotations to the class-level docblock of `Zend\Diactoros\RequestTrait` to
+- [zendframework/zend-diactoros#36](https://github.com/zendframework/zend-diactoros/pull/36) adds property
+  annotations to the class-level docblock of `Laminas\Diactoros\RequestTrait` to
   ensure properties inherited from the `MessageTrait` are inherited by
   implementations.
 
@@ -1433,12 +1433,12 @@ immediately.
 -
 ### Fixed
 
-- [#41](https://github.com/zendframework/zend-diactoros/pull/41) fixes the
-  namespace for test files to begin with `ZendTest` instead of `Zend`.
-- [#46](https://github.com/zendframework/zend-diactoros/pull/46) ensures that
+- [zendframework/zend-diactoros#41](https://github.com/zendframework/zend-diactoros/pull/41) fixes the
+  namespace for test files to begin with `LaminasTest` instead of `Laminas`.
+- [zendframework/zend-diactoros#46](https://github.com/zendframework/zend-diactoros/pull/46) ensures that
   the cookie and query params for the `ServerRequest` implementation are
   initialized as arrays.
-- [#47](https://github.com/zendframework/zend-diactoros/pull/47) modifies the
+- [zendframework/zend-diactoros#47](https://github.com/zendframework/zend-diactoros/pull/47) modifies the
   internal logic in `HeaderSecurity::isValid()` to use a regular expression
   instead of character-by-character comparisons, improving performance.
 
@@ -1446,12 +1446,12 @@ immediately.
 
 ### Added
 
-- [#10](https://github.com/zendframework/zend-diactoros/pull/10) adds
-  `Zend\Diactoros\RelativeStream`, which will return stream contents relative to
+- [zendframework/zend-diactoros#10](https://github.com/zendframework/zend-diactoros/pull/10) adds
+  `Laminas\Diactoros\RelativeStream`, which will return stream contents relative to
   a given offset (i.e., a subset of the stream).  `AbstractSerializer` was
   updated to create a `RelativeStream` when creating the body of a message,
   which will prevent duplication of the stream in-memory.
-- [#21](https://github.com/zendframework/zend-diactoros/pull/21) adds a
+- [zendframework/zend-diactoros#21](https://github.com/zendframework/zend-diactoros/pull/21) adds a
   `.gitattributes` file that excludes directories and files not needed for
   production; this will further minify the package for production use cases.
 
@@ -1465,20 +1465,20 @@ immediately.
 
 ### Fixed
 
-- [#9](https://github.com/zendframework/zend-diactoros/pull/9) ensures that
+- [zendframework/zend-diactoros#9](https://github.com/zendframework/zend-diactoros/pull/9) ensures that
   attributes are initialized to an empty array, ensuring that attempts to
   retrieve single attributes when none are defined will not produce errors.
-- [#14](https://github.com/zendframework/zend-diactoros/pull/14) updates
-  `Zend\Diactoros\Request` to use a `php://temp` stream by default instead of
+- [zendframework/zend-diactoros#14](https://github.com/zendframework/zend-diactoros/pull/14) updates
+  `Laminas\Diactoros\Request` to use a `php://temp` stream by default instead of
   `php://memory`, to ensure requests do not create an out-of-memory condition.
-- [#15](https://github.com/zendframework/zend-diactoros/pull/15) updates
-  `Zend\Diactoros\Stream` to ensure that write operations trigger an exception
+- [zendframework/zend-diactoros#15](https://github.com/zendframework/zend-diactoros/pull/15) updates
+  `Laminas\Diactoros\Stream` to ensure that write operations trigger an exception
   if the stream is not writeable. Additionally, it adds more robust logic for
   determining if a stream is writeable.
 
 ## 1.0.0 - 2015-05-21
 
-First stable release, and first release as `zend-diactoros`.
+First stable release, and first release as `laminas-diactoros`.
 
 ### Added
 
