@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2019 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros\functions;
+namespace LaminasTest\Diactoros\functions;
 
 use PHPUnit\Framework\TestCase;
-use function Zend\Diactoros\marshalUriFromSapi;
+
+use function Laminas\Diactoros\marshalUriFromSapi;
 
 class MarshalUriFromSapiTest extends TestCase
 {
