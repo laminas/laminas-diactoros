@@ -1,60 +1,71 @@
 {
-  "name": "zendframework/zend-diactoros",
-  "description": "PSR HTTP Message implementations",
-  "type": "library",
-  "license": "BSD-2-Clause",
-  "keywords": [
-    "http",
-    "psr",
-    "psr-7"
-  ],
-  "homepage": "https://github.com/zendframework/zend-diactoros",
-  "support": {
-    "issues": "https://github.com/zendframework/zend-diactoros/issues",
-    "source": "https://github.com/zendframework/zend-diactoros"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.4-dev",
-      "dev-develop": "1.5-dev"
-    }
-  },
-  "require": {
-    "php": "^5.4 || ^7.0",
-    "psr/http-message": "~1.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^4.6 || ^5.5",
-    "zendframework/zend-coding-standard": "~1.0.0",
-    "ext-dom": "*",
-    "ext-libxml": "*"
-  },
-  "provide": {
-    "psr/http-message-implementation": "1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Zend\\Diactoros\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "ZendTest\\Diactoros\\": "test/"
-    },
-    "files": [
-      "test/TestAsset/Functions.php",
-      "test/TestAsset/SapiResponse.php"
-    ]
-  },
-  "scripts": {
-    "check": [
-      "@cs-check",
-      "@test"
+    "name": "laminas/laminas-diactoros",
+    "description": "PSR HTTP Message implementations",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "laminas",
+        "http",
+        "psr",
+        "psr-7"
     ],
-    "upload-coverage": "coveralls -v",
-    "cs-check": "phpcs",
-    "cs-fix": "phpcbf",
-    "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
-  }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-diactoros/",
+        "issues": "https://github.com/laminas/laminas-diactoros/issues",
+        "source": "https://github.com/laminas/laminas-diactoros",
+        "rss": "https://github.com/laminas/laminas-diactoros/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.4-dev",
+            "dev-develop": "1.5-dev"
+        }
+    },
+    "require": {
+        "php": "^5.4 || ^7.0",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "psr/http-message": "~1.0"
+    },
+    "require-dev": {
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "phpunit/phpunit": "^4.6 || ^5.5"
+    },
+    "provide": {
+        "psr/http-message-implementation": "1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Diactoros\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\Diactoros\\": "test/"
+        },
+        "files": [
+            "test/TestAsset/Functions.php",
+            "test/TestAsset/SapiResponse.php"
+        ]
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "upload-coverage": "coveralls -v",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "replace": {
+        "zendframework/zend-diactoros": "self.version"
+    }
 }

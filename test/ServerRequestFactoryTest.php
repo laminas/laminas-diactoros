@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\UploadedFile;
+use Laminas\Diactoros\Uri;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionMethod;
 use ReflectionProperty;
 use UnexpectedValueException;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\UploadedFile;
-use Zend\Diactoros\Uri;
 
 class ServerRequestFactoryTest extends TestCase
 {
@@ -292,7 +291,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUriFromServer($server, $request->getHeaders());
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('https', $uri->getScheme());
     }
 
@@ -307,7 +306,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUriFromServer($server, $request->getHeaders());
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('http', $uri->getScheme());
     }
 
@@ -321,7 +320,7 @@ class ServerRequestFactoryTest extends TestCase
         $server  = [];
 
         $uri = ServerRequestFactory::marshalUriFromServer($server, $request->getHeaders());
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('https', $uri->getScheme());
     }
 
@@ -336,7 +335,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUriFromServer($server, $request->getHeaders());
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('/foo/bar', $uri->getPath());
     }
 
@@ -352,7 +351,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUriFromServer($server, $request->getHeaders());
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('bar=baz', $uri->getQuery());
     }
 
@@ -367,7 +366,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUriFromServer($server, $request->getHeaders());
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('foo', $uri->getFragment());
     }
 
@@ -401,7 +400,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $request = ServerRequestFactory::fromGlobals($server, $query, $body, $cookies, $files);
-        $this->assertInstanceOf('Zend\Diactoros\ServerRequest', $request);
+        $this->assertInstanceOf('Laminas\Diactoros\ServerRequest', $request);
         $this->assertEquals($cookies, $request->getCookieParams());
         $this->assertEquals($query, $request->getQueryParams());
         $this->assertEquals($body, $request->getParsedBody());
@@ -476,7 +475,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent()
     {
-        $r = new ReflectionProperty('Zend\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
+        $r = new ReflectionProperty('Laminas\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
         $r->setAccessible(true);
         $r->setValue(function () {
             return ['Authorization' => 'foobar'];
@@ -490,7 +489,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent()
     {
-        $r = new ReflectionProperty('Zend\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
+        $r = new ReflectionProperty('Laminas\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
         $r->setAccessible(true);
         $r->setValue(function () {
             return ['authorization' => 'foobar'];
@@ -504,7 +503,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerReturnsArrayUnalteredIfApacheHeadersDoNotContainAuthorization()
     {
-        $r = new ReflectionProperty('Zend\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
+        $r = new ReflectionProperty('Laminas\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
         $r->setAccessible(true);
         $r->setValue(function () {
             return [];
@@ -537,7 +536,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testMarshalProtocolVersionRisesExceptionIfVersionIsNotRecognized()
     {
-        $method = new ReflectionMethod('Zend\Diactoros\ServerRequestFactory', 'marshalProtocolVersion');
+        $method = new ReflectionMethod('Laminas\Diactoros\ServerRequestFactory', 'marshalProtocolVersion');
         $method->setAccessible(true);
         $this->setExpectedException('UnexpectedValueException');
         $method->invoke(null, ['SERVER_PROTOCOL' => 'dadsa/1.0']);
@@ -545,7 +544,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testMarshalProtocolReturnsDefaultValueIfHeaderIsNotPresent()
     {
-        $method = new ReflectionMethod('Zend\Diactoros\ServerRequestFactory', 'marshalProtocolVersion');
+        $method = new ReflectionMethod('Laminas\Diactoros\ServerRequestFactory', 'marshalProtocolVersion');
         $method->setAccessible(true);
         $version = $method->invoke(null, []);
         $this->assertEquals('1.1', $version);
@@ -556,7 +555,7 @@ class ServerRequestFactoryTest extends TestCase
      */
     public function testMarshalProtocolVersionReturnsHttpVersions($protocol, $expected)
     {
-        $method = new ReflectionMethod('Zend\Diactoros\ServerRequestFactory', 'marshalProtocolVersion');
+        $method = new ReflectionMethod('Laminas\Diactoros\ServerRequestFactory', 'marshalProtocolVersion');
         $method->setAccessible(true);
         $version = $method->invoke(null, ['SERVER_PROTOCOL' => $protocol]);
         $this->assertEquals($expected, $version);
