@@ -25,7 +25,7 @@ common tasks.
 
 ## HTML Responses
 
-`Zend\Diactoros\Response\HtmlResponse` allows specifying HTML as a payload, and sets the
+`Laminas\Diactoros\Response\HtmlResponse` allows specifying HTML as a payload, and sets the
 `Content-Type` header to `text/html` by default:
 
 ```php
@@ -45,7 +45,7 @@ Headers must be in the same format as you would provide to the
 
 ## JSON Responses
 
-`Zend\Diactoros\Response\JsonResponse` accepts a data structure to convert to JSON, and sets
+`Laminas\Diactoros\Response\JsonResponse` accepts a data structure to convert to JSON, and sets
 the `Content-Type` header to `application/json`:
 
 ```php
@@ -89,7 +89,7 @@ Many API actions allow returning empty responses:
 - `204 No Content` responses are, by definition, empty, and often used as a success response when
   deleting an entity.
 
-`Zend\Diactoros\Response\EmptyResponse` is a `Zend\Diactoros\Response` extension that, by default,
+`Laminas\Diactoros\Response\EmptyResponse` is a `Laminas\Diactoros\Response` extension that, by default,
 returns an empty response with a 204 status. Its constructor allows passing the status and headers
 only:
 
@@ -118,7 +118,7 @@ $response = ( new EmptyResponse(201) )->withHeader('Location', $url);
 
 ## Redirects
 
-`Zend\Diactoros\Response\RedirectResponse` is a `Zend\Diactoros\Response` extension for producing
+`Laminas\Diactoros\Response\RedirectResponse` is a `Laminas\Diactoros\Response` extension for producing
 redirect responses. The only required argument is a URI, which may be provided as either a string or
 `Psr\Http\Message\UriInterface` instance. By default, the status 302 is used, and no other headers
 are produced; you may alter these via the additional optional arguments:
