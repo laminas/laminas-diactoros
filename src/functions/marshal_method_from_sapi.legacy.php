@@ -6,15 +6,14 @@
  * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace Laminas\Diactoros;
+namespace Zend\Diactoros;
+
+use function Laminas\Diactoros\marshalMethodFromSapi as laminas_marshalMethodFromSapi;
 
 /**
- * Retrieve the request method from the SAPI parameters.
- *
- * @param array $server
- * @return string
+ * @deprecated Use Laminas\Diactoros\marshalMethodFromSapi instead
  */
 function marshalMethodFromSapi(array $server)
 {
-    return isset($server['REQUEST_METHOD']) ? $server['REQUEST_METHOD'] : 'GET';
+    laminas_marshalMethodFromSapi(...func_get_args());
 }

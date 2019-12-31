@@ -1,11 +1,12 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Diactoros;
+namespace Laminas\Diactoros;
 
 use OutOfBoundsException;
 use Psr\Http\Message\ResponseInterface;
@@ -20,7 +21,7 @@ use function property_exists;
  * callback, and then sends a response.
  *
  * @deprecated since 1.8.0. We recommend using the `RequestHandlerRunner` class
- *     from the zendframework/zend-httphandlerrunner package instead.
+ *     from the laminas/laminas-httphandlerrunner package instead.
  */
 class Server
 {
