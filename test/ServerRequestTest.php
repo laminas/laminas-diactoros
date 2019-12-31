@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
 use InvalidArgumentException;
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\UploadedFile;
+use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\UploadedFile;
-use Zend\Diactoros\Uri;
 
 class ServerRequestTest extends TestCase
 {
