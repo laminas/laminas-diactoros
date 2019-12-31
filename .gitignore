@@ -1,4 +1,4 @@
-doc/html/
-vendor/
-composer.lock
-phpunit.xml
+/composer.lock
+/doc/html/
+/phpunit.xml
+/vendor/

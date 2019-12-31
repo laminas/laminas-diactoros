@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
+use Laminas\Diactoros\Server;
+use Laminas\Diactoros\Stream;
+use LaminasTest\Diactoros\TestAsset\HeaderStack;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Server;
-use Zend\Diactoros\Stream;
-use ZendTest\Diactoros\TestAsset\HeaderStack;
 
 class ServerTest extends TestCase
 {
@@ -56,7 +55,7 @@ class ServerTest extends TestCase
             $this->request,
             $this->response
         );
-        $this->assertInstanceOf('Zend\Diactoros\Server', $server);
+        $this->assertInstanceOf('Laminas\Diactoros\Server', $server);
         $this->assertSame($this->callback, $server->callback);
         $this->assertSame($this->request, $server->request);
         $this->assertSame($this->response, $server->response);
@@ -68,10 +67,10 @@ class ServerTest extends TestCase
             $this->callback,
             $this->request
         );
-        $this->assertInstanceOf('Zend\Diactoros\Server', $server);
+        $this->assertInstanceOf('Laminas\Diactoros\Server', $server);
         $this->assertSame($this->callback, $server->callback);
         $this->assertSame($this->request, $server->request);
-        $this->assertInstanceOf('Zend\Diactoros\Response', $server->response);
+        $this->assertInstanceOf('Laminas\Diactoros\Response', $server->response);
     }
 
     public function testCannotAccessArbitraryProperties()
@@ -93,7 +92,7 @@ class ServerTest extends TestCase
             $this->request,
             $this->response
         );
-        $emmiter = $this->getMock('Zend\Diactoros\Response\EmitterInterface');
+        $emmiter = $this->getMock('Laminas\Diactoros\Response\EmitterInterface');
         $emmiter->expects($this->once())->method('emit');
 
         $server->setEmitter($emmiter);
@@ -113,16 +112,16 @@ class ServerTest extends TestCase
             'QUERY_STRING' => 'bar=baz',
         ];
         $server = Server::createServer($this->callback, $server, [], [], [], []);
-        $this->assertInstanceOf('Zend\Diactoros\Server', $server);
+        $this->assertInstanceOf('Laminas\Diactoros\Server', $server);
         $this->assertSame($this->callback, $server->callback);
 
-        $this->assertInstanceOf('Zend\Diactoros\ServerRequest', $server->request);
+        $this->assertInstanceOf('Laminas\Diactoros\ServerRequest', $server->request);
         $request = $server->request;
         $this->assertEquals('POST', $request->getMethod());
         $this->assertEquals('/foo/bar', $request->getUri()->getPath());
         $this->assertTrue($request->hasHeader('Accept'));
 
-        $this->assertInstanceOf('Zend\Diactoros\Response', $server->response);
+        $this->assertInstanceOf('Laminas\Diactoros\Response', $server->response);
     }
 
     public function testListenInvokesCallbackAndSendsResponse()
