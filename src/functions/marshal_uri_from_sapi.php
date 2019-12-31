@@ -1,13 +1,14 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
 declare(strict_types=1);
 
-namespace Zend\Diactoros;
+namespace Laminas\Diactoros;
 
 use function array_change_key_case;
 use function array_key_exists;
@@ -131,9 +132,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
      * - REQUEST_URI
      * - ORIG_PATH_INFO
      *
-     * From ZF2's Zend\Http\PhpEnvironment\Request class
-     * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
-     * @license   http://framework.zend.com/license/new-bsd New BSD License
+     * From Laminas\Http\PhpEnvironment\Request class
      */
     $marshalRequestPath = function (array $server) : string {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
