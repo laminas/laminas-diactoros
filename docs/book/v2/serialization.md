@@ -4,7 +4,7 @@
 
 At times, it's useful to either create a string representation of a message (serialization), or to
 cast a string or stream message to an object (deserialization). This package provides features for
-this in `Zend\Diactoros\Request\Serializer` and `Zend\Diactoros\Response\Serializer`; each provides
+this in `Laminas\Diactoros\Request\Serializer` and `Laminas\Diactoros\Response\Serializer`; each provides
 the following static methods:
 
 - `fromString($message)` will create either a `Request` or `Response` instance (based on the
@@ -21,7 +21,7 @@ serialization is not present in the message instance.
 ## Array
 
 This package also provides features for array serialization using
-`Zend\Diactoros\Request\ArraySerializer` and `Zend\Diactoros\Response\ArraySerializer`; each provides
+`Laminas\Diactoros\Request\ArraySerializer` and `Laminas\Diactoros\Response\ArraySerializer`; each provides
 the following static methods:
 
 - `fromArray(array $message)` will create either a `Request` or `Response` instance (based on the
@@ -49,8 +49,8 @@ class LoggerMiddleware
         $response = $next($request, $response);
 
         $this->logger->debug('Request/Response', [
-            'request' => \Zend\Diactoros\Request\ArraySerializer::toArray($request),
-            'response' => \Zend\Diactoros\Response\ArraySerializer::toArray($response),
+            'request' => \Laminas\Diactoros\Request\ArraySerializer::toArray($request),
+            'response' => \Laminas\Diactoros\Response\ArraySerializer::toArray($response),
         ]);
 
         return $response;
