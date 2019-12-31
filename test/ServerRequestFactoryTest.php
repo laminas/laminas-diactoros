@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Diactoros;
+namespace Laminas\Diactoros;
 
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\UploadedFile;
+use Laminas\Diactoros\Uri;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionProperty;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\UploadedFile;
-use Zend\Diactoros\Uri;
 
 class ServerRequestFactoryTest extends TestCase
 {
@@ -272,7 +271,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUri($server, $request);
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('https', $uri->getScheme());
     }
 
@@ -287,7 +286,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUri($server, $request);
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('http', $uri->getScheme());
     }
 
@@ -301,7 +300,7 @@ class ServerRequestFactoryTest extends TestCase
         $server  = [];
 
         $uri = ServerRequestFactory::marshalUri($server, $request);
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('https', $uri->getScheme());
     }
 
@@ -316,7 +315,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUri($server, $request);
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('/foo/bar', $uri->getPath());
     }
 
@@ -332,7 +331,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $uri = ServerRequestFactory::marshalUri($server, $request);
-        $this->assertInstanceOf('Zend\Diactoros\Uri', $uri);
+        $this->assertInstanceOf('Laminas\Diactoros\Uri', $uri);
         $this->assertEquals('bar=baz', $uri->getQuery());
     }
 
@@ -366,7 +365,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
 
         $request = ServerRequestFactory::fromGlobals($server, $query, $body, $cookies, $files);
-        $this->assertInstanceOf('Zend\Diactoros\ServerRequest', $request);
+        $this->assertInstanceOf('Laminas\Diactoros\ServerRequest', $request);
         $this->assertEquals($cookies, $request->getCookieParams());
         $this->assertEquals($query, $request->getQueryParams());
         $this->assertEquals($body, $request->getParsedBody());
@@ -376,7 +375,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent()
     {
-        $r = new ReflectionProperty('Zend\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
+        $r = new ReflectionProperty('Laminas\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
         $r->setAccessible(true);
         $r->setValue(function () {
             return ['Authorization' => 'foobar'];
@@ -390,7 +389,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent()
     {
-        $r = new ReflectionProperty('Zend\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
+        $r = new ReflectionProperty('Laminas\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
         $r->setAccessible(true);
         $r->setValue(function () {
             return ['authorization' => 'foobar'];
@@ -404,7 +403,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerReturnsArrayUnalteredIfApacheHeadersDoNotContainAuthorization()
     {
-        $r = new ReflectionProperty('Zend\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
+        $r = new ReflectionProperty('Laminas\Diactoros\ServerRequestFactory', 'apacheRequestHeaders');
         $r->setAccessible(true);
         $r->setValue(function () {
             return [];

@@ -1,27 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Diactoros;
+namespace Laminas\Diactoros;
 
 use InvalidArgumentException;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\MessageInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 
 /**
  * Class for marshaling a request object from the current PHP environment.
  *
- * Logic largely refactored from the ZF2 Zend\Http\PhpEnvironment\Request class.
+ * Logic largely refactored from the Laminas Laminas\Http\PhpEnvironment\Request class.
  *
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @copyright Copyright (c) 2005-2014 Laminas (https://www.zend.com)
+ * @license   https://getlaminas.org/license/new-bsd New BSD License
  */
 abstract class ServerRequestFactory
 {
@@ -337,9 +336,9 @@ abstract class ServerRequestFactory
      * Looks at a variety of criteria in order to attempt to autodetect a base
      * URI, including rewrite URIs, proxy URIs, etc.
      *
-     * From ZF2's Zend\Http\PhpEnvironment\Request class
-     * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
-     * @license   http://framework.zend.com/license/new-bsd New BSD License
+     * From Laminas's Laminas\Http\PhpEnvironment\Request class
+     * @copyright Copyright (c) 2005-2014 Laminas (https://www.zend.com)
+     * @license   https://getlaminas.org/license/new-bsd New BSD License
      *
      * @param array $server
      * @return string
