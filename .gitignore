@@ -1,5 +1,7 @@
 .tmp/
-doc/html/
-vendor/
-zf-mkdoc-theme/
-phpunit.xml
+/composer.lock
+/doc/html/
+/laminas-mkdoc-theme.tgz
+/laminas-mkdoc-theme/
+/phpunit.xml
+/vendor/
