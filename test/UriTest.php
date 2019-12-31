@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
+use Laminas\Diactoros\Uri;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Diactoros\Uri;
 
 class UriTest extends TestCase
 {
@@ -55,19 +54,19 @@ class UriTest extends TestCase
     public function testWithUserInfoReturnsNewInstanceWithProvidedUserAndPassword()
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        $new = $uri->withUserInfo('matthew', 'zf2');
+        $new = $uri->withUserInfo('matthew', 'laminas');
         $this->assertNotSame($uri, $new);
-        $this->assertEquals('matthew:zf2', $new->getUserInfo());
-        $this->assertEquals('https://matthew:zf2@local.example.com:3001/foo?bar=baz#quz', (string) $new);
+        $this->assertEquals('matthew:laminas', $new->getUserInfo());
+        $this->assertEquals('https://matthew:laminas@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
     public function testWithHostReturnsNewInstanceWithProvidedHost()
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        $new = $uri->withHost('framework.zend.com');
+        $new = $uri->withHost('getlaminas.org');
         $this->assertNotSame($uri, $new);
-        $this->assertEquals('framework.zend.com', $new->getHost());
-        $this->assertEquals('https://user:pass@framework.zend.com:3001/foo?bar=baz#quz', (string) $new);
+        $this->assertEquals('getlaminas.org', $new->getHost());
+        $this->assertEquals('https://user:pass@getlaminas.org:3001/foo?bar=baz#quz', (string) $new);
     }
 
     public function validPorts()
