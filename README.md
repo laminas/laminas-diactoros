@@ -1,4 +1,4 @@
-# zend-diactoros
+# laminas-diactoros
 
 Master:
 [![Build status][Master image]][Master]
@@ -11,26 +11,26 @@ Develop:
 
 This package supercedes and replaces [phly/http](https://github.com/phly/http).
 
-`zend-diactoros` is a PHP package containing implementations of the
+`laminas-diactoros` is a PHP package containing implementations of the
 [PSR-7 HTTP message interfaces](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)
 and [PSR-17 HTTP message factory interfaces](https://www.php-fig.org/psr/psr-17).
 
-* File issues at https://github.com/zendframework/zend-diactoros/issues
-* Issue patches to https://github.com/zendframework/zend-diactoros/pulls
+* File issues at https://github.com/laminas/laminas-diactoros/issues
+* Issue patches to https://github.com/laminas/laminas-diactoros/pulls
 
 ## Documentation
 
 Documentation is available at:
 
-- https://docs.zendframework.com/zend-diactoros/
+- https://docs.laminas.dev/laminas-diactoros/
 
 Source files for documentation are [in the docs/ tree](docs/).
 
-  [Master]: https://travis-ci.org/zendframework/zend-diactoros
-  [Master image]: https://secure.travis-ci.org/zendframework/zend-diactoros.svg?branch=master
-  [Master coverage image]: https://img.shields.io/coveralls/zendframework/zend-diactoros/master.svg
-  [Master coverage]: https://coveralls.io/r/zendframework/zend-diactoros?branch=master
-  [Develop]: https://github.com/zendframework/zend-diactoros/tree/develop
-  [Develop image]:  https://secure.travis-ci.org/zendframework/zend-diactoros.svg?branch=develop
-  [Develop coverage image]: https://coveralls.io/repos/zendframework/zend-diactoros/badge.svg?branch=develop
-  [Develop coverage]: https://coveralls.io/r/zendframework/zend-diactoros?branch=develop
+  [Master]: https://travis-ci.org/laminas/laminas-diactoros
+  [Master image]: https://travis-ci.org/laminas/laminas-diactoros.svg?branch=master
+  [Master coverage image]: https://img.shields.io/coveralls/laminas/laminas-diactoros/master.svg
+  [Master coverage]: https://coveralls.io/r/laminas/laminas-diactoros?branch=master
+  [Develop]: https://github.com/laminas/laminas-diactoros/tree/develop
+  [Develop image]:  https://travis-ci.org/laminas/laminas-diactoros.svg?branch=develop
+  [Develop coverage image]: https://coveralls.io/repos/laminas/laminas-diactoros/badge.svg?branch=develop
+  [Develop coverage]: https://coveralls.io/r/laminas/laminas-diactoros?branch=develop

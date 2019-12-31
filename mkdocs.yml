@@ -5,7 +5,7 @@ extra:
   versions:
     - v2
     - v1
-pages:
+nav:
   - Home: index.md
   - v2:
     - Overview: v2/overview.md
@@ -34,6 +34,6 @@ pages:
     - "_reference-emitting-responses": emitting-responses.md
     - "_reference-serialization": serialization.md
     - "_reference-api": api.md
-site_name: zend-diactoros
+site_name: laminas-diactoros
 site_description: 'PSR-7 HTTP message implementations.'
-repo_url: 'https://github.com/zendframework/zend-diactoros'
+repo_url: 'https://github.com/laminas/laminas-diactoros'

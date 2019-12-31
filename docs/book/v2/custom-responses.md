@@ -4,7 +4,7 @@ When developing server-side applications, the message type you're most likely to
 the response. In such cases, the standard signature can be an obstacle to usability. Let's review:
 
 ```php
-namespace Zend\Diactoros;
+namespace Laminas\Diactoros;
 
 use Psr\Http\Message\ResponseInterface;
 
@@ -29,17 +29,17 @@ common tasks.
 
 ## Text Responses
 
-`Zend\Diactoros\Response\TextResponse` creates a plain text response. It sets the
+`Laminas\Diactoros\Response\TextResponse` creates a plain text response. It sets the
 `Content-Type` header to `text/plain` by default:
 
 ```php
-$response = new Zend\Diactoros\Response\TextResponse('Hello world!');
+$response = new Laminas\Diactoros\Response\TextResponse('Hello world!');
 ```
 
 The constructor accepts two additional arguments: a status code and an array of headers.
 
 ```php
-$response = new Zend\Diactoros\Response\TextResponse(
+$response = new Laminas\Diactoros\Response\TextResponse(
     $text,
     200,
     ['Content-Type' => ['text/csv']]
@@ -48,11 +48,11 @@ $response = new Zend\Diactoros\Response\TextResponse(
 
 ## HTML Responses
 
-`Zend\Diactoros\Response\HtmlResponse` allows specifying HTML as a payload, and sets the
+`Laminas\Diactoros\Response\HtmlResponse` allows specifying HTML as a payload, and sets the
 `Content-Type` header to `text/html` by default:
 
 ```php
-$response = new Zend\Diactoros\Response\HtmlResponse($htmlContent);
+$response = new Laminas\Diactoros\Response\HtmlResponse($htmlContent);
 ```
 
 The constructor allows passing two additional arguments: a status code, and an array of headers.
@@ -60,7 +60,7 @@ These allow you to further seed the initial state of the response, as well as to
 `Content-Type` header if desired:
 
 ```php
-$response = new Zend\Diactoros\Response\HtmlResponse(
+$response = new Laminas\Diactoros\Response\HtmlResponse(
     $htmlContent,
     200,
     ['Content-Type' => ['application/xhtml+xml']]
@@ -72,11 +72,11 @@ Headers must be in the same format as you would provide to the
 
 ## XML Responses
 
-`Zend\Diactoros\Response\XmlResponse` allows specifying XML as a payload, and sets the
+`Laminas\Diactoros\Response\XmlResponse` allows specifying XML as a payload, and sets the
 `Content-Type` header to `application/xml` by default:
 
 ```php
-$response = new Zend\Diactoros\Response\XmlResponse($xml);
+$response = new Laminas\Diactoros\Response\XmlResponse($xml);
 ```
 
 The constructor allows passing two additional arguments: a status code, and an array of headers.
@@ -84,7 +84,7 @@ These allow you to further seed the initial state of the response, as well as to
 `Content-Type` header if desired:
 
 ```php
-$response = new Zend\Diactoros\Response\XmlResponse(
+$response = new Laminas\Diactoros\Response\XmlResponse(
     $xml,
     200,
     ['Content-Type' => ['application/hal+xml']]
@@ -96,11 +96,11 @@ Headers must be in the same format as you would provide to the
 
 ## JSON Responses
 
-`Zend\Diactoros\Response\JsonResponse` accepts a data structure to convert to JSON, and sets
+`Laminas\Diactoros\Response\JsonResponse` accepts a data structure to convert to JSON, and sets
 the `Content-Type` header to `application/json`:
 
 ```php
-$response = new Zend\Diactoros\Response\JsonResponse($data);
+$response = new Laminas\Diactoros\Response\JsonResponse($data);
 ```
 
 If providing an object, we recommend implementing [JsonSerializable](http://php.net/JsonSerializable)
@@ -111,7 +111,7 @@ status code, and an array of headers — to allow you to further seed the initia
 response:
 
 ```php
-$response = new Zend\Diactoros\Response\JsonResponse(
+$response = new Laminas\Diactoros\Response\JsonResponse(
     $data,
     200,
     ['Content-Type' => ['application/hal+json']]
@@ -124,7 +124,7 @@ By default, these are set to `JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON
 HTML. If you want to specify a different set of flags, use the fourth constructor argument:
 
 ```php
-$response = new Zend\Diactoros\Response\JsonResponse(
+$response = new Laminas\Diactoros\Response\JsonResponse(
     $data,
     200,
     [],
@@ -143,14 +143,14 @@ Many API actions allow returning empty responses:
 - `204 No Content` responses are, by definition, empty, and often used as a success response when
   deleting an entity.
 
-`Zend\Diactoros\Response\EmptyResponse` is a `Zend\Diactoros\Response` extension that, by default,
+`Laminas\Diactoros\Response\EmptyResponse` is a `Laminas\Diactoros\Response` extension that, by default,
 returns an empty response with a 204 status. Its constructor allows passing the status and headers
 only:
 
 ```php
-namespace Zend\Diactoros\Response;
+namespace Laminas\Diactoros\Response;
 
-use Zend\Diactoros\Response;
+use Laminas\Diactoros\Response;
 
 class EmptyResponse extends Response
 {
@@ -162,7 +162,7 @@ An empty, read-only body is injected at instantiation, ensuring no write operati
 the response. Usage is typically one of the following forms:
 
 ```php
-use Zend\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\EmptyResponse;
 
 // Basic 204 response:
 $response = new EmptyResponse();
@@ -178,15 +178,15 @@ $response = (new EmptyResponse(201))->withHeader('Location', $url);
 
 ## Redirects
 
-`Zend\Diactoros\Response\RedirectResponse` is a `Zend\Diactoros\Response` extension for producing
+`Laminas\Diactoros\Response\RedirectResponse` is a `Laminas\Diactoros\Response` extension for producing
 redirect responses. The only required argument is a URI, which may be provided as either a string or
 `Psr\Http\Message\UriInterface` instance. By default, the status 302 is used, and no other headers
 are produced; you may alter these via the additional optional arguments:
 
 ```php
-namespace Zend\Diactoros\Response;
+namespace Laminas\Diactoros\Response;
 
-use Zend\Diactoros\Response;
+use Laminas\Diactoros\Response;
 
 class RedirectResponse extends Response
 {
@@ -197,7 +197,7 @@ class RedirectResponse extends Response
 Typical usage is:
 
 ```php
-use Zend\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 
 // 302 redirect:
 $response = new RedirectResponse('/user/login');
@@ -221,7 +221,7 @@ create your custom types.
 The general pattern will be something like this:
 
 ```php
-use Zend\Diactoros\Response;
+use Laminas\Diactoros\Response;
 
 class MyCustomResponse extends Response
 {
@@ -245,7 +245,7 @@ implementation within your object graph) you can instead create a factory. As an
 
 ```php
 $plainTextResponse = function ($text, $status = 200, array $headers = []) {
-    $response = new Zend\Diactoros\Response('php://temp', $status, $headers);
+    $response = new Laminas\Diactoros\Response('php://temp', $status, $headers);
     $response->getBody()->write($text);
     if (! $response->hasHeader('Content-Type')) {
         $response = $response->withHeader('Content-Type', 'text/plain');

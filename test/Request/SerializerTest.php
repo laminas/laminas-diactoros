@@ -1,24 +1,25 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
 declare(strict_types=1);
 
-namespace ZendTest\Diactoros\Request;
+namespace LaminasTest\Diactoros\Request;
 
 use InvalidArgumentException;
+use Laminas\Diactoros\RelativeStream;
+use Laminas\Diactoros\Request;
+use Laminas\Diactoros\Request\Serializer;
+use Laminas\Diactoros\Stream;
+use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use UnexpectedValueException;
-use Zend\Diactoros\RelativeStream;
-use Zend\Diactoros\Request;
-use Zend\Diactoros\Request\Serializer;
-use Zend\Diactoros\Stream;
-use Zend\Diactoros\Uri;
 
 use function json_encode;
 use function strlen;

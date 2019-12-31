@@ -1,6 +1,6 @@
-<noscript><meta http-equiv="refresh" content="0; url=/zend-diactoros/v1/emitting-responses/"></noscript>
+<noscript><meta http-equiv="refresh" content="0; url=/laminas-diactoros/v1/emitting-responses/"></noscript>
 <script>
   document.addEventListener("DOMContentLoaded", function (event) {
-    window.location.pathname = '/zend-diactoros/v1/emitting-responses/';
+    window.location.pathname = '/laminas-diactoros/v1/emitting-responses/';
   });
 </script>
