@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 cache:
@@ -11,24 +9,19 @@ env:
     - COMPOSER_ARGS="--no-interaction"
 
 matrix:
+  fast_finish: true
   include:
     - php: 7.1
       env:
         - DEPS=lowest
     - php: 7.1
       env:
-        - DEPS=locked
+        - DEPS=latest
         - CS_CHECK=true
         - TEST_COVERAGE=true
-    - php: 7.1
-      env:
-        - DEPS=latest
     - php: 7.2
       env:
         - DEPS=lowest
-    - php: 7.2
-      env:
-        - DEPS=locked
     - php: 7.2
       env:
         - DEPS=latest

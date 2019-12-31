@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2017-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
 declare(strict_types=1);
 
-namespace Zend\Diactoros\Response;
+namespace Laminas\Diactoros\Response;
 
+use Laminas\Diactoros\Exception;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use Zend\Diactoros\Exception;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Stream;
 
 use function sprintf;
 
