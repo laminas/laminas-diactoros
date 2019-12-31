@@ -4,17 +4,17 @@
 >
 > Emitters are deprecated from Diactoros starting with version 1.8.0. The
 > functionality is now available for any PSR-7 implementation via the package
-> [zendframework/zend-httphandlerrunner](https://docs.zendframework.com/zend-httphandlerrunner).
+> [laminas/laminas-httphandlerrunner](https://docs.laminas.dev/laminas-httphandlerrunner).
 > We suggest using that functionality instead.
 
 If you are using a non-SAPI PHP implementation and wish to use the `Server` class, or if you do not
 want to use the `Server` implementation but want to emit a response, this package provides an
-interface, `Zend\Diactoros\Response\EmitterInterface`, defining a method `emit()` for emitting the
+interface, `Laminas\Diactoros\Response\EmitterInterface`, defining a method `emit()` for emitting the
 response.
 
 Diactoros provides two implementations currently, both for working with
-traditional Server API (SAPI) implementations: `Zend\Diactoros\Response\SapiEmitter`
-and `Zend\Diactoros\Response\SapiStreamEmitter`.  Each uses the native `header()`
+traditional Server API (SAPI) implementations: `Laminas\Diactoros\Response\SapiEmitter`
+and `Laminas\Diactoros\Response\SapiStreamEmitter`.  Each uses the native `header()`
 PHP function to emit headers, and `echo()` to emit the response body.
 
 If you are using a non-SAPI implementation, you will need to create your own
@@ -23,9 +23,9 @@ If you are using a non-SAPI implementation, you will need to create your own
 For example, the `SapiEmitter` implementation of the `EmitterInterface` can be used thus:
 
 ```php
-$response = new Zend\Diactoros\Response();
+$response = new Laminas\Diactoros\Response();
 $response->getBody()->write("some content\n");
-$emitter = new Zend\Diactoros\Response\SapiEmitter();
+$emitter = new Laminas\Diactoros\Response\SapiEmitter();
 $emitter->emit($response);
 ```
 
