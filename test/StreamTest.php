@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
+use Laminas\Diactoros\Stream;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionProperty;
-use Zend\Diactoros\Stream;
 
 class StreamTest extends TestCase
 {
@@ -32,14 +31,14 @@ class StreamTest extends TestCase
 
     public function testCanInstantiateWithStreamIdentifier()
     {
-        $this->assertInstanceOf('Zend\Diactoros\Stream', $this->stream);
+        $this->assertInstanceOf('Laminas\Diactoros\Stream', $this->stream);
     }
 
     public function testCanInstantiteWithStreamResource()
     {
         $resource = fopen('php://memory', 'wb+');
         $stream   = new Stream($resource);
-        $this->assertInstanceOf('Zend\Diactoros\Stream', $stream);
+        $this->assertInstanceOf('Laminas\Diactoros\Stream', $stream);
     }
 
     public function testIsReadableReturnsFalseIfStreamIsNotReadable()
