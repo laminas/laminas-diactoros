@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 cache:
@@ -11,22 +9,17 @@ env:
     - COMPOSER_ARGS="--no-interaction"
 
 matrix:
+  fast_finish: true
   include:
     - php: 5.4
       env:
         - DEPS=lowest
     - php: 5.4
       env:
-        - DEPS=locked
-    - php: 5.4
-      env:
         - DEPS=latest
     - php: 5.5
       env:
         - DEPS=lowest
-    - php: 5.5
-      env:
-        - DEPS=locked
     - php: 5.5
       env:
         - DEPS=latest
@@ -35,27 +28,18 @@ matrix:
         - DEPS=lowest
     - php: 5.6
       env:
-        - DEPS=locked
+        - DEPS=latest
         - TEST_COVERAGE=true
-    - php: 5.6
-      env:
-        - DEPS=latest
     - php: 7
       env:
         - DEPS=lowest
     - php: 7
       env:
-        - DEPS=locked
-        - CHECK_CS=true
-    - php: 7
-      env:
         - DEPS=latest
+        - CS_CHECK=true
     - php: 7.1
       env:
         - DEPS=lowest
-    - php: 7.1
-      env:
-        - DEPS=locked
     - php: 7.1
       env:
         - DEPS=latest
@@ -73,7 +57,7 @@ install:
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
-  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
+  - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi

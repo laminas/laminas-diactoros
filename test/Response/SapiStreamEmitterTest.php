@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @see       http://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros\Response;
+namespace LaminasTest\Diactoros\Response;
 
+use Laminas\Diactoros\CallbackStream;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\SapiStreamEmitter;
+use Laminas\Diactoros\Response\TextResponse;
+use LaminasTest\Diactoros\TestAsset\HeaderStack;
 use Prophecy\Argument;
-use Zend\Diactoros\CallbackStream;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Response\EmptyResponse;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\SapiStreamEmitter;
-use Zend\Diactoros\Response\TextResponse;
-use ZendTest\Diactoros\TestAsset\HeaderStack;
 
 class SapiStreamEmitterTest extends SapiEmitterTest
 {
