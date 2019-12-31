@@ -6,15 +6,16 @@
  * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace Laminas\Diactoros;
+namespace Zend\Diactoros;
+
+use InvalidArgumentException;
+
+use function Laminas\Diactoros\createUploadedFile as laminas_createUploadedFile;
 
 /**
- * Retrieve the request method from the SAPI parameters.
- *
- * @param array $server
- * @return string
+ * @deprecated Use Laminas\Diactoros\createUploadedFile instead
  */
-function marshalMethodFromSapi(array $server)
+function createUploadedFile(array $spec)
 {
-    return isset($server['REQUEST_METHOD']) ? $server['REQUEST_METHOD'] : 'GET';
+    laminas_createUploadedFile(...func_get_args());
 }
