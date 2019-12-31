@@ -1,5 +1,5 @@
 {
-  "title": "zend-diactoros: PSR-7 HTTP message implementation",
+  "title": "laminas-diactoros: PSR-7 HTTP message implementation",
   "content": [
     "book/overview.md",
     "book/install.md",

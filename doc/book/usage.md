@@ -17,14 +17,14 @@ value, as it is a new instance.
 
 ```php
 // Create a request
-$request = (new Zend\Diactoros\Request())
-    ->withUri(new Zend\Diactoros\Uri('http://example.com'))
+$request = (new Laminas\Diactoros\Request())
+    ->withUri(new Laminas\Diactoros\Uri('http://example.com'))
     ->withMethod('PATCH')
     ->withAddedHeader('Authorization', 'Bearer ' . $token)
     ->withAddedHeader('Content-Type', 'application/json');
 
 // OR:
-$request = new Zend\Diactoros\Request(
+$request = new Laminas\Diactoros\Request(
     'http://example.com',
     'PATCH',
     'php://memory',
@@ -52,7 +52,7 @@ foreach ($response->getHeaders() as $header => $values) {
 printf("Message:\n%s\n", $response->getBody());
 ```
 
-(Note: `zend-diactoros` does NOT ship with a client implementation; the above is just an
+(Note: `laminas-diactoros` does NOT ship with a client implementation; the above is just an
 illustration of a possible implementation.)
 
 ## Server-Side Applications
@@ -63,7 +63,7 @@ then populate and send a response.
 ### Marshaling an incoming request
 
 PHP contains a plethora of information about the incoming request, and keeps that information in a
-variety of locations. `Zend\Diactoros\ServerRequestFactory::fromGlobals()` can simplify marshaling
+variety of locations. `Laminas\Diactoros\ServerRequestFactory::fromGlobals()` can simplify marshaling
 that information into a request instance.
 
 You can call the factory method with or without the following arguments, in the following order:
@@ -74,11 +74,11 @@ You can call the factory method with or without the following arguments, in the 
 - `$cookies`, typically `$_COOKIE`
 - `$files`, typically `$_FILES`
 
-The method will then return a `Zend\Diactoros\ServerRequest` instance. If any argument is omitted,
+The method will then return a `Laminas\Diactoros\ServerRequest` instance. If any argument is omitted,
 the associated superglobal will be used.
 
 ```php
-$request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
+$request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER,
     $_GET,
     $_POST,
@@ -94,7 +94,7 @@ does not create a state change in the response, so it can be done without captur
 value. Manipulating headers does, however.
 
 ```php
-$response = new Zend\Diactoros\Response();
+$response = new Laminas\Diactoros\Response();
 
 // Write to the response body:
 $response->getBody()->write("some content\n");
@@ -111,7 +111,7 @@ $response = $response
 
 ### "Serving" an application
 
-`Zend\Diactoros\Server` mimics a portion of the API of node's `http.Server` class. It invokes a
+`Laminas\Diactoros\Server` mimics a portion of the API of node's `http.Server` class. It invokes a
 callback, passing it an `ServerRequest`, an `Response`, and optionally a callback to use for
 incomplete/unhandled requests.
 
@@ -119,7 +119,7 @@ You can create a server in one of three ways:
 
 ```php
 // Direct instantiation, with a callback handler, request, and response
-$server = new Zend\Diactoros\Server(
+$server = new Laminas\Diactoros\Server(
     function ($request, $response, $done) {
         $response->getBody()->write("Hello world!");
     },
@@ -128,7 +128,7 @@ $server = new Zend\Diactoros\Server(
 );
 
 // Using the createServer factory, providing it with the various superglobals:
-$server = Zend\Diactoros\Server::createServer(
+$server = Laminas\Diactoros\Server::createServer(
     function ($request, $response, $done) {
         $response->getBody()->write("Hello world!");
     },
@@ -140,7 +140,7 @@ $server = Zend\Diactoros\Server::createServer(
 );
 
 // Using the createServerFromRequest factory, and providing it a request:
-$server = Zend\Diactoros\Server::createServerfromRequest(
+$server = Laminas\Diactoros\Server::createServerfromRequest(
   function ($request, $response, $done) {
       $response->getBody()->write("Hello world!");
   },
