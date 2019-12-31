@@ -2,7 +2,7 @@
 
 ## Request Message
 
-`Zend\Diactoros\Request` implements [`Psr\Http\Message\RequestInterface`](https://github.com/php-fig/http-message/blob/master/src/RequestInterface.php),
+`Laminas\Diactoros\Request` implements [`Psr\Http\Message\RequestInterface`](https://github.com/php-fig/http-message/blob/master/src/RequestInterface.php),
 and is intended for client-side requests. It includes the following methods:
 
 ```php
@@ -24,7 +24,7 @@ Requests are immutable. Any methods that would change state -- those prefixed wi
 
 ## ServerRequest Message
 
-For server-side applications, `Zend\Diactoros\ServerRequest` implements
+For server-side applications, `Laminas\Diactoros\ServerRequest` implements
 [`Psr\Http\Message\ServerRequestInterface`](https://github.com/php-fig/http-message/blob/master/src/ServerRequestInterface.php),
 which provides access to the elements of an HTTP request, as well as uniform access to the various
 elements of incoming data. The methods included are:
@@ -52,7 +52,7 @@ for other values.
 
 ## Response Message
 
-`Zend\Diactoros\Response` provides an implementation of
+`Laminas\Diactoros\Response` provides an implementation of
 [`Psr\Http\Message\ResponseInterface`](https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php),
 an object to be used to aggregate response information for both HTTP clients and server-side
 applications, including headers and message body content. It includes the following:
@@ -76,7 +76,7 @@ Like the `Request` and `ServerRequest`, responses are immutable. Any methods tha
 ### ServerRequestFactory
 
 This static class can be used to marshal a `ServerRequest` instance from the PHP environment. The
-primary entry point is `Zend\Diactoros\ServerRequestFactory::fromGlobals(array $server, array
+primary entry point is `Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array
 $query, array $body, array $cookies, array $files)`. This method will create a new `ServerRequest`
 instance with the data provided. Examples of usage are:
 
@@ -99,7 +99,7 @@ $request = RequestFactory::fromGlobals(
 
 ## URI
 
-`Zend\Diactoros\Uri` is an implementation of
+`Laminas\Diactoros\Uri` is an implementation of
 [`Psr\Http\Message\UriInterface`](https://github.com/php-fig/http-message/blob/master/src/UriInterface.php),
 and models and validates URIs. It implements `__toString()`, allowing it to be represented as a
 string and `echo()`'d directly. The following methods are pertinent:
@@ -118,7 +118,7 @@ prefixed with `with` and `without` -- all return a new instance with the changes
 
 ## Stream
 
-`Zend\Diactoros\Stream` is an implementation of
+`Laminas\Diactoros\Stream` is an implementation of
 [`Psr\Http\Message\StreamInterface`](https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php),
 and provides a number of facilities around manipulating the composed PHP stream resource. The
 constructor accepts a stream, which may be either:
@@ -136,7 +136,7 @@ In most cases, you will not interact with the Stream object directly.
 
 ## UploadedFile
 
-`Zend\Diactoros\UploadedFile` is an implementation of
+`Laminas\Diactoros\UploadedFile` is an implementation of
 [`Psr\Http\Message\UploadedFileInterface`](https://github.com/php-fig/http-message/blob/master/src/UploadedFileInterface.php),
 and provides abstraction around a single uploaded file, including behavior for interacting with it
 as a stream or moving it to a filesystem location.
@@ -145,7 +145,7 @@ In most cases, you will only use the methods defined in the `UploadedFileInterfa
 
 ## Server
 
-`Zend\Diactoros\Server` represents a server capable of executing a callback. It has four methods:
+`Laminas\Diactoros\Server` represents a server capable of executing a callback. It has four methods:
 
 ```php
 class Server
