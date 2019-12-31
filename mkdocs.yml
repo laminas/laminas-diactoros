@@ -1,6 +1,6 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
+nav:
   - index.md
   - Overview: v2/overview.md
   - Installation: v2/install.md
@@ -28,7 +28,6 @@ pages:
     - "_reference-emitting-responses": emitting-responses.md
     - "_reference-serialization": serialization.md
     - "_reference-api": api.md
-site_name: zend-diactoros
-site_description: 'zend-diactoros: PSR-7 HTTP message implementation'
-repo_url: 'https://github.com/zendframework/zend-diactoros'
-copyright: 'Copyright (c) 2016-2018 <a href="https://www.zend.com/">Zend Technologies USA Inc.</a>'
+site_name: laminas-diactoros
+site_description: 'laminas-diactoros: PSR-7 HTTP message implementation'
+repo_url: 'https://github.com/laminas/laminas-diactoros'
