@@ -1,26 +1,27 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-diactoros for the canonical source repository
- * @copyright Copyright (c) 2015-2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Diactoros;
+namespace LaminasTest\Diactoros;
 
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\UploadedFile;
+use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use ReflectionProperty;
 use UnexpectedValueException;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\UploadedFile;
-use Zend\Diactoros\Uri;
 
-use function Zend\Diactoros\marshalHeadersFromSapi;
-use function Zend\Diactoros\marshalProtocolVersionFromSapi;
-use function Zend\Diactoros\marshalUriFromSapi;
-use function Zend\Diactoros\normalizeServer;
-use function Zend\Diactoros\normalizeUploadedFiles;
+use function Laminas\Diactoros\marshalHeadersFromSapi;
+use function Laminas\Diactoros\marshalProtocolVersionFromSapi;
+use function Laminas\Diactoros\marshalUriFromSapi;
+use function Laminas\Diactoros\normalizeServer;
+use function Laminas\Diactoros\normalizeUploadedFiles;
 
 class ServerRequestFactoryTest extends TestCase
 {
