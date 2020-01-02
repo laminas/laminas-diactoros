@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
-use Psr\Http\Message\UploadedFileInterface;
-
-use function is_array;
 use function Laminas\Diactoros\normalizeUploadedFiles as laminas_normalizeUploadedFiles;
 
 /**
@@ -20,5 +17,5 @@ use function Laminas\Diactoros\normalizeUploadedFiles as laminas_normalizeUpload
  */
 function normalizeUploadedFiles(array $files) : array
 {
-    laminas_normalizeUploadedFiles(...func_get_args());
+    return laminas_normalizeUploadedFiles(...func_get_args());
 }

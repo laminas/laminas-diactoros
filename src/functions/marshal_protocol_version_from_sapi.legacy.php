@@ -11,12 +11,11 @@ declare(strict_types=1);
 namespace Zend\Diactoros;
 
 use function Laminas\Diactoros\marshalProtocolVersionFromSapi as laminas_marshalProtocolVersionFromSapi;
-use function preg_match;
 
 /**
  * @deprecated Use Laminas\Diactoros\marshalProtocolVersionFromSapi instead
  */
 function marshalProtocolVersionFromSapi(array $server) : string
 {
-    laminas_marshalProtocolVersionFromSapi(...func_get_args());
+    return laminas_marshalProtocolVersionFromSapi(...func_get_args());
 }
