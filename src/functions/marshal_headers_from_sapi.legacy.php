@@ -23,5 +23,5 @@ use function substr;
  */
 function marshalHeadersFromSapi(array $server) : array
 {
-    laminas_marshalHeadersFromSapi(...func_get_args());
+    return laminas_marshalHeadersFromSapi(...func_get_args());
 }
