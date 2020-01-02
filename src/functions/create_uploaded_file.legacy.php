@@ -8,8 +8,6 @@
 
 namespace Zend\Diactoros;
 
-use InvalidArgumentException;
-
 use function Laminas\Diactoros\createUploadedFile as laminas_createUploadedFile;
 
 /**
@@ -17,5 +15,5 @@ use function Laminas\Diactoros\createUploadedFile as laminas_createUploadedFile;
  */
 function createUploadedFile(array $spec)
 {
-    laminas_createUploadedFile(...func_get_args());
+    return laminas_createUploadedFile(...func_get_args());
 }
