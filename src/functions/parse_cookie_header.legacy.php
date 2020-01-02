@@ -19,5 +19,5 @@ use function urldecode;
  */
 function parseCookieHeader($cookieHeader) : array
 {
-    laminas_parseCookieHeader(...func_get_args());
+    return laminas_parseCookieHeader(...func_get_args());
 }

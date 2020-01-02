@@ -20,5 +20,5 @@ use function Laminas\Diactoros\normalizeUploadedFiles as laminas_normalizeUpload
  */
 function normalizeUploadedFiles(array $files) : array
 {
-    laminas_normalizeUploadedFiles(...func_get_args());
+    return laminas_normalizeUploadedFiles(...func_get_args());
 }

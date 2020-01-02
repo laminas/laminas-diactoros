@@ -29,5 +29,5 @@ use function substr;
  */
 function marshalUriFromSapi(array $server, array $headers) : Uri
 {
-    laminas_marshalUriFromSapi(...func_get_args());
+    return laminas_marshalUriFromSapi(...func_get_args());
 }
