@@ -11,13 +11,11 @@ declare(strict_types=1);
 namespace Zend\Diactoros;
 
 use function Laminas\Diactoros\parseCookieHeader as laminas_parseCookieHeader;
-use function preg_match_all;
-use function urldecode;
 
 /**
  * @deprecated Use Laminas\Diactoros\parseCookieHeader instead
  */
 function parseCookieHeader($cookieHeader) : array
 {
-    laminas_parseCookieHeader(...func_get_args());
+    return laminas_parseCookieHeader(...func_get_args());
 }
