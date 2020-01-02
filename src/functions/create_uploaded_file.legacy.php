@@ -17,5 +17,5 @@ use function Laminas\Diactoros\createUploadedFile as laminas_createUploadedFile;
  */
 function createUploadedFile(array $spec) : UploadedFile
 {
-    laminas_createUploadedFile(...func_get_args());
+    return laminas_createUploadedFile(...func_get_args());
 }
