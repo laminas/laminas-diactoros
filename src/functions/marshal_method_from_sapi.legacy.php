@@ -17,5 +17,5 @@ use function Laminas\Diactoros\marshalMethodFromSapi as laminas_marshalMethodFro
  */
 function marshalMethodFromSapi(array $server) : string
 {
-    laminas_marshalMethodFromSapi(...func_get_args());
+    return laminas_marshalMethodFromSapi(...func_get_args());
 }
