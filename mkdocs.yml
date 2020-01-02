@@ -1,6 +1,8 @@
 docs_dir: docs/book
 site_dir: docs/html
 extra:
+  project: Components
+  project_url: 'https://docs.laminas.dev'
   current_version: v2
   versions:
     - v2
