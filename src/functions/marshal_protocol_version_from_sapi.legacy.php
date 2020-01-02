@@ -18,5 +18,5 @@ use function preg_match;
  */
 function marshalProtocolVersionFromSapi(array $server) : string
 {
-    laminas_marshalProtocolVersionFromSapi(...func_get_args());
+    return laminas_marshalProtocolVersionFromSapi(...func_get_args());
 }
