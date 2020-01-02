@@ -8,15 +8,12 @@
 
 namespace Zend\Diactoros;
 
-use UnexpectedValueException;
-
 use function Laminas\Diactoros\marshalProtocolVersionFromSapi as laminas_marshalProtocolVersionFromSapi;
-use function preg_match;
 
 /**
  * @deprecated Use Laminas\Diactoros\marshalProtocolVersionFromSapi instead
  */
 function marshalProtocolVersionFromSapi(array $server)
 {
-    laminas_marshalProtocolVersionFromSapi(...func_get_args());
+    return laminas_marshalProtocolVersionFromSapi(...func_get_args());
 }
