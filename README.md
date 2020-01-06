@@ -26,11 +26,11 @@ Documentation is available at:
 
 Source files for documentation are [in the docs/ tree](docs/).
 
-  [Master]: https://travis-ci.org/laminas/laminas-diactoros
-  [Master image]: https://travis-ci.org/laminas/laminas-diactoros.svg?branch=master
+  [Master]: https://travis-ci.com/laminas/laminas-diactoros
+  [Master image]: https://travis-ci.com/laminas/laminas-diactoros.svg?branch=master
   [Master coverage image]: https://img.shields.io/coveralls/laminas/laminas-diactoros/master.svg
   [Master coverage]: https://coveralls.io/r/laminas/laminas-diactoros?branch=master
   [Develop]: https://github.com/laminas/laminas-diactoros/tree/develop
-  [Develop image]:  https://travis-ci.org/laminas/laminas-diactoros.svg?branch=develop
+  [Develop image]:  https://travis-ci.com/laminas/laminas-diactoros.svg?branch=develop
   [Develop coverage image]: https://coveralls.io/repos/laminas/laminas-diactoros/badge.svg?branch=develop
   [Develop coverage]: https://coveralls.io/r/laminas/laminas-diactoros?branch=develop
