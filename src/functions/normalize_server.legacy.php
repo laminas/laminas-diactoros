@@ -18,5 +18,5 @@ use function Laminas\Diactoros\normalizeServer as laminas_normalizeServer;
  */
 function normalizeServer(array $server, callable $apacheRequestHeaderCallback = null) : array
 {
-    laminas_normalizeServer(...func_get_args());
+    return laminas_normalizeServer(...func_get_args());
 }
