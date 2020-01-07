@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
-use function is_callable;
 use function Laminas\Diactoros\normalizeServer as laminas_normalizeServer;
 
 /**
@@ -18,5 +17,5 @@ use function Laminas\Diactoros\normalizeServer as laminas_normalizeServer;
  */
 function normalizeServer(array $server, callable $apacheRequestHeaderCallback = null) : array
 {
-    laminas_normalizeServer(...func_get_args());
+    return laminas_normalizeServer(...func_get_args());
 }
