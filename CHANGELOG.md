@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.2.2 - TBD
+## 2.2.2 - 2020-01-07
 
 ### Added
 
@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#30](https://github.com/laminas/laminas-diactoros/pull/30) adds missing `return` statements to the various `src/functions/*.legacy.php` function files to ensure they work correctly when used.
 
 ## 2.2.1 - 2019-11-13
 
