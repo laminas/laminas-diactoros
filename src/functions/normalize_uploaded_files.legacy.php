@@ -12,7 +12,6 @@ namespace Zend\Diactoros;
 
 use Psr\Http\Message\UploadedFileInterface;
 
-use function is_array;
 use function Laminas\Diactoros\normalizeUploadedFiles as laminas_normalizeUploadedFiles;
 
 /**

@@ -10,13 +10,7 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
-use function array_key_exists;
-use function is_string;
 use function Laminas\Diactoros\marshalHeadersFromSapi as laminas_marshalHeadersFromSapi;
-use function strpos;
-use function strtolower;
-use function strtr;
-use function substr;
 
 /**
  * @deprecated Use Laminas\Diactoros\marshalHeadersFromSapi instead
