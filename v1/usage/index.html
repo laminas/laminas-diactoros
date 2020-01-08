@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -291,41 +295,40 @@ return a <code>Response</code> instance.</p>
 <em>populate</em> the request, and then <em>introspect</em> the response.  Both requests and responses are
 immutable; if you make changes &mdash; e.g., by calling setter methods &mdash; you must capture the return
 value, as it is a new instance.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Create a request</span>
-<span class=x>$request = (new Laminas\Diactoros\Request())</span>
-<span class=x>    -&gt;withUri(new Laminas\Diactoros\Uri(&#39;http://example.com&#39;))</span>
-<span class=x>    -&gt;withMethod(&#39;PATCH&#39;)</span>
-<span class=x>    -&gt;withAddedHeader(&#39;Authorization&#39;, &#39;Bearer &#39; . $token)</span>
-<span class=x>    -&gt;withAddedHeader(&#39;Content-Type&#39;, &#39;application/json&#39;);</span>
+<pre class=codehilite><code class=language-php>// Create a request
+$request = (new Laminas\Diactoros\Request())
+    -&gt;withUri(new Laminas\Diactoros\Uri('http://example.com'))
+    -&gt;withMethod('PATCH')
+    -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
+    -&gt;withAddedHeader('Content-Type', 'application/json');
 
-<span class=x>// OR:</span>
-<span class=x>$request = new Laminas\Diactoros\Request(</span>
-<span class=x>    &#39;http://example.com&#39;,</span>
-<span class=x>    &#39;PATCH&#39;,</span>
-<span class=x>    &#39;php://memory&#39;,</span>
-<span class=x>    [</span>
-<span class=x>        &#39;Authorization&#39; =&gt; &#39;Bearer &#39; . $token,</span>
-<span class=x>        &#39;Content-Type&#39;  =&gt; &#39;application/json&#39;,</span>
-<span class=x>    ]</span>
-<span class=x>);</span>
+// OR:
+$request = new Laminas\Diactoros\Request(
+    'http://example.com',
+    'PATCH',
+    'php://memory',
+    [
+        'Authorization' =&gt; 'Bearer ' . $token,
+        'Content-Type'  =&gt; 'application/json',
+    ]
+);
 
-<span class=x>// If you want to set a non-origin-form request target, set the</span>
-<span class=x>// request-target explicitly:</span>
-<span class=x>$request = $request-&gt;withRequestTarget((string) $uri);       // absolute-form</span>
-<span class=x>$request = $request-&gt;withRequestTarget($uri-&gt;getAuthority()); // authority-form</span>
-<span class=x>$request = $request-&gt;withRequestTarget(&#39;*&#39;);                 // asterisk-form</span>
+// If you want to set a non-origin-form request target, set the
+// request-target explicitly:
+$request = $request-&gt;withRequestTarget((string) $uri);       // absolute-form
+$request = $request-&gt;withRequestTarget($uri-&gt;getAuthority()); // authority-form
+$request = $request-&gt;withRequestTarget('*');                 // asterisk-form
 
-<span class=x>// Once you have the instance:</span>
-<span class=x>$request-&gt;getBody()-&gt;write(json_encode($data));</span>
-<span class=x>$response = $client-&gt;send($request);</span>
+// Once you have the instance:
+$request-&gt;getBody()-&gt;write(json_encode($data));
+$response = $client-&gt;send($request);
 
-<span class=x>printf(&quot;Response status: %d (%s)\n&quot;, $response-&gt;getStatusCode(), $response-&gt;getReasonPhrase());</span>
-<span class=x>printf(&quot;Headers:\n&quot;);</span>
-<span class=x>foreach ($response-&gt;getHeaders() as $header =&gt; $values) {</span>
-<span class=x>    printf(&quot;    %s: %s\n&quot;, $header, implode(&#39;, &#39;, $values));</span>
-<span class=x>}</span>
-<span class=x>printf(&quot;Message:\n%s\n&quot;, $response-&gt;getBody());</span>
-</pre></div></p>
+printf(&quot;Response status: %d (%s)\n&quot;, $response-&gt;getStatusCode(), $response-&gt;getReasonPhrase());
+printf(&quot;Headers:\n&quot;);
+foreach ($response-&gt;getHeaders() as $header =&gt; $values) {
+    printf(&quot;    %s: %s\n&quot;, $header, implode(', ', $values));
+}
+printf(&quot;Message:\n%s\n&quot;, $response-&gt;getBody());</code></pre>
 <p>(Note: <code>laminas-diactoros</code> does NOT ship with a client implementation; the above is just an
 illustration of a possible implementation.)</p>
 <h2 id="server-side-applications">Server-Side Applications</h2>
@@ -345,14 +348,13 @@ that information into a request instance.</p>
 </ul>
 <p>The method will then return a <code>Laminas\Diactoros\ServerRequest</code> instance. If any argument is omitted,
 the associated superglobal will be used.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(</span>
-<span class=x>    $_SERVER,</span>
-<span class=x>    $_GET,</span>
-<span class=x>    $_POST,</span>
-<span class=x>    $_COOKIE,</span>
-<span class=x>    $_FILES</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
+    $_SERVER,
+    $_GET,
+    $_POST,
+    $_COOKIE,
+    $_FILES
+);</code></pre>
 <p>When no cookie array is supplied, <code>fromGlobals</code> will first try to parse the supplied <code>cookie</code> header
 before falling back to the <code>$_COOKIE</code> superglobal. This is done because PHP has some legacy handling
 for request parameters which were then registered as global variables. Due to this, cookies with a period
@@ -363,20 +365,19 @@ agent.</p>
 <p>Use the response object to add headers and provide content for the response.  Writing to the body
 does not create a state change in the response, so it can be done without capturing the return
 value. Manipulating headers does, however.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$response = new Laminas\Diactoros\Response();</span>
+<pre class=codehilite><code class=language-php>$response = new Laminas\Diactoros\Response();
 
-<span class=x>// Write to the response body:</span>
-<span class=x>$response-&gt;getBody()-&gt;write(&quot;some content\n&quot;);</span>
+// Write to the response body:
+$response-&gt;getBody()-&gt;write(&quot;some content\n&quot;);
 
-<span class=x>// Multiple calls to write() append:</span>
-<span class=x>$response-&gt;getBody()-&gt;write(&quot;more content\n&quot;); // now &quot;some content\nmore content\n&quot;</span>
+// Multiple calls to write() append:
+$response-&gt;getBody()-&gt;write(&quot;more content\n&quot;); // now &quot;some content\nmore content\n&quot;
 
-<span class=x>// Add headers</span>
-<span class=x>// Note: headers do not need to be added before data is written to the body!</span>
-<span class=x>$response = $response</span>
-<span class=x>    -&gt;withHeader(&#39;Content-Type&#39;, &#39;text/plain&#39;)</span>
-<span class=x>    -&gt;withAddedHeader(&#39;X-Show-Something&#39;, &#39;something&#39;);</span>
-</pre></div></p>
+// Add headers
+// Note: headers do not need to be added before data is written to the body!
+$response = $response
+    -&gt;withHeader('Content-Type', 'text/plain')
+    -&gt;withAddedHeader('X-Show-Something', 'something');</code></pre>
 <h3>"Serving" an Application</h3>
 <blockquote>
 <h3>Deprecated</h3>
@@ -389,35 +390,34 @@ instead.</p>
 callback, passing it an <code>ServerRequest</code>, an <code>Response</code>, and optionally a callback to use for
 incomplete/unhandled requests.</p>
 <p>You can create a server in one of three ways:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Direct instantiation, with a callback handler, request, and response</span>
-<span class=x>$server = new Laminas\Diactoros\Server(</span>
-<span class=x>    function ($request, $response, $done) {</span>
-<span class=x>        $response-&gt;getBody()-&gt;write(&quot;Hello world!&quot;);</span>
-<span class=x>    },</span>
-<span class=x>    $request,</span>
-<span class=x>    $response</span>
-<span class=x>);</span>
+<pre class=codehilite><code class=language-php>// Direct instantiation, with a callback handler, request, and response
+$server = new Laminas\Diactoros\Server(
+    function ($request, $response, $done) {
+        $response-&gt;getBody()-&gt;write(&quot;Hello world!&quot;);
+    },
+    $request,
+    $response
+);
 
-<span class=x>// Using the createServer factory, providing it with the various superglobals:</span>
-<span class=x>$server = Laminas\Diactoros\Server::createServer(</span>
-<span class=x>    function ($request, $response, $done) {</span>
-<span class=x>        $response-&gt;getBody()-&gt;write(&quot;Hello world!&quot;);</span>
-<span class=x>    },</span>
-<span class=x>    $_SERVER,</span>
-<span class=x>    $_GET,</span>
-<span class=x>    $_POST,</span>
-<span class=x>    $_COOKIE,</span>
-<span class=x>    $_FILES</span>
-<span class=x>);</span>
+// Using the createServer factory, providing it with the various superglobals:
+$server = Laminas\Diactoros\Server::createServer(
+    function ($request, $response, $done) {
+        $response-&gt;getBody()-&gt;write(&quot;Hello world!&quot;);
+    },
+    $_SERVER,
+    $_GET,
+    $_POST,
+    $_COOKIE,
+    $_FILES
+);
 
-<span class=x>// Using the createServerFromRequest factory, and providing it a request:</span>
-<span class=x>$server = Laminas\Diactoros\Server::createServerFromRequest(</span>
-<span class=x>  function ($request, $response, $done) {</span>
-<span class=x>      $response-&gt;getBody()-&gt;write(&quot;Hello world!&quot;);</span>
-<span class=x>  },</span>
-<span class=x>  $request</span>
-<span class=x>);</span>
-</pre></div></p>
+// Using the createServerFromRequest factory, and providing it a request:
+$server = Laminas\Diactoros\Server::createServerFromRequest(
+  function ($request, $response, $done) {
+      $response-&gt;getBody()-&gt;write(&quot;Hello world!&quot;);
+  },
+  $request
+);</code></pre>
 <p>Server callbacks can expect up to three arguments, in the following order:</p>
 <ul>
 <li><code>$request</code> - the request object</li>
@@ -425,17 +425,15 @@ incomplete/unhandled requests.</p>
 <li><code>$done</code> - an optional callback to call when complete</li>
 </ul>
 <p>Once you have your server instance, you must instruct it to listen:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$server-&gt;listen();</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$server-&gt;listen();</code></pre>
 <p>At this time, you can optionally provide a callback to <code>listen()</code>; this will be passed to the
 handler as the third argument (<code>$done</code>):</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$server-&gt;listen(function ($request, $response, $error = null) {</span>
-<span class=x>    if (! $error) {</span>
-<span class=x>        return;</span>
-<span class=x>    }</span>
-<span class=x>    // do something with the error...</span>
-<span class=x>});</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$server-&gt;listen(function ($request, $response, $error = null) {
+    if (! $error) {
+        return;
+    }
+    // do something with the error...
+});</code></pre>
 <p>Typically, the <code>listen</code> callback will be an error handler, and can expect to receive the request,
 response, and error as its arguments (though the error may be null).</p>
 
@@ -587,9 +585,10 @@ response, and error as its arguments (though the error may be null).</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -626,7 +625,7 @@ response, and error as its arguments (though the error may be null).</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-diactoros//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -635,8 +634,8 @@ response, and error as its arguments (though the error may be null).</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-diactoros//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-diactoros/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

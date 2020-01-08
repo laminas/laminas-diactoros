@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -304,35 +308,31 @@ PHP function to emit headers, and <code>echo()</code> to emit the response body.
 <p>If you are using a non-SAPI implementation, you will need to create your own
 <code>EmitterInterface</code> implementation.</p>
 <p>For example, the <code>SapiEmitter</code> implementation of the <code>EmitterInterface</code> can be used thus:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$response = new Laminas\Diactoros\Response();</span>
-<span class=x>$response-&gt;getBody()-&gt;write(&quot;some content\n&quot;);</span>
-<span class=x>$emitter = new Laminas\Diactoros\Response\SapiEmitter();</span>
-<span class=x>$emitter-&gt;emit($response);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$response = new Laminas\Diactoros\Response();
+$response-&gt;getBody()-&gt;write(&quot;some content\n&quot;);
+$emitter = new Laminas\Diactoros\Response\SapiEmitter();
+$emitter-&gt;emit($response);</code></pre>
 <h2 id="emitting-ranges-of-streamed-files">Emitting Ranges of streamed Files</h2>
 <p>The <code>SapiStreamEmitter</code> is useful when you want to emit a <code>Content-Range</code>. As an
 example, to stream a range of bytes from a file to a client, the client can pass
 the following header:</p>
-<p> <div class=codehilite><pre><span></span><span class=err>Range: bytes=1024-2047</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-http>Range: bytes=1024-2047</code></pre>
 <p>Your application would then populate the response with a <code>Content-Range</code> header:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$range = $request-&gt;getHeaderLine(&#39;range&#39;);</span>
-<span class=x>$range = str_replace(&#39;=&#39;, &#39; &#39;, $range);</span>
+<pre class=codehilite><code class=language-php>$range = $request-&gt;getHeaderLine('range');
+$range = str_replace('=', ' ', $range);
 
-<span class=x>$body = new Stream($pathToFile);</span>
-<span class=x>$size = $body-&gt;getSize();</span>
-<span class=x>$range .= &#39;/&#39; . $size;</span>
+$body = new Stream($pathToFile);
+$size = $body-&gt;getSize();
+$range .= '/' . $size;
 
-<span class=x>$response = new Response($body);</span>
-<span class=x>$response = $response-&gt;withHeader(&#39;Content-Range&#39;, $range);</span>
-</pre></div></p>
+$response = new Response($body);
+$response = $response-&gt;withHeader('Content-Range', $range);</code></pre>
 <p>(Note: you will likely want to ensure the range specified falls within the
 content size of the streamed body!)</p>
 <p>The <code>SapiStreamEmitter</code> detects the <code>Content-Range</code> header and emits only the
 bytes specified.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$emitter = new SapiStreamEmitter();</span>
-<span class=x>$emitter-&gt;emit($response);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$emitter = new SapiStreamEmitter();
+$emitter-&gt;emit($response);</code></pre>
 <p>The <code>SapiStreamEmitter</code> may be used in place of the <code>SapiEmitter</code>, even when not
 sending files. However, unlike the <code>SapiEmitter</code>, it will emit a chunk of
 content at a time instead of the full content at once, which could lead to
@@ -486,9 +486,10 @@ performance overhead. The default chunk size is 8192 bytes.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -525,7 +526,7 @@ performance overhead. The default chunk size is 8192 bytes.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-diactoros//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -534,8 +535,8 @@ performance overhead. The default chunk size is 8192 bytes.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-diactoros//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-diactoros/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
