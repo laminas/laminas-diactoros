@@ -189,35 +189,30 @@
                     
 <div class="version-selector">
     <div class="btn-group">
-        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
                 v2
             
-            <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu">
+        <div class="dropdown-menu" aria-labelledby="version-selector-dropdown">
             
                 
-                    <li class="dropdown-menu__item dropdown-menu__item--selected">
-                        <a href="./">
-                            
-                                v2 (latest)
-                            
-                        </a>
-                    </li>
+                    <a href="./" class="dropdown-item active">
+                        
+                            v2 (latest)
+                        
+                    </a>
                 
             
                 
-                    <li class="dropdown-menu__item">
-                        <a href="../../v1/overview/">
-                            
-                                v1
-                            
-                        </a>
-                    </li>
+                    <a href="../../v1/overview/" class="dropdown-item">
+                        
+                            v1
+                        
+                    </a>
                 
             
-        </ul>
+        </div>
     </div>
 </div>
 
