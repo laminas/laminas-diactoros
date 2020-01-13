@@ -603,6 +603,13 @@ class UriTest extends TestCase
         $this->assertSame('ουτοπία.δπθ.gr', $uri->getHost());
     }
 
+    public function testUriWithGermanUmlaut()
+    {
+        $uri = new Uri('https://körberl.taugl.online/');
+        
+        $this->assertSame('körberl.taugl.online', $uri->getHost());
+    }
+    
     /**
      * @dataProvider utf8PathsDataProvider
      */
