@@ -317,7 +317,7 @@ class Uri implements UriInterface
         }
 
         $new = clone $this;
-        $new->host = strtolower($host);
+        $new->host = mb_strtolower($host);
 
         return $new;
     }

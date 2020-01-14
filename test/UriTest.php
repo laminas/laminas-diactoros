@@ -138,9 +138,10 @@ class UriTest extends TestCase
 
     public function testWithHostWithGermanUmlaut()
     {
-        $uri = new Uri('https://körberl.taugl.online');
-        $new = $uri->withHost('körberl.taugl.online');
-        $this->assertSame($uri, $new);
+        $uri = new Uri('https://www.example.com');
+        $newHost = 'körberl.taugl.online';
+        $new = $uri->withHost($newHost);
+        $this->assertSame($newHost, $new->getHost());
     }
 
     public function validPorts()
