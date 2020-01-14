@@ -136,6 +136,13 @@ class UriTest extends TestCase
         $this->assertSame('https://user:pass@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
+    public function testWithHostWithGermanUmlaut()
+    {
+        $uri = new Uri('https://körberl.taugl.online');
+        $new = $uri->withHost('körberl.taugl.online');
+        $this->assertSame($uri, $new);
+    }
+
     public function validPorts()
     {
         return [
