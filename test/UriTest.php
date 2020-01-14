@@ -606,10 +606,10 @@ class UriTest extends TestCase
     public function testUriWithGermanUmlaut()
     {
         $uri = new Uri('https://körberl.taugl.online/');
-        
+
         $this->assertSame('körberl.taugl.online', $uri->getHost());
     }
-    
+
     /**
      * @dataProvider utf8PathsDataProvider
      */
