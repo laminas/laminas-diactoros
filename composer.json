@@ -84,6 +84,6 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
     "replace": {
-        "zendframework/zend-diactoros": "self.version"
+        "zendframework/zend-diactoros": "~1.8.3.0"
     }
 }
