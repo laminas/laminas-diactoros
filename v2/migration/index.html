@@ -362,21 +362,21 @@ options for doing so:</p>
 <ul>
 <li>Adopt the v2 release specifically:</li>
 </ul>
-<p><code>bash
-  $ composer require "laminas/laminas-diactoros:^2.0"</code></p>
+<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^2.0"</code></pre>
+
 <ul>
 <li>
 <p>Update your constraint to allow either version:</p>
 </li>
 <li>
 <p>Edit the constraint in your <code>composer.json</code> to read:</p>
-<p><code>json
-"laminas/laminas-diactoros": "^1.8.6 || ^2.0"</code></p>
+<pre class="highlight"><code class="language-json">"laminas/laminas-diactoros": "^1.8.6 || ^2.0"</code></pre>
+
 </li>
 <li>
 <p>Update your dependencies:</p>
-<p><code>bash
-$ composer update</code></p>
+<pre class="highlight"><code class="language-bash">$ composer update</code></pre>
+
 </li>
 </ul>
 <p>The first approach may fail if libraries you depend on specifically require a
