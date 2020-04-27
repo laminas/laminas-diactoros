@@ -27,7 +27,8 @@
             "dev-release-1.8": "1.8.x-dev"
         },
         "laminas": {
-            "config-provider": "Laminas\\Diactoros\\ConfigProvider"
+            "config-provider": "Laminas\\Diactoros\\ConfigProvider",
+            "module": "Laminas\\Diactoros"
         }
     },
     "require": {
