@@ -16,3 +16,14 @@ The `ServerRequestFactory` continues to define the static method
 
 These classes may be used as described in the specification document for the
 purpose of creating Diactoros instances that fulfill PSR-7 typehints.
+
+## Autoregistration of factories
+
+- Since 2.3.0
+
+When installing Diactoros in a Laminas or Mezzio application, or any application
+using the [laminas-component-installer plugin](https://docs.laminas.dev/laminas-component-installer),
+you will now be prompted to install its `ConfigProvider` and/or `Module`. When
+you do, it registers the Diactoros factory implementations under the PSR-17
+interface names, allowing you to compose instances of the interface in your
+application classes..
