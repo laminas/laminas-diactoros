@@ -296,6 +296,17 @@
 
     
     
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#autoregistration-of-factories" class="toc__link nav-link">Autoregistration of factories</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
                 
 
@@ -355,6 +366,16 @@ creating <a href="https://www.php-fig.org/psr/psr-7/">PSR-7</a> instances. As of
 <code>fromGlobals()</code>, but also serves as a PSR-17 implementation.</p>
 <p>These classes may be used as described in the specification document for the
 purpose of creating Diactoros instances that fulfill PSR-7 typehints.</p>
+<h2 id="autoregistration-of-factories">Autoregistration of factories</h2>
+<ul>
+<li>Since 2.3.0</li>
+</ul>
+<p>When installing Diactoros in a Laminas or Mezzio application, or any application
+using the <a href="https://docs.laminas.dev/laminas-component-installer">laminas-component-installer plugin</a>,
+you will now be prompted to install its <code>ConfigProvider</code> and/or <code>Module</code>. When
+you do, it registers the Diactoros factory implementations under the PSR-17
+interface names, allowing you to compose instances of the interface in your
+application classes..</p>
 
 
 
@@ -548,7 +569,7 @@ purpose of creating Diactoros instances that fulfill PSR-7 typehints.</p>
                                 <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                                <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
                             </li>
                             <li class="support__list-item">
                                 <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
