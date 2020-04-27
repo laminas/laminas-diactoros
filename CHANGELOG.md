@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#37](https://github.com/laminas/laminas-diactoros/pull/37) adds a ConfigProvider and Module, allowing the package to be autoregistered within Mezzio and MVC applications. Each provides configuration mapping PSR-17 HTTP message factory interfaces to the Diactoros implementations of them.
 
 ### Changed
 
