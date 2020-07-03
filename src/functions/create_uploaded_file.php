@@ -32,8 +32,8 @@ function createUploadedFile(array $spec) : UploadedFile
 
     return new UploadedFile(
         $spec['tmp_name'],
-        intval($spec['size']),
-        intval($spec['error']),
+        (int) $spec['size'],
+        $spec['error'],
         $spec['name'] ?? null,
         $spec['type'] ?? null
     );
