@@ -20,6 +20,6 @@ trait StreamTrait
      */
     protected function isValidStreamResourceType($resource)
     {
-        return (is_resource($resource) && in_array(get_resource_type($resource), Stream::ALLOWED_TYPES));
+        return (is_resource($resource) && in_array(get_resource_type($resource), Stream::ALLOWED_TYPES, true));
     }
 }
