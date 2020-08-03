@@ -40,6 +40,8 @@ use const SEEK_SET;
  */
 class Stream implements StreamInterface
 {
+    use StreamTrait;
+
     /**
      * A list of types that are allowed to instantiate a Stream
      */
@@ -350,7 +352,7 @@ class Stream implements StreamInterface
             throw new Exception\InvalidArgumentException('Invalid stream reference provided');
         }
 
-        if (! is_resource($resource) || ! $this->isAllowedStreamResourceType($resource)) {
+        if (! $this->isValidStreamResourceType($resource)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid stream provided; must be a string stream identifier or stream resource'
             );
@@ -361,16 +363,5 @@ class Stream implements StreamInterface
         }
 
         $this->resource = $resource;
-    }
-
-    /**
-     * Determine if a resource is one of the resource types allowed to instantiate a Stream
-     *
-     * @param resource $resource Stream resource.
-     * @return bool
-     */
-    protected function isAllowedStreamResourceType($resource)
-    {
-        return in_array(get_resource_type($resource), self::ALLOWED_TYPES);
     }
 }
