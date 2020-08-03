@@ -72,6 +72,13 @@ class StreamTest extends TestCase
         $this->assertInstanceOf(Stream::class, $stream);
     }
 
+    public function testCanInstantiateWithGDResource()
+    {
+        $resource = imagecreate(1, 1);
+        $stream   = new Stream($resource);
+        $this->assertInstanceOf(Stream::class, $stream);
+    }
+
     public function testIsReadableReturnsFalseIfStreamIsNotReadable()
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
