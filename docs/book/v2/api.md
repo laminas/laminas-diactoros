@@ -174,10 +174,11 @@ prefixed with `with` and `without` &mdash; all return a new instance with the ch
 `Laminas\Diactoros\Stream` is an implementation of
 [`Psr\Http\Message\StreamInterface`](https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php),
 and provides a number of facilities around manipulating the composed PHP stream resource. The
-constructor accepts a stream, which may be either:
+constructor accepts a stream, which may be one of:
 
-- a stream identifier; e.g., `php://input`, a filename, etc.
-- a PHP stream resource
+- A stream identifier; e.g., `php://input`, a filename, etc.
+- A PHP stream resource; or
+- A GD resource
 
 If a stream identifier is provided, an optional second parameter may be provided, the file mode by
 which to `fopen` the stream.
