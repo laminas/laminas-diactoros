@@ -15,7 +15,7 @@ trait StreamTrait
     /**
      * A list of types that are allowed to instantiate a Stream
      */
-    private $allowedTypes = ['stream', 'gd'];
+    private $allowedTypes = ['gd', 'stream'];
 
     /**
      * Determine if a resource is one of the resource types allowed to instantiate a Stream
