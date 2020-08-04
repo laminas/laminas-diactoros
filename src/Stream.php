@@ -43,11 +43,6 @@ class Stream implements StreamInterface
     use StreamTrait;
 
     /**
-     * A list of types that are allowed to instantiate a Stream
-     */
-    const ALLOWED_TYPES = ['stream', 'gd'];
-
-    /**
      * @var resource|null
      */
     protected $resource;

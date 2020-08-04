@@ -13,6 +13,11 @@ namespace Laminas\Diactoros;
 trait StreamTrait
 {
     /**
+     * A list of types that are allowed to instantiate a Stream
+     */
+    private $allowedTypes = ['stream', 'gd'];
+
+    /**
      * Determine if a resource is one of the resource types allowed to instantiate a Stream
      *
      * @param resource $resource Stream resource.
@@ -20,6 +25,6 @@ trait StreamTrait
      */
     private function isValidStreamResourceType($resource)
     {
-        return (is_resource($resource) && in_array(get_resource_type($resource), Stream::ALLOWED_TYPES, true));
+        return (is_resource($resource) && in_array(get_resource_type($resource), $this->allowedTypes, true));
     }
 }
