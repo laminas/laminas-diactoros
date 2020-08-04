@@ -18,7 +18,7 @@ trait StreamTrait
      * @param resource $resource Stream resource.
      * @return bool
      */
-    protected function isValidStreamResourceType($resource)
+    private function isValidStreamResourceType($resource)
     {
         return (is_resource($resource) && in_array(get_resource_type($resource), Stream::ALLOWED_TYPES, true));
     }
