@@ -40,7 +40,10 @@ use const SEEK_SET;
  */
 class Stream implements StreamInterface
 {
-    use StreamTrait;
+    /**
+     * A list of allowed stream resource types that are allowed to instantiate a Stream
+     */
+    private const ALLOWED_STREAM_RESOURCE_TYPES = ['gd', 'stream'];
 
     /**
      * @var resource|null
@@ -358,5 +361,18 @@ class Stream implements StreamInterface
         }
 
         $this->resource = $resource;
+    }
+
+    /**
+     * Determine if a resource is one of the resource types allowed to instantiate a Stream
+     *
+     * @param resource $resource Stream resource.
+     */
+    private function isValidStreamResourceType($resource): bool
+    {
+        return (
+            is_resource($resource) &&
+            in_array(get_resource_type($resource), self::ALLOWED_STREAM_RESOURCE_TYPES, true)
+        );
     }
 }

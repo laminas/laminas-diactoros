@@ -21,7 +21,6 @@ use function rewind;
 
 class StreamFactory implements StreamFactoryInterface
 {
-    use StreamTrait;
 
     /**
      * {@inheritDoc}
@@ -48,11 +47,6 @@ class StreamFactory implements StreamFactoryInterface
      */
     public function createStreamFromResource($resource) : StreamInterface
     {
-        if (! $this->isValidStreamResourceType($resource)) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid stream provided; must be a stream resource'
-            );
-        }
         return new Stream($resource);
     }
 }
