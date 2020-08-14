@@ -54,8 +54,8 @@ class SerializerTest extends TestCase
             ->withBody($stream);
 
         $message = Serializer::toString($request);
-        $this->assertContains("POST /foo/bar HTTP/1.1\r\n", $message);
-        $this->assertContains("\r\n\r\n" . $body, $message);
+        $this->assertStringContainsString("POST /foo/bar HTTP/1.1\r\n", $message);
+        $this->assertStringContainsString("\r\n\r\n" . $body, $message);
     }
 
     public function testSerializesMultipleHeadersCorrectly()
@@ -67,8 +67,8 @@ class SerializerTest extends TestCase
             ->withAddedHeader('X-Foo-Bar', 'Bat');
 
         $message = Serializer::toString($request);
-        $this->assertContains("X-Foo-Bar: Baz", $message);
-        $this->assertContains("X-Foo-Bar: Bat", $message);
+        $this->assertStringContainsString("X-Foo-Bar: Baz", $message);
+        $this->assertStringContainsString("X-Foo-Bar: Bat", $message);
     }
 
     public function originForms()

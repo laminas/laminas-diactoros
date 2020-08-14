@@ -13,38 +13,28 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 7.1
+    - php: 7.3
       env:
         - DEPS=lowest
-    - php: 7.1
+    - php: 7.3
       env:
         - DEPS=latest
         - CS_CHECK=true
         - TEST_COVERAGE=true
-    - php: 7.2
-      env:
-        - DEPS=lowest
-    - php: 7.2
-      env:
-        - DEPS=latest
-    - php: 7.3
-      env:
-        - DEPS=lowest
-    - php: 7.3
-      env:
-        - DEPS=latest
     - php: 7.4
       env:
         - DEPS=lowest
     - php: 7.4
+      env:
+        - DEPS=latest
+    - php: 'nightly'
       env:
         - DEPS=latest
 
 before_install:
-  - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - if [[ $TEST_COVERAGE != 'true' && $TRAVIS_PHP_VERSION != 'nightly' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
 
 install:
-  - travis_retry composer install $COMPOSER_ARGS
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi

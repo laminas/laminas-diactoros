@@ -14,6 +14,7 @@ use Laminas\Diactoros\RelativeStream;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use RuntimeException;
 
 use const SEEK_SET;
@@ -23,6 +24,8 @@ use const SEEK_SET;
  */
 class RelativeStreamTest extends TestCase
 {
+    use ProphecyTrait;
+    
     public function testToString()
     {
         $decorated = $this->prophesize(Stream::class);

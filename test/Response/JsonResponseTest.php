@@ -128,7 +128,7 @@ class JsonResponseTest extends TestCase
         $contents = (string) $stream;
 
         $expected = json_encode($value, $defaultFlags);
-        $this->assertContains(
+        $this->assertStringContainsString(
             $expected,
             $contents,
             sprintf('Did not encode %s properly; expected (%s), received (%s)', $key, $expected, $contents)

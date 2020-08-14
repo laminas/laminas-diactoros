@@ -14,11 +14,14 @@ use InvalidArgumentException;
 use Laminas\Diactoros\Response\XmlResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 use const PHP_EOL;
 
 class XmlResponseTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testConstructorAcceptsBodyAsString()
     {
         $body = 'Super valid XML';

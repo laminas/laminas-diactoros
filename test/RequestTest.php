@@ -342,7 +342,7 @@ class RequestTest extends TestCase
         $request = new Request('http://example.com');
         $headers = $request->getHeaders();
         $this->assertArrayHasKey('Host', $headers);
-        $this->assertContains('example.com', $headers['Host']);
+        $this->assertStringContainsString('example.com', $headers['Host'][0]);
     }
 
     /**
@@ -421,7 +421,7 @@ class RequestTest extends TestCase
     {
         $request = new Request('http://example.com');
         $header = $request->getHeaderLine('host');
-        $this->assertContains('example.com', $header);
+        $this->assertStringContainsString('example.com', $header);
     }
 
     /**
