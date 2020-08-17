@@ -21,7 +21,6 @@ use function rewind;
 
 class StreamFactory implements StreamFactoryInterface
 {
-
     /**
      * {@inheritDoc}
      */
