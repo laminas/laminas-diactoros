@@ -26,8 +26,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ## 2.4.0 - 2020-09-02
 
-
-
 -----
 
 ### Release Notes for [2.4.0](https://github.com/laminas/laminas-diactoros/milestone/1)
