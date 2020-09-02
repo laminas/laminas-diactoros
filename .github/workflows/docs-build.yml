@@ -14,3 +14,4 @@ jobs:
         uses: laminas/documentation-theme/github-actions/docs@master
         env:
           DOCS_DEPLOY_KEY: ${{ secrets.DOCS_DEPLOY_KEY }}
+          "GITHUB_TOKEN": ${{ secrets.GITHUB_TOKEN }}
