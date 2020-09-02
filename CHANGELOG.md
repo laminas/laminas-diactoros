@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.3.2 - TBD
+## 2.3.2 - 2020-09-02
 
 ### Added
 
@@ -24,6 +24,22 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#47](https://github.com/laminas/laminas-diactoros/pull/47) corrects the documented exception type thrown by `Laminas\Diactoros\Response\ArraySerializer::fromArray()` to indicate `Laminas\Diactoros\Exception\DeserializationException` is thrown by the method.
 
+
+-----
+
+### Release Notes for [2.3.2](https://github.com/laminas/laminas-diactoros/milestone/2)
+
+
+
+### 2.3.2
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Bug,Documentation
+
+ - [47: Fixes docblock @throws in ArraySerializer::getValueFromKey()](https://github.com/laminas/laminas-diactoros/pull/47) thanks to @samsonasik
 ## 2.3.1 - 2020-07-07
 
 ### Added
