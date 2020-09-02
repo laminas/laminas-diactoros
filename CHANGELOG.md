@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#47](https://github.com/laminas/laminas-diactoros/pull/47) corrects the documented exception type thrown by `Laminas\Diactoros\Response\ArraySerializer::fromArray()` to indicate `Laminas\Diactoros\Exception\DeserializationException` is thrown by the method.
 
 ## 2.3.1 - 2020-07-07
 
