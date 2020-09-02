@@ -22,10 +22,6 @@
         "sort-packages": true
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "2.3.x-dev",
-            "dev-develop": "2.4.x-dev"
-        },
         "laminas": {
             "config-provider": "Laminas\\Diactoros\\ConfigProvider",
             "module": "Laminas\\Diactoros"
