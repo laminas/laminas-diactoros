@@ -2,28 +2,30 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.4.0 - TBD
+## 2.4.0 - 2020-09-02
 
-### Added
 
-- Nothing.
 
-### Changed
+-----
 
-- Nothing.
+### Release Notes for [2.4.0](https://github.com/laminas/laminas-diactoros/milestone/1)
 
-### Deprecated
+Feature release (minor)
 
-- Nothing.
+### 2.4.0
 
-### Removed
+- Total issues resolved: **0**
+- Total pull requests resolved: **2**
+- Total contributors: **2**
 
-- Nothing.
 
-### Fixed
 
-- Nothing.
 
+ - [49: Merge release 2.3.2 into 2.4.x](https://github.com/laminas/laminas-diactoros/pull/49) thanks to @github-actions[bot]
+
+#### Enhancement
+
+ - [45: Allow Streams to be instantiated using GD resources](https://github.com/laminas/laminas-diactoros/pull/45) thanks to @settermjd
 ## 2.3.2 - 2020-09-02
 
 ### Added
