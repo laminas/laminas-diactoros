@@ -36,6 +36,7 @@
     "require-dev": {
         "ext-curl": "*",
         "ext-dom": "*",
+        "ext-gd": "*",
         "ext-libxml": "*",
         "http-interop/http-factory-tests": "^0.5.0",
         "laminas/laminas-coding-standard": "~1.0.0",
