@@ -2,28 +2,25 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.4.1 - TBD
+## 2.4.1 - 2020-09-03
 
-### Added
 
-- Nothing.
 
-### Changed
+-----
 
-- Nothing.
+### Release Notes for [2.4.1](https://github.com/laminas/laminas-diactoros/milestone/6)
 
-### Deprecated
+2.4.x bugfix release (patch)
 
-- Nothing.
+### 2.4.1
 
-### Removed
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-- Nothing.
+#### Bug
 
-### Fixed
-
-- Nothing.
-
+ - [50: gd is used by test suite](https://github.com/laminas/laminas-diactoros/pull/50) thanks to @remicollet
 ## 2.4.0 - 2020-09-02
 
 -----
