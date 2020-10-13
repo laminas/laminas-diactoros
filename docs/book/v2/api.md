@@ -117,7 +117,7 @@ $request = ServerRequestFactory::fromGlobals();
 
 // Returns new ServerRequest instance, using values provided (in this
 // case, equivalent to the previous!)
-$request = RequestFactory::fromGlobals(
+$request = ServerRequestFactory::fromGlobals(
     $_SERVER,
     $_GET,
     $_POST,
