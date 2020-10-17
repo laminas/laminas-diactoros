@@ -370,9 +370,14 @@ class Stream implements StreamInterface
      */
     private function isValidStreamResourceType($resource): bool
     {
-        return (
-            is_resource($resource) &&
-            in_array(get_resource_type($resource), self::ALLOWED_STREAM_RESOURCE_TYPES, true)
-        );
+        if (is_resource($resource)) {
+            return in_array(get_resource_type($resource), self::ALLOWED_STREAM_RESOURCE_TYPES, true);
+        }
+
+        if (PHP_VERSION_ID >= 80000 && $resource instanceof \GdImage) {
+            return true;
+        }
+
+        return false;
     }
 }
