@@ -25,7 +25,7 @@ use const SEEK_SET;
 class RelativeStreamTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     public function testToString()
     {
         $decorated = $this->prophesize(Stream::class);
