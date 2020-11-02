@@ -347,7 +347,7 @@ class Stream implements StreamInterface
         }
 
         if ($error) {
-            throw new Exception\InvalidArgumentException('Invalid stream reference provided');
+            throw new Exception\RuntimeException('Invalid stream reference provided');
         }
 
         if (! $this->isValidStreamResourceType($resource)) {
