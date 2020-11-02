@@ -38,7 +38,7 @@
         "ext-dom": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
-        "http-interop/http-factory-tests": "^0.7.0",
+        "http-interop/http-factory-tests": "^0.8.0",
         "laminas/laminas-coding-standard": "~1.0.0",
         "php-http/psr7-integration-tests": "^1.1",
         "phpspec/prophecy-phpunit": "^2.0",
