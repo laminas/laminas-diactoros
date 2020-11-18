@@ -6,11 +6,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#46](https://github.com/laminas/laminas-diactoros/pull/46) adds the class `Laminas\Diactoros\Exception\RuntimeException`.
+
+- [#46](https://github.com/laminas/laminas-diactoros/pull/46) adds support for PHP 8.
 
 ### Changed
 
-- Nothing.
+- [#46](https://github.com/laminas/laminas-diactoros/pull/46) changes the exception thrown by `Laminas\Diactoros\Stream::setStream()` when an error occurs opening a stream resource. Previously, it would throw a `Laminas\Diactoros\Exception\InvalidArgumentException`; it now throws `Laminas\Diactoros\Exception\RuntimeException`. This was done to comply with PSR-7 integration test suites, which test behavior of PSR-7 implementations against the specification.
 
 ### Deprecated
 
@@ -18,7 +20,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#46](https://github.com/laminas/laminas-diactoros/pull/46) removes support for PHP versions prior to 7.3.
 
 ### Fixed
 
