@@ -240,17 +240,17 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 <div class="version-selector">
     <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
                 v2
             
         </button>
-        <div class="dropdown-menu" aria-labelledby="version-selector-dropdown">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
                     <a href="../overview/" class="dropdown-item active">
@@ -390,7 +390,6 @@ foreach ($response-&gt;getHeaders() as $header =&gt; $values) {
     printf("    %s: %s\n", $header, implode(', ', $values));
 }
 printf("Message:\n%s\n", $response-&gt;getBody());</code></pre>
-
 <p>(Note: <code>laminas-diactoros</code> does NOT ship with a client implementation; the above is just an
 illustration of a possible implementation.)</p>
 <h2 id="server-side-applications">Server-Side Applications</h2>
@@ -417,7 +416,6 @@ the associated superglobal will be used.</p>
     $_COOKIE,
     $_FILES
 );</code></pre>
-
 <p>When no cookie array is supplied, <code>fromGlobals</code> will first try to parse the supplied <code>cookie</code> header
 before falling back to the <code>$_COOKIE</code> superglobal. This is done because PHP has some legacy handling
 for request parameters which were then registered as global variables. Due to this, cookies with a period

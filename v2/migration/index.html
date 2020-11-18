@@ -240,17 +240,17 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 <div class="version-selector">
     <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
                 v2
             
         </button>
-        <div class="dropdown-menu" aria-labelledby="version-selector-dropdown">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
                     <a href="../overview/" class="dropdown-item active">
@@ -363,7 +363,6 @@ options for doing so:</p>
 <li>Adopt the v2 release specifically:</li>
 </ul>
 <pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^2.0"</code></pre>
-
 <ul>
 <li>
 <p>Update your constraint to allow either version:</p>
@@ -371,12 +370,10 @@ options for doing so:</p>
 <li>
 <p>Edit the constraint in your <code>composer.json</code> to read:</p>
 <pre class="highlight"><code class="language-json">"laminas/laminas-diactoros": "^1.8.6 || ^2.0"</code></pre>
-
 </li>
 <li>
 <p>Update your dependencies:</p>
 <pre class="highlight"><code class="language-bash">$ composer update</code></pre>
-
 </li>
 </ul>
 <p>The first approach may fail if libraries you depend on specifically require a

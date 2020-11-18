@@ -225,17 +225,17 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 <div class="version-selector">
     <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
                 v1
             
         </button>
-        <div class="dropdown-menu" aria-labelledby="version-selector-dropdown">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
                     <a href="../../v2/overview/" class="dropdown-item">
@@ -383,7 +383,6 @@ foreach ($response-&gt;getHeaders() as $header =&gt; $values) {
     printf("    %s: %s\n", $header, implode(', ', $values));
 }
 printf("Message:\n%s\n", $response-&gt;getBody());</code></pre>
-
 <p>(Note: <code>laminas-diactoros</code> does NOT ship with a client implementation; the above is just an
 illustration of a possible implementation.)</p>
 <h2 id="server-side-applications">Server-Side Applications</h2>
@@ -410,7 +409,6 @@ the associated superglobal will be used.</p>
     $_COOKIE,
     $_FILES
 );</code></pre>
-
 <p>When no cookie array is supplied, <code>fromGlobals</code> will first try to parse the supplied <code>cookie</code> header
 before falling back to the <code>$_COOKIE</code> superglobal. This is done because PHP has some legacy handling
 for request parameters which were then registered as global variables. Due to this, cookies with a period
@@ -434,7 +432,6 @@ $response-&gt;getBody()-&gt;write("more content\n"); // now "some content\nmore 
 $response = $response
     -&gt;withHeader('Content-Type', 'text/plain')
     -&gt;withAddedHeader('X-Show-Something', 'something');</code></pre>
-
 <h3>"Serving" an Application</h3>
 <blockquote>
 <h3>Deprecated</h3>
@@ -475,7 +472,6 @@ $server = Laminas\Diactoros\Server::createServerFromRequest(
   },
   $request
 );</code></pre>
-
 <p>Server callbacks can expect up to three arguments, in the following order:</p>
 <ul>
 <li><code>$request</code> - the request object</li>
@@ -484,7 +480,6 @@ $server = Laminas\Diactoros\Server::createServerFromRequest(
 </ul>
 <p>Once you have your server instance, you must instruct it to listen:</p>
 <pre class="highlight"><code class="language-php">$server-&gt;listen();</code></pre>
-
 <p>At this time, you can optionally provide a callback to <code>listen()</code>; this will be passed to the
 handler as the third argument (<code>$done</code>):</p>
 <pre class="highlight"><code class="language-php">$server-&gt;listen(function ($request, $response, $error = null) {
@@ -493,7 +488,6 @@ handler as the third argument (<code>$done</code>):</p>
     }
     // do something with the error...
 });</code></pre>
-
 <p>Typically, the <code>listen</code> callback will be an error handler, and can expect to receive the request,
 response, and error as its arguments (though the error may be null).</p>
 

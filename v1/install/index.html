@@ -225,17 +225,17 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 <div class="version-selector">
     <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
                 v1
             
         </button>
-        <div class="dropdown-menu" aria-labelledby="version-selector-dropdown">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
                     <a href="../../v2/overview/" class="dropdown-item">
@@ -326,7 +326,6 @@
     <h1 id="installation">Installation</h1>
 <p>Install this library using composer:</p>
 <pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^1.8.6"</code></pre>
-
 <p><code>laminas-diactoros</code> has the following dependencies (which are managed by Composer):</p>
 <ul>
 <li><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
