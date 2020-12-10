@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.3.1@2feba22a005a18bf31d4c7b9bdb9252c73897476">
-  <file src="src/AbstractSerializer.php">
-    <MissingParamType occurrences="1">
-      <code>$header</code>
-    </MissingParamType>
-    <MixedArgument occurrences="2">
-      <code>$header</code>
-      <code>$value</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$value</code>
-      <code>$values</code>
-    </MixedAssignment>
-  </file>
   <file src="src/CallbackStream.php">
-    <MissingReturnType occurrences="1">
-      <code>seek</code>
-    </MissingReturnType>
     <MixedAssignment occurrences="1">
       <code>$contents</code>
     </MixedAssignment>
@@ -43,48 +27,23 @@
       <code>$code</code>
     </MixedArgument>
   </file>
-  <file src="src/HeaderSecurity.php">
-    <MissingReturnType occurrences="2">
-      <code>assertValid</code>
-      <code>assertValidName</code>
-    </MissingReturnType>
-    <RedundantCast occurrences="1">
-      <code>(string) $value</code>
-    </RedundantCast>
-  </file>
   <file src="src/MessageTrait.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($version)</code>
     </DocblockTypeContradiction>
-    <LessSpecificImplementedReturnType occurrences="1">
-      <code>array</code>
-    </LessSpecificImplementedReturnType>
     <MissingParamType occurrences="1">
       <code>$stream</code>
     </MissingParamType>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;headers[$header]</code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="2">
       <code>$header</code>
       <code>$header</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayOffset occurrences="5">
-      <code>$new-&gt;headers[$header]</code>
-      <code>$new-&gt;headers[$new-&gt;headerNames[$normalized]]</code>
-      <code>$new-&gt;headers[$original]</code>
-      <code>$this-&gt;headers[$header]</code>
-      <code>$this-&gt;headers[$header]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="4">
-      <code>$header</code>
-      <code>$header</code>
-      <code>$original</code>
+    <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>string[]</code>
-    </MixedInferredReturnType>
+    <MixedPropertyTypeCoercion occurrences="1">
+      <code>$headerNames</code>
+    </MixedPropertyTypeCoercion>
     <ParamNameMismatch occurrences="2">
       <code>$header</code>
       <code>$header</code>
@@ -108,24 +67,6 @@
     <PossiblyNullOperand occurrences="1">
       <code>$this-&gt;decoratedStream-&gt;getSize()</code>
     </PossiblyNullOperand>
-  </file>
-  <file src="src/Request.php">
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;headers[$header]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="1">
-      <code>$header</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>array</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;headers[$header]</code>
-    </MixedReturnStatement>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>$headers</code>
-      <code>array</code>
-    </MixedReturnTypeCoercion>
   </file>
   <file src="src/Request/ArraySerializer.php">
     <LessSpecificReturnStatement occurrences="1"/>
@@ -157,6 +98,9 @@
       <code>$requestTarget</code>
       <code>$version</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$request-&gt;getHeaders()</code>
+    </MixedArgumentTypeCoercion>
     <MoreSpecificReturnType occurrences="1">
       <code>Request</code>
     </MoreSpecificReturnType>
@@ -195,10 +139,6 @@
       <code>static::MAX_STATUS_CODE_VALUE</code>
       <code>static::MIN_STATUS_CODE_VALUE</code>
     </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$reasonPhrase</code>
-      <code>$this-&gt;reasonPhrase</code>
-    </MixedAssignment>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(int) $code</code>
     </RedundantCastGivenDocblockType>
@@ -256,6 +196,9 @@
       <code>$status</code>
       <code>$version</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$response-&gt;getHeaders()</code>
+    </MixedArgumentTypeCoercion>
     <RedundantCast occurrences="1">
       <code>(int) $status</code>
     </RedundantCast>
@@ -362,13 +305,9 @@
       <code>$port</code>
       <code>$value</code>
     </MixedArgument>
-    <PossiblyNullPropertyAssignmentValue occurrences="2">
-      <code>$port</code>
-      <code>isset($parts['port']) ? $parts['port'] : null</code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$port</code>
-    </PropertyNotSetInConstructor>
+    <PossiblyNullOperand occurrences="1">
+      <code>$this-&gt;port</code>
+    </PossiblyNullOperand>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(int) $port</code>
     </RedundantCastGivenDocblockType>
@@ -527,25 +466,6 @@
       <code>$callback</code>
       <code>$expected</code>
     </MissingParamType>
-    <MissingReturnType occurrences="17">
-      <code>phpCallbacksForStreams</code>
-      <code>testAllowsArbitraryPhpCallbacks</code>
-      <code>testClose</code>
-      <code>testDetach</code>
-      <code>testEof</code>
-      <code>testGetContents</code>
-      <code>testGetMetadata</code>
-      <code>testGetSize</code>
-      <code>testIsReadable</code>
-      <code>testIsSeekable</code>
-      <code>testIsWritable</code>
-      <code>testRead</code>
-      <code>testRewind</code>
-      <code>testSeek</code>
-      <code>testTell</code>
-      <code>testToString</code>
-      <code>testWrite</code>
-    </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$callback</code>
     </MixedArgument>
@@ -553,6 +473,9 @@
       <code>$ret</code>
       <code>$ret</code>
     </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
   </file>
   <file src="test/HeaderSecurityTest.php">
     <MissingParamType occurrences="5">
@@ -730,27 +653,6 @@
       <code>$requestTarget</code>
       <code>$text</code>
     </MissingParamType>
-    <MissingReturnType occurrences="19">
-      <code>absoluteForms</code>
-      <code>headersWithContinuationLines</code>
-      <code>invalidRequestLines</code>
-      <code>messagesWithInvalidHeaders</code>
-      <code>originForms</code>
-      <code>testCanDeserializeRequestWithAbsoluteForm</code>
-      <code>testCanDeserializeRequestWithAsteriskForm</code>
-      <code>testCanDeserializeRequestWithAuthorityForm</code>
-      <code>testCanDeserializeRequestWithOriginForm</code>
-      <code>testCanDeserializeResponseWithHeaderContinuations</code>
-      <code>testCanDeserializeResponseWithMultipleHeadersOfSameName</code>
-      <code>testDeserializationRaisesExceptionForMalformedHeaders</code>
-      <code>testFromStreamStopsReadingAfterScanningHeader</code>
-      <code>testFromStreamThrowsExceptionWhenStreamIsNotReadable</code>
-      <code>testFromStreamThrowsExceptionWhenStreamIsNotSeekable</code>
-      <code>testRaisesExceptionDuringDeserializationForInvalidRequestLine</code>
-      <code>testSerializesBasicRequest</code>
-      <code>testSerializesMultipleHeadersCorrectly</code>
-      <code>testSerializesRequestWithBody</code>
-    </MissingReturnType>
     <MixedArgument occurrences="3">
       <code>$exceptionMessage</code>
       <code>$message</code>
@@ -766,6 +668,13 @@
       <code>$method</code>
       <code>$method</code>
     </MixedAssignment>
+    <MixedInferredReturnType occurrences="5">
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
     <MixedOperand occurrences="4">
       <code>$i</code>
       <code>$line</code>
