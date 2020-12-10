@@ -405,9 +405,11 @@ trait MessageTrait
     /**
      * Ensure header name and values are valid.
      *
+     * @param string $name
+     *
      * @throws Exception\InvalidArgumentException
      */
-    private function assertHeader(string $name) : void
+    private function assertHeader($name) : void
     {
         HeaderSecurity::assertValidName($name);
     }
