@@ -31,6 +31,8 @@ class Response implements ResponseInterface
      * Map of standard HTTP status code/reason phrases
      *
      * @var array
+     *
+     * @psalm-var array<int, string>
      */
     private $phrases = [
         // INFORMATIONAL CODES

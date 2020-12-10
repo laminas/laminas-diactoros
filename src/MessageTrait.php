@@ -31,6 +31,8 @@ trait MessageTrait
      * List of all registered headers, as key => array of values.
      *
      * @var array
+     *
+     * @psalm-var array<array-key, array<array-key, string>>
      */
     protected $headers = [];
 
@@ -38,6 +40,8 @@ trait MessageTrait
      * Map of normalized header name to original name used to register header.
      *
      * @var array
+     *
+     * @psalm-var array<string, string>
      */
     protected $headerNames = [];
 
@@ -104,6 +108,8 @@ trait MessageTrait
      *
      * @return array Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
+     *
+     * @psalm-return array<array-key, array<array-key, string>>
      */
     public function getHeaders() : array
     {
@@ -132,20 +138,20 @@ trait MessageTrait
      * If the header does not appear in the message, this method MUST return an
      * empty array.
      *
-     * @param string $header Case-insensitive header field name.
+     * @param string $name Case-insensitive header field name.
      * @return string[] An array of string values as provided for the given
      *    header. If the header does not appear in the message, this method MUST
      *    return an empty array.
      */
-    public function getHeader($header) : array
+    public function getHeader($name) : array
     {
-        if (! $this->hasHeader($header)) {
+        if (! $this->hasHeader($name)) {
             return [];
         }
 
-        $header = $this->headerNames[strtolower($header)];
+        $name = $this->headerNames[strtolower($name)];
 
-        return $this->headers[$header];
+        return $this->headers[$name];
     }
 
     /**
@@ -399,11 +405,9 @@ trait MessageTrait
     /**
      * Ensure header name and values are valid.
      *
-     * @param string $name
-     *
      * @throws Exception\InvalidArgumentException
      */
-    private function assertHeader($name) : void
+    private function assertHeader(string $name) : void
     {
         HeaderSecurity::assertValidName($name);
     }
