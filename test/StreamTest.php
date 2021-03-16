@@ -477,7 +477,6 @@ class StreamTest extends TestCase
             'true' => [ true ],
             'int' => [ 1 ],
             'float' => [ 1.1 ],
-            'string-non-resource' => [ 'foo-bar-baz' ],
             'array' => [ [ fopen($this->tmpnam, 'r+') ] ],
             'object' => [ (object) [ 'resource' => fopen($this->tmpnam, 'r+') ] ],
         ];
@@ -492,6 +491,14 @@ class StreamTest extends TestCase
         $this->expectExceptionMessage('Invalid stream');
 
         $this->stream->attach($resource);
+    }
+
+    public function testAttachWithInvalidStringResourceRaisesException()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Invalid stream');
+
+        $this->stream->attach('foo-bar-baz');
     }
 
     public function testAttachWithResourceAttachesResource()
