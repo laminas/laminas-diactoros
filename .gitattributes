@@ -2,6 +2,7 @@
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
+/.laminas-ci.json
 /docs/ export-ignore
 /mkdocs.yml export-ignore
 /phpcs.xml export-ignore
