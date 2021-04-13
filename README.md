@@ -1,7 +1,6 @@
 # laminas-diactoros
 
-[![Build Status](https://travis-ci.com/laminas/laminas-diactoros.svg)](https://travis-ci.com/laminas/laminas-diactoros)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-diactoros/badge.svg)](https://coveralls.io/github/laminas/laminas-diactoros)
+[![Build Status](https://github.com/laminas/laminas-diactoros/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-diactoros/actions/workflows/continuous-integration.yml)
 
 > Diactoros (pronunciation: `/dɪʌktɒrɒs/`): an epithet for Hermes, meaning literally, "the messenger."
 
