@@ -388,7 +388,7 @@ illustration of a possible implementation.)</p>
 <h2 id="server-side-applications">Server-Side Applications</h2>
 <p>Server-side applications will need to marshal the incoming request based on superglobals, and will
 then populate and send a response.</p>
-<h3>Marshaling an incoming Request</h3>
+<h3 id="marshaling-an-incoming-request">Marshaling an incoming Request</h3>
 <p>PHP contains a plethora of information about the incoming request, and keeps that information in a
 variety of locations. <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals()</code> can simplify marshaling
 that information into a request instance.</p>
@@ -415,7 +415,7 @@ for request parameters which were then registered as global variables. Due to th
 in the name were renamed with underlines. By getting the cookies directly from the cookie header, you have
 access to the original cookies in the way you set them in your application and they are send by the user
 agent.</p>
-<h3>Manipulating the Response</h3>
+<h3 id="manipulating-the-response">Manipulating the Response</h3>
 <p>Use the response object to add headers and provide content for the response.  Writing to the body
 does not create a state change in the response, so it can be done without capturing the return
 value. Manipulating headers does, however.</p>
@@ -432,9 +432,9 @@ $response-&gt;getBody()-&gt;write("more content\n"); // now "some content\nmore 
 $response = $response
     -&gt;withHeader('Content-Type', 'text/plain')
     -&gt;withAddedHeader('X-Show-Something', 'something');</code></pre>
-<h3>"Serving" an Application</h3>
+<h3 id="serving-an-application">"Serving" an Application</h3>
 <blockquote>
-<h3>Deprecated</h3>
+<h3 id="deprecated">Deprecated</h3>
 <p>The class <code>Laminas\Diactoros\Server</code> is deprecated as of the 1.8.0 release. We
 recommend using the class <code>Laminas\HttpHandlerRunner\RequestHandlerRunner</code> via
 the package <a href="https://docs.laminas.dev/laminas-httphandlerrunner">laminas/laminas-httphandlerrunner</a>
@@ -627,6 +627,7 @@ response, and error as its arguments (though the error may be null).</p>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -699,7 +700,7 @@ response, and error as its arguments (though the error may be null).</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-diactoros/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
