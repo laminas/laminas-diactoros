@@ -1,8 +1,5 @@
 {
     "extensions": [
-        "curl",
-        "dom",
-        "gd",
-        "libxml"
+        "gd"
     ]
 }
