@@ -32,7 +32,7 @@ trait MessageTrait
      *
      * @var array
      *
-     * @psalm-var array<array-key, array<array-key, string>>
+     * @psalm-var array<non-empty-string, list<string>>
      */
     protected $headers = [];
 
@@ -41,7 +41,7 @@ trait MessageTrait
      *
      * @var array
      *
-     * @psalm-var array<string, string>
+     * @psalm-var array<non-empty-string, non-empty-string>
      */
     protected $headerNames = [];
 
@@ -109,7 +109,7 @@ trait MessageTrait
      * @return array Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
      *
-     * @psalm-return array<array-key, array<array-key, string>>
+     * @psalm-return array<non-empty-string, list<string>>
      */
     public function getHeaders() : array
     {

@@ -32,7 +32,7 @@ class Response implements ResponseInterface
      *
      * @var array
      *
-     * @psalm-var array<int, string>
+     * @psalm-var array<positive-int, non-empty-string>
      */
     private $phrases = [
         // INFORMATIONAL CODES
