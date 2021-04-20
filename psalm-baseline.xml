@@ -41,13 +41,19 @@
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion occurrences="1">
+    <MixedPropertyTypeCoercion occurrences="3">
       <code>$headerNames</code>
+      <code>$headers</code>
+      <code>$new-&gt;headers</code>
     </MixedPropertyTypeCoercion>
     <ParamNameMismatch occurrences="2">
       <code>$header</code>
       <code>$header</code>
     </ParamNameMismatch>
+    <PropertyTypeCoercion occurrences="2">
+      <code>$new-&gt;headerNames</code>
+      <code>$new-&gt;headers</code>
+    </PropertyTypeCoercion>
   </file>
   <file src="src/PhpInputStream.php">
     <MissingParamType occurrences="1">
@@ -114,9 +120,6 @@
       <code>RequestInterface</code>
       <code>RequestInterface</code>
     </LessSpecificImplementedReturnType>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$header</code>
-    </MixedArgumentTypeCoercion>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$requestTarget</code>
     </MoreSpecificImplementedParamType>
