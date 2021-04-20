@@ -113,7 +113,7 @@ class JsonResponseTest extends TestCase
     /**
      * @dataProvider valuesToJsonEncode
      */
-    public function testUsesSaneDefaultJsonEncodingFlags($value, $key)
+    public function testUsesSaneDefaultJsonEncodingFlags($value, string $key)
     {
         $defaultFlags = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES;
 

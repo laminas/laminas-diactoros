@@ -104,7 +104,7 @@ class StreamTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $stream = new Stream(['  THIS WILL NOT WORK  ']);
+        new Stream(['  THIS WILL NOT WORK  ']);
     }
 
     public function testStringSerializationReturnsEmptyStringWhenStreamIsNotReadable()

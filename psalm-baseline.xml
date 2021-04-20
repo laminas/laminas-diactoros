@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.3.1@2feba22a005a18bf31d4c7b9bdb9252c73897476">
+<files psalm-version="4.7.0@d4377c0baf3ffbf0b1ec6998e8d1be2a40971005">
   <file src="src/CallbackStream.php">
     <MixedAssignment occurrences="1">
       <code>$contents</code>
@@ -182,6 +182,11 @@
     <MixedAssignment occurrences="1">
       <code>$hasContentType</code>
     </MixedAssignment>
+  </file>
+  <file src="src/Response/JsonResponse.php">
+    <UnusedFunctionCall occurrences="1">
+      <code>json_encode</code>
+    </UnusedFunctionCall>
   </file>
   <file src="src/Response/RedirectResponse.php">
     <DocblockTypeContradiction occurrences="1">
@@ -689,7 +694,7 @@
     <InvalidArgument occurrences="1">
       <code>['TOTALLY INVALID']</code>
     </InvalidArgument>
-    <MissingParamType occurrences="13">
+    <MissingParamType occurrences="12">
       <code>$body</code>
       <code>$contains</code>
       <code>$expected</code>
@@ -698,7 +703,6 @@
       <code>$method</code>
       <code>$method</code>
       <code>$method</code>
-      <code>$name</code>
       <code>$request</code>
       <code>$requestTarget</code>
       <code>$uri</code>
@@ -818,8 +822,7 @@
     </MixedArgument>
   </file>
   <file src="test/Response/JsonResponseTest.php">
-    <MissingParamType occurrences="3">
-      <code>$key</code>
+    <MissingParamType occurrences="2">
       <code>$value</code>
       <code>$value</code>
     </MissingParamType>
@@ -840,9 +843,6 @@
       <code>testWithPayload</code>
       <code>valuesToJsonEncode</code>
     </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$key</code>
-    </MixedArgument>
   </file>
   <file src="test/Response/RedirectResponseTest.php">
     <MissingParamType occurrences="1">
@@ -929,7 +929,7 @@
     <InvalidArgument occurrences="1">
       <code>[ 'TOTALLY INVALID' ]</code>
     </InvalidArgument>
-    <MissingParamType occurrences="10">
+    <MissingParamType occurrences="9">
       <code>$body</code>
       <code>$code</code>
       <code>$code</code>
@@ -937,7 +937,6 @@
       <code>$contains</code>
       <code>$headers</code>
       <code>$invalidReasonPhrase</code>
-      <code>$name</code>
       <code>$reasonPhrase</code>
       <code>$value</code>
     </MissingParamType>
