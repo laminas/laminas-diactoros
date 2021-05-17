@@ -1,7 +1,6 @@
 {
     "name": "laminas/laminas-diactoros",
     "description": "PSR HTTP Message implementations",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "http",
@@ -10,28 +9,22 @@
         "psr-17"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-diactoros/",
-        "issues": "https://github.com/laminas/laminas-diactoros/issues",
-        "source": "https://github.com/laminas/laminas-diactoros",
-        "rss": "https://github.com/laminas/laminas-diactoros/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laminas": {
-            "config-provider": "Laminas\\Diactoros\\ConfigProvider",
-            "module": "Laminas\\Diactoros"
-        }
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-zendframework-bridge": "^1.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0"
+    },
+    "replace": {
+        "zendframework/zend-diactoros": "^2.2.1"
+    },
+    "conflict": {
+        "phpspec/prophecy": "<1.9.0"
+    },
+    "provide": {
+        "psr/http-factory-implementation": "1.0",
+        "psr/http-message-implementation": "1.0"
     },
     "require-dev": {
         "ext-curl": "*",
@@ -44,14 +37,19 @@
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.1"
     },
-    "provide": {
-        "psr/http-factory-implementation": "1.0",
-        "psr/http-message-implementation": "1.0"
+    "config": {
+        "sort-packages": true
     },
-    "conflict": {
-        "phpspec/prophecy": "<1.9.0"
+    "extra": {
+        "laminas": {
+            "config-provider": "Laminas\\Diactoros\\ConfigProvider",
+            "module": "Laminas\\Diactoros"
+        }
     },
     "autoload": {
+        "psr-4": {
+            "Laminas\\Diactoros\\": "src/"
+        },
         "files": [
             "src/functions/create_uploaded_file.php",
             "src/functions/marshal_headers_from_sapi.php",
@@ -69,10 +67,7 @@
             "src/functions/normalize_server.legacy.php",
             "src/functions/normalize_uploaded_files.legacy.php",
             "src/functions/parse_cookie_header.legacy.php"
-        ],
-        "psr-4": {
-            "Laminas\\Diactoros\\": "src/"
-        }
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -89,7 +84,12 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-diactoros": "^2.2.1"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-diactoros/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-diactoros",
+        "docs": "https://docs.laminas.dev/laminas-diactoros/",
+        "rss": "https://github.com/laminas/laminas-diactoros/releases.atom"
     }
 }
