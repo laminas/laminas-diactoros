@@ -136,8 +136,10 @@ abstract class AbstractSerializer
 
     /**
      * Filter a header name to wordcase
+     *
+     * @param string $header
      */
-    protected static function filterHeader(string $header) : string
+    protected static function filterHeader($header) : string
     {
         $filtered = str_replace('-', ' ', $header);
         $filtered = ucwords($filtered);

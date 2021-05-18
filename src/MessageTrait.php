@@ -138,20 +138,20 @@ trait MessageTrait
      * If the header does not appear in the message, this method MUST return an
      * empty array.
      *
-     * @param string $name Case-insensitive header field name.
+     * @param string $header Case-insensitive header field name.
      * @return string[] An array of string values as provided for the given
      *    header. If the header does not appear in the message, this method MUST
      *    return an empty array.
      */
-    public function getHeader($name) : array
+    public function getHeader($header) : array
     {
-        if (! $this->hasHeader($name)) {
+        if (! $this->hasHeader($header)) {
             return [];
         }
 
-        $name = $this->headerNames[strtolower($name)];
+        $header = $this->headerNames[strtolower($header)];
 
-        return $this->headers[$name];
+        return $this->headers[$header];
     }
 
     /**

@@ -97,8 +97,9 @@ class CallbackStream implements StreamInterface
 
     /**
      * {@inheritdoc}
+     * @return void
      */
-    public function seek($offset, $whence = SEEK_SET) : void
+    public function seek($offset, $whence = SEEK_SET)
     {
         throw Exception\UnseekableStreamException::forCallbackStream();
     }
