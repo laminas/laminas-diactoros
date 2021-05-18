@@ -506,7 +506,7 @@ class RequestTest extends TestCase
      * @group ZF2015-04
      * @dataProvider headersWithInjectionVectors
      */
-    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors($name, $value)
+    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value)
     {
         $this->expectException(InvalidArgumentException::class);
 

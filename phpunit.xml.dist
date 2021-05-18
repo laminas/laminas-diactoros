@@ -1,18 +1,24 @@
-<phpunit bootstrap="./vendor/autoload.php" colors="true">
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    bootstrap="./vendor/autoload.php"
+    colors="true"
+    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+
     <testsuites>
         <testsuite name="Laminas\\Diactoros Tests">
             <directory>./test</directory>
         </testsuite>
+
         <testsuite name="PSR-17 Integration Tests">
             <directory>./vendor/http-interop/http-factory-tests/test</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
 
     <php>
         <env name="ALWAYS_REFRESH_IANA_HTTP_STATUS_CODES" value="false"/>

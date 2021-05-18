@@ -394,7 +394,7 @@ class ServerRequestFactoryTest extends TestCase
             'QUERY_STRING' => 'bar=baz',
         ];
 
-        $cookies = $query = $body = $files = [
+        $cookies = $query = $body = [
             'bar' => 'baz',
         ];
 

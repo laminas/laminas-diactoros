@@ -118,6 +118,8 @@ abstract class AbstractSerializer
 
     /**
      * Serialize headers to string values.
+     *
+     * @psalm-param array<string, string[]> $headers
      */
     protected static function serializeHeaders(array $headers) : string
     {
@@ -134,6 +136,8 @@ abstract class AbstractSerializer
 
     /**
      * Filter a header name to wordcase
+     *
+     * @param string $header
      */
     protected static function filterHeader($header) : string
     {

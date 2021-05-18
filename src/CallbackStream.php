@@ -97,6 +97,9 @@ class CallbackStream implements StreamInterface
 
     /**
      * {@inheritdoc}
+     * @param int $offset
+     * @param int $whence
+     * @return void
      */
     public function seek($offset, $whence = SEEK_SET)
     {
