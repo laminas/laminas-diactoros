@@ -422,6 +422,21 @@ for request parameters which were then registered as global variables. Due to th
 in the name were renamed with underlines. By getting the cookies directly from the cookie header, you have
 access to the original cookies in the way you set them in your application and they are send by the user
 agent.</p>
+<blockquote>
+<h4 id="strict-content-header-matching">Strict Content- header matching</h4>
+<p>Available since version 2.6.0</p>
+<p>By default, Diactoros will resolve any <code>$_SERVER</code> keys matching the prefix <code>CONTENT_</code> as HTTP headers.
+However, the proper behavior is to only match <code>CONTENT_TYPE</code>, <code>CONTENT_LENGTH</code>, and <code>CONTENT_MD5</code>, mapping them to <code>Content-Type</code>, <code>Content-Length</code>, and <code>Content-MD5</code> headers, respectively.
+Since changing the existing behavior may break some applications, we will not make the functionality more restrictive before version 3.0.0.
+If you are running into issues whereby you have ENV variables that are being munged into request headers, you can define the following ENV variable in your application to enable the more strict behavior:</p>
+<ul>
+<li>LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP</li>
+</ul>
+<p>As an example, you could define it in your application's <code>.env</code> file if you are using <a href="https://github.com/vlucas/phpdotenv">vlucas/phpdotenv</a>:</p>
+<pre class="highlight"><code class="language-env">LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP=true</code></pre>
+<p>Alternately, you could define it as a php-fpm or Apache environment variable.</p>
+<p>Once this ENV variable is present, the logic for identifying <code>Content-*</code> headers will only look at the <code>CONTENT_TYPE</code>, <code>CONTENT_LENGTH</code>, and <code>CONTENT_MD5</code> variables in <code>$_SERVER</code>, and skip over any others.</p>
+</blockquote>
 <h3 id="manipulating-the-response">Manipulating the Response</h3>
 <p>Use the response object to add headers and provide content for the response.  Writing to the body
 does not create a state change in the response, so it can be done without capturing the return
