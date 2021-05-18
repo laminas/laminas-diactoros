@@ -18,7 +18,7 @@ use function substr;
 function marshalHeadersFromSapi(array $server) : array
 {
     $contentHeaderLookup = isset($server['LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP'])
-        ? function (string $key) : bool {
+        ? static function (string $key) : bool {
             static $contentHeaders = [
                 'CONTENT_TYPE'   => true,
                 'CONTENT_LENGTH' => true,
@@ -26,7 +26,7 @@ function marshalHeadersFromSapi(array $server) : array
             ];
             return isset($contentHeaders[$key]);
         }
-        : function (string $key): bool {
+        : static function (string $key): bool {
             return strpos($key, 'CONTENT_') === 0;
         };
 
