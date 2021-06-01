@@ -34,3 +34,11 @@ Source files for documentation are [in the docs/ tree](docs/).
   [Develop image]:  https://travis-ci.com/laminas/laminas-diactoros.svg?branch=develop
   [Develop coverage image]: https://coveralls.io/repos/laminas/laminas-diactoros/badge.svg?branch=develop
   [Develop coverage]: https://coveralls.io/r/laminas/laminas-diactoros?branch=develop
+
+## Support
+
+If you need support with the project, read [the support documentation](SUPPORT.md).
+  
+## Contributing
+
+If you wish to contribute to the project, read the [contributing guidelines](CONTRIBUTING.md).
