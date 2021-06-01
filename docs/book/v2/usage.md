@@ -94,6 +94,27 @@ in the name were renamed with underlines. By getting the cookies directly from t
 access to the original cookies in the way you set them in your application and they are send by the user
 agent.
 
+> #### Strict Content- header matching
+>
+> Available since version 2.6.0
+>
+> By default, Diactoros will resolve any `$_SERVER` keys matching the prefix `CONTENT_` as HTTP headers.
+> However, the proper behavior is to only match `CONTENT_TYPE`, `CONTENT_LENGTH`, and `CONTENT_MD5`, mapping them to `Content-Type`, `Content-Length`, and `Content-MD5` headers, respectively.
+> Since changing the existing behavior may break some applications, we will not make the functionality more restrictive before version 3.0.0.
+> If you are running into issues whereby you have ENV variables that are being munged into request headers, you can define the following ENV variable in your application to enable the more strict behavior:
+>
+> - LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP
+>
+> As an example, you could define it in your application's `.env` file if you are using [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv):
+>
+> ```env
+> LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP=true
+> ```
+>
+> Alternately, you could define it as a php-fpm or Apache environment variable.
+>
+> Once this ENV variable is present, the logic for identifying `Content-*` headers will only look at the `CONTENT_TYPE`, `CONTENT_LENGTH`, and `CONTENT_MD5` variables in `$_SERVER`, and skip over any others.
+
 ### Manipulating the Response
 
 Use the response object to add headers and provide content for the response.  Writing to the body

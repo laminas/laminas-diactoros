@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -56,7 +50,6 @@ final class HeaderSecurity
      */
     public static function filter(string $value) : string
     {
-        $value  = (string) $value;
         $length = strlen($value);
         $string = '';
         for ($i = 0; $i < $length; $i += 1) {
@@ -134,7 +127,7 @@ final class HeaderSecurity
      * @param mixed $value Value to be tested. This method asserts it is a string or number.
      * @throws Exception\InvalidArgumentException for invalid values
      */
-    public static function assertValid($value)
+    public static function assertValid($value) : void
     {
         if (! is_string($value) && ! is_numeric($value)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -157,7 +150,7 @@ final class HeaderSecurity
      * @param mixed $name
      * @throws Exception\InvalidArgumentException
      */
-    public static function assertValidName($name)
+    public static function assertValidName($name) : void
     {
         if (! is_string($name)) {
             throw new Exception\InvalidArgumentException(sprintf(

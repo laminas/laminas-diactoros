@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
@@ -342,7 +336,7 @@ class RequestTest extends TestCase
         $request = new Request('http://example.com');
         $headers = $request->getHeaders();
         $this->assertArrayHasKey('Host', $headers);
-        $this->assertContains('example.com', $headers['Host']);
+        $this->assertStringContainsString('example.com', $headers['Host'][0]);
     }
 
     /**
@@ -421,7 +415,7 @@ class RequestTest extends TestCase
     {
         $request = new Request('http://example.com');
         $header = $request->getHeaderLine('host');
-        $this->assertContains('example.com', $header);
+        $this->assertStringContainsString('example.com', $header);
     }
 
     /**
@@ -512,7 +506,7 @@ class RequestTest extends TestCase
      * @group ZF2015-04
      * @dataProvider headersWithInjectionVectors
      */
-    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors($name, $value)
+    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value)
     {
         $this->expectException(InvalidArgumentException::class);
 

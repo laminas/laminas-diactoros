@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros\Response;
@@ -56,8 +50,8 @@ class SerializerTest extends TestCase
             ->withAddedHeader('X-Foo-Bar', 'Bat');
 
         $message = Serializer::toString($response);
-        $this->assertContains("X-Foo-Bar: Baz", $message);
-        $this->assertContains("X-Foo-Bar: Bat", $message);
+        $this->assertStringContainsString("X-Foo-Bar: Baz", $message);
+        $this->assertStringContainsString("X-Foo-Bar: Bat", $message);
     }
 
     public function testOmitsReasonPhraseFromStatusLineIfEmpty()
@@ -68,7 +62,7 @@ class SerializerTest extends TestCase
         $response->getBody()->write('Content!');
 
         $message = Serializer::toString($response);
-        $this->assertContains("HTTP/1.1 299\r\n", $message);
+        $this->assertStringContainsString("HTTP/1.1 299\r\n", $message);
     }
 
     public function testCanDeserializeBasicResponse()

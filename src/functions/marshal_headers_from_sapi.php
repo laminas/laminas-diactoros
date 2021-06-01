@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -23,6 +17,19 @@ use function substr;
  */
 function marshalHeadersFromSapi(array $server) : array
 {
+    $contentHeaderLookup = isset($server['LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP'])
+        ? static function (string $key) : bool {
+            static $contentHeaders = [
+                'CONTENT_TYPE'   => true,
+                'CONTENT_LENGTH' => true,
+                'CONTENT_MD5'    => true,
+            ];
+            return isset($contentHeaders[$key]);
+        }
+        : static function (string $key): bool {
+            return strpos($key, 'CONTENT_') === 0;
+        };
+
     $headers = [];
     foreach ($server as $key => $value) {
         if (! is_string($key)) {
@@ -51,7 +58,7 @@ function marshalHeadersFromSapi(array $server) : array
             continue;
         }
 
-        if (strpos($key, 'CONTENT_') === 0) {
+        if ($contentHeaderLookup($key)) {
             $name = strtr(strtolower($key), '_', '-');
             $headers[$name] = $value;
             continue;

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -37,6 +31,8 @@ trait MessageTrait
      * List of all registered headers, as key => array of values.
      *
      * @var array
+     *
+     * @psalm-var array<non-empty-string, list<string>>
      */
     protected $headers = [];
 
@@ -44,6 +40,8 @@ trait MessageTrait
      * Map of normalized header name to original name used to register header.
      *
      * @var array
+     *
+     * @psalm-var array<non-empty-string, non-empty-string>
      */
     protected $headerNames = [];
 
@@ -110,6 +108,8 @@ trait MessageTrait
      *
      * @return array Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
+     *
+     * @psalm-return array<non-empty-string, list<string>>
      */
     public function getHeaders() : array
     {

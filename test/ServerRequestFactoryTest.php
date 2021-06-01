@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
@@ -400,7 +394,7 @@ class ServerRequestFactoryTest extends TestCase
             'QUERY_STRING' => 'bar=baz',
         ];
 
-        $cookies = $query = $body = $files = [
+        $cookies = $query = $body = [
             'bar' => 'baz',
         ];
 
@@ -627,5 +621,105 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertTrue($body->isWritable());
         $this->assertTrue($body->isSeekable());
         $this->assertSame(0, $body->getSize());
+    }
+
+    /**
+     * @psalm-return iterable<string, array{
+     *     0: array<string, string>,
+     *     1: string,
+     *     2: string,
+     *     3: string
+     * }>
+     */
+    public function serverContentMap(): iterable
+    {
+        yield 'content-type' => [
+            [
+                'HTTP_CONTENT_TYPE' => 'text/plain',
+                'CONTENT_TYPE'      => 'application/x-octect-stream',
+            ],
+            'CONTENT_TYPE',
+            'application/x-octect-stream',
+            'application/x-octect-stream',
+        ];
+
+        yield 'content-length' => [
+            [
+                'HTTP_CONTENT_LENGTH' => '24',
+                'CONTENT_LENGTH'      => '42',
+            ],
+            'CONTENT_LENGTH',
+            '42',
+            '42',
+        ];
+
+        yield 'content-md5' => [
+            [
+                'HTTP_CONTENT_MD5' => '3112373cbdba2b74d26d231f1aa5318b',
+                'CONTENT_MD5'      => 'a918b672e563fb911e8c59ea1c56819a',
+            ],
+            'CONTENT_MD5',
+            'a918b672e563fb911e8c59ea1c56819a',
+            'a918b672e563fb911e8c59ea1c56819a',
+        ];
+
+        yield 'env-value-last-default-behavior' => [
+            [
+                'HTTP_CONTENT_API_PASSWORD' => 'password from header',
+                'CONTENT_API_PASSWORD'      => 'password from env',
+            ],
+            'CONTENT_API_PASSWORD',
+            'password from env',
+            'password from env',
+        ];
+
+        yield 'env-value-first-default-behavior' => [
+            [
+                'CONTENT_API_PASSWORD'      => 'password from env',
+                'HTTP_CONTENT_API_PASSWORD' => 'password from header',
+            ],
+            'CONTENT_API_PASSWORD',
+            'password from header',
+            'password from env',
+        ];
+
+        yield 'env-value-last-strict-content-headers' => [
+            [
+                'HTTP_CONTENT_API_PASSWORD'                      => 'password from header',
+                'CONTENT_API_PASSWORD'                           => 'password from env',
+                'LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP' => 'true',
+            ],
+            'CONTENT_API_PASSWORD',
+            'password from header',
+            'password from env',
+        ];
+
+        yield 'env-value-first-strict-content-headers' => [
+            [
+                'CONTENT_API_PASSWORD'                           => 'password from env',
+                'LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP' => 'true',
+                'HTTP_CONTENT_API_PASSWORD'                      => 'password from header',
+            ],
+            'CONTENT_API_PASSWORD',
+            'password from header',
+            'password from env',
+        ];
+    }
+
+    /**
+     * @dataProvider serverContentMap
+     * @psalm-param array<string, string> $server
+     */
+    public function testDoesNotMarshalAllContentPrefixedServerVarsAsHeaders(
+        array $server,
+        string $key,
+        string $expectedHeaderValue,
+        string $expectedServerValue
+    ): void {
+        $request = ServerRequestFactory::fromGlobals($server);
+        $headerName = str_replace('_', '-', $key);
+
+        $this->assertSame($expectedHeaderValue, $request->getHeaderLine($headerName));
+        $this->assertSame($expectedServerValue, $request->getServerParams()[$key]);
     }
 }

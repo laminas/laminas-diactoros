@@ -1,5 +1,7 @@
 # Emitting Responses
 
+## Introduction
+
 > ### Deprecated
 >
 > Emitters are deprecated from Diactoros starting with version 1.8.0. The

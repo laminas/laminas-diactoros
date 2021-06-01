@@ -1,8 +1,8 @@
 .tmp/
-/composer.lock
 /doc/html/
 /laminas-mkdoc-theme.tgz
 /laminas-mkdoc-theme/
 /phpunit.xml
 /test/TestAsset/.cache/
 /vendor/
+.phpunit.result.cache

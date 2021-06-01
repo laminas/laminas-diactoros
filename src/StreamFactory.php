@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -46,11 +40,6 @@ class StreamFactory implements StreamFactoryInterface
      */
     public function createStreamFromResource($resource) : StreamInterface
     {
-        if (! is_resource($resource) || 'stream' !== get_resource_type($resource)) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid stream provided; must be a stream resource'
-            );
-        }
         return new Stream($resource);
     }
 }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
@@ -13,6 +7,7 @@ namespace LaminasTest\Diactoros;
 use InvalidArgumentException;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 
 use function sprintf;
 
@@ -468,10 +463,19 @@ class UriTest extends TestCase
     {
         $uri = new Uri('http://example.com/path?query=string#fragment');
         $string = (string) $uri;
-        $this->assertAttributeSame($string, 'uriString', $uri);
+
+        $r = new ReflectionObject($uri);
+        $p = $r->getProperty('uriString');
+        $p->setAccessible(true);
+        $this->assertSame($string, $p->getValue($uri));
+
         $test = $uri->{$method}($value);
-        $this->assertAttributeInternalType('null', 'uriString', $test);
-        $this->assertAttributeSame($string, 'uriString', $uri);
+        $r2 = new ReflectionObject($uri);
+        $p2 = $r2->getProperty('uriString');
+        $p2->setAccessible(true);
+        $this->assertNull($p2->getValue($test));
+
+        $this->assertSame($string, $p->getValue($uri));
     }
 
     /**
@@ -662,7 +666,10 @@ class UriTest extends TestCase
             ->withHost('api.linkedin.com')
             ->withPath('/v1/people/~:(first-name,last-name,email-address,picture-url)');
 
-        $this->assertContains('/v1/people/~:(first-name,last-name,email-address,picture-url)', (string) $uri);
+        $this->assertStringContainsString(
+            '/v1/people/~:(first-name,last-name,email-address,picture-url)',
+            (string) $uri
+        );
     }
 
     public function testHostIsLowercase()

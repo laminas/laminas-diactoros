@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -124,6 +118,8 @@ abstract class AbstractSerializer
 
     /**
      * Serialize headers to string values.
+     *
+     * @psalm-param array<string, string[]> $headers
      */
     protected static function serializeHeaders(array $headers) : string
     {
@@ -140,6 +136,8 @@ abstract class AbstractSerializer
 
     /**
      * Filter a header name to wordcase
+     *
+     * @param string $header
      */
     protected static function filterHeader($header) : string
     {

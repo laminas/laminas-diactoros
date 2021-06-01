@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
@@ -72,6 +66,13 @@ class StreamTest extends TestCase
         $this->assertInstanceOf(Stream::class, $stream);
     }
 
+    public function testCanInstantiateWithGDResource()
+    {
+        $resource = imagecreate(1, 1);
+        $stream   = new Stream($resource);
+        $this->assertInstanceOf(Stream::class, $stream);
+    }
+
     public function testIsReadableReturnsFalseIfStreamIsNotReadable()
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
@@ -103,7 +104,7 @@ class StreamTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $stream = new Stream(['  THIS WILL NOT WORK  ']);
+        new Stream(['  THIS WILL NOT WORK  ']);
     }
 
     public function testStringSerializationReturnsEmptyStringWhenStreamIsNotReadable()
@@ -470,7 +471,6 @@ class StreamTest extends TestCase
             'true' => [ true ],
             'int' => [ 1 ],
             'float' => [ 1.1 ],
-            'string-non-resource' => [ 'foo-bar-baz' ],
             'array' => [ [ fopen($this->tmpnam, 'r+') ] ],
             'object' => [ (object) [ 'resource' => fopen($this->tmpnam, 'r+') ] ],
         ];
@@ -485,6 +485,14 @@ class StreamTest extends TestCase
         $this->expectExceptionMessage('Invalid stream');
 
         $this->stream->attach($resource);
+    }
+
+    public function testAttachWithInvalidStringResourceRaisesException()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Invalid stream');
+
+        $this->stream->attach('foo-bar-baz');
     }
 
     public function testAttachWithResourceAttachesResource()

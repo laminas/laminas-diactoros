@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros\Response;
@@ -14,9 +8,12 @@ use InvalidArgumentException;
 use Laminas\Diactoros\Response\HtmlResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class HtmlResponseTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testConstructorAcceptsHtmlString()
     {
         $body = '<html>Uh oh not found</html>';

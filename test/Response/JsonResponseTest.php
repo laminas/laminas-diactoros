@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Diactoros\Response;
@@ -119,7 +113,7 @@ class JsonResponseTest extends TestCase
     /**
      * @dataProvider valuesToJsonEncode
      */
-    public function testUsesSaneDefaultJsonEncodingFlags($value, $key)
+    public function testUsesSaneDefaultJsonEncodingFlags($value, string $key)
     {
         $defaultFlags = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES;
 
@@ -128,7 +122,7 @@ class JsonResponseTest extends TestCase
         $contents = (string) $stream;
 
         $expected = json_encode($value, $defaultFlags);
-        $this->assertContains(
+        $this->assertStringContainsString(
             $expected,
             $contents,
             sprintf('Did not encode %s properly; expected (%s), received (%s)', $key, $expected, $contents)
