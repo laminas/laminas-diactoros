@@ -20,3 +20,11 @@ Documentation is available at:
 - https://docs.laminas.dev/laminas-diactoros/
 
 Source files for documentation are [in the docs/ tree](docs/).
+
+## Support
+
+If you need support with the project, read [the support documentation](SUPPORT.md).
+  
+## Contributing
+
+If you wish to contribute to the project, read the [contributing guidelines](CONTRIBUTING.md).
