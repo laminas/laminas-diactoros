@@ -10,8 +10,8 @@ This package supercedes and replaces [phly/http](https://github.com/phly/http).
 [PSR-7 HTTP message interfaces](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)
 and [PSR-17 HTTP message factory interfaces](https://www.php-fig.org/psr/psr-17).
 
-* File issues at https://github.com/laminas/laminas-diactoros/issues
-* Issue patches to https://github.com/laminas/laminas-diactoros/pulls
+- File issues at https://github.com/laminas/laminas-diactoros/issues
+- Issue patches to https://github.com/laminas/laminas-diactoros/pulls
 
 ## Documentation
 
@@ -21,10 +21,11 @@ Documentation is available at:
 
 Source files for documentation are [in the docs/ tree](docs/).
 
-## Support
+-----
 
-If you need support with the project, read [the support documentation](SUPPORT.md).
-  
-## Contributing
+## Contributing and Support
 
-If you wish to contribute to the project, read the [contributing guidelines](CONTRIBUTING.md).
+- If you need support with the project, read [the support documentation](/laminas/.github/blob/main/SUPPORT.md).
+- If you wish to contribute to the project, read the [contributing guidelines](/laminas/.github/blob/main/CONTRIBUTING.md) as well as the [Code of Conduct](/laminas/.github/blob/main/CODE_OF_CONDUCT.md).
+- For reporting security issues, please review our [security policy](/laminas/.github/blob/main/SECURITY.md).
+
