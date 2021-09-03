@@ -50,7 +50,6 @@ class MessageTraitTest extends TestCase
             '1-without-minor'      => [ '1' ],
             '1-with-invalid-minor' => [ '1.2' ],
             '1-with-hotfix'        => [ '1.2.3' ],
-            '2-with-minor'         => [ '2.0' ],
         ];
     }
 
@@ -64,6 +63,27 @@ class MessageTraitTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $request->withProtocolVersion($version);
+    }
+
+    public function validProtocolVersionProvider()
+    {
+        return [
+            '1.0' => [ '1.0' ],
+            '1.1' => [ '1.1' ],
+            '2'   => [ '2' ],
+            '2.0' => [ '2.0' ],
+        ];
+    }
+
+    /**
+     * @dataProvider validProtocolVersionProvider
+     */
+    public function testWithProtocolVersionDoesntRaiseExceptionForValidVersion($version)
+    {
+        $request = new Request();
+
+        $request->withProtocolVersion($version);
+        $this->addToAssertionCount(1);
     }
 
     public function testUsesStreamProvidedInConstructorAsBody()
