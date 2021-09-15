@@ -28,8 +28,7 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0",
-        "laminas/laminas-zendframework-bridge": "^1.0",
+        "php": "^7.3 || ~8.0.0 || ~8.1.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0"
     },
@@ -51,7 +50,8 @@
         "psr/http-message-implementation": "1.0"
     },
     "conflict": {
-        "phpspec/prophecy": "<1.9.0"
+        "phpspec/prophecy": "<1.9.0",
+        "zendframework/zend-diactoros": "*"
     },
     "autoload": {
         "files": [
@@ -91,8 +91,5 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "static-analysis": "psalm --shepherd --stats"
-    },
-    "replace": {
-        "zendframework/zend-diactoros": "^2.2.1"
     }
 }
