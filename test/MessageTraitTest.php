@@ -80,10 +80,8 @@ class MessageTraitTest extends TestCase
      */
     public function testWithProtocolVersionDoesntRaiseExceptionForValidVersion(string $version): void
     {
-        $request = new Request();
-
-        $request->withProtocolVersion($version);
-        $this->addToAssertionCount(1);
+        $request = (new Request())->withProtocolVersion($version);
+        $this->assertEquals($version, $request->getProtocolVersion());
     }
 
     public function testUsesStreamProvidedInConstructorAsBody(): void
