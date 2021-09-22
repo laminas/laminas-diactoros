@@ -370,7 +370,7 @@ trait MessageTrait
 
         // HTTP/1 uses a "<major>.<minor>" numbering scheme to indicate
         // versions of the protocol, while HTTP/2 does not.
-        if (! preg_match('#^(1\.[01]|2)$#', $version)) {
+        if (! preg_match('#^(1\.[01]|2(\.0)?)$#', $version)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP protocol version "%s" provided',
                 $version
