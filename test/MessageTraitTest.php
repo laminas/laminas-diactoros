@@ -36,7 +36,7 @@ class MessageTraitTest extends TestCase
         $this->assertSame('1.0', $message->getProtocolVersion());
     }
 
-
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidProtocolVersionProvider(): array
     {
         return [
@@ -55,6 +55,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidProtocolVersionProvider
+     *
+     * @param mixed $version
      */
     public function testWithProtocolVersionRaisesExceptionForInvalidVersion($version): void
     {
@@ -65,6 +67,7 @@ class MessageTraitTest extends TestCase
         $request->withProtocolVersion($version);
     }
 
+    /** @return non-empty-array<array{non-empty-string}> */
     public function validProtocolVersionProvider(): array
     {
         return [
@@ -179,6 +182,7 @@ class MessageTraitTest extends TestCase
         $this->assertSame(0, count($headers));
     }
 
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidGeneralHeaderValues(): array
     {
         return [
@@ -192,6 +196,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidGeneralHeaderValues
+     *
+     * @param mixed $value
      */
     public function testWithHeaderRaisesExceptionForInvalidNestedHeaderValue($value): void
     {
@@ -201,6 +207,7 @@ class MessageTraitTest extends TestCase
         $this->message->withHeader('X-Foo', [ $value ]);
     }
 
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidHeaderValues(): array
     {
         return [
@@ -213,6 +220,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidHeaderValues
+     *
+     * @param mixed $value
      */
     public function testWithHeaderRaisesExceptionForInvalidValueType($value): void
     {
@@ -232,6 +241,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidGeneralHeaderValues
+     *
+     * @param mixed $value
      */
     public function testWithAddedHeaderRaisesExceptionForNonStringNonArrayValue($value): void
     {
@@ -266,6 +277,7 @@ class MessageTraitTest extends TestCase
         $this->assertEmpty($this->message->getHeaderLine('X-Foo-Bar'));
     }
 
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string|array{non-empty-string}}> */
     public function headersWithInjectionVectors(): array
     {
         return [
@@ -287,6 +299,9 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider headersWithInjectionVectors
      * @group ZF2015-04
+     *
+     * @param string               $name
+     * @param string|array{string} $value
      */
     public function testDoesNotAllowCRLFInjectionWhenCallingWithHeader($name, $value): void
     {
@@ -298,6 +313,9 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider headersWithInjectionVectors
      * @group ZF2015-04
+     *
+     * @param string               $name
+     * @param string|array{string} $value
      */
     public function testDoesNotAllowCRLFInjectionWhenCallingWithAddedHeader($name, $value): void
     {
@@ -318,6 +336,7 @@ class MessageTraitTest extends TestCase
         $this->assertSame("value,\r\n second value", $message->getHeaderLine('X-Foo-Bar'));
     }
 
+    /** @return non-empty-array<non-empty-string, array{int|float}> */
     public function numericHeaderValuesProvider(): array
     {
         return [
@@ -329,6 +348,9 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider numericHeaderValuesProvider
      * @group 99
+     *
+     * @psalm-suppress InvalidScalarArgument this test explicitly verifies that pre-type-declaration
+     *                                       implicit type conversion semantics still apply, for BC Compliance
      */
     public function testWithHeaderShouldAllowIntegersAndFloats(float $value): void
     {
@@ -342,6 +364,7 @@ class MessageTraitTest extends TestCase
         ], $message->getHeaders());
     }
 
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidHeaderValueTypes(): array
     {
         return [
@@ -352,6 +375,7 @@ class MessageTraitTest extends TestCase
         ];
     }
 
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidArrayHeaderValues(): array
     {
         $values = $this->invalidHeaderValueTypes();
@@ -362,6 +386,8 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider invalidArrayHeaderValues
      * @group 99
+     *
+     * @param mixed $value
      */
     public function testWithHeaderShouldRaiseExceptionForInvalidHeaderValuesInArrays($value): void
     {
@@ -374,6 +400,8 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider invalidHeaderValueTypes
      * @group 99
+     *
+     * @param mixed $value
      */
     public function testWithHeaderShouldRaiseExceptionForInvalidHeaderScalarValues($value): void
     {

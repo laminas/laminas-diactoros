@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.7.0@d4377c0baf3ffbf0b1ec6998e8d1be2a40971005">
+<files psalm-version="4.7.2@83a0325c0a95c0ab531d6b90c877068b464377b5">
   <file src="src/CallbackStream.php">
     <MixedAssignment occurrences="1">
       <code>$contents</code>
@@ -515,60 +515,7 @@
     </PossiblyNullArgument>
   </file>
   <file src="test/MessageTraitTest.php">
-    <MissingParamType occurrences="11">
-      <code>$name</code>
-      <code>$name</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$version</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="36">
-      <code>headersWithInjectionVectors</code>
-      <code>invalidArrayHeaderValues</code>
-      <code>invalidGeneralHeaderValues</code>
-      <code>invalidHeaderValueTypes</code>
-      <code>invalidHeaderValues</code>
-      <code>invalidProtocolVersionProvider</code>
-      <code>numericHeaderValuesProvider</code>
-      <code>testAddHeaderAppendsToExistingHeader</code>
-      <code>testBodyMutatorReturnsCloneWithChanges</code>
-      <code>testCanRemoveHeaders</code>
-      <code>testDoesNotAllowCRLFInjectionWhenCallingWithAddedHeader</code>
-      <code>testDoesNotAllowCRLFInjectionWhenCallingWithHeader</code>
-      <code>testGetHeaderLineReturnsEmptyStringWhenHeaderDoesNotExist</code>
-      <code>testGetHeaderLineReturnsHeaderValueAsCommaConcatenatedString</code>
-      <code>testGetHeaderReturnsAnEmptyArrayWhenHeaderDoesNotExist</code>
-      <code>testGetHeaderReturnsHeaderValueAsArray</code>
-      <code>testGetHeadersKeepsHeaderCaseSensitivity</code>
-      <code>testGetHeadersReturnsCaseWithWhichHeaderFirstRegistered</code>
-      <code>testHasHeaderReturnsFalseIfHeaderIsNotPresent</code>
-      <code>testHasHeaderReturnsTrueIfHeaderIsPresent</code>
-      <code>testHeaderRemovalIsCaseInsensitive</code>
-      <code>testHeadersInitialization</code>
-      <code>testProtocolHasAcceptableDefault</code>
-      <code>testProtocolMutatorReturnsCloneWithChanges</code>
-      <code>testUsesStreamProvidedInConstructorAsBody</code>
-      <code>testWithAddedHeaderAllowsHeaderContinuations</code>
-      <code>testWithAddedHeaderRaisesExceptionForNonStringNonArrayValue</code>
-      <code>testWithHeaderAllowsHeaderContinuations</code>
-      <code>testWithHeaderRaisesExceptionForInvalidNestedHeaderValue</code>
-      <code>testWithHeaderRaisesExceptionForInvalidValueType</code>
-      <code>testWithHeaderReplacesDifferentCapitalization</code>
-      <code>testWithHeaderShouldAllowIntegersAndFloats</code>
-      <code>testWithHeaderShouldRaiseExceptionForInvalidHeaderScalarValues</code>
-      <code>testWithHeaderShouldRaiseExceptionForInvalidHeaderValuesInArrays</code>
-      <code>testWithProtocolVersionRaisesExceptionForInvalidVersion</code>
-      <code>testWithoutHeaderDoesNothingIfHeaderDoesNotExist</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="9">
-      <code>$name</code>
-      <code>$name</code>
+    <MixedArgument occurrences="4">
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
@@ -577,17 +524,11 @@
       <code>$value</code>
       <code>$version</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="3">
+    <MixedArgumentTypeCoercion occurrences="2">
       <code>[ $value ]</code>
       <code>[ $value ]</code>
       <code>[ $value ]</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAssignment occurrences="1">
-      <code>$values['array']</code>
-    </MixedArrayAssignment>
-    <MixedAssignment occurrences="1">
-      <code>$values</code>
-    </MixedAssignment>
   </file>
   <file src="test/PhpInputStreamTest.php">
     <MissingParamType occurrences="2">
