@@ -94,6 +94,6 @@ final class Serializer extends AbstractSerializer
             throw Exception\SerializationException::forInvalidStatusLine();
         }
 
-        return [$matches['version'], (int) $matches['status'], isset($matches['reason']) ? $matches['reason'] : ''];
+        return [$matches['version'], (int) $matches['status'], $matches['reason'] ?? ''];
     }
 }

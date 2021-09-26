@@ -24,8 +24,8 @@ class Response implements ResponseInterface
 {
     use MessageTrait;
 
-    const MIN_STATUS_CODE_VALUE = 100;
-    const MAX_STATUS_CODE_VALUE = 599;
+    public const MIN_STATUS_CODE_VALUE = 100;
+    public const MAX_STATUS_CODE_VALUE = 599;
 
     /**
      * Map of standard HTTP status code/reason phrases

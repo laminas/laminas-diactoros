@@ -21,9 +21,9 @@ use function ucwords;
  */
 abstract class AbstractSerializer
 {
-    const CR  = "\r";
-    const EOL = "\r\n";
-    const LF  = "\n";
+    public const CR  = "\r";
+    public const EOL = "\r\n";
+    public const LF  = "\n";
 
     /**
      * Retrieve a single line from the stream.
