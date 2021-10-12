@@ -28,14 +28,17 @@ nav:
       - "Emitting Responses": v1/emitting-responses.md
       - Serialization: v1/serialization.md
       - API: v1/api.md
-  - "_hidden-legacy-page-links":
-    - "_overview": overview.md
-    - "_installation": install.md
-    - "_usage": usage.md
-    - "_reference-custom-responses": custom-responses.md
-    - "_reference-emitting-responses": emitting-responses.md
-    - "_reference-serialization": serialization.md
-    - "_reference-api": api.md
 site_name: laminas-diactoros
 site_description: "PSR-7 HTTP message implementations"
 repo_url: "https://github.com/laminas/laminas-diactoros"
+plugins:
+  - search
+  - redirects:
+      redirect_maps:
+        overview.md: v2/overview.md
+        install.md: v2/install.md
+        usage.md: v2/usage.md
+        custom-responses.md: v2/custom-responses.md
+        emitting-responses.md: v1/emitting-responses.md
+        serialization.md: v2/serialization.md
+        api.md: v2/api.md
