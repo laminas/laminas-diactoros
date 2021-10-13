@@ -546,13 +546,6 @@ class UriTest extends TestCase
         $this->assertSame($expected, $uri->getFragment());
     }
 
-    public function testProperlyTrimsLeadingSlashesToPreventXSS()
-    {
-        $url = 'http://example.org//zend.com';
-        $uri = new Uri($url);
-        $this->assertSame('http://example.org/zend.com', (string) $uri);
-    }
-
     public function invalidStringComponentValues()
     {
         $methods = [
@@ -690,5 +683,14 @@ class UriTest extends TestCase
         $expected = 'https://0:0@0:1/0?0#0';
         $uri = new Uri($expected);
         $this->assertSame($expected, (string) $uri);
+    }
+
+    public function testPathWithMultipleSlashes()
+    {
+        $expected = 'http://example.org//valid///path';
+        $uri = new Uri($expected);
+
+        $this->assertSame($expected, (string) $uri);
+        $this->assertSame('//valid///path', $uri->getPath());
     }
 }

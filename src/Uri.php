@@ -573,24 +573,11 @@ class Uri implements UriInterface
     {
         $path = $this->filterInvalidUtf8($path);
 
-        $path = preg_replace_callback(
+        return preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . ')(:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
             $path
         );
-
-        if ('' === $path) {
-            // No path
-            return $path;
-        }
-
-        if ($path[0] !== '/') {
-            // Relative path
-            return $path;
-        }
-
-        // Ensure only one leading slash, to prevent XSS attempts.
-        return '/' . ltrim($path, '/');
     }
 
     /**
