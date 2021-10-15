@@ -57,7 +57,7 @@ class ResponseTest extends TestCase
     public function testReasonPhraseDefaultsToStandards()
     {
         $response = $this->response->withStatus(422);
-        $this->assertSame('Unprocessable Entity', $response->getReasonPhrase());
+        $this->assertSame('Unprocessable Content', $response->getReasonPhrase());
     }
 
     private function fetchIanaStatusCodes() : DOMDocument
