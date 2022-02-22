@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.7.2@83a0325c0a95c0ab531d6b90c877068b464377b5">
+<files psalm-version="4.21.0@d8bec4c7aaee111a532daec32fb09de5687053d1">
   <file src="src/CallbackStream.php">
     <MixedAssignment occurrences="1">
       <code>$contents</code>
@@ -41,8 +41,7 @@
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion occurrences="3">
-      <code>$headerNames</code>
+    <MixedPropertyTypeCoercion occurrences="2">
       <code>$headers</code>
       <code>$new-&gt;headers</code>
     </MixedPropertyTypeCoercion>
@@ -175,10 +174,6 @@
     </DocblockTypeContradiction>
   </file>
   <file src="src/Response/InjectContentTypeTrait.php">
-    <MissingClosureParamType occurrences="2">
-      <code>$carry</code>
-      <code>$item</code>
-    </MissingClosureParamType>
     <MixedArgument occurrences="1">
       <code>$item</code>
     </MixedArgument>
@@ -192,9 +187,7 @@
     </UnusedFunctionCall>
   </file>
   <file src="src/Response/RedirectResponse.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_string($uri) &amp;&amp; ! $uri instanceof UriInterface</code>
-    </DocblockTypeContradiction>
+    <DocblockTypeContradiction occurrences="1"/>
   </file>
   <file src="src/Response/Serializer.php">
     <MixedArgument occurrences="5">
@@ -240,12 +233,8 @@
   </file>
   <file src="src/Stream.php">
     <InvalidArgument occurrences="1"/>
-    <MissingClosureParamType occurrences="1">
-      <code>$e</code>
-    </MissingClosureParamType>
-    <MixedInferredReturnType occurrences="2">
+    <MixedInferredReturnType occurrences="1">
       <code>?int</code>
-      <code>bool</code>
     </MixedInferredReturnType>
     <MixedReturnStatement occurrences="1">
       <code>$stats['size']</code>
@@ -268,9 +257,6 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_resource($resource)</code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedClass occurrences="1">
-      <code>\GdImage</code>
-    </UndefinedClass>
   </file>
   <file src="src/StreamFactory.php">
     <ParamNameMismatch occurrences="1">
@@ -286,9 +272,6 @@
     </PossiblyNullArgument>
   </file>
   <file src="src/UploadedFileFactory.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>$stream</code>
-    </ImplicitToStringCast>
     <PossiblyNullArgument occurrences="1">
       <code>$size</code>
     </PossiblyNullArgument>
@@ -507,9 +490,6 @@
     </MixedArgument>
   </file>
   <file src="test/Integration/UploadedFileTest.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>$stream</code>
-    </ImplicitToStringCast>
     <PossiblyNullArgument occurrences="1">
       <code>$stream-&gt;getSize()</code>
     </PossiblyNullArgument>
@@ -1130,13 +1110,6 @@
     </MissingReturnType>
   </file>
   <file src="test/UploadedFileTest.php">
-    <ImplicitToStringCast occurrences="5">
-      <code>$stream</code>
-      <code>$stream</code>
-      <code>$stream</code>
-      <code>$stream</code>
-      <code>$stream</code>
-    </ImplicitToStringCast>
     <MissingParamType occurrences="6">
       <code>$path</code>
       <code>$status</code>
