@@ -13,22 +13,6 @@ use RuntimeException;
  */
 class CallbackStreamTest extends TestCase
 {
-    /**
-     * Sample callback to use with testing.
-     */
-    public function sampleCallback() : string
-    {
-        return __METHOD__;
-    }
-
-    /**
-     * Sample static callback to use with testing.
-     */
-    public static function sampleStaticCallback() : string
-    {
-        return __METHOD__;
-    }
-
     public function testToString() : void
     {
         $stream = new CallbackStream(function () {
@@ -191,14 +175,14 @@ class CallbackStreamTest extends TestCase
 
     public function phpCallbacksForStreams() : array
     {
-        $class = __CLASS__;
+        $class = TestAsset\CallbacksForCallbackStreamTest::class;
 
-        // @codingStandardsIgnoreStart
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
-            'instance-method' => [[new self(), 'sampleCallback'],   $class . '::sampleCallback'],
+            'instance-method' => [[new TestAsset\CallbacksForCallbackStreamTest(), 'sampleCallback'], $class . '::sampleCallback'],
             'static-method'   => [[$class, 'sampleStaticCallback'], $class . '::sampleStaticCallback'],
         ];
-        // @codingStandardsIgnoreEnd
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     /**

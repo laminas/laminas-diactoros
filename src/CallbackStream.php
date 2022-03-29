@@ -47,6 +47,7 @@ class CallbackStream implements StreamInterface
 
     /**
      * {@inheritdoc}
+     * @return null|callable
      */
     public function detach() : ?callable
     {

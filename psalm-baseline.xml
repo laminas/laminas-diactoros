@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.21.0@d8bec4c7aaee111a532daec32fb09de5687053d1">
   <file src="src/CallbackStream.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>null|callable</code>
+    </ImplementedReturnTypeMismatch>
     <MixedAssignment occurrences="1">
       <code>$contents</code>
     </MixedAssignment>
@@ -28,9 +31,19 @@
     </MixedArgument>
   </file>
   <file src="src/MessageTrait.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction occurrences="2">
+      <code>! is_string($name)</code>
       <code>is_string($version)</code>
     </DocblockTypeContradiction>
+    <InvalidArrayOffset occurrences="4">
+      <code>$new-&gt;headerNames[$normalized]</code>
+      <code>$this-&gt;headerNames[strtolower($header)]</code>
+      <code>$this-&gt;headerNames[strtolower($header)]</code>
+      <code>$this-&gt;headerNames[strtolower($name)]</code>
+    </InvalidArrayOffset>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$headerNames</code>
+    </InvalidPropertyAssignmentValue>
     <MissingParamType occurrences="1">
       <code>$stream</code>
     </MissingParamType>
@@ -187,7 +200,12 @@
     </UnusedFunctionCall>
   </file>
   <file src="src/Response/RedirectResponse.php">
-    <DocblockTypeContradiction occurrences="1"/>
+    <DocblockTypeContradiction occurrences="1">
+      <code>gettype($uri)</code>
+    </DocblockTypeContradiction>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_object($uri)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Response/Serializer.php">
     <MixedArgument occurrences="5">
@@ -379,6 +397,10 @@
       <code>$requestUri</code>
       <code>$server['QUERY_STRING']</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$headers[$header]</code>
+      <code>$host</code>
+    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="5">
       <code>$host</code>
       <code>$iisUrlRewritten</code>
@@ -499,13 +521,9 @@
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
       <code>$version</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="2">
-      <code>[ $value ]</code>
       <code>[ $value ]</code>
       <code>[ $value ]</code>
     </MixedArgumentTypeCoercion>
@@ -899,9 +917,6 @@
     <MixedAssignment occurrences="1">
       <code>$responseCode</code>
     </MixedAssignment>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$response</code>
-    </PossiblyInvalidArgument>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>assertIsInt</code>
     </RedundantConditionGivenDocblockType>
