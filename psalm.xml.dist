@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="true"
+    errorLevel="1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -22,6 +22,12 @@
                 <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::with"/>
             </errorLevel>
         </InternalMethod>
+
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="GdImage" />
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

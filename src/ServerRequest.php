@@ -222,10 +222,10 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function withoutAttribute($attribute) : ServerRequest
+    public function withoutAttribute($name) : ServerRequest
     {
         $new = clone $this;
-        unset($new->attributes[$attribute]);
+        unset($new->attributes[$name]);
         return $new;
     }
 

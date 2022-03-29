@@ -103,7 +103,7 @@ class Response implements ResponseInterface
         506 => 'Variant Also Negotiates',
         507 => 'Insufficient Storage',
         508 => 'Loop Detected',
-        510 => 'Not Extended',
+        510 => 'Not Extended (OBSOLETED)',
         511 => 'Network Authentication Required',
         599 => 'Network Connect Timeout Error',
     ];

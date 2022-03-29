@@ -103,7 +103,7 @@ class ResponseTest extends TestCase
             return $ianaHttpStatusCodes;
         }
 
-        if ($responseCode === 200) {
+        if ($responseCode === 200 && is_string($response) && $response != '') {
             $downloadedIanaHttpStatusCodes = new DOMDocument();
             $downloadedIanaHttpStatusCodes->loadXML($response);
             if ($downloadedIanaHttpStatusCodes->relaxNGValidate(__DIR__ . '/TestAsset/http-status-codes.rng')) {
