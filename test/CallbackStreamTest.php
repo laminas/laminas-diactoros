@@ -178,10 +178,12 @@ class CallbackStreamTest extends TestCase
         $class = TestAsset\CallbacksForCallbackStreamTest::class;
 
         // phpcs:disable Generic.Files.LineLength.TooLong
+        // @codingStandardsIgnoreStart
         return [
             'instance-method' => [[new TestAsset\CallbacksForCallbackStreamTest(), 'sampleCallback'], $class . '::sampleCallback'],
             'static-method'   => [[$class, 'sampleStaticCallback'], $class . '::sampleStaticCallback'],
         ];
+        // @codingStandardsIgnoreEnd
         // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
