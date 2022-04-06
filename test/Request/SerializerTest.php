@@ -244,7 +244,7 @@ class SerializerTest extends TestCase
         $this->assertInstanceOf(Request::class, $request);
 
         $this->assertTrue($request->hasHeader('X-Foo-Bar'));
-        $this->assertSame('Baz;Bat', $request->getHeaderLine('X-Foo-Bar'));
+        $this->assertSame('Baz; Bat', $request->getHeaderLine('X-Foo-Bar'));
     }
 
     public function messagesWithInvalidHeaders() : array

@@ -118,7 +118,7 @@ class SerializerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
 
         $this->assertTrue($response->hasHeader('X-Foo-Bar'));
-        $this->assertSame('Baz;Bat', $response->getHeaderLine('X-Foo-Bar'));
+        $this->assertSame('Baz; Bat', $response->getHeaderLine('X-Foo-Bar'));
     }
 
     public function testCanDeserializeResponseWithoutBody()
