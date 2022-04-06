@@ -109,7 +109,7 @@ abstract class AbstractSerializer
 
             // Append continuation to last header value found
             $value = array_pop($headers[$currentHeader]);
-            $headers[$currentHeader][] = $value . ltrim($line);
+            $headers[$currentHeader][] = $value . ' ' . ltrim($line);
         }
 
         // use RelativeStream to avoid copying initial stream into memory
