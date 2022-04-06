@@ -398,7 +398,8 @@ trait MessageTrait
         return array_map(function ($value) {
             HeaderSecurity::assertValid($value);
 
-            return (string) $value;
+            // Remove optional whitespace (OWS, RFC 7230#3.2.3) around the header value.
+            return trim((string) $value, "\t ");
         }, array_values($values));
     }
 

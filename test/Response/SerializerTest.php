@@ -121,6 +121,30 @@ class SerializerTest extends TestCase
         $this->assertSame('Baz; Bat', $response->getHeaderLine('X-Foo-Bar'));
     }
 
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
+    public function headersWithWhitespace(): array
+    {
+        return [
+            'no' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz\r\n\r\nContent!"],
+            'leading' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\n\r\nContent!"],
+            'trailing' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz \r\n\r\nContent!"],
+            'both' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz \r\n\r\nContent!"],
+            'mixed' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: \t Baz\t \t\r\n\r\nContent!"],
+        ];
+    }
+
+    /**
+     * @dataProvider headersWithWhitespace
+     */
+    public function testDeserializationRemovesWhitespaceAroundValues(string $text): void
+    {
+        $response = Serializer::fromString($text);
+
+        $this->assertInstanceOf(Response::class, $response);
+
+        $this->assertSame('Baz', $response->getHeaderLine('X-Foo-Bar'));
+    }
+
     public function testCanDeserializeResponseWithoutBody()
     {
         $text = "HTTP/1.0 204\r\nX-Foo-Bar: Baz";

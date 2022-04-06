@@ -247,6 +247,30 @@ class SerializerTest extends TestCase
         $this->assertSame('Baz; Bat', $request->getHeaderLine('X-Foo-Bar'));
     }
 
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
+    public function headersWithWhitespace(): array
+    {
+        return [
+            'no' => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz\r\n\r\nContent!"],
+            'leading' => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\n\r\nContent!"],
+            'trailing' => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz \r\n\r\nContent!"],
+            'both' => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz \r\n\r\nContent!"],
+            'mixed' => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar: \t Baz\t \t\r\n\r\nContent!"],
+        ];
+    }
+
+    /**
+     * @dataProvider headersWithWhitespace
+     */
+    public function testDeserializationRemovesWhitespaceAroundValues(string $text): void
+    {
+        $request = Serializer::fromString($text);
+
+        $this->assertInstanceOf(Request::class, $request);
+
+        $this->assertSame('Baz', $request->getHeaderLine('X-Foo-Bar'));
+    }
+
     public function messagesWithInvalidHeaders() : array
     {
         return [
