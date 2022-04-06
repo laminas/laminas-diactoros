@@ -336,6 +336,27 @@ class MessageTraitTest extends TestCase
         $this->assertSame("value,\r\n second value", $message->getHeaderLine('X-Foo-Bar'));
     }
 
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
+    public function headersWithWhitespace(): array
+    {
+        return [
+            'no' => ["Baz"],
+            'leading' => [" Baz"],
+            'trailing' => ["Baz "],
+            'both' => [" Baz "],
+            'mixed' => [" \t Baz\t \t"],
+        ];
+    }
+
+    /**
+     * @dataProvider headersWithWhitespace
+     */
+    public function testWithHeaderTrimsWhitespace(string $value): void
+    {
+        $message = $this->message->withHeader('X-Foo-Bar', $value);
+        $this->assertSame(trim($value, "\t "), $message->getHeaderLine('X-Foo-Bar'));
+    }
+
     /** @return non-empty-array<non-empty-string, array{int|float}> */
     public function numericHeaderValuesProvider(): array
     {
