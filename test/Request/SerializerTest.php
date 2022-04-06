@@ -212,7 +212,7 @@ class SerializerTest extends TestCase
         Serializer::fromString($message);
     }
 
-    public function testCanDeserializeResponseWithMultipleHeadersOfSameName() : void
+    public function testCanDeserializeRequestWithMultipleHeadersOfSameName() : void
     {
         $text = "POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\nX-Foo-Bar: Bat\r\n\r\nContent!";
         $request = Serializer::fromString($text);
@@ -236,7 +236,7 @@ class SerializerTest extends TestCase
     /**
      * @dataProvider headersWithContinuationLines
      */
-    public function testCanDeserializeResponseWithHeaderContinuations($text) : void
+    public function testCanDeserializeRequestWithHeaderContinuations($text) : void
     {
         $request = Serializer::fromString($text);
 
