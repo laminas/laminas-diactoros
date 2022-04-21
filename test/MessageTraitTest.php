@@ -327,13 +327,13 @@ class MessageTraitTest extends TestCase
     public function testWithHeaderAllowsHeaderContinuations(): void
     {
         $message = $this->message->withHeader('X-Foo-Bar', "value,\r\n second value");
-        $this->assertSame("value,\r\n second value", $message->getHeaderLine('X-Foo-Bar'));
+        $this->assertSame("value, second value", $message->getHeaderLine('X-Foo-Bar'));
     }
 
     public function testWithAddedHeaderAllowsHeaderContinuations(): void
     {
         $message = $this->message->withAddedHeader('X-Foo-Bar', "value,\r\n second value");
-        $this->assertSame("value,\r\n second value", $message->getHeaderLine('X-Foo-Bar'));
+        $this->assertSame("value, second value", $message->getHeaderLine('X-Foo-Bar'));
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
@@ -355,6 +355,28 @@ class MessageTraitTest extends TestCase
     {
         $message = $this->message->withHeader('X-Foo-Bar', $value);
         $this->assertSame(trim($value, "\t "), $message->getHeaderLine('X-Foo-Bar'));
+    }
+
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
+    public function headersWithContinuation(): array
+    {
+        return [
+            'space' => ["foo\r\n bar"],
+            'tab' => ["foo\r\n\tbar"],
+        ];
+    }
+
+    /**
+     * @dataProvider headersWithContinuation
+     */
+    public function testWithHeaderNormalizesContinuationToNotContainNewlines(string $value): void
+    {
+        $message = $this->message->withHeader('X-Foo-Bar', $value);
+        // Newlines must no longer appear.
+        $this->assertStringNotContainsString("\r", $message->getHeaderLine('X-Foo-Bar'));
+        $this->assertStringNotContainsString("\n", $message->getHeaderLine('X-Foo-Bar'));
+        // But there must be at least one space.
+        $this->assertStringContainsString(' ', $message->getHeaderLine('X-Foo-Bar'));
     }
 
     /** @return non-empty-array<non-empty-string, array{int|float}> */

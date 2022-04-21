@@ -18,6 +18,7 @@ use function is_resource;
 use function is_string;
 use function preg_match;
 use function sprintf;
+use function str_replace;
 use function strtolower;
 
 /**
@@ -398,8 +399,13 @@ trait MessageTrait
         return array_map(function ($value) {
             HeaderSecurity::assertValid($value);
 
+            $value = (string)$value;
+
+            // Normalize line folding to a single space (RFC 7230#3.2.4).
+            $value = str_replace(["\r\n\t", "\r\n "], ' ', $value);
+
             // Remove optional whitespace (OWS, RFC 7230#3.2.3) around the header value.
-            return trim((string) $value, "\t ");
+            return trim($value, "\t ");
         }, array_values($values));
     }
 
