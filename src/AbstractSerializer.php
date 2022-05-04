@@ -8,10 +8,10 @@ use Psr\Http\Message\StreamInterface;
 
 use function array_pop;
 use function implode;
-use function ltrim;
 use function preg_match;
 use function sprintf;
 use function str_replace;
+use function trim;
 use function ucwords;
 
 /**
