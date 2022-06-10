@@ -36,7 +36,7 @@ class UploadedFileTest extends TestCase
 
     protected function setUp() : void
     {
-        $this->tmpfile = null;
+        $this->tmpFile = null;
     }
 
     protected function tearDown() : void
