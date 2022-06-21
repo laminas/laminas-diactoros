@@ -82,7 +82,7 @@ final class LegacyXForwardedHeaderFilter implements ServerRequestFilterInterface
     }
 
     /**
-     * Trust X-FORWARDED-* headers from any address.
+     * Trust any X-FORWARDED-* headers from any address.
      *
      * WARNING: Only do this if you know for certain that your application
      * sits behind a trusted proxy that cannot be spoofed. This should only
