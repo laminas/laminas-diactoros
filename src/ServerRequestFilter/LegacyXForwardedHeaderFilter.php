@@ -54,7 +54,8 @@ final class LegacyXForwardedHeaderFilter implements ServerRequestFilterInterface
         $uri = $originalUri = $request->getUri();
         foreach ($this->trustedHeaders as $headerName) {
             $header = $request->getHeaderLine($headerName);
-            if ('' === $header) {
+            if ('' === $header || false !== strpos($header, ',')) {
+                // Reject empty headers and/or headers with multiple values
                 continue;
             }
 

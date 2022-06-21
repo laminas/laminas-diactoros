@@ -210,4 +210,64 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
         $this->expectException(InvalidForwardedHeaderNameException::class);
         $filter->trustProxies('192.168.1.0/24', ['Host']);
     }
+
+    public function testListOfForwardedHostsIsConsideredUntrusted(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.1.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Host'  => 'example.com,proxy.api.example.com',
+            ]
+        );
+
+        $filter = new LegacyXForwardedHeaderFilter();
+        $filter->trustAny();
+
+        $this->assertSame($request, $filter->filterRequest($request));
+    }
+
+    public function testListOfForwardedPortsIsConsideredUntrusted(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.1.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Port'  => '8080,9000',
+            ]
+        );
+
+        $filter = new LegacyXForwardedHeaderFilter();
+        $filter->trustAny();
+
+        $this->assertSame($request, $filter->filterRequest($request));
+    }
+
+    public function testListOfForwardedProtosIsConsideredUntrusted(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.1.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Proto' => 'http,https',
+            ]
+        );
+
+        $filter = new LegacyXForwardedHeaderFilter();
+        $filter->trustAny();
+
+        $this->assertSame($request, $filter->filterRequest($request));
+    }
 }
