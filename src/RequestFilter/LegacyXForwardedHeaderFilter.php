@@ -10,9 +10,9 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class LegacyXForwardedHeaderFilter implements RequestFilterInterface
 {
-    public const HEADER_HOST                = 'X-FORWARDED-HOST';
-    public const HEADER_PORT                = 'X-FORWARDED-PORT';
-    public const HEADER_PROTO               = 'X-FORWARDED-PROTO';
+    public const HEADER_HOST  = 'X-FORWARDED-HOST';
+    public const HEADER_PORT  = 'X-FORWARDED-PORT';
+    public const HEADER_PROTO = 'X-FORWARDED-PROTO';
 
     public const X_FORWARDED_HEADERS = [
         self::HEADER_HOST,

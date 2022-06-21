@@ -14,11 +14,13 @@ nav:
     - Usage: v2/usage.md
     - Reference:
       - Factories: v2/factories.md
+      - "Request Filters": v2/request-filters.md
       - "Custom Responses": v2/custom-responses.md
       - Serialization: v2/serialization.md
       - API: v2/api.md
     - Migration:
       - "Migration to Version 2": v2/migration.md
+      - "Preparing for Version 3": v2/forward-migration.md
   - v1:
     - Overview: v1/overview.md
     - Installation: v1/install.md

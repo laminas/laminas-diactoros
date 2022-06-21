@@ -145,12 +145,8 @@ function marshalUriFromSapiSafely(array $server, array $headers) : Uri
         $https = false;
     }
 
-    if ($https
-        || strtolower($getHeaderFromArray('x-forwarded-proto', $headers, '')) === 'https'
-    ) {
-        $scheme = 'https';
-    }
-    $uri = $uri->withScheme($scheme);
+    $scheme = $https ? 'https' : $scheme;
+    $uri    = $uri->withScheme($scheme);
 
     // Set the host
     [$host, $port] = $marshalHostAndPort($server);
