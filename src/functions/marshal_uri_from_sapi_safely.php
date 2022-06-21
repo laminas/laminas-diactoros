@@ -12,7 +12,6 @@ use function is_array;
 use function ltrim;
 use function preg_match;
 use function preg_replace;
-use function strlen;
 use function strpos;
 use function strtolower;
 use function substr;
@@ -22,13 +21,8 @@ use function substr;
  *
  * @param array $server SAPI parameters
  * @param array $headers HTTP request headers
- * @deprecated This function is deprecated as of 2.11.1, and will be removed in
- *     3.0.0. For security purposes, we recommend using Laminas\Diactoros\marshalUriFromSapiSafely,
- *     and a Laminas\Diactoros\RequestFilter\RequestFilterInterface
- *     implmentation if you need the ability to use X-Forwarded-* headers to
- *     modify the generated URI.
  */
-function marshalUriFromSapi(array $server, array $headers) : Uri
+function marshalUriFromSapiSafely(array $server, array $headers) : Uri
 {
     /**
      * Retrieve a header value from an array of headers using a case-insensitive lookup.
@@ -49,37 +43,16 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
     };
 
     /**
-     * Marshal the host and port from HTTP headers and/or the PHP environment.
+     * Marshal the host and port from the PHP environment.
      *
      * @return array Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
      */
-    $marshalHostAndPort = function (array $headers, array $server) use ($getHeaderFromArray) : array {
+    $marshalHostAndPort = function (array $server) : array {
         /**
-        * @param string|array $host
-        * @return array Array of two items, host and port, in that order (can be
-        *     passed to a list() operation).
-        */
-        $marshalHostAndPortFromHeader = function ($host) {
-            if (is_array($host)) {
-                $host = implode(', ', $host);
-            }
-
-            $port = null;
-
-            // works for regname, IPv4 & IPv6
-            if (preg_match('|\:(\d+)$|', $host, $matches)) {
-                $host = substr($host, 0, -1 * (strlen($matches[1]) + 1));
-                $port = (int) $matches[1];
-            }
-
-            return [$host, $port];
-        };
-
-        /**
-        * @return array Array of two items, host and port, in that order (can be
-        *     passed to a list() operation).
-        */
+         * @return array Array of two items, host and port, in that order (can be
+         *     passed to a list() operation).
+         */
         $marshalIpv6HostAndPort = function (array $server, ?int $port) : array {
             $host = '[' . $server['SERVER_ADDR'] . ']';
             $port = $port ?: 80;
@@ -92,16 +65,6 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
         };
 
         static $defaults = ['', null];
-
-        $forwardedHost = $getHeaderFromArray('x-forwarded-host', $headers, false);
-        if ($forwardedHost !== false) {
-            return $marshalHostAndPortFromHeader($forwardedHost);
-        }
-
-        $host = $getHeaderFromArray('host', $headers, false);
-        if ($host !== false) {
-            return $marshalHostAndPortFromHeader($host);
-        }
 
         if (! isset($server['SERVER_NAME'])) {
             return $defaults;
@@ -190,7 +153,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
     $uri = $uri->withScheme($scheme);
 
     // Set the host
-    [$host, $port] = $marshalHostAndPort($headers, $server);
+    [$host, $port] = $marshalHostAndPort($server);
     if (! empty($host)) {
         $uri = $uri->withHost($host);
         if (! empty($port)) {

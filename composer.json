@@ -21,7 +21,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.3.99"
+            "php": "7.4.99"
         }
     },
     "extra": {
@@ -31,7 +31,7 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0 || ~8.1.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0"
     },
@@ -63,6 +63,7 @@
             "src/functions/marshal_method_from_sapi.php",
             "src/functions/marshal_protocol_version_from_sapi.php",
             "src/functions/marshal_uri_from_sapi.php",
+            "src/functions/marshal_uri_from_sapi_safely.php",
             "src/functions/normalize_server.php",
             "src/functions/normalize_uploaded_files.php",
             "src/functions/parse_cookie_header.php",

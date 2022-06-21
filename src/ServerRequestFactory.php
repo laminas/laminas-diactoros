@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Laminas\Diactoros\RequestFilter\LegacyXForwardedHeaderFilter;
+use Laminas\Diactoros\RequestFilter\RequestFilterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -42,6 +44,12 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @param array $body $_POST superglobal
      * @param array $cookies $_COOKIE superglobal
      * @param array $files $_FILES superglobal
+     * @param null|RequestFilterInterface $requestFilter If present, the
+     *     generated request will be passed to this instance and the result
+     *     returned by this method. When not present, a default instance
+     *     is created and used. For version 2, that instance is of
+     *     LegacyXForwardedHeaderFilter, with the `trustAny()` method called.
+     *     For version 3, it will be a NoOpRequestFilter instance.
      * @return ServerRequest
      */
     public static function fromGlobals(
@@ -49,8 +57,15 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         array $query = null,
         array $body = null,
         array $cookies = null,
-        array $files = null
+        array $files = null,
+        ?RequestFilterInterface $requestFilter = null
     ) : ServerRequest {
+        // @todo For version 3, we should instead create a NoOpRequestFilter instance.
+        if (null === $requestFilter) {
+            $requestFilter = new LegacyXForwardedHeaderFilter();
+            $requestFilter->trustAny();
+        }
+
         $server = normalizeServer(
             $server ?: $_SERVER,
             is_callable(self::$apacheRequestHeaders) ? self::$apacheRequestHeaders : null
@@ -62,10 +77,10 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             $cookies = parseCookieHeader($headers['cookie']);
         }
 
-        return new ServerRequest(
+        return $requestFilter->filterRequest(new ServerRequest(
             $server,
             $files,
-            marshalUriFromSapi($server, $headers),
+            marshalUriFromSapiSafely($server, $headers),
             marshalMethodFromSapi($server),
             'php://input',
             $headers,
@@ -73,7 +88,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             $query ?: $_GET,
             $body ?: $_POST,
             marshalProtocolVersionFromSapi($server)
-        );
+        ));
     }
 
     /**
