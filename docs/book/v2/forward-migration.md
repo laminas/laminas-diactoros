@@ -5,7 +5,7 @@
 Introduced in version 2.11.1, the `Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface` is used by `ServerRequestFactory::fromGlobals()` to allow modifying the generated `ServerRequest` instance prior to returning it.
 The primary use case is to allow modifying the generated URI based on the presence of headers such as `X-Forwarded-Host`.
 When operating behind a reverse proxy, the `Host` header is often rewritten to the name of the node to which the request is being forwarded, and an `X-Forwarded-Host` header is generated with the original `Host` value to allow the server to determine the original host the request was intended for.
-(We have also traditionally examined the `X-Forwarded-Proto` header; some implementations examine the `X-Forwarded-Port` header as well.)
+(We have always examined the `X-Forwarded-Proto` header; as of 2.11.1, we also examine the `X-Forwarded-Port` header.)
 
 To accommodate this use case, we created `Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter`.
 (The "Legacy" verbiage is because a [new RFC (7239)](https://datatracker.ietf.org/doc/html/rfc7239) provides an official specification for this behavior via a new `Forwarded` header.)
