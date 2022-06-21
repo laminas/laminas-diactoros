@@ -138,6 +138,7 @@ final class LegacyXForwardedHeaderFilter implements ServerRequestFilterInterface
         }
     }
 
+    /** @throws InvalidProxyAddressException */
     private function normalizeProxiesList($proxies): array
     {
         if (! is_array($proxies) && ! is_string($proxies)) {
