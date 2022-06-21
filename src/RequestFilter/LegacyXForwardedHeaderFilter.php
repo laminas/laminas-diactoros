@@ -22,10 +22,18 @@ final class LegacyXForwardedHeaderFilter implements RequestFilterInterface
 
     /**
      * @todo Toggle this to false for version 3.0.
+     * @var bool
      */
-    private bool $trustAny = true;
-    private array $trustedHeaders = [];
-    private array $trustedProxies = [];
+    private $trustAny = true;
+
+    /**
+     * @var string[]
+     * @psalm-var array<array-key, LegacyXForwardedHeaderFilter::HEADER_*>
+     */
+    private $trustedHeaders = [];
+
+    /** @var string[] */
+    private $trustedProxies = [];
 
     // public function filterRequest(array $headers, string $remoteAddress): array
     public function filterRequest(ServerRequestInterface $request): ServerRequestInterface

@@ -729,7 +729,8 @@ class ServerRequestFactoryTest extends TestCase
     {
         $expectedRequest = new ServerRequest();
         $filter = new class($expectedRequest) implements RequestFilterInterface {
-            private ServerRequestInterface $request;
+            /** @var ServerRequestInterface */
+            private $request;
 
             public function __construct(ServerRequestInterface $request)
             {
