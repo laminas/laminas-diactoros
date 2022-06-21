@@ -28,7 +28,7 @@ interface ServerRequestFilterInterface
 We provide the following implementations:
 
 - `NoOpRequestFilter`: returns the provided `$request` verbatim.
-- `LegacyXForwardedHeaderFilter`: if the originating request comes from a trusted proxy, examines the `X-Forwarded-*` headers, and returns the request instance with a URI instanct that reflects those headers.
+- `LegacyXForwardedHeaderFilter`: if the originating request comes from a trusted proxy, examines the `X-Forwarded-*` headers, and returns the request instance with a URI instance that reflects those headers.
 
 ### LegacyXForwardedHeaderFilter
 
