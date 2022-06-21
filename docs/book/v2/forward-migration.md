@@ -1,13 +1,13 @@
 # Preparing for Version 3
 
-## RequestFilterInterface defaults
+## ServerRequestFilterInterface defaults
 
-Introduced in version 2.11.1, the `Laminas\Diactoros\RequestFilter\RequestFilterInterface` is used by `ServerRequestFactory::fromGlobals()` to allow modifying the generated `ServerRequest` instance prior to returning it.
+Introduced in version 2.11.1, the `Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface` is used by `ServerRequestFactory::fromGlobals()` to allow modifying the generated `ServerRequest` instance prior to returning it.
 The primary use case is to allow modifying the generated URI based on the presence of headers such as `X-Forwarded-Host`.
 When operating behind a reverse proxy, the `Host` header is often rewritten to the name of the node to which the request is being forwarded, and an `X-Forwarded-Host` header is generated with the original `Host` value to allow the server to determine the original host the request was intended for.
 (We have also traditionally examined the `X-Forwarded-Proto` header; some implementations examine the `X-Forwarded-Port` header as well.)
 
-To accommodate this use case, we created `Laminas\Diactoros\RequestFilter\LegacyXForwardedHeaderFilter`.
+To accommodate this use case, we created `Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter`.
 (The "Legacy" verbiage is because a [new RFC (7239)](https://datatracker.ietf.org/doc/html/rfc7239) provides an official specification for this behavior via a new `Forwarded` header.)
 
 Due to potential security issues, it is generally best to only accept these headers if you trust the reverse proxy that has initiated the request.
@@ -16,7 +16,7 @@ Due to potential security issues, it is generally best to only accept these head
 To prevent backwards compatibility breaks, we use this filter by default, marked to trust any proxy.
 However, **in version 3, we will use a no-op filter by default**.
 
-Features will be added to the 3.11.0 version of [mezzio/mezzio](https://github.com/mezzio/mezzio) that will allow configuring the `Laminas\Diactoros\RequestFilter\RequestFilterInterface` instance, and we recommend explicitly configuring this to utilize the `LegacyXForwardedHeaderFilter` if you depend on this functionality.
-If you **do not** need the functionality, we recommend specifying `Laminas\Diactoros\RequestFilter\NoOpRequestFilter` as the configured `RequestFilterInterface` in your application immediately.
+Features will be added to the 3.11.0 version of [mezzio/mezzio](https://github.com/mezzio/mezzio) that will allow configuring the `Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface` instance, and we recommend explicitly configuring this to utilize the `LegacyXForwardedHeaderFilter` if you depend on this functionality.
+If you **do not** need the functionality, we recommend specifying `Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilter` as the configured `ServerRequestFilterInterface` in your application immediately.
 
 We will update this documentation with a link to the related functionality in mezzio/mezzio when it is published.

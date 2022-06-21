@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaminasTest\Diactoros\RequestFilter;
+namespace LaminasTest\Diactoros\ServerRequestFilter;
 
-use Laminas\Diactoros\RequestFilter\NoOpRequestFilter;
+use Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilter;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 

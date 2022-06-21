@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Diactoros\RequestFilter;
+namespace Laminas\Diactoros\ServerRequestFilter;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface RequestFilterInterface
+interface ServerRequestFilterInterface
 {
     public function filterRequest(ServerRequestInterface $request): ServerRequestInterface;
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaminasTest\Diactoros\RequestFilter;
+namespace LaminasTest\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
-use Laminas\Diactoros\RequestFilter\LegacyXForwardedHeaderFilter;
+use Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 

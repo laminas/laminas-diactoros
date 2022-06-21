@@ -125,11 +125,11 @@ $request = ServerRequestFactory::fromGlobals(
     $_FILES
 );
 
-### Request Filter
+### Request Filters
 
 Since version 2.11.1, this method takes the additional optional argument `$requestFilter`.
-This should be a `null` value, or an instance of [`Laminas\Diactoros\RequestFilter\RequestFilterInterface`](request-filters.md).
-For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\RequestFilter\LegacyXForwardedHeaderFilter`](request-filters.md#legacyxforwardedheaderfilter) instance configured as follows:
+This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface`](server-request-filters.md).
+For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter`](server-request-filters.md#legacyxforwardedheaderfilter) instance configured as follows:
 
 ```php
 $requestFilter = new LegacyXForwardedHeaderFilter();
@@ -138,7 +138,7 @@ $requestFilter->trustAny();
 
 The request filter is called on the generated server request instance, and its result is returned from `fromGlobals()`.
 
-**For version 3 releases, this method will switch to using a `Laminas\Diactoros\RequestFilter\NoOpRequestFilter` by default.**
+**For version 3 releases, this method will switch to using a `Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilter` by default.**
 If you are using this factory method directly, please be aware and update your code accordingly.
 
 ### ServerRequestFactory Helper Functions

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Diactoros\RequestFilter;
+namespace Laminas\Diactoros\ServerRequestFilter;
 
 final class IPRange
 {

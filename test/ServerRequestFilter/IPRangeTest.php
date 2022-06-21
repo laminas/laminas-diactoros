@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaminasTest\Diactoros\RequestFilter;
+namespace LaminasTest\Diactoros\ServerRequestFilter;
 
-use Laminas\Diactoros\RequestFilter\IPRange;
+use Laminas\Diactoros\ServerRequestFilter\IPRange;
 use PHPUnit\Framework\TestCase;
 
 class IPRangeTest extends TestCase

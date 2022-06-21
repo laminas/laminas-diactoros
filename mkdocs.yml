@@ -14,7 +14,7 @@ nav:
     - Usage: v2/usage.md
     - Reference:
       - Factories: v2/factories.md
-      - "Request Filters": v2/request-filters.md
+      - "Server Request Filters": v2/server-request-filters.md
       - "Custom Responses": v2/custom-responses.md
       - Serialization: v2/serialization.md
       - API: v2/api.md

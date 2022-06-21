@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
-use Laminas\Diactoros\RequestFilter\RequestFilterInterface;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface;
 use Laminas\Diactoros\UploadedFile;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionMethod;
-use ReflectionProperty;
 use UnexpectedValueException;
 
 use function Laminas\Diactoros\marshalHeadersFromSapi;
@@ -728,7 +726,7 @@ class ServerRequestFactoryTest extends TestCase
     public function testReturnsFilteredRequestBasedOnRequestFilterProvided(): void
     {
         $expectedRequest = new ServerRequest();
-        $filter = new class($expectedRequest) implements RequestFilterInterface {
+        $filter = new class($expectedRequest) implements ServerRequestFilterInterface {
             /** @var ServerRequestInterface */
             private $request;
 

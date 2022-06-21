@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Diactoros\RequestFilter;
+namespace Laminas\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class LegacyXForwardedHeaderFilter implements RequestFilterInterface
+final class LegacyXForwardedHeaderFilter implements ServerRequestFilterInterface
 {
     public const HEADER_HOST  = 'X-FORWARDED-HOST';
     public const HEADER_PORT  = 'X-FORWARDED-PORT';

@@ -1,23 +1,23 @@
-# Request Filters
+# Server Request Filters
 
 > - Since laminas/laminas-diactoros 2.11.1
 
-Request filters allow you to modify the initial state of a generated `ServerRequest` instance as returned from `Laminas\Diactoros\ServerRequestFactory::fromGlobals()`.
+Server request filters allow you to modify the initial state of a generated `ServerRequest` instance as returned from `Laminas\Diactoros\ServerRequestFactory::fromGlobals()`.
 Common use cases include:
 
 - Generating and injecting a request ID.
 - Modifying the request URI based on headers provided (e.g., based on the `X-Forwarded-Host` or `X-Forwarded-Proto` headers).
 
-## RequestFilterInterface
+## ServerRequestFilterInterface
 
-A request filter implements `Laminas\Diactoros\RequestFilter\RequestFilterInterface`:
+A request filter implements `Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface`:
 
 ```php
-namespace Laminas\Diactoros\RequestFilter;
+namespace Laminas\Diactoros\ServerRequestFilter;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface RequestFilterInterface
+interface ServerRequestFilterInterface
 {
     public function filterRequest(ServerRequestInterface $request): ServerRequestInterface;
 }
@@ -40,7 +40,7 @@ These include:
 - `X-Forwarded-Port`: the original port included in the `Host` header value.
 - `X-Forwarded-Proto`: the original URI scheme used to make the request (e.g., "http" or "https").
 
-`Laminas\Diactoros\RequestFilter\LegacyXForwardedHeaderFilter` provides mechanisms for accepting these headers and using them to modify the URI composed in the request instance to match the original request.
+`Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter` provides mechanisms for accepting these headers and using them to modify the URI composed in the request instance to match the original request.
 These methods are:
 
 - `trustAny(): void`: when this method is called, the filter will trust requests from any origin, and use any of the above headers to modify the URI instance.
