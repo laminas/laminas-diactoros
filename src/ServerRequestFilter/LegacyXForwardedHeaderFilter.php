@@ -194,19 +194,4 @@ final class LegacyXForwardedHeaderFilter implements ServerRequestFilterInterface
                 )
             );
     }
-
-    private function getHeaderListToRemove(): array
-    {
-        $toRemove = self::X_FORWARDED_HEADERS;
-        foreach ($this->trustedHeaders as $header) {
-            $index = array_search($header, $toRemove, true);
-            if (! is_int($index)) {
-                continue;
-            }
-
-            unset($toRemove[$index]);
-        }
-
-        return $toRemove;
-    }
 }
