@@ -30,6 +30,26 @@ We provide the following implementations:
 - `NoOpRequestFilter`: returns the provided `$request` verbatim.
 - `LegacyXForwardedHeaderFilter`: if the originating request comes from a trusted proxy, examines the `X-Forwarded-*` headers, and returns the request instance with a URI instance that reflects those headers.
 
+### NoOpRequestFilter
+
+This filter returns the `$request` argument back verbatim when invoked.
+
+#### NoOpRequestFilterFactory
+
+Diactoros also ships with a factory for generating a `Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilter` via the `Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilterFactory` class.
+Register it as follows:
+
+```php
+$config = [
+    'dependencies' => [
+        'factories' => [
+            \Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface::class =>
+                \Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilterFactory::class,
+        ],
+    ],
+];
+```
+
 ### LegacyXForwardedHeaderFilter
 
 Servers behind a reverse proxy need mechanisms to determine the original URL requested.
