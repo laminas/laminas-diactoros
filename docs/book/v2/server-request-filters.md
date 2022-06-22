@@ -97,3 +97,40 @@ $filter->trustProxies(
     [LegacyXForwardedHeaderFilter::HEADER_HOST, LegacyXForwardedHeaderFilter::HEADER_PROTO]
 );
 ```
+
+#### LegacyXForwardedHeaderFilterFactory
+
+Diactoros also ships with a factory for generating a `Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter` via the `Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilterFactory` class.
+This factory looks for the following configuration in order to generate an instance:
+
+```php
+$config = [
+    'laminas-diactoros' => [
+        'legacy-x-forwarded-header-filter' => [
+            'trust-any' => bool,
+            'trusted-proxies' => string|string[],
+            'trusted-headers' => string[],
+        ],
+    ],
+];
+```
+
+- The `trust-any` key should be a boolean.
+  By default, it is `false`; toggling it `true` will cause the `trustAny()` method to be called on the generated instance.
+  This flag overrides the `trusted-proxies` configuration.
+- The `trusted-proxies` array should be a string IP address or CIDR notation, or an array of such values, each indicating a trusted proxy server or subnet of such servers.
+- The `trusted-headers` array should consist of one or more of the `X-Forwarded-Host`, `X-Forwarded-Port`, or `X-Forwarded-Proto` header names; the values are case insensitive.
+  When the configuration is omitted or the array is empty, the assumption is to honor all `X-Forwarded-*` headers for trusted proxies.
+
+Register the factory using the `Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface` key:
+
+```php
+$config = [
+    'dependencies' => [
+        'factories' => [
+            \Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface::class =>
+                \Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilterFactory::class,
+        ],
+    ],
+];
+```
