@@ -7,21 +7,21 @@ namespace Laminas\Diactoros\ServerRequestFilter;
 use Laminas\Diactoros\ConfigProvider;
 use Psr\Container\ContainerInterface;
 
-final class XForwardedHeaderFilterFactory
+final class XForwardedRequestFilterFactory
 {
-    public function __invoke(ContainerInterface $container): XForwardedHeaderFilter
+    public function __invoke(ContainerInterface $container): XForwardedRequestFilter
     {
         $config = $container->get('config');
         $config = $config[ConfigProvider::CONFIG_KEY][ConfigProvider::X_FORWARDED] ?? [];
 
         if (! is_array($config) || empty($config)) {
-            return XForwardedHeaderFilter::trustNone();
+            return XForwardedRequestFilter::trustNone();
         }
 
         if (array_key_exists(ConfigProvider::X_FORWARDED_TRUST_ANY, $config)
             && true === $config[ConfigProvider::X_FORWARDED_TRUST_ANY]
         ) {
-            return XForwardedHeaderFilter::trustAny();
+            return XForwardedRequestFilter::trustAny();
         }
 
         $proxies = array_key_exists(ConfigProvider::X_FORWARDED_TRUSTED_PROXIES, $config)
@@ -32,21 +32,21 @@ final class XForwardedHeaderFilterFactory
             || empty($proxies)
         ) {
             // Makes no sense to set trusted headers if no proxies are trusted
-            return XForwardedHeaderFilter::trustNone();
+            return XForwardedRequestFilter::trustNone();
         }
 
         $headers = array_key_exists(ConfigProvider::X_FORWARDED_TRUSTED_HEADERS, $config)
             ? $config[ConfigProvider::X_FORWARDED_TRUSTED_HEADERS]
-            : XForwardedHeaderFilter::X_FORWARDED_HEADERS;
+            : XForwardedRequestFilter::X_FORWARDED_HEADERS;
 
         if (! is_array($headers)) {
             // Invalid value
-            return XForwardedHeaderFilter::trustNone();
+            return XForwardedRequestFilter::trustNone();
         }
 
         // Empty headers list implies trust all
-        $headers = empty($headers) ? XForwardedHeaderFilter::X_FORWARDED_HEADERS : $headers;
+        $headers = empty($headers) ? XForwardedRequestFilter::X_FORWARDED_HEADERS : $headers;
 
-        return XForwardedHeaderFilter::trustProxies($proxies, $headers);
+        return XForwardedRequestFilter::trustProxies($proxies, $headers);
     }
 }

@@ -6,11 +6,11 @@ namespace LaminasTest\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
-use Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter;
+use Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 
-class XForwardedHeaderFilterTest extends TestCase
+class XForwardedRequestFilterTest extends TestCase
 {
     public function testTrustingStringProxyWithoutSpecifyingTrustedHeadersTrustsAllForwardedHeadersForThatProxy(): void
     {
@@ -28,7 +28,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustProxies('192.168.1.0/24');
+        $filter = XForwardedRequestFilter::trustProxies('192.168.1.0/24');
 
         $filteredRequest = $filter->filterRequest($request);
         $filteredUri     = $filteredRequest->getUri();
@@ -54,9 +54,9 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustProxies(
+        $filter = XForwardedRequestFilter::trustProxies(
             '192.168.1.0/24',
-            [XForwardedHeaderFilter::HEADER_HOST, XForwardedHeaderFilter::HEADER_PROTO]
+            [XForwardedRequestFilter::HEADER_HOST, XForwardedRequestFilter::HEADER_PROTO]
         );
 
         $filteredRequest = $filter->filterRequest($request);
@@ -83,7 +83,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustProxies('192.168.1.0/24');
+        $filter = XForwardedRequestFilter::trustProxies('192.168.1.0/24');
 
         $filteredRequest = $filter->filterRequest($request);
         $filteredUri     = $filteredRequest->getUri();
@@ -98,7 +98,7 @@ class XForwardedHeaderFilterTest extends TestCase
     }
 
     /** @dataProvider trustedProxyList */
-    public function testTrustingProxyListWithoutExplicitTrustedHeadersTrustsAllForwardedHeadersForTrustedProxies(
+    public function testTrustingProxyListWithoutExplicitTrustedHeadersTrustsAllForwardedRequestsForTrustedProxies(
         string $remoteAddr
     ): void {
         $request = new ServerRequest(
@@ -115,7 +115,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
+        $filter = XForwardedRequestFilter::trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
 
         $filteredRequest = $filter->filterRequest($request);
         $filteredUri     = $filteredRequest->getUri();
@@ -142,9 +142,9 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustProxies(
+        $filter = XForwardedRequestFilter::trustProxies(
             ['192.168.1.0/24', '10.1.0.0/16'],
-            [XForwardedHeaderFilter::HEADER_HOST, XForwardedHeaderFilter::HEADER_PROTO]
+            [XForwardedRequestFilter::HEADER_HOST, XForwardedRequestFilter::HEADER_PROTO]
         );
 
         $filteredRequest = $filter->filterRequest($request);
@@ -179,7 +179,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
+        $filter = XForwardedRequestFilter::trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
 
         $this->assertSame($request, $filter->filterRequest($request));
     }
@@ -187,19 +187,19 @@ class XForwardedHeaderFilterTest extends TestCase
     public function testPassingInvalidStringAddressForProxyRaisesException(): void
     {
         $this->expectException(InvalidProxyAddressException::class);
-        XForwardedHeaderFilter::trustProxies('192.168.1');
+        XForwardedRequestFilter::trustProxies('192.168.1');
     }
 
     public function testPassingInvalidAddressInProxyListRaisesException(): void
     {
         $this->expectException(InvalidProxyAddressException::class);
-        XForwardedHeaderFilter::trustProxies(['192.168.1']);
+        XForwardedRequestFilter::trustProxies(['192.168.1']);
     }
 
     public function testPassingInvalidForwardedHeaderNamesWhenTrustingProxyRaisesException(): void
     {
         $this->expectException(InvalidForwardedHeaderNameException::class);
-        XForwardedHeaderFilter::trustProxies('192.168.1.0/24', ['Host']);
+        XForwardedRequestFilter::trustProxies('192.168.1.0/24', ['Host']);
     }
 
     public function testListOfForwardedHostsIsConsideredUntrusted(): void
@@ -216,7 +216,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustAny();
+        $filter = XForwardedRequestFilter::trustAny();
 
         $this->assertSame($request, $filter->filterRequest($request));
     }
@@ -235,7 +235,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustAny();
+        $filter = XForwardedRequestFilter::trustAny();
 
         $this->assertSame($request, $filter->filterRequest($request));
     }
@@ -254,7 +254,7 @@ class XForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = XForwardedHeaderFilter::trustAny();
+        $filter = XForwardedRequestFilter::trustAny();
 
         $this->assertSame($request, $filter->filterRequest($request));
     }
