@@ -175,7 +175,6 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
 
     /**
      * @param mixed $cidr
-     * @throws InvalidCIDRException
      */
     private static function validateProxyCIDR($cidr): bool
     {
