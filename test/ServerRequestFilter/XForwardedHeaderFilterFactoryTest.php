@@ -111,8 +111,8 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
         $headers['Host'] = 'localhost';
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
-                ConfigProvider::LEGACY_X_FORWARDED => [
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => true,
+                ConfigProvider::X_FORWARDED => [
+                    ConfigProvider::X_FORWARDED_TRUST_ANY => true,
                 ],
             ],
         ]);
@@ -143,9 +143,9 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
         $headers['Host'] = 'localhost';
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
-                ConfigProvider::LEGACY_X_FORWARDED => [
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => true,
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => [
+                ConfigProvider::X_FORWARDED => [
+                    ConfigProvider::X_FORWARDED_TRUST_ANY => true,
+                    ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => [
                         '192.168.0.0/24',
                     ],
                 ],
@@ -175,10 +175,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
     {
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
-                ConfigProvider::LEGACY_X_FORWARDED => [
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => [],
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
+                ConfigProvider::X_FORWARDED => [
+                    ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                    ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => [],
+                    ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                         XForwardedHeaderFilter::HEADER_HOST,
                     ],
                 ],
@@ -208,10 +208,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
     {
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
-                ConfigProvider::LEGACY_X_FORWARDED => [
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['0.0.0.0/0'],
-                    ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [],
+                ConfigProvider::X_FORWARDED => [
+                    ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                    ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['0.0.0.0/0'],
+                    ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [],
                 ],
             ],
         ]);
@@ -256,10 +256,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
             false,
             [
                 ConfigProvider::CONFIG_KEY => [
-                    ConfigProvider::LEGACY_X_FORWARDED => [
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => '192.168.1.1',
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
+                    ConfigProvider::X_FORWARDED => [
+                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                        ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => '192.168.1.1',
+                        ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
@@ -280,10 +280,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
             false,
             [
                 ConfigProvider::CONFIG_KEY => [
-                    ConfigProvider::LEGACY_X_FORWARDED => [
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
+                    ConfigProvider::X_FORWARDED => [
+                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                        ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
+                        ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
@@ -304,10 +304,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
             false,
             [
                 ConfigProvider::CONFIG_KEY => [
-                    ConfigProvider::LEGACY_X_FORWARDED => [
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
+                    ConfigProvider::X_FORWARDED => [
+                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                        ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
+                        ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedHeaderFilter::HEADER_HOST,
                             XForwardedHeaderFilter::HEADER_PROTO,
                         ],
@@ -329,10 +329,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
             true,
             [
                 ConfigProvider::CONFIG_KEY => [
-                    ConfigProvider::LEGACY_X_FORWARDED => [
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
+                    ConfigProvider::X_FORWARDED => [
+                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                        ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
+                        ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
@@ -353,10 +353,10 @@ class XForwardedHeaderFilterFactoryTest extends TestCase
             false,
             [
                 ConfigProvider::CONFIG_KEY => [
-                    ConfigProvider::LEGACY_X_FORWARDED => [
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.0/24', '192.168.2.0/24'],
-                        ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
+                    ConfigProvider::X_FORWARDED => [
+                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
+                        ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.0/24', '192.168.2.0/24'],
+                        ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
