@@ -14,7 +14,7 @@ final class XForwardedHeaderFilterFactory
         $config = $container->get('config');
         $config = $config[ConfigProvider::CONFIG_KEY][ConfigProvider::LEGACY_X_FORWARDED] ?? [];
 
-        if (empty($config)) {
+        if (! is_array($config) || empty($config)) {
             return XForwardedHeaderFilter::trustNone();
         }
 
