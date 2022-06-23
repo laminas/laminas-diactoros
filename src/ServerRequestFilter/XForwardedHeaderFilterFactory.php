@@ -12,20 +12,20 @@ final class XForwardedHeaderFilterFactory
     public function __invoke(ContainerInterface $container): XForwardedHeaderFilter
     {
         $config = $container->get('config');
-        $config = $config[ConfigProvider::CONFIG_KEY][ConfigProvider::LEGACY_X_FORWARDED] ?? [];
+        $config = $config[ConfigProvider::CONFIG_KEY][ConfigProvider::X_FORWARDED] ?? [];
 
         if (! is_array($config) || empty($config)) {
             return XForwardedHeaderFilter::trustNone();
         }
 
-        if (array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY, $config)
-            && $config[ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY]
+        if (array_key_exists(ConfigProvider::X_FORWARDED_TRUST_ANY, $config)
+            && $config[ConfigProvider::X_FORWARDED_TRUST_ANY]
         ) {
             return XForwardedHeaderFilter::trustAny();
         }
 
-        $proxies = array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES, $config)
-            ? $config[ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES]
+        $proxies = array_key_exists(ConfigProvider::X_FORWARDED_TRUSTED_PROXIES, $config)
+            ? $config[ConfigProvider::X_FORWARDED_TRUSTED_PROXIES]
             : [];
 
         if ((! is_string($proxies) && ! is_array($proxies))
@@ -35,8 +35,8 @@ final class XForwardedHeaderFilterFactory
             return XForwardedHeaderFilter::trustNone();
         }
 
-        $headers = array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS, $config)
-            ? $config[ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS]
+        $headers = array_key_exists(ConfigProvider::X_FORWARDED_TRUSTED_HEADERS, $config)
+            ? $config[ConfigProvider::X_FORWARDED_TRUSTED_HEADERS]
             : XForwardedHeaderFilter::X_FORWARDED_HEADERS;
 
         if (! is_array($headers)) {

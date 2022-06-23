@@ -14,10 +14,10 @@ use Psr\Http\Message\UriFactoryInterface;
 class ConfigProvider
 {
     public const CONFIG_KEY = 'laminas-diactoros';
-    public const LEGACY_X_FORWARDED = 'laminas-x-forwarded-header-filter';
-    public const LEGACY_X_FORWARDED_TRUST_ANY = 'trust-any';
-    public const LEGACY_X_FORWARDED_TRUSTED_PROXIES = 'trusted-proxies';
-    public const LEGACY_X_FORWARDED_TRUSTED_HEADERS = 'trusted-headers';
+    public const X_FORWARDED = 'x-forwarded-header-filter';
+    public const X_FORWARDED_TRUST_ANY = 'trust-any';
+    public const X_FORWARDED_TRUSTED_PROXIES = 'trusted-proxies';
+    public const X_FORWARDED_TRUSTED_HEADERS = 'trusted-headers';
 
     /**
      * Retrieve configuration for laminas-diactoros.
@@ -56,10 +56,10 @@ class ConfigProvider
     public function getComponentConfig(): array
     {
         return [
-            self::LEGACY_X_FORWARDED => [
-                self::LEGACY_X_FORWARDED_TRUST_ANY       => false,
-                self::LEGACY_X_FORWARDED_TRUSTED_PROXIES => [],
-                self::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [],
+            self::X_FORWARDED => [
+                self::X_FORWARDED_TRUST_ANY       => false,
+                self::X_FORWARDED_TRUSTED_PROXIES => [],
+                self::X_FORWARDED_TRUSTED_HEADERS => [],
             ],
         ];
     }
