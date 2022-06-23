@@ -121,7 +121,6 @@ This factory looks for the following configuration in order to generate an insta
 $config = [
     'laminas-diactoros' => [
         'x-forwarded-request-filter' => [
-            'trust-any' => bool,
             'trusted-proxies' => string|string[],
             'trusted-headers' => string[],
         ],
@@ -129,10 +128,10 @@ $config = [
 ];
 ```
 
-- The `trust-any` key should be a boolean.
-  By default, it is `false`; toggling it `true` will use the `trustAny()` constructor to generate the instance.
-  This flag overrides the `trusted-proxies` configuration.
-- The `trusted-proxies` array should be a string IP address or CIDR notation, or an array of such values, each indicating a trusted proxy server or subnet of such servers.
+- The `trusted-proxies` value may be one of the following:
+  - The string "*". This indicates that all originating addresses are trusted.
+  - A string IP address or CIDR notation value indicating a trusted proxy server or subnet.
+  - An array of string IP addresses or CIDR notation values.
 - The `trusted-headers` array should consist of one or more of the `X-Forwarded-Host`, `X-Forwarded-Port`, or `X-Forwarded-Proto` header names; the values are case insensitive.
   When the configuration is omitted or the array is empty, the assumption is to honor all `X-Forwarded-*` headers for trusted proxies.
 

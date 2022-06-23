@@ -18,15 +18,12 @@ final class XForwardedRequestFilterFactory
             return XForwardedRequestFilter::trustNone();
         }
 
-        if (array_key_exists(ConfigProvider::X_FORWARDED_TRUST_ANY, $config)
-            && true === $config[ConfigProvider::X_FORWARDED_TRUST_ANY]
-        ) {
-            return XForwardedRequestFilter::trustAny();
-        }
-
         $proxies = array_key_exists(ConfigProvider::X_FORWARDED_TRUSTED_PROXIES, $config)
             ? $config[ConfigProvider::X_FORWARDED_TRUSTED_PROXIES]
             : [];
+
+        // '*' means trust any source as a trusted proxy for purposes of this factory
+        $proxies = $proxies === '*' ? ['0.0.0.0/0'] : $proxies;
 
         if ((! is_string($proxies) && ! is_array($proxies))
             || empty($proxies)
@@ -35,6 +32,7 @@ final class XForwardedRequestFilterFactory
             return XForwardedRequestFilter::trustNone();
         }
 
+        // Missing trusted headers setting means all headers are considered trusted
         $headers = array_key_exists(ConfigProvider::X_FORWARDED_TRUSTED_HEADERS, $config)
             ? $config[ConfigProvider::X_FORWARDED_TRUSTED_HEADERS]
             : XForwardedRequestFilter::X_FORWARDED_HEADERS;

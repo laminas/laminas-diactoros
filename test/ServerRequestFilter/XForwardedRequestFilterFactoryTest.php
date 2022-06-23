@@ -104,7 +104,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
     }
 
     /** @dataProvider trustAnyProvider */
-    public function testIfTrustAnyFlagIsEnabledReturnsFilterConfiguredToTrustAny(
+    public function testIfWildcardProxyAddressSpecifiedReturnsFilterConfiguredToTrustAny(
         string $remoteAddr,
         array $headers
     ): void {
@@ -112,42 +112,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
                 ConfigProvider::X_FORWARDED => [
-                    ConfigProvider::X_FORWARDED_TRUST_ANY => true,
-                ],
-            ],
-        ]);
-
-        $factory = new XForwardedRequestFilterFactory();
-        $filter = $factory($this->container);
-        $request = $this->generateServerRequest(
-            $headers,
-            ['REMOTE_ADDR' => $remoteAddr],
-            'http://localhost/foo/bar',
-        );
-
-        $filteredRequest = $filter->filterRequest($request);
-        $this->assertNotSame($request, $filteredRequest);
-
-        $uri = $filteredRequest->getUri();
-        $this->assertSame($headers[XForwardedRequestFilter::HEADER_HOST], $uri->getHost());
-        // Port is always cast to int
-        $this->assertSame((int) $headers[XForwardedRequestFilter::HEADER_PORT], $uri->getPort());
-        $this->assertSame($headers[XForwardedRequestFilter::HEADER_PROTO], $uri->getScheme());
-    }
-
-    /** @dataProvider trustAnyProvider */
-    public function testEnabledTrustAnyFlagHasPrecedenceOverTrustedProxiesConfig(
-        string $remoteAddr,
-        array $headers
-    ): void {
-        $headers['Host'] = 'localhost';
-        $this->container->set('config', [
-            ConfigProvider::CONFIG_KEY => [
-                ConfigProvider::X_FORWARDED => [
-                    ConfigProvider::X_FORWARDED_TRUST_ANY => true,
-                    ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => [
-                        '192.168.0.0/24',
-                    ],
+                    ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => '*',
                 ],
             ],
         ]);
@@ -176,7 +141,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
                 ConfigProvider::X_FORWARDED => [
-                    ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                     ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => [],
                     ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                         XForwardedRequestFilter::HEADER_HOST,
@@ -209,7 +173,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
         $this->container->set('config', [
             ConfigProvider::CONFIG_KEY => [
                 ConfigProvider::X_FORWARDED => [
-                    ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                     ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['0.0.0.0/0'],
                     ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [],
                 ],
@@ -257,7 +220,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             [
                 ConfigProvider::CONFIG_KEY => [
                     ConfigProvider::X_FORWARDED => [
-                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => '192.168.1.1',
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedRequestFilter::HEADER_HOST,
@@ -281,7 +243,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             [
                 ConfigProvider::CONFIG_KEY => [
                     ConfigProvider::X_FORWARDED => [
-                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedRequestFilter::HEADER_HOST,
@@ -305,7 +266,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             [
                 ConfigProvider::CONFIG_KEY => [
                     ConfigProvider::X_FORWARDED => [
-                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedRequestFilter::HEADER_HOST,
@@ -330,7 +290,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             [
                 ConfigProvider::CONFIG_KEY => [
                     ConfigProvider::X_FORWARDED => [
-                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedRequestFilter::HEADER_HOST,
@@ -354,7 +313,6 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             [
                 ConfigProvider::CONFIG_KEY => [
                     ConfigProvider::X_FORWARDED => [
-                        ConfigProvider::X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.0/24', '192.168.2.0/24'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
                             XForwardedRequestFilter::HEADER_HOST,

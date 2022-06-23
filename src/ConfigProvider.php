@@ -15,7 +15,6 @@ class ConfigProvider
 {
     public const CONFIG_KEY = 'laminas-diactoros';
     public const X_FORWARDED = 'x-forwarded-request-filter';
-    public const X_FORWARDED_TRUST_ANY = 'trust-any';
     public const X_FORWARDED_TRUSTED_PROXIES = 'trusted-proxies';
     public const X_FORWARDED_TRUSTED_HEADERS = 'trusted-headers';
 
@@ -58,8 +57,7 @@ class ConfigProvider
     {
         return [
             self::X_FORWARDED => [
-                self::X_FORWARDED_TRUST_ANY       => false,
-                self::X_FORWARDED_TRUSTED_PROXIES => [],
+                self::X_FORWARDED_TRUSTED_PROXIES => '',
                 self::X_FORWARDED_TRUSTED_HEADERS => [],
             ],
         ];
