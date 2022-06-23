@@ -19,7 +19,7 @@ final class XForwardedHeaderFilterFactory
         }
 
         if (array_key_exists(ConfigProvider::X_FORWARDED_TRUST_ANY, $config)
-            && $config[ConfigProvider::X_FORWARDED_TRUST_ANY]
+            && true === $config[ConfigProvider::X_FORWARDED_TRUST_ANY]
         ) {
             return XForwardedHeaderFilter::trustAny();
         }
