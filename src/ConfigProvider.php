@@ -14,7 +14,7 @@ use Psr\Http\Message\UriFactoryInterface;
 class ConfigProvider
 {
     public const CONFIG_KEY = 'laminas-diactoros';
-    public const X_FORWARDED = 'x-forwarded-header-filter';
+    public const X_FORWARDED = 'x-forwarded-request-filter';
     public const X_FORWARDED_TRUST_ANY = 'trust-any';
     public const X_FORWARDED_TRUSTED_PROXIES = 'trusted-proxies';
     public const X_FORWARDED_TRUSTED_HEADERS = 'trusted-headers';

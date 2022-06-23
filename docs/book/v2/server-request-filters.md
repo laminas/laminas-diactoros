@@ -120,7 +120,7 @@ This factory looks for the following configuration in order to generate an insta
 ```php
 $config = [
     'laminas-diactoros' => [
-        'x-forwarded-header-filter' => [
+        'x-forwarded-request-filter' => [
             'trust-any' => bool,
             'trusted-proxies' => string|string[],
             'trusted-headers' => string[],
