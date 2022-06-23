@@ -28,7 +28,7 @@ interface ServerRequestFilterInterface
 We provide the following implementations:
 
 - `NoOpRequestFilter`: returns the provided `$request` verbatim.
-- `LegacyXForwardedHeaderFilter`: if the originating request comes from a trusted proxy, examines the `X-Forwarded-*` headers, and returns the request instance with a URI instance that reflects those headers.
+- `XForwardedHeaderFilter`: if the originating request comes from a trusted proxy, examines the `X-Forwarded-*` headers, and returns the request instance with a URI instance that reflects those headers.
 
 ### NoOpRequestFilter
 
@@ -50,7 +50,7 @@ $config = [
 ];
 ```
 
-### LegacyXForwardedHeaderFilter
+### XForwardedHeaderFilter
 
 Servers behind a reverse proxy need mechanisms to determine the original URL requested.
 As such, reverse proxies have provided a number of mechanisms for delivering this information, with the use of `X-Forwarded-*` headers being the most prevalant.
@@ -60,11 +60,11 @@ These include:
 - `X-Forwarded-Port`: the original port included in the `Host` header value.
 - `X-Forwarded-Proto`: the original URI scheme used to make the request (e.g., "http" or "https").
 
-`Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter` provides mechanisms for accepting these headers and using them to modify the URI composed in the request instance to match the original request.
+`Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter` provides mechanisms for accepting these headers and using them to modify the URI composed in the request instance to match the original request.
 These methods are:
 
 - `trustAny(): void`: when this method is called, the filter will trust requests from any origin, and use any of the above headers to modify the URI instance.
-- `trustProxies(string|string[] $proxies, string[] $trustedHeaders = LegacyXForwardedHeaderFilter::X_FORWARDED_HEADERS): void`: when this method is called, only requests originating from the trusted proxy/ies will be considered, as well as only the headers specified.
+- `trustProxies(string|string[] $proxies, string[] $trustedHeaders = XForwardedHeaderFilter::X_FORWARDED_HEADERS): void`: when this method is called, only requests originating from the trusted proxy/ies will be considered, as well as only the headers specified.
 
 Order of operations matters when configuring the instance.
 If `trustAny()` is called after `trustProxies()`, the filter will trust any request.
@@ -75,7 +75,7 @@ Internally, the filter checks the `REMOTE_ADDR` server parameter (as retrieved f
 
 #### Constants
 
-The `LegacyXForwardedHeaderFilter` defines the following constants for use in specifying various headers:
+The `XForwardedHeaderFilter` defines the following constants for use in specifying various headers:
 
 - `HEADER_HOST`: corresponds to `X-Forwarded-Host`.
 - `HEADER_PORT`: corresponds to `X-Forwarded-Port`.
@@ -87,40 +87,40 @@ The `LegacyXForwardedHeaderFilter` defines the following constants for use in sp
 Trusting all `X-Forwarded-*` headers from any source:
 
 ```php
-$filter = new LegacyXForwardedHeaderFilter();
+$filter = new XForwardedHeaderFilter();
 $filter->trustAny();
 ```
 
 Trusting only the `X-Forwarded-Host` header from any source:
 
 ```php
-$filter = new LegacyXForwardedHeaderFilter();
-$filter->trustProxies('0.0.0.0/0', [LegacyXForwardedHeaderFilter::HEADER_HOST]);
+$filter = new XForwardedHeaderFilter();
+$filter->trustProxies('0.0.0.0/0', [XForwardedHeaderFilter::HEADER_HOST]);
 ```
 
 Trusting the `X-Forwarded-Host` and `X-Forwarded-Proto` headers from a Class C subnet:
 
 ```php
-$filter = new LegacyXForwardedHeaderFilter();
+$filter = new XForwardedHeaderFilter();
 $filter->trustProxies(
     '192.168.1.0/24',
-    [LegacyXForwardedHeaderFilter::HEADER_HOST, LegacyXForwardedHeaderFilter::HEADER_PROTO]
+    [XForwardedHeaderFilter::HEADER_HOST, XForwardedHeaderFilter::HEADER_PROTO]
 );
 ```
 
 Trusting the `X-Forwarded-Host` header from either a Class A or a Class C subnet:
 
 ```php
-$filter = new LegacyXForwardedHeaderFilter();
+$filter = new XForwardedHeaderFilter();
 $filter->trustProxies(
     ['10.1.1.0/16', '192.168.1.0/24'],
-    [LegacyXForwardedHeaderFilter::HEADER_HOST, LegacyXForwardedHeaderFilter::HEADER_PROTO]
+    [XForwardedHeaderFilter::HEADER_HOST, XForwardedHeaderFilter::HEADER_PROTO]
 );
 ```
 
-#### LegacyXForwardedHeaderFilterFactory
+#### XForwardedHeaderFilterFactory
 
-Diactoros also ships with a factory for generating a `Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter` via the `Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilterFactory` class.
+Diactoros also ships with a factory for generating a `Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter` via the `Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilterFactory` class.
 This factory looks for the following configuration in order to generate an instance:
 
 ```php
@@ -149,7 +149,7 @@ $config = [
     'dependencies' => [
         'factories' => [
             \Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface::class =>
-                \Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilterFactory::class,
+                \Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilterFactory::class,
         ],
     ],
 ];

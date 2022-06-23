@@ -6,11 +6,11 @@ namespace LaminasTest\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
-use Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter;
+use Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 
-class LegacyXForwardedHeaderFilterTest extends TestCase
+class XForwardedHeaderFilterTest extends TestCase
 {
     public function testTrustingStringProxyWithoutSpecifyingTrustedHeadersTrustsAllForwardedHeadersForThatProxy(): void
     {
@@ -28,7 +28,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustProxies('192.168.1.0/24');
 
         $filteredRequest = $filter->filterRequest($request);
@@ -55,7 +55,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustProxies(
             '192.168.1.0/24',
             [$filter::HEADER_HOST, $filter::HEADER_PROTO]
@@ -85,7 +85,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustProxies('192.168.1.0/24');
 
         $filteredRequest = $filter->filterRequest($request);
@@ -118,7 +118,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
 
         $filteredRequest = $filter->filterRequest($request);
@@ -146,7 +146,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustProxies(
             ['192.168.1.0/24', '10.1.0.0/16'],
             [$filter::HEADER_HOST, $filter::HEADER_PROTO]
@@ -184,7 +184,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
 
         $this->assertSame($request, $filter->filterRequest($request));
@@ -192,21 +192,21 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
 
     public function testPassingInvalidStringAddressForProxyRaisesException(): void
     {
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $this->expectException(InvalidProxyAddressException::class);
         $filter->trustProxies('192.168.1');
     }
 
     public function testPassingInvalidAddressInProxyListRaisesException(): void
     {
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $this->expectException(InvalidProxyAddressException::class);
         $filter->trustProxies(['192.168.1']);
     }
 
     public function testPassingInvalidForwardedHeaderNamesWhenTrustingProxyRaisesException(): void
     {
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $this->expectException(InvalidForwardedHeaderNameException::class);
         $filter->trustProxies('192.168.1.0/24', ['Host']);
     }
@@ -225,7 +225,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustAny();
 
         $this->assertSame($request, $filter->filterRequest($request));
@@ -245,7 +245,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustAny();
 
         $this->assertSame($request, $filter->filterRequest($request));
@@ -265,7 +265,7 @@ class LegacyXForwardedHeaderFilterTest extends TestCase
             ]
         );
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
         $filter->trustAny();
 
         $this->assertSame($request, $filter->filterRequest($request));

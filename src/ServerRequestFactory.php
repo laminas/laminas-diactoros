@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter;
+use Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter;
 use Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -47,8 +47,8 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @param null|ServerRequestFilterInterface $requestFilter If present, the
      *     generated request will be passed to this instance and the result
      *     returned by this method. When not present, a default instance
-     *     is created and used. For version 2, that instance is of
-     *     LegacyXForwardedHeaderFilter, with the `trustAny()` method called.
+     *     is created and used. For version 2, that instance is an
+     *     XForwardedHeaderFilter, with the `trustAny()` method called.
      *     For version 3, it will be a NoOpRequestFilter instance.
      * @return ServerRequest
      */
@@ -62,7 +62,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     ) : ServerRequest {
         // @todo For version 3, we should instead create a NoOpRequestFilter instance.
         if (null === $requestFilter) {
-            $requestFilter = new LegacyXForwardedHeaderFilter();
+            $requestFilter = new XForwardedHeaderFilter();
             $requestFilter->trustAny();
         }
 

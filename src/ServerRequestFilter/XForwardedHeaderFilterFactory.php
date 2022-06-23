@@ -7,14 +7,14 @@ namespace Laminas\Diactoros\ServerRequestFilter;
 use Laminas\Diactoros\ConfigProvider;
 use Psr\Container\ContainerInterface;
 
-final class LegacyXForwardedHeaderFilterFactory
+final class XForwardedHeaderFilterFactory
 {
-    public function __invoke(ContainerInterface $container): LegacyXForwardedHeaderFilter
+    public function __invoke(ContainerInterface $container): XForwardedHeaderFilter
     {
         $config = $container->get('config');
         $config = $config[ConfigProvider::CONFIG_KEY][ConfigProvider::LEGACY_X_FORWARDED] ?? [];
 
-        $filter = new LegacyXForwardedHeaderFilter();
+        $filter = new XForwardedHeaderFilter();
 
         if (empty($config)) {
             return $filter;
@@ -40,7 +40,7 @@ final class LegacyXForwardedHeaderFilterFactory
 
         $headers = array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS, $config)
             ? $config[ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS]
-            : LegacyXForwardedHeaderFilter::X_FORWARDED_HEADERS;
+            : XForwardedHeaderFilter::X_FORWARDED_HEADERS;
 
         if (! is_array($headers)) {
             // Invalid value
@@ -48,7 +48,7 @@ final class LegacyXForwardedHeaderFilterFactory
         }
 
         // Empty headers list implies trust all
-        $headers = empty($headers) ? LegacyXForwardedHeaderFilter::X_FORWARDED_HEADERS : $headers;
+        $headers = empty($headers) ? XForwardedHeaderFilter::X_FORWARDED_HEADERS : $headers;
 
         $filter->trustProxies($proxies, $headers);
 

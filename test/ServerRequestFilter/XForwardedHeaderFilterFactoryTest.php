@@ -6,12 +6,12 @@ namespace LaminasTest\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\ConfigProvider;
 use Laminas\Diactoros\ServerRequest;
-use Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilter;
-use Laminas\Diactoros\ServerRequestFilter\LegacyXForwardedHeaderFilterFactory;
+use Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter;
+use Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilterFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
+class XForwardedHeaderFilterFactoryTest extends TestCase
 {
     /** @var ContainerInterface */
     private $container;
@@ -70,13 +70,13 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
     /** @dataProvider randomIpGenerator */
     public function testIfNoConfigPresentFactoryReturnsFilterThatDoesNotTrustAny(string $remoteAddr): void
     {
-        $factory = new LegacyXForwardedHeaderFilterFactory();
+        $factory = new XForwardedHeaderFilterFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
             ],
             [
                 'REMOTE_ADDR' => $remoteAddr,
@@ -92,9 +92,9 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
     public function trustAnyProvider(): iterable
     {
         $headers = [
-            LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-            LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-            LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+            XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+            XForwardedHeaderFilter::HEADER_PROTO => 'https',
+            XForwardedHeaderFilter::HEADER_PORT  => '4443',
         ];
 
         foreach ($this->randomIpGenerator() as $name => $arguments) {
@@ -117,7 +117,7 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
             ],
         ]);
 
-        $factory = new LegacyXForwardedHeaderFilterFactory();
+        $factory = new XForwardedHeaderFilterFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             $headers,
@@ -129,10 +129,10 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
         $this->assertNotSame($request, $filteredRequest);
 
         $uri = $filteredRequest->getUri();
-        $this->assertSame($headers[LegacyXForwardedHeaderFilter::HEADER_HOST], $uri->getHost());
+        $this->assertSame($headers[XForwardedHeaderFilter::HEADER_HOST], $uri->getHost());
         // Port is always cast to int
-        $this->assertSame((int) $headers[LegacyXForwardedHeaderFilter::HEADER_PORT], $uri->getPort());
-        $this->assertSame($headers[LegacyXForwardedHeaderFilter::HEADER_PROTO], $uri->getScheme());
+        $this->assertSame((int) $headers[XForwardedHeaderFilter::HEADER_PORT], $uri->getPort());
+        $this->assertSame($headers[XForwardedHeaderFilter::HEADER_PROTO], $uri->getScheme());
     }
 
     /** @dataProvider trustAnyProvider */
@@ -152,7 +152,7 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
             ],
         ]);
 
-        $factory = new LegacyXForwardedHeaderFilterFactory();
+        $factory = new XForwardedHeaderFilterFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             $headers,
@@ -164,10 +164,10 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
         $this->assertNotSame($request, $filteredRequest);
 
         $uri = $filteredRequest->getUri();
-        $this->assertSame($headers[LegacyXForwardedHeaderFilter::HEADER_HOST], $uri->getHost());
+        $this->assertSame($headers[XForwardedHeaderFilter::HEADER_HOST], $uri->getHost());
         // Port is always cast to int
-        $this->assertSame((int) $headers[LegacyXForwardedHeaderFilter::HEADER_PORT], $uri->getPort());
-        $this->assertSame($headers[LegacyXForwardedHeaderFilter::HEADER_PROTO], $uri->getScheme());
+        $this->assertSame((int) $headers[XForwardedHeaderFilter::HEADER_PORT], $uri->getPort());
+        $this->assertSame($headers[XForwardedHeaderFilter::HEADER_PROTO], $uri->getScheme());
     }
 
     /** @dataProvider randomIpGenerator */
@@ -179,19 +179,19 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
                     ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
                     ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => [],
                     ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
-                        LegacyXForwardedHeaderFilter::HEADER_HOST,
+                        XForwardedHeaderFilter::HEADER_HOST,
                     ],
                 ],
             ],
         ]);
 
-        $factory = new LegacyXForwardedHeaderFilterFactory();
+        $factory = new XForwardedHeaderFilterFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
             ],
             [
                 'REMOTE_ADDR' => $remoteAddr,
@@ -216,14 +216,14 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
             ],
         ]);
 
-        $factory = new LegacyXForwardedHeaderFilterFactory();
+        $factory = new XForwardedHeaderFilterFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-                LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_PORT  => '4443',
             ],
             [
                 'REMOTE_ADDR' => $remoteAddr,
@@ -260,16 +260,16 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
                         ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => '192.168.1.1',
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
-                            LegacyXForwardedHeaderFilter::HEADER_HOST,
+                            XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-                LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.1.1'],
             'http://localhost/foo/bar',
@@ -284,16 +284,16 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
                         ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
-                            LegacyXForwardedHeaderFilter::HEADER_HOST,
+                            XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-                LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.1.1'],
             'http://localhost/foo/bar',
@@ -308,17 +308,17 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
                         ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
-                            LegacyXForwardedHeaderFilter::HEADER_HOST,
-                            LegacyXForwardedHeaderFilter::HEADER_PROTO,
+                            XForwardedHeaderFilter::HEADER_HOST,
+                            XForwardedHeaderFilter::HEADER_PROTO,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-                LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.1.1'],
             'http://localhost/foo/bar',
@@ -333,16 +333,16 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
                         ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
-                            LegacyXForwardedHeaderFilter::HEADER_HOST,
+                            XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-                LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.2.1'],
             'http://localhost/foo/bar',
@@ -357,16 +357,16 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
                         ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY => false,
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.0/24', '192.168.2.0/24'],
                         ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS => [
-                            LegacyXForwardedHeaderFilter::HEADER_HOST,
+                            XForwardedHeaderFilter::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                LegacyXForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
-                LegacyXForwardedHeaderFilter::HEADER_PROTO => 'https',
-                LegacyXForwardedHeaderFilter::HEADER_PORT  => '4443',
+                XForwardedHeaderFilter::HEADER_HOST  => 'api.example.com',
+                XForwardedHeaderFilter::HEADER_PROTO => 'https',
+                XForwardedHeaderFilter::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.2.1'],
             'http://localhost/foo/bar',
@@ -385,7 +385,7 @@ class LegacyXForwardedHeaderFilterFactoryTest extends TestCase
     ): void {
         $this->container->set('config', $config);
 
-        $factory = new LegacyXForwardedHeaderFilterFactory();
+        $factory = new XForwardedHeaderFilterFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest($headers, $server, $baseUriString);
 
