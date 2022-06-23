@@ -17,7 +17,7 @@ use function strtolower;
 use function substr;
 
 /**
- * Marshal a Uri instance based on the values presnt in the $_SERVER array and headers.
+ * Marshal a Uri instance based on the values present in the $_SERVER array and headers.
  *
  * @param array $server SAPI parameters
  * @param array $headers HTTP request headers
