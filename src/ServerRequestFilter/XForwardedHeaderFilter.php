@@ -85,7 +85,6 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
         return $filter;
     }
 
-    // public function filterRequest(array $headers, string $remoteAddress): array
     public function filterRequest(ServerRequestInterface $request): ServerRequestInterface
     {
         $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';
