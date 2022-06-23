@@ -129,7 +129,7 @@ $request = ServerRequestFactory::fromGlobals(
 
 Since version 2.11.1, this method takes the additional optional argument `$requestFilter`.
 This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface`](server-request-filters.md).
-For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter`](server-request-filters.md#legacyxforwardedrequestfilter) instance configured as follows:
+For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter`](server-request-filters.md#xforwardedrequestfilter) instance configured as follows:
 
 ```php
 $requestFilter = $requestFilter ?: XForwardedRequestFilter::trustAny();
