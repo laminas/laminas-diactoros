@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\Exception;
 
-use Laminas\Diactoros\ForwardedHeaderFilter;
+use Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter;
 
 class InvalidForwardedHeaderNameException extends RuntimeException implements ExceptionInterface
 {
@@ -17,7 +17,7 @@ class InvalidForwardedHeaderNameException extends RuntimeException implements Ex
         return new self(sprintf(
             'Invalid X-Forwarded-* header name "%s" provided to %s',
             $name,
-            ForwardedHeaderFilter::class,
+            XForwardedRequestFilter::class
         ));
     }
 }
