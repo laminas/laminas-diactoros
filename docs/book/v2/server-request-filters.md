@@ -1,6 +1,7 @@
 # Server Request Filters
 
-> - Since laminas/laminas-diactoros 2.11.1
+INFO: **New Feature**
+Available since version 2.11.1
 
 Server request filters allow you to modify the initial state of a generated `ServerRequest` instance as returned from `Laminas\Diactoros\ServerRequestFactory::fromGlobals()`.
 Common use cases include:
