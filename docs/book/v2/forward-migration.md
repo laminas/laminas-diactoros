@@ -11,7 +11,7 @@ To accommodate this use case, we created `Laminas\Diactoros\ServerRequestFilter\
 
 Due to potential security issues, it is generally best to only accept these headers if you trust the reverse proxy that has initiated the request.
 (This value is found in `$_SERVER['REMOTE_ADDR']`, which is present as `$request->getServerParams()['REMOTE_ADDR']` within PSR-7 implementations.)
-`XForwardedHeaderFilter` provides methods to allow you to trust these headers from any source (which has been the default behavior of Diactoros since the beginning), or to specify specific IP addresses or CIDR subnets to trust, along with which headers are trusted.
+`XForwardedHeaderFilter` provides named constructors to allow you to trust these headers from any source (which has been the default behavior of Diactoros since the beginning), or to specify specific IP addresses or CIDR subnets to trust, along with which headers are trusted.
 To prevent backwards compatibility breaks, we use this filter by default, marked to trust any proxy.
 However, **in version 3, we will use a no-op filter by default**.
 

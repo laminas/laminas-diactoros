@@ -132,8 +132,7 @@ This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerReque
 For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter`](server-request-filters.md#legacyxforwardedheaderfilter) instance configured as follows:
 
 ```php
-$requestFilter = new XForwardedHeaderFilter();
-$requestFilter->trustAny();
+$requestFilter = $requestFilter ?: XForwardedHeaderFilter::trustAny();
 ```
 
 The request filter is called on the generated server request instance, and its result is returned from `fromGlobals()`.

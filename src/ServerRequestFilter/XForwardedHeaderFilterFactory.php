@@ -14,17 +14,14 @@ final class XForwardedHeaderFilterFactory
         $config = $container->get('config');
         $config = $config[ConfigProvider::CONFIG_KEY][ConfigProvider::LEGACY_X_FORWARDED] ?? [];
 
-        $filter = new XForwardedHeaderFilter();
-
         if (empty($config)) {
-            return $filter;
+            return XForwardedHeaderFilter::trustNone();
         }
 
         if (array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY, $config)
             && $config[ConfigProvider::LEGACY_X_FORWARDED_TRUST_ANY]
         ) {
-            $filter->trustAny();
-            return $filter;
+            return XForwardedHeaderFilter::trustAny();
         }
 
         $proxies = array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_PROXIES, $config)
@@ -35,7 +32,7 @@ final class XForwardedHeaderFilterFactory
             || empty($proxies)
         ) {
             // Makes no sense to set trusted headers if no proxies are trusted
-            return $filter;
+            return XForwardedHeaderFilter::trustNone();
         }
 
         $headers = array_key_exists(ConfigProvider::LEGACY_X_FORWARDED_TRUSTED_HEADERS, $config)
@@ -44,14 +41,12 @@ final class XForwardedHeaderFilterFactory
 
         if (! is_array($headers)) {
             // Invalid value
-            return $filter;
+            return XForwardedHeaderFilter::trustNone();
         }
 
         // Empty headers list implies trust all
         $headers = empty($headers) ? XForwardedHeaderFilter::X_FORWARDED_HEADERS : $headers;
 
-        $filter->trustProxies($proxies, $headers);
-
-        return $filter;
+        return XForwardedHeaderFilter::trustProxies($proxies, $headers);
     }
 }

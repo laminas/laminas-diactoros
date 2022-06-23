@@ -60,15 +60,12 @@ These include:
 - `X-Forwarded-Port`: the original port included in the `Host` header value.
 - `X-Forwarded-Proto`: the original URI scheme used to make the request (e.g., "http" or "https").
 
-`Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter` provides mechanisms for accepting these headers and using them to modify the URI composed in the request instance to match the original request.
-These methods are:
+`Laminas\Diactoros\ServerRequestFilter\XForwardedHeaderFilter` provides named constructors for choosing whether to never trust proxies, always trust proxies, or choose wich proxies and/or headers to trust in order to modify the URI composed in the request instance to match the original request.
+These named constructors are:
 
-- `trustAny(): void`: when this method is called, the filter will trust requests from any origin, and use any of the above headers to modify the URI instance.
-- `trustProxies(string|string[] $proxies, string[] $trustedHeaders = XForwardedHeaderFilter::X_FORWARDED_HEADERS): void`: when this method is called, only requests originating from the trusted proxy/ies will be considered, as well as only the headers specified.
-
-Order of operations matters when configuring the instance.
-If `trustAny()` is called after `trustProxies()`, the filter will trust any request.
-If `trustProxies()` is called after `trustAny()`, the filter will trust only the proxy/ies provided to `trustProxies()`.
+- `XForwardedHeaderFilter::trustNone(): void`: when this method is called, the filter will not trust any proxies, and return the request back verbatim.
+- `XForwardedHeaderFilter::trustAny(): void`: when this method is called, the filter will trust requests from any origin, and use any of the above headers to modify the URI instance.
+- `XForwardedHeaderFilterFactory::trustProxies(string|string[] $proxies, string[] $trustedHeaders = XForwardedHeaderFilter::X_FORWARDED_HEADERS): void`: when this method is called, only requests originating from the trusted proxy/ies will be considered, as well as only the headers specified.
 
 When providing one or more proxies to `trustProxies()`, the values may be exact IP addresses, or subnets specified by [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
 Internally, the filter checks the `REMOTE_ADDR` server parameter (as retrieved from `getServerParams()`) and compares it against each proxy listed; the first to match indicates trust.
@@ -80,29 +77,26 @@ The `XForwardedHeaderFilter` defines the following constants for use in specifyi
 - `HEADER_HOST`: corresponds to `X-Forwarded-Host`.
 - `HEADER_PORT`: corresponds to `X-Forwarded-Port`.
 - `HEADER_PROTO`: corresponds to `X-Forwarded-Proto`.
-- `X_FORWARDED_HEADERS`: corresponds to an array consisting of all of the above costants.
+- `X_FORWARDED_HEADERS`: corresponds to an array consisting of all of the above constants.
 
 #### Example usage
 
 Trusting all `X-Forwarded-*` headers from any source:
 
 ```php
-$filter = new XForwardedHeaderFilter();
-$filter->trustAny();
+$filter = XForwardedHeaderFilter::trustAny();
 ```
 
 Trusting only the `X-Forwarded-Host` header from any source:
 
 ```php
-$filter = new XForwardedHeaderFilter();
-$filter->trustProxies('0.0.0.0/0', [XForwardedHeaderFilter::HEADER_HOST]);
+$filter = XForwardedHeaderFilter::trustProxies('0.0.0.0/0', [XForwardedHeaderFilter::HEADER_HOST]);
 ```
 
 Trusting the `X-Forwarded-Host` and `X-Forwarded-Proto` headers from a Class C subnet:
 
 ```php
-$filter = new XForwardedHeaderFilter();
-$filter->trustProxies(
+$filter = XForwardedHeaderFilter::trustProxies(
     '192.168.1.0/24',
     [XForwardedHeaderFilter::HEADER_HOST, XForwardedHeaderFilter::HEADER_PROTO]
 );
@@ -111,8 +105,7 @@ $filter->trustProxies(
 Trusting the `X-Forwarded-Host` header from either a Class A or a Class C subnet:
 
 ```php
-$filter = new XForwardedHeaderFilter();
-$filter->trustProxies(
+$filter = XForwardedHeaderFilter::trustProxies(
     ['10.1.1.0/16', '192.168.1.0/24'],
     [XForwardedHeaderFilter::HEADER_HOST, XForwardedHeaderFilter::HEADER_PROTO]
 );
@@ -136,7 +129,7 @@ $config = [
 ```
 
 - The `trust-any` key should be a boolean.
-  By default, it is `false`; toggling it `true` will cause the `trustAny()` method to be called on the generated instance.
+  By default, it is `false`; toggling it `true` will use the `trustAny()` constructor to generate the instance.
   This flag overrides the `trusted-proxies` configuration.
 - The `trusted-proxies` array should be a string IP address or CIDR notation, or an array of such values, each indicating a trusted proxy server or subnet of such servers.
 - The `trusted-headers` array should consist of one or more of the `X-Forwarded-Host`, `X-Forwarded-Port`, or `X-Forwarded-Proto` header names; the values are case insensitive.

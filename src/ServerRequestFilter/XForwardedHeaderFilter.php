@@ -35,6 +35,56 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
     /** @var string[] */
     private $trustedProxies = [];
 
+    /**
+     * Do not trust any proxies, nor any X-FORWARDED-* headers.
+     */
+    public static function trustNone(): self
+    {
+        $filter = new self();
+        $filter->trustAny = false;
+
+        return $filter;
+    }
+
+    /**
+     * Trust any X-FORWARDED-* headers from any address.
+     *
+     * WARNING: Only do this if you know for certain that your application
+     * sits behind a trusted proxy that cannot be spoofed. This should only
+     * be the case if your server is not publicly addressable, and all requests
+     * are routed via a reverse proxy (e.g., a load balancer, a server such as
+     * Caddy, when using Traefik, etc.).
+     */
+    public static function trustAny(): self
+    {
+        $filter = new self();
+        $filter->trustAny       = true;
+        $filter->trustedHeaders = self::X_FORWARDED_HEADERS;
+
+        return $filter;
+    }
+
+    /**
+     * @param string|string[] $proxies
+     * @param array<int, self::HEADER_*> $trustedHeaders
+     * @throws InvalidProxyAddressException
+     * @throws InvalidForwardedHeaderNameException
+     */
+    public static function trustProxies(
+        $proxies,
+        array $trustedHeaders = self::X_FORWARDED_HEADERS
+    ): self {
+        $proxies = self::normalizeProxiesList($proxies);
+        self::validateTrustedHeaders($trustedHeaders);
+
+        $filter = new self();
+        $filter->trustAny       = false;
+        $filter->trustedProxies = $proxies;
+        $filter->trustedHeaders = $trustedHeaders;
+
+        return $filter;
+    }
+
     // public function filterRequest(array $headers, string $remoteAddress): array
     public function filterRequest(ServerRequestInterface $request): ServerRequestInterface
     {
@@ -81,40 +131,7 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
         return $request;
     }
 
-    /**
-     * Trust any X-FORWARDED-* headers from any address.
-     *
-     * WARNING: Only do this if you know for certain that your application
-     * sits behind a trusted proxy that cannot be spoofed. This should only
-     * be the case if your server is not publicly addressable, and all requests
-     * are routed via a reverse proxy (e.g., a load balancer, a server such as
-     * Caddy, when using Traefik, etc.).
-     */
-    public function trustAny(): void
-    {
-        $this->trustAny       = true;
-        $this->trustedHeaders = self::X_FORWARDED_HEADERS;
-    }
-
-    /**
-     * @param string|string[] $proxies
-     * @param array<int, self::HEADER_*> $trustedHeaders
-     * @throws InvalidProxyAddressException
-     * @throws InvalidForwardedHeaderNameException
-     */
-    public function trustProxies(
-        $proxies,
-        array $trustedHeaders = self::X_FORWARDED_HEADERS
-    ): void {
-        $proxies = $this->normalizeProxiesList($proxies);
-        $this->validateTrustedHeaders($trustedHeaders);
-
-        $this->trustAny       = false;
-        $this->trustedProxies = $proxies;
-        $this->trustedHeaders = $trustedHeaders;
-    }
-
-    public function isFromTrustedProxy(string $remoteAddress): bool
+    private function isFromTrustedProxy(string $remoteAddress): bool
     {
         if ($this->trustAny) {
             return true;
@@ -130,7 +147,7 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
     }
 
     /** @throws InvalidForwardedHeaderNameException */
-    private function validateTrustedHeaders(array $headers): void
+    private static function validateTrustedHeaders(array $headers): void
     {
         foreach ($headers as $header) {
             if (! in_array($header, self::X_FORWARDED_HEADERS, true)) {
@@ -140,7 +157,7 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
     }
 
     /** @throws InvalidProxyAddressException */
-    private function normalizeProxiesList($proxies): array
+    private static function normalizeProxiesList($proxies): array
     {
         if (! is_array($proxies) && ! is_string($proxies)) {
             throw InvalidProxyAddressException::forInvalidProxyArgument($proxies);
@@ -149,7 +166,7 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
         $proxies = is_array($proxies) ? $proxies : [$proxies];
 
         foreach ($proxies as $proxy) {
-            if (! $this->validateProxyCIDR($proxy)) {
+            if (! self::validateProxyCIDR($proxy)) {
                 throw InvalidProxyAddressException::forAddress($proxy);
             }
         }
@@ -161,7 +178,7 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
      * @param mixed $cidr
      * @throws InvalidCIDRException
      */
-    private function validateProxyCIDR($cidr): bool
+    private static function validateProxyCIDR($cidr): bool
     {
         if (! is_string($cidr)) {
             return false;
@@ -195,5 +212,12 @@ final class XForwardedHeaderFilter implements ServerRequestFilterInterface
                     && $mask >= 0
                 )
             );
+    }
+
+    /**
+     * Only allow construction via named constructors
+     */
+    private function __construct()
+    {
     }
 }
