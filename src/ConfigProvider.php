@@ -45,7 +45,8 @@ class ConfigProvider
                 ResponseFactoryInterface::class => ResponseFactory::class,
                 StreamFactoryInterface::class => StreamFactory::class,
                 ServerRequestFactoryInterface::class => ServerRequestFactory::class,
-                ServerRequestFilter\XForwardedHeaderFilter::class => ServerRequestFilter\XForwardedHeaderFilterFactory::class,
+                ServerRequestFilter\NoOpRequestFilter::class => ServerRequestFilter\NoOpRequestFilterFactory::class,
+                ServerRequestFilter\XForwardedRequestFilter::class => ServerRequestFilter\XForwardedRequestFilterFactory::class,
                 UploadedFileFactoryInterface::class => UploadedFileFactory::class,
                 UriFactoryInterface::class => UriFactory::class
             ],
