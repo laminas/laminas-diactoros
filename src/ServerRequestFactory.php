@@ -77,7 +77,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         return $requestFilter->filterRequest(new ServerRequest(
             $server,
             $files,
-            marshalUriFromSapiSafely($server, $headers),
+            self::marshalUriFromSapi($server),
             marshalMethodFromSapi($server),
             'php://input',
             $headers,
@@ -102,5 +102,159 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             $method,
             'php://temp'
         );
+    }
+
+    /**
+     * Marshal a Uri instance based on the values present in the $_SERVER array and headers.
+     *
+     * @param array $server SAPI parameters
+     */
+    private static function marshalUriFromSapi(array $server) : Uri
+    {
+        $uri = new Uri('');
+
+        // URI scheme
+        $scheme = 'http';
+        if (array_key_exists('HTTPS', $server)) {
+            $https = self::marshalHttpsValue($server['HTTPS']);
+        } elseif (array_key_exists('https', $server)) {
+            $https = self::marshalHttpsValue($server['https']);
+        } else {
+            $https = false;
+        }
+
+        $scheme = $https ? 'https' : $scheme;
+        $uri    = $uri->withScheme($scheme);
+
+        // Set the host
+        [$host, $port] = self::marshalHostAndPort($server);
+        if (! empty($host)) {
+            $uri = $uri->withHost($host);
+            if (! empty($port)) {
+                $uri = $uri->withPort($port);
+            }
+        }
+
+        // URI path
+        $path = self::marshalRequestPath($server);
+
+        // Strip query string
+        $path = explode('?', $path, 2)[0];
+
+        // URI query
+        $query = '';
+        if (isset($server['QUERY_STRING'])) {
+            $query = ltrim($server['QUERY_STRING'], '?');
+        }
+
+        // URI fragment
+        $fragment = '';
+        if (strpos($path, '#') !== false) {
+            [$path, $fragment] = explode('#', $path, 2);
+        }
+
+        return $uri
+            ->withPath($path)
+            ->withFragment($fragment)
+            ->withQuery($query);
+    }
+
+    /**
+     * Marshal the host and port from the PHP environment.
+     *
+     * @return array Array of two items, host and port, in that order (can be
+     *     passed to a list() operation).
+     */
+    private static function marshalHostAndPort(array $server) : array
+    {
+        static $defaults = ['', null];
+
+        if (! isset($server['SERVER_NAME'])) {
+            return $defaults;
+        }
+
+        $host = $server['SERVER_NAME'];
+        $port = isset($server['SERVER_PORT']) ? (int) $server['SERVER_PORT'] : null;
+
+        if (! isset($server['SERVER_ADDR'])
+            || ! preg_match('/^\[[0-9a-fA-F\:]+\]$/', $host)
+        ) {
+            return [$host, $port];
+        }
+
+        // Misinterpreted IPv6-Address
+        // Reported for Safari on Windows
+        return self::marshalIpv6HostAndPort($server, $port);
+    }
+
+    /**
+     * @return array Array of two items, host and port, in that order (can be
+     *     passed to a list() operation).
+     */
+    private static function marshalIpv6HostAndPort(array $server, ?int $port) : array
+    {
+        $host = '[' . $server['SERVER_ADDR'] . ']';
+        $port = $port ?: 80;
+        if ($port . ']' === substr($host, strrpos($host, ':') + 1)) {
+            // The last digit of the IPv6-Address has been taken as port
+            // Unset the port so the default port can be used
+            $port = null;
+        }
+        return [$host, $port];
+    }
+
+    /**
+     * Detect the path for the request
+     *
+     * Looks at a variety of criteria in order to attempt to autodetect the base
+     * request path, including:
+     *
+     * - IIS7 UrlRewrite environment
+     * - REQUEST_URI
+     * - ORIG_PATH_INFO
+     *
+     * From Laminas\Http\PhpEnvironment\Request class
+     */
+    private static function marshalRequestPath(array $server) : string
+    {
+        // IIS7 with URL Rewrite: make sure we get the unencoded url
+        // (double slash problem).
+        $iisUrlRewritten = $server['IIS_WasUrlRewritten'] ?? null;
+        $unencodedUrl    = $server['UNENCODED_URL'] ?? '';
+        if ('1' === $iisUrlRewritten && ! empty($unencodedUrl)) {
+            return $unencodedUrl;
+        }
+
+        $requestUri = $server['REQUEST_URI'] ?? null;
+
+        if ($requestUri !== null) {
+            return preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
+        }
+
+        $origPathInfo = $server['ORIG_PATH_INFO'] ?? null;
+        if (empty($origPathInfo)) {
+            return '/';
+        }
+
+        return $origPathInfo;
+    }
+
+    /**
+     * @param mixed $https
+     */
+    private static function marshalHttpsValue($https) : bool
+    {
+        if (is_bool($https)) {
+            return $https;
+        }
+
+        if (! is_string($https)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                'SAPI HTTPS value MUST be a string or boolean; received %s',
+                gettype($https)
+            ));
+        }
+
+        return 'on' === strtolower($https);
     }
 }

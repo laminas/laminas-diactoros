@@ -23,10 +23,7 @@ use function substr;
  * @param array $server SAPI parameters
  * @param array $headers HTTP request headers
  * @deprecated This function is deprecated as of 2.11.1, and will be removed in
- *     3.0.0. For security purposes, we recommend using Laminas\Diactoros\marshalUriFromSapiSafely,
- *     and a Laminas\Diactoros\RequestFilter\RequestFilterInterface
- *     implmentation if you need the ability to use X-Forwarded-* headers to
- *     modify the generated URI.
+ *     3.0.0. As of 2.11.1, it is no longer used internally.
  */
 function marshalUriFromSapi(array $server, array $headers) : Uri
 {

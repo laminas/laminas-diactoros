@@ -153,12 +153,8 @@ and even the `Cookie` header. These include:
 - `Laminas\Diactoros\marshalProtocolVersionFromSapi(array $server) : string`
 - `Laminas\Diactoros\marshalMethodFromSapi(array $server) : string`.
 - `Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers) : Uri`.
-  Please note: **this function is deprecated as of version 2.11.1**.
-  Use `Laminas\Diactoros\marshalUriFromSapiSafely()` instead.
-  This function is no longer used in `ServerRequestFactory::fromGlobals()`.
-- `Laminas\Diactoros\marshalUriFromSapiSafely(array $server, array $headers) : Uri`.
-  This function differs from `Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers)` in that it never considers `X-Forwarded-*` headers when generating the `Uri` instance composed in the generated `ServerRequest`.
-  It is the implementation used since version 2.11.1.
+  Please note: **this function is deprecated as of version 2.11.1**, and no longer used in `ServerRequestFactory::fromGlobals()`.
+  Use `ServerRequestFactory::fromGlobals()` instead.
 - `Laminas\Diactoros\marshalHeadersFromSapi(array $server) : array`
 - `Laminas\Diactoros\parseCookieHeader(string $header) : array`
 - `Laminas\Diactoros\createUploadedFile(array $spec) : UploadedFile` (creates the
