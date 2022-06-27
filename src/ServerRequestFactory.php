@@ -48,7 +48,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      *     generated request will be passed to this instance and the result
      *     returned by this method. When not present, a default instance
      *     is created and used. For version 2, that instance is an
-     *     FilterUsingXForwardedHeaders, using the `trustAny()` constructor.
+     *     FilterUsingXForwardedHeaders, using the `trustReservedSubnets()` constructor.
      *     For version 3, it will be a DoNotFilter instance.
      * @return ServerRequest
      */
@@ -61,7 +61,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         ?FilterServerRequestInterface $requestFilter = null
     ) : ServerRequest {
         // @todo For version 3, we should instead create a DoNotFilter instance.
-        $requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustAny();
+        $requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();
 
         $server = normalizeServer(
             $server ?: $_SERVER,
