@@ -105,7 +105,7 @@ $jsonResponse = new JsonResponse($data, 422, [
 ## ServerRequestFactory
 
 This static class can be used to marshal a `ServerRequest` instance from the PHP environment.
-The primary entry point is `Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array $query, array $body, array $cookies, array $files, ?Laminas\Diactoros\RequestFilter\RequestFilterInterface $requestFilter)`.
+The primary entry point is `Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array $query, array $body, array $cookies, array $files, ?Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface $requestFilter)`.
 This method will create a new `ServerRequest` instance with the data provided.
 Examples of usage are:
 
@@ -128,16 +128,16 @@ $request = ServerRequestFactory::fromGlobals(
 ### Request Filters
 
 Since version 2.11.1, this method takes the additional optional argument `$requestFilter`.
-This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface`](server-request-filters.md).
-For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter`](server-request-filters.md#xforwardedrequestfilter) instance configured as follows:
+This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface`](server-request-filters.md).
+For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\FilerUsingXForwardedHeaders`](server-request-filters.md#filterusingxforwardedheaders) instance configured as follows:
 
 ```php
-$requestFilter = $requestFilter ?: XForwardedRequestFilter::trustAny();
+$requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();
 ```
 
 The request filter is called on the generated server request instance, and its result is returned from `fromGlobals()`.
 
-**For version 3 releases, this method will switch to using a `Laminas\Diactoros\ServerRequestFilter\NoOpRequestFilter` by default.**
+**For version 3 releases, this method will switch to using a `Laminas\Diactoros\ServerRequestFilter\DoNotFilter` by default.**
 If you are using this factory method directly, please be aware and update your code accordingly.
 
 ### ServerRequestFactory Helper Functions
