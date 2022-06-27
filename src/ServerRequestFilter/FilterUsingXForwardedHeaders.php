@@ -33,10 +33,66 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     /**
      * @var list<FilterUsingXForwardedHeaders::HEADER_*>
      */
-    private $trustedHeaders = [];
+    private $trustedHeaders;
 
     /** @var list<non-empty-string> */
-    private $trustedProxies = [];
+    private $trustedProxies;
+
+    /**
+     * Only allow construction via named constructors
+     */
+    private function __construct(
+        array $trustedProxies = [],
+        array $trustedHeaders = []
+    ) {
+        $this->trustedProxies = $trustedProxies;
+        $this->trustedHeaders = $trustedHeaders;
+    }
+
+    public function __invoke(ServerRequestInterface $request): ServerRequestInterface
+    {
+        $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';
+
+        if ('' === $remoteAddress) {
+            // Should we trigger a warning here?
+            return $request;
+        }
+
+        if (! $this->isFromTrustedProxy($remoteAddress)) {
+            // Do nothing
+            return $request;
+        }
+
+        // Update the URI based on the trusted headers
+        $uri = $originalUri = $request->getUri();
+        foreach ($this->trustedHeaders as $headerName) {
+            $header = $request->getHeaderLine($headerName);
+            if ('' === $header || false !== strpos($header, ',')) {
+                // Reject empty headers and/or headers with multiple values
+                continue;
+            }
+
+            switch ($headerName) {
+                case self::HEADER_HOST:
+                    $uri = $uri->withHost($header);
+                    break;
+                case self::HEADER_PORT:
+                    $uri = $uri->withPort($header);
+                    break;
+                case self::HEADER_PROTO:
+                    $uri = $uri->withScheme($header);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if ($uri !== $originalUri) {
+            return $request->withUri($uri);
+        }
+
+        return $request;
+    }
 
     /**
      * Do not trust any proxies, nor any X-FORWARDED-* headers.
@@ -84,56 +140,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         $proxyCIDRList = self::normalizeProxiesList($proxyCIDRList);
         self::validateTrustedHeaders($trustedHeaders);
 
-        $filter = new self();
-        $filter->trustedProxies = $proxyCIDRList;
-        $filter->trustedHeaders = $trustedHeaders;
-
-        return $filter;
-    }
-
-    public function __invoke(ServerRequestInterface $request): ServerRequestInterface
-    {
-        $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';
-
-        if ('' === $remoteAddress) {
-            // Should we trigger a warning here?
-            return $request;
-        }
-
-        if (! $this->isFromTrustedProxy($remoteAddress)) {
-            // Do nothing
-            return $request;
-        }
-
-        // Update the URI based on the trusted headers
-        $uri = $originalUri = $request->getUri();
-        foreach ($this->trustedHeaders as $headerName) {
-            $header = $request->getHeaderLine($headerName);
-            if ('' === $header || false !== strpos($header, ',')) {
-                // Reject empty headers and/or headers with multiple values
-                continue;
-            }
-
-            switch ($headerName) {
-                case self::HEADER_HOST:
-                    $uri = $uri->withHost($header);
-                    break;
-                case self::HEADER_PORT:
-                    $uri = $uri->withPort($header);
-                    break;
-                case self::HEADER_PROTO:
-                    $uri = $uri->withScheme($header);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        if ($uri !== $originalUri) {
-            return $request->withUri($uri);
-        }
-
-        return $request;
+        return new self($proxyCIDRList, $trustedHeaders);
     }
 
     private function isFromTrustedProxy(string $remoteAddress): bool
@@ -223,12 +230,5 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
                     && $mask >= 0
                 )
             );
-    }
-
-    /**
-     * Only allow construction via named constructors
-     */
-    private function __construct()
-    {
     }
 }
