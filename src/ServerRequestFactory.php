@@ -114,17 +114,14 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $uri = new Uri('');
 
         // URI scheme
-        $scheme = 'http';
+        $https  = false;
         if (array_key_exists('HTTPS', $server)) {
             $https = self::marshalHttpsValue($server['HTTPS']);
         } elseif (array_key_exists('https', $server)) {
             $https = self::marshalHttpsValue($server['https']);
-        } else {
-            $https = false;
         }
 
-        $scheme = $https ? 'https' : $scheme;
-        $uri    = $uri->withScheme($scheme);
+        $uri = $uri->withScheme($https ? 'https' : 'http');
 
         // Set the host
         [$host, $port] = self::marshalHostAndPort($server);
@@ -162,8 +159,8 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Marshal the host and port from the PHP environment.
      *
-     * @return array Array of two items, host and port, in that order (can be
-     *     passed to a list() operation).
+     * @return array{string, numeric-string} Array of two items, host and port,
+     *     in that order (can be passed to a list() operation).
      */
     private static function marshalHostAndPort(array $server) : array
     {
@@ -188,8 +185,8 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     }
 
     /**
-     * @return array Array of two items, host and port, in that order (can be
-     *     passed to a list() operation).
+     * @return array{string, numeric-string} Array of two items, host and port,
+     *     in that order (can be passed to a list() operation).
      */
     private static function marshalIpv6HostAndPort(array $server, ?int $port) : array
     {
@@ -212,8 +209,6 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * - IIS7 UrlRewrite environment
      * - REQUEST_URI
      * - ORIG_PATH_INFO
-     *
-     * From Laminas\Http\PhpEnvironment\Request class
      */
     private static function marshalRequestPath(array $server) : string
     {
