@@ -28,7 +28,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
             ]
         );
 
-        $filter = FilterUsingXForwardedHeaders::trustProxies('192.168.1.0/24');
+        $filter = FilterUsingXForwardedHeaders::trustProxies(['192.168.1.0/24']);
 
         $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
@@ -55,7 +55,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         );
 
         $filter = FilterUsingXForwardedHeaders::trustProxies(
-            '192.168.1.0/24',
+            ['192.168.1.0/24'],
             [FilterUsingXForwardedHeaders::HEADER_HOST, FilterUsingXForwardedHeaders::HEADER_PROTO]
         );
 
@@ -83,7 +83,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
             ]
         );
 
-        $filter = FilterUsingXForwardedHeaders::trustProxies('192.168.1.0/24');
+        $filter = FilterUsingXForwardedHeaders::trustProxies(['192.168.1.0/24']);
 
         $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
@@ -184,12 +184,6 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $this->assertSame($request, $filter($request));
     }
 
-    public function testPassingInvalidStringAddressForProxyRaisesException(): void
-    {
-        $this->expectException(InvalidProxyAddressException::class);
-        FilterUsingXForwardedHeaders::trustProxies('192.168.1');
-    }
-
     public function testPassingInvalidAddressInProxyListRaisesException(): void
     {
         $this->expectException(InvalidProxyAddressException::class);
@@ -199,7 +193,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     public function testPassingInvalidForwardedHeaderNamesWhenTrustingProxyRaisesException(): void
     {
         $this->expectException(InvalidForwardedHeaderNameException::class);
-        FilterUsingXForwardedHeaders::trustProxies('192.168.1.0/24', ['Host']);
+        FilterUsingXForwardedHeaders::trustProxies(['192.168.1.0/24'], ['Host']);
     }
 
     public function testListOfForwardedHostsIsConsideredUntrusted(): void

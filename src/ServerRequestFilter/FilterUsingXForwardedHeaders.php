@@ -31,33 +31,27 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     ];
 
     /**
-     * @todo Toggle this to false for version 3.0.
-     * @var bool
-     */
-    private $trustAny = true;
-
-    /**
-     * @var string[]
-     * @psalm-var array<array-key, FilterUsingXForwardedHeaders::HEADER_*>
+     * @var list<FilterUsingXForwardedHeaders::HEADER_*>
      */
     private $trustedHeaders = [];
 
-    /** @var string[] */
+    /** @var list<non-empty-string> */
     private $trustedProxies = [];
 
     /**
      * Do not trust any proxies, nor any X-FORWARDED-* headers.
+     *
+     * This is functionally equivalent to calling `trustProxies([], [])`.
      */
     public static function trustNone(): self
     {
-        $filter = new self();
-        $filter->trustAny = false;
-
-        return $filter;
+        return new self();
     }
 
     /**
      * Trust any X-FORWARDED-* headers from any address.
+     *
+     * This is functionally equivalent to calling `trustProxies(['*'])`.
      *
      * WARNING: Only do this if you know for certain that your application
      * sits behind a trusted proxy that cannot be spoofed. This should only
@@ -67,29 +61,31 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
      */
     public static function trustAny(): self
     {
-        $filter = new self();
-        $filter->trustAny       = true;
-        $filter->trustedHeaders = self::X_FORWARDED_HEADERS;
-
-        return $filter;
+        return self::trustProxies(['*']);
     }
 
     /**
-     * @param string|string[] $proxies
-     * @param array<int, self::HEADER_*> $trustedHeaders
+     * Indicate which proxies and which X-Forwarded headers to trust.
+     *
+     * @param list<non-empty-string> $proxyCIDRList Each element may
+     *     be an IP address or a subnet specified using CIDR notation; both IPv4
+     *     and IPv6 are supported. The special string "*" will be translated to
+     *     two entries, "0.0.0.0/0" and "::/0". An empty list indicates no
+     *     proxies are trusted.
+     * @param list<FilterUsingXForwardedHeaders::HEADER_*> $trustedHeaders If
+     *     the list is empty, all X-Forwarded headers are trusted.
      * @throws InvalidProxyAddressException
      * @throws InvalidForwardedHeaderNameException
      */
     public static function trustProxies(
-        $proxies,
+        array $proxyCIDRList,
         array $trustedHeaders = self::X_FORWARDED_HEADERS
     ): self {
-        $proxies = self::normalizeProxiesList($proxies);
+        $proxyCIDRList = self::normalizeProxiesList($proxyCIDRList);
         self::validateTrustedHeaders($trustedHeaders);
 
         $filter = new self();
-        $filter->trustAny       = false;
-        $filter->trustedProxies = $proxies;
+        $filter->trustedProxies = $proxyCIDRList;
         $filter->trustedHeaders = $trustedHeaders;
 
         return $filter;
@@ -104,7 +100,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
             return $request;
         }
 
-        if (! $this->trustAny && ! $this->isFromTrustedProxy($remoteAddress)) {
+        if (! $this->isFromTrustedProxy($remoteAddress)) {
             // Do nothing
             return $request;
         }
@@ -142,10 +138,6 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 
     private function isFromTrustedProxy(string $remoteAddress): bool
     {
-        if ($this->trustAny) {
-            return true;
-        }
-
         foreach ($this->trustedProxies as $proxy) {
             if (IPRange::matches($remoteAddress, $proxy)) {
                 return true;
@@ -165,22 +157,33 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         }
     }
 
-    /** @throws InvalidProxyAddressException */
-    private static function normalizeProxiesList($proxies): array
+    /**
+     * @param non-empty-list<non-empty-string> $proxyCIDRList
+     * @return non-empty-list<non-empty-string>
+     * @throws InvalidProxyAddressException
+     */
+    private static function normalizeProxiesList(array $proxyCIDRList): array
     {
-        if (! is_array($proxies) && ! is_string($proxies)) {
-            throw InvalidProxyAddressException::forInvalidProxyArgument($proxies);
-        }
+        $foundWildcard = false;
 
-        $proxies = is_array($proxies) ? $proxies : [$proxies];
+        foreach ($proxyCIDRList as $index => $cidr) {
+            if ($cidr === '*') {
+                unset($proxyCIDRList[$index]);
+                $foundWildcard = true;
+                continue;
+            }
 
-        foreach ($proxies as $proxy) {
-            if (! self::validateProxyCIDR($proxy)) {
-                throw InvalidProxyAddressException::forAddress($proxy);
+            if (! self::validateProxyCIDR($cidr)) {
+                throw InvalidProxyAddressException::forAddress($cidr);
             }
         }
 
-        return $proxies;
+        if ($foundWildcard) {
+            $proxyCIDRList[] = '0.0.0.0/0';
+            $proxyCIDRList[] = '::/0';
+        }
+
+        return $proxyCIDRList;
     }
 
     /**
