@@ -8,6 +8,16 @@ use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Modify the URI to reflect the X-Forwarded-* headers.
+ *
+ * If the request comes from a trusted proxy, this filter will analyze the
+ * various X-Forwarded-* headers, if any, and if they are marked as trusted,
+ * in order to return a new request that composes a URI instance that reflects
+ * those headers.
+ *
+ * @psalm-immutable
+*/
 final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 {
     public const HEADER_HOST  = 'X-FORWARDED-HOST';
