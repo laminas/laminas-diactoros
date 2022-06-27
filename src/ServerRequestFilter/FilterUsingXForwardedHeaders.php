@@ -105,22 +105,6 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     }
 
     /**
-     * Trust any X-FORWARDED-* headers from any address.
-     *
-     * This is functionally equivalent to calling `trustProxies(['*'])`.
-     *
-     * WARNING: Only do this if you know for certain that your application
-     * sits behind a trusted proxy that cannot be spoofed. This should only
-     * be the case if your server is not publicly addressable, and all requests
-     * are routed via a reverse proxy (e.g., a load balancer, a server such as
-     * Caddy, when using Traefik, etc.).
-     */
-    public static function trustAny(): self
-    {
-        return self::trustProxies(['*']);
-    }
-
-    /**
      * Indicate which proxies and which X-Forwarded headers to trust.
      *
      * @param list<non-empty-string> $proxyCIDRList Each element may
@@ -141,6 +125,53 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         self::validateTrustedHeaders($trustedHeaders);
 
         return new self($proxyCIDRList, $trustedHeaders);
+    }
+
+    /**
+     * Trust any X-FORWARDED-* headers from any address.
+     *
+     * This is functionally equivalent to calling `trustProxies(['*'])`.
+     *
+     * WARNING: Only do this if you know for certain that your application
+     * sits behind a trusted proxy that cannot be spoofed. This should only
+     * be the case if your server is not publicly addressable, and all requests
+     * are routed via a reverse proxy (e.g., a load balancer, a server such as
+     * Caddy, when using Traefik, etc.).
+     */
+    public static function trustAny(): self
+    {
+        return self::trustProxies(['*']);
+    }
+
+    /**
+     * Trust X-Forwarded headers from reserved subnetworks.
+     *
+     * This is functionally equivalent to calling `trustProxies()` where the
+     * `$proxcyCIDRList` argument is a list with the following:
+     *
+     * - 10.0.0.0/8
+     * - 127.0.0.0/8
+     * - 172.16.0.0/12
+     * - 192.168.0.0/16
+     * - ::1/128 (IPv6 localhost)
+     * - fc00::/7 (IPv6 private networks)
+     * - fe80::/10 (IPv6 local-link addresses)
+     *
+     * @param list<FilterUsingXForwardedHeaders::HEADER_*> $trustedHeaders If
+     *     the list is empty, all X-Forwarded headers are trusted.
+     * @throws InvalidForwardedHeaderNameException
+     */
+    public static function trustReservedSubnets(array $trustedHeaders = self::X_FORWARDED_HEADERS): self
+    {
+        return self::trustProxies([
+            '10.0.0.0/8',
+            '127.0.0.0/8',
+            '172.16.0.0/12',
+            '192.168.0.0/16',
+            '::1/128', // ipv6 localhost
+            'fc00::/7', // ipv6 private networks
+            'fe80::/10', // ipv6 local-link addresses
+        ], $trustedHeaders);
     }
 
     private function isFromTrustedProxy(string $remoteAddress): bool

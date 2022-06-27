@@ -252,4 +252,80 @@ class FilterUsingXForwardedHeadersTest extends TestCase
 
         $this->assertSame($request, $filter($request));
     }
+
+    /** @psalm-return iterable<string, array{0: string}> */
+    public function trustedReservedNetworkList(): iterable
+    {
+        yield 'ipv4-localhost' => ['127.0.0.1'];
+        yield 'ipv4-class-a' => ['10.10.10.10'];
+        yield 'ipv4-class-b' => ['172.16.16.16'];
+        yield 'ipv4-class-c' => ['192.168.2.1'];
+        yield 'ipv6-localhost' => ['::1'];
+        yield 'ipv6-private' => ['fdb4:d239:27bc:1d9f:0001:0001:0001:0001'];
+        yield 'ipv6-local-link' => ['fe80:0000:0000:0000:abcd:abcd:abcd:abcd'];
+    }
+
+    /** @dataProvider trustedReservedNetworkList */
+    public function testTrustReservedSubnetsProducesFilterThatAcceptsAddressesFromThoseSubnets(
+        string $remoteAddr
+    ): void {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => $remoteAddr],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Host'  => 'example.com',
+                'X-Forwarded-Port'  => '4433',
+                'X-Forwarded-Proto' => 'https',
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustReservedSubnets();
+
+        $filteredRequest = $filter($request);
+        $filteredUri     = $filteredRequest->getUri();
+        $this->assertNotSame($request->getUri(), $filteredUri);
+        $this->assertSame('example.com', $filteredUri->getHost());
+        $this->assertSame(4433, $filteredUri->getPort());
+        $this->assertSame('https', $filteredUri->getScheme());
+    }
+
+    /** @psalm-return iterable<string, array{0: string}> */
+    public function unreservedNetworkAddressList(): iterable
+    {
+        yield 'ipv4-no-localhost' => ['128.0.0.1'];
+        yield 'ipv4-no-class-a' => ['19.10.10.10'];
+        yield 'ipv4-not-class-b' => ['173.16.16.16'];
+        yield 'ipv4-not-class-c' => ['193.168.2.1'];
+        yield 'ipv6-not-localhost' => ['::2'];
+        yield 'ipv6-not-private' => ['fab4:d239:27bc:1d9f:0001:0001:0001:0001'];
+        yield 'ipv6-not-local-link' => ['ef80:0000:0000:0000:abcd:abcd:abcd:abcd'];
+    }
+
+    /** @dataProvider unreservedNetworkAddressList */
+    public function testTrustReservedSubnetsProducesFilterThatRejectsAddressesNotFromThoseSubnets(
+        string $remoteAddr
+    ): void {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => $remoteAddr],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Host'  => 'example.com',
+                'X-Forwarded-Port'  => '4433',
+                'X-Forwarded-Proto' => 'https',
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustReservedSubnets();
+
+        $filteredRequest = $filter($request);
+        $this->assertSame($request, $filteredRequest);
+    }
 }
