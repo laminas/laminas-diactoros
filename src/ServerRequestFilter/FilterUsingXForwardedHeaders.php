@@ -95,16 +95,6 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     }
 
     /**
-     * Do not trust any proxies, nor any X-FORWARDED-* headers.
-     *
-     * This is functionally equivalent to calling `trustProxies([], [])`.
-     */
-    public static function trustNone(): self
-    {
-        return new self();
-    }
-
-    /**
      * Indicate which proxies and which X-Forwarded headers to trust.
      *
      * @param list<non-empty-string> $proxyCIDRList Each element may

@@ -51,8 +51,6 @@ These named constructors are:
 - `FilterUsingXForwardedHeadersFactory::trustProxies(string[] $proxyCIDRList, string[] $trustedHeaders = FilterUsingXForwardedHeaders::X_FORWARDED_HEADERS): void`: when this method is called, only requests originating from the trusted proxy/ies will be considered, as well as only the headers specified.
   Proxies may be specified by IP address, or using [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for subnets; both IPv4 and IPv6 are accepted.
   The special string "*" will be translated to two entries, `0.0.0.0/0` and `::/0`.
-- `FilterUsingXForwardedHeaders::trustNone(): void`: when this method is called, the filter will not trust any proxies, and return the request back verbatim.
-  It is functionally equivalent to `FilterUsingXForwardedHeaders::trustProxies([], [])`.
 - `FilterUsingXForwardedHeaders::trustAny(): void`: when this method is called, the filter will trust requests from any origin, and use any of the above headers to modify the URI instance.
   It is functionally equivalent to `FilterUsingXForwardedHeaders::trustProxies(['*'])`.
 - `FilterUsingXForwardedHeaders::trustReservedSubnets(): void`: when this method is called, the filter will trust requests made from reserved, private subnets.
