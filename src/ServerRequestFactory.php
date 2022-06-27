@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Diactoros;
 
 use Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter;
-use Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface;
+use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -44,7 +44,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @param array $body $_POST superglobal
      * @param array $cookies $_COOKIE superglobal
      * @param array $files $_FILES superglobal
-     * @param null|ServerRequestFilterInterface $requestFilter If present, the
+     * @param null|FilterServerRequestInterface $requestFilter If present, the
      *     generated request will be passed to this instance and the result
      *     returned by this method. When not present, a default instance
      *     is created and used. For version 2, that instance is an
@@ -58,7 +58,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         array $body = null,
         array $cookies = null,
         array $files = null,
-        ?ServerRequestFilterInterface $requestFilter = null
+        ?FilterServerRequestInterface $requestFilter = null
     ) : ServerRequest {
         // @todo For version 3, we should instead create a NoOpRequestFilter instance.
         $requestFilter = $requestFilter ?: XForwardedRequestFilter::trustAny();
@@ -74,7 +74,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             $cookies = parseCookieHeader($headers['cookie']);
         }
 
-        return $requestFilter->filterRequest(new ServerRequest(
+        return $requestFilter(new ServerRequest(
             $server,
             $files,
             self::marshalUriFromSapi($server),

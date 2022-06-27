@@ -30,7 +30,7 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustProxies('192.168.1.0/24');
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
         $this->assertNotSame($request->getUri(), $filteredUri);
         $this->assertSame('example.com', $filteredUri->getHost());
@@ -59,7 +59,7 @@ class XForwardedRequestFilterTest extends TestCase
             [XForwardedRequestFilter::HEADER_HOST, XForwardedRequestFilter::HEADER_PROTO]
         );
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
         $this->assertNotSame($request->getUri(), $filteredUri);
         $this->assertSame('example.com', $filteredUri->getHost());
@@ -85,7 +85,7 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustProxies('192.168.1.0/24');
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
         $this->assertSame($request->getUri(), $filteredUri);
     }
@@ -117,7 +117,7 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
         $this->assertNotSame($request->getUri(), $filteredUri);
         $this->assertSame('example.com', $filteredUri->getHost());
@@ -147,7 +147,7 @@ class XForwardedRequestFilterTest extends TestCase
             [XForwardedRequestFilter::HEADER_HOST, XForwardedRequestFilter::HEADER_PROTO]
         );
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $filteredUri     = $filteredRequest->getUri();
         $this->assertNotSame($request->getUri(), $filteredUri);
         $this->assertSame('example.com', $filteredUri->getHost());
@@ -181,7 +181,7 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustProxies(['192.168.1.0/24', '10.1.0.0/16']);
 
-        $this->assertSame($request, $filter->filterRequest($request));
+        $this->assertSame($request, $filter($request));
     }
 
     public function testPassingInvalidStringAddressForProxyRaisesException(): void
@@ -218,7 +218,7 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustAny();
 
-        $this->assertSame($request, $filter->filterRequest($request));
+        $this->assertSame($request, $filter($request));
     }
 
     public function testListOfForwardedPortsIsConsideredUntrusted(): void
@@ -237,7 +237,7 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustAny();
 
-        $this->assertSame($request, $filter->filterRequest($request));
+        $this->assertSame($request, $filter($request));
     }
 
     public function testListOfForwardedProtosIsConsideredUntrusted(): void
@@ -256,6 +256,6 @@ class XForwardedRequestFilterTest extends TestCase
 
         $filter = XForwardedRequestFilter::trustAny();
 
-        $this->assertSame($request, $filter->filterRequest($request));
+        $this->assertSame($request, $filter($request));
     }
 }

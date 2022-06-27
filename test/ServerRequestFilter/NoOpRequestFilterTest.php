@@ -15,6 +15,6 @@ class NoOpRequestFilterTest extends TestCase
         $request = new ServerRequest();
         $filter  = new NoOpRequestFilter();
 
-        $this->assertSame($request, $filter->filterRequest($request));
+        $this->assertSame($request, $filter($request));
     }
 }

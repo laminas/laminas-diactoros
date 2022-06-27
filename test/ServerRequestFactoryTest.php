@@ -6,7 +6,7 @@ namespace LaminasTest\Diactoros;
 
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
-use Laminas\Diactoros\ServerRequestFilter\ServerRequestFilterInterface;
+use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Laminas\Diactoros\UploadedFile;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
@@ -726,7 +726,7 @@ class ServerRequestFactoryTest extends TestCase
     public function testReturnsFilteredRequestBasedOnRequestFilterProvided(): void
     {
         $expectedRequest = new ServerRequest();
-        $filter = new class($expectedRequest) implements ServerRequestFilterInterface {
+        $filter = new class($expectedRequest) implements FilterServerRequestInterface {
             /** @var ServerRequestInterface */
             private $request;
 
@@ -735,7 +735,7 @@ class ServerRequestFactoryTest extends TestCase
                 $this->request = $request;
             }
 
-            public function filterRequest(ServerRequestInterface $request): ServerRequestInterface
+            public function __invoke(ServerRequestInterface $request): ServerRequestInterface
             {
                 return $this->request;
             }

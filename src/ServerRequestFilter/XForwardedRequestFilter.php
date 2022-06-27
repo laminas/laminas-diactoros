@@ -8,7 +8,7 @@ use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class XForwardedRequestFilter implements ServerRequestFilterInterface
+final class XForwardedRequestFilter implements FilterServerRequestInterface
 {
     public const HEADER_HOST  = 'X-FORWARDED-HOST';
     public const HEADER_PORT  = 'X-FORWARDED-PORT';
@@ -85,7 +85,7 @@ final class XForwardedRequestFilter implements ServerRequestFilterInterface
         return $filter;
     }
 
-    public function filterRequest(ServerRequestInterface $request): ServerRequestInterface
+    public function __invoke(ServerRequestInterface $request): ServerRequestInterface
     {
         $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';
 

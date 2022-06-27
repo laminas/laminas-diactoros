@@ -84,7 +84,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             'http://localhost/foo/bar',
         );
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $this->assertSame($request, $filteredRequest);
     }
 
@@ -125,7 +125,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             'http://localhost/foo/bar',
         );
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $this->assertNotSame($request, $filteredRequest);
 
         $uri = $filteredRequest->getUri();
@@ -163,7 +163,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             'http://localhost/foo/bar',
         );
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $this->assertSame($request, $filteredRequest);
     }
 
@@ -194,7 +194,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             'http://localhost/foo/bar',
         );
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
         $this->assertNotSame($request, $filteredRequest);
 
         $uri = $filteredRequest->getUri();
@@ -347,7 +347,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
         $filter = $factory($this->container);
         $request = $this->generateServerRequest($headers, $server, $baseUriString);
 
-        $filteredRequest = $filter->filterRequest($request);
+        $filteredRequest = $filter($request);
 
         if ($expectUnfiltered) {
             $this->assertSame($request, $filteredRequest);
