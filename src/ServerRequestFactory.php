@@ -49,7 +49,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      *     returned by this method. When not present, a default instance
      *     is created and used. For version 2, that instance is an
      *     XForwardedRequestFilter, using the `trustAny()` constructor.
-     *     For version 3, it will be a NoOpRequestFilter instance.
+     *     For version 3, it will be a DoNotFilter instance.
      * @return ServerRequest
      */
     public static function fromGlobals(
@@ -60,7 +60,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         array $files = null,
         ?FilterServerRequestInterface $requestFilter = null
     ) : ServerRequest {
-        // @todo For version 3, we should instead create a NoOpRequestFilter instance.
+        // @todo For version 3, we should instead create a DoNotFilter instance.
         $requestFilter = $requestFilter ?: XForwardedRequestFilter::trustAny();
 
         $server = normalizeServer(

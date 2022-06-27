@@ -6,7 +6,7 @@ namespace Laminas\Diactoros\ServerRequestFilter;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-final class NoOpRequestFilter implements FilterServerRequestInterface
+final class DoNotFilter implements FilterServerRequestInterface
 {
     public function __invoke(ServerRequestInterface $request): ServerRequestInterface
     {
