@@ -24,7 +24,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     public const HEADER_PORT  = 'X-FORWARDED-PORT';
     public const HEADER_PROTO = 'X-FORWARDED-PROTO';
 
-    public const X_FORWARDED_HEADERS = [
+    private const X_FORWARDED_HEADERS = [
         self::HEADER_HOST,
         self::HEADER_PORT,
         self::HEADER_PROTO,
