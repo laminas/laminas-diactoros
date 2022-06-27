@@ -46,10 +46,9 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @param array $files $_FILES superglobal
      * @param null|FilterServerRequestInterface $requestFilter If present, the
      *     generated request will be passed to this instance and the result
-     *     returned by this method. When not present, a default instance
-     *     is created and used. For version 2, that instance is an
-     *     FilterUsingXForwardedHeaders, using the `trustReservedSubnets()` constructor.
-     *     For version 3, it will be a DoNotFilter instance.
+     *     returned by this method. When not present, a default instance of
+     *     FilterUsingXForwardedHeaders is created, using the `trustReservedSubnets()`
+     *     constructor.
      * @return ServerRequest
      */
     public static function fromGlobals(
@@ -60,7 +59,6 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         array $files = null,
         ?FilterServerRequestInterface $requestFilter = null
     ) : ServerRequest {
-        // @todo For version 3, we should instead create a DoNotFilter instance.
         $requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();
 
         $server = normalizeServer(

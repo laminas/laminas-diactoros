@@ -13,7 +13,6 @@ Due to potential security issues, it is generally best to only accept these head
 (This value is found in `$_SERVER['REMOTE_ADDR']`, which is present as `$request->getServerParams()['REMOTE_ADDR']` within PSR-7 implementations.)
 `FilterUsingXForwardedHeaders` provides named constructors to allow you to trust these headers from any source (which has been the default behavior of Diactoros since the beginning), or to specify specific IP addresses or CIDR subnets to trust, along with which headers are trusted.
 To prevent backwards compatibility breaks, we use this filter by default, marked to trust **only proxies on private subnets**.
-However, **in version 3, we will use a no-op filter by default**.
 
 Features will be added to the 3.11.0 version of [mezzio/mezzio](https://github.com/mezzio/mezzio) that will allow configuring the `Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface` instance, and we recommend explicitly configuring this to utilize the `FilterUsingXForwardedHeaders` if you depend on this functionality.
 If you **do not** need the functionality, we recommend specifying `Laminas\Diactoros\ServerRequestFilter\DoNotFilter` as the configured `FilterServerRequestInterface` in your application immediately.
