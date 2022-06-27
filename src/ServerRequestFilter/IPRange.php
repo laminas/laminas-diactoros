@@ -14,6 +14,7 @@ final class IPRange
     {
     }
 
+    /** @psalm-pure */
     public static function matches(string $ip, string $cidr): bool
     {
         if (false !== strpos($ip, ':')) {
@@ -23,6 +24,7 @@ final class IPRange
         return self::matchesIPv4($ip, $cidr);
     }
 
+    /** @psalm-pure */
     public static function matchesIPv4(string $ip, string $cidr): bool
     {
         $mask   = 32;
@@ -52,6 +54,7 @@ final class IPRange
         );
     }
 
+    /** @psalm-pure */
     public static function matchesIPv6(string $ip, string $cidr): bool
     {
         $mask   = 128;

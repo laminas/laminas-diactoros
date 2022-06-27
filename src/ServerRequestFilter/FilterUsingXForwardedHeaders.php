@@ -40,6 +40,9 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 
     /**
      * Only allow construction via named constructors
+     *
+     * @param list<non-empty-string> $trustedProxies
+     * @param list<FilterUsingXForwardedHeaders::HEADER_*> $trustedHeaders
      */
     private function __construct(
         array $trustedProxies = [],
@@ -53,7 +56,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     {
         $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';
 
-        if ('' === $remoteAddress) {
+        if ('' === $remoteAddress || ! is_string($remoteAddress)) {
             // Should we trigger a warning here?
             return $request;
         }
@@ -77,12 +80,10 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
                     $uri = $uri->withHost($header);
                     break;
                 case self::HEADER_PORT:
-                    $uri = $uri->withPort($header);
+                    $uri = $uri->withPort((int) $header);
                     break;
                 case self::HEADER_PROTO:
                     $uri = $uri->withScheme($header);
-                    break;
-                default:
                     break;
             }
         }
@@ -186,8 +187,8 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     }
 
     /**
-     * @param non-empty-list<non-empty-string> $proxyCIDRList
-     * @return non-empty-list<non-empty-string>
+     * @param list<non-empty-string> $proxyCIDRList
+     * @return list<non-empty-string>
      * @throws InvalidProxyAddressException
      */
     private static function normalizeProxiesList(array $proxyCIDRList): array
@@ -219,7 +220,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
      */
     private static function validateProxyCIDR($cidr): bool
     {
-        if (! is_string($cidr)) {
+        if (! is_string($cidr) || '' === $cidr) {
             return false;
         }
 

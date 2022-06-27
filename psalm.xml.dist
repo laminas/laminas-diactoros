@@ -15,11 +15,26 @@
     </projectFiles>
 
     <issueHandlers>
+        <DeprecatedFunction>
+            <errorLevel type="suppress">
+                <referencedFunction name="laminas\diactoros\marshalurifromsapi"/>
+            </errorLevel>
+        </DeprecatedFunction>
+
+        <InternalClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Laminas\Diactoros\ServerRequestFilter\IPRange"/>
+            </errorLevel>
+        </InternalClass>
+
         <InternalMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::method"/>
                 <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::willReturn"/>
                 <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::with"/>
+                <referencedMethod name="Laminas\Diactoros\ServerRequestFilter\IPRange::matches"/>
+                <referencedMethod name="Laminas\Diactoros\ServerRequestFilter\IPRange::matchesIPv4"/>
+                <referencedMethod name="Laminas\Diactoros\ServerRequestFilter\IPRange::matchesIPv6"/>
             </errorLevel>
         </InternalMethod>
 

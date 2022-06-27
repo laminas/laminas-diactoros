@@ -193,6 +193,9 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     public function testPassingInvalidForwardedHeaderNamesWhenTrustingProxyRaisesException(): void
     {
         $this->expectException(InvalidForwardedHeaderNameException::class);
+        /**
+         * @psalm-suppress InvalidArgument
+         */
         FilterUsingXForwardedHeaders::trustProxies(['192.168.1.0/24'], ['Host']);
     }
 

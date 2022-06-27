@@ -139,7 +139,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         // URI query
         $query = '';
         if (isset($server['QUERY_STRING'])) {
-            $query = ltrim($server['QUERY_STRING'], '?');
+            $query = ltrim((string) $server['QUERY_STRING'], '?');
         }
 
         // URI fragment
@@ -157,7 +157,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Marshal the host and port from the PHP environment.
      *
-     * @return array{string, numeric-string} Array of two items, host and port,
+     * @return array{string, int|null} Array of two items, host and port,
      *     in that order (can be passed to a list() operation).
      */
     private static function marshalHostAndPort(array $server) : array
@@ -168,7 +168,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             return $defaults;
         }
 
-        $host = $server['SERVER_NAME'];
+        $host = (string) $server['SERVER_NAME'];
         $port = isset($server['SERVER_PORT']) ? (int) $server['SERVER_PORT'] : null;
 
         if (! isset($server['SERVER_ADDR'])
@@ -183,14 +183,20 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     }
 
     /**
-     * @return array{string, numeric-string} Array of two items, host and port,
+     * @return array{string, int|null} Array of two items, host and port,
      *     in that order (can be passed to a list() operation).
      */
     private static function marshalIpv6HostAndPort(array $server, ?int $port) : array
     {
-        $host = '[' . $server['SERVER_ADDR'] . ']';
-        $port = $port ?: 80;
-        if ($port . ']' === substr($host, strrpos($host, ':') + 1)) {
+        $host             = '[' . (string) $server['SERVER_ADDR'] . ']';
+        $port             = $port ?: 80;
+        $portSeparatorPos = strrpos($host, ':');
+
+        if (false === $portSeparatorPos) {
+            return [$host, $port];
+        }
+
+        if ($port . ']' === substr($host, $portSeparatorPos + 1)) {
             // The last digit of the IPv6-Address has been taken as port
             // Unset the port so the default port can be used
             $port = null;
@@ -214,18 +220,18 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         // (double slash problem).
         $iisUrlRewritten = $server['IIS_WasUrlRewritten'] ?? null;
         $unencodedUrl    = $server['UNENCODED_URL'] ?? '';
-        if ('1' === $iisUrlRewritten && ! empty($unencodedUrl)) {
+        if ('1' === $iisUrlRewritten && is_string($unencodedUrl) && '' !== $unencodedUrl) {
             return $unencodedUrl;
         }
 
         $requestUri = $server['REQUEST_URI'] ?? null;
 
-        if ($requestUri !== null) {
+        if (is_string($requestUri)) {
             return preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
         }
 
-        $origPathInfo = $server['ORIG_PATH_INFO'] ?? null;
-        if (empty($origPathInfo)) {
+        $origPathInfo = $server['ORIG_PATH_INFO'] ?? '';
+        if (! is_string($origPathInfo) || '' === $origPathInfo) {
             return '/';
         }
 
