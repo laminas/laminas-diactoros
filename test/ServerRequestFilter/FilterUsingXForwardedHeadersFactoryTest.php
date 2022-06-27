@@ -6,12 +6,12 @@ namespace LaminasTest\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\ConfigProvider;
 use Laminas\Diactoros\ServerRequest;
-use Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilter;
-use Laminas\Diactoros\ServerRequestFilter\XForwardedRequestFilterFactory;
+use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
+use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeadersFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-class XForwardedRequestFilterFactoryTest extends TestCase
+class FilterUsingXForwardedHeadersFactoryTest extends TestCase
 {
     /** @var ContainerInterface */
     private $container;
@@ -70,13 +70,13 @@ class XForwardedRequestFilterFactoryTest extends TestCase
     /** @dataProvider randomIpGenerator */
     public function testIfNoConfigPresentFactoryReturnsFilterThatDoesNotTrustAny(string $remoteAddr): void
     {
-        $factory = new XForwardedRequestFilterFactory();
+        $factory = new FilterUsingXForwardedHeadersFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
             ],
             [
                 'REMOTE_ADDR' => $remoteAddr,
@@ -92,9 +92,9 @@ class XForwardedRequestFilterFactoryTest extends TestCase
     public function trustAnyProvider(): iterable
     {
         $headers = [
-            XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-            XForwardedRequestFilter::HEADER_PROTO => 'https',
-            XForwardedRequestFilter::HEADER_PORT  => '4443',
+            FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+            FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+            FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
         ];
 
         foreach ($this->randomIpGenerator() as $name => $arguments) {
@@ -117,7 +117,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             ],
         ]);
 
-        $factory = new XForwardedRequestFilterFactory();
+        $factory = new FilterUsingXForwardedHeadersFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             $headers,
@@ -129,10 +129,10 @@ class XForwardedRequestFilterFactoryTest extends TestCase
         $this->assertNotSame($request, $filteredRequest);
 
         $uri = $filteredRequest->getUri();
-        $this->assertSame($headers[XForwardedRequestFilter::HEADER_HOST], $uri->getHost());
+        $this->assertSame($headers[FilterUsingXForwardedHeaders::HEADER_HOST], $uri->getHost());
         // Port is always cast to int
-        $this->assertSame((int) $headers[XForwardedRequestFilter::HEADER_PORT], $uri->getPort());
-        $this->assertSame($headers[XForwardedRequestFilter::HEADER_PROTO], $uri->getScheme());
+        $this->assertSame((int) $headers[FilterUsingXForwardedHeaders::HEADER_PORT], $uri->getPort());
+        $this->assertSame($headers[FilterUsingXForwardedHeaders::HEADER_PROTO], $uri->getScheme());
     }
 
     /** @dataProvider randomIpGenerator */
@@ -143,19 +143,19 @@ class XForwardedRequestFilterFactoryTest extends TestCase
                 ConfigProvider::X_FORWARDED => [
                     ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => [],
                     ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
-                        XForwardedRequestFilter::HEADER_HOST,
+                        FilterUsingXForwardedHeaders::HEADER_HOST,
                     ],
                 ],
             ],
         ]);
 
-        $factory = new XForwardedRequestFilterFactory();
+        $factory = new FilterUsingXForwardedHeadersFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
             ],
             [
                 'REMOTE_ADDR' => $remoteAddr,
@@ -179,14 +179,14 @@ class XForwardedRequestFilterFactoryTest extends TestCase
             ],
         ]);
 
-        $factory = new XForwardedRequestFilterFactory();
+        $factory = new FilterUsingXForwardedHeadersFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest(
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
-                XForwardedRequestFilter::HEADER_PORT  => '4443',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
             ],
             [
                 'REMOTE_ADDR' => $remoteAddr,
@@ -222,16 +222,16 @@ class XForwardedRequestFilterFactoryTest extends TestCase
                     ConfigProvider::X_FORWARDED => [
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => '192.168.1.1',
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
-                            XForwardedRequestFilter::HEADER_HOST,
+                            FilterUsingXForwardedHeaders::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
-                XForwardedRequestFilter::HEADER_PORT  => '4443',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.1.1'],
             'http://localhost/foo/bar',
@@ -245,16 +245,16 @@ class XForwardedRequestFilterFactoryTest extends TestCase
                     ConfigProvider::X_FORWARDED => [
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
-                            XForwardedRequestFilter::HEADER_HOST,
+                            FilterUsingXForwardedHeaders::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
-                XForwardedRequestFilter::HEADER_PORT  => '4443',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.1.1'],
             'http://localhost/foo/bar',
@@ -268,17 +268,17 @@ class XForwardedRequestFilterFactoryTest extends TestCase
                     ConfigProvider::X_FORWARDED => [
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
-                            XForwardedRequestFilter::HEADER_HOST,
-                            XForwardedRequestFilter::HEADER_PROTO,
+                            FilterUsingXForwardedHeaders::HEADER_HOST,
+                            FilterUsingXForwardedHeaders::HEADER_PROTO,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
-                XForwardedRequestFilter::HEADER_PORT  => '4443',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.1.1'],
             'http://localhost/foo/bar',
@@ -292,16 +292,16 @@ class XForwardedRequestFilterFactoryTest extends TestCase
                     ConfigProvider::X_FORWARDED => [
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.1'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
-                            XForwardedRequestFilter::HEADER_HOST,
+                            FilterUsingXForwardedHeaders::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
-                XForwardedRequestFilter::HEADER_PORT  => '4443',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.2.1'],
             'http://localhost/foo/bar',
@@ -315,16 +315,16 @@ class XForwardedRequestFilterFactoryTest extends TestCase
                     ConfigProvider::X_FORWARDED => [
                         ConfigProvider::X_FORWARDED_TRUSTED_PROXIES => ['192.168.1.0/24', '192.168.2.0/24'],
                         ConfigProvider::X_FORWARDED_TRUSTED_HEADERS => [
-                            XForwardedRequestFilter::HEADER_HOST,
+                            FilterUsingXForwardedHeaders::HEADER_HOST,
                         ],
                     ],
                 ],
             ],
             [
                 'Host' => 'localhost',
-                XForwardedRequestFilter::HEADER_HOST  => 'api.example.com',
-                XForwardedRequestFilter::HEADER_PROTO => 'https',
-                XForwardedRequestFilter::HEADER_PORT  => '4443',
+                FilterUsingXForwardedHeaders::HEADER_HOST  => 'api.example.com',
+                FilterUsingXForwardedHeaders::HEADER_PROTO => 'https',
+                FilterUsingXForwardedHeaders::HEADER_PORT  => '4443',
             ],
             ['REMOTE_ADDR' => '192.168.2.1'],
             'http://localhost/foo/bar',
@@ -343,7 +343,7 @@ class XForwardedRequestFilterFactoryTest extends TestCase
     ): void {
         $this->container->set('config', $config);
 
-        $factory = new XForwardedRequestFilterFactory();
+        $factory = new FilterUsingXForwardedHeadersFactory();
         $filter = $factory($this->container);
         $request = $this->generateServerRequest($headers, $server, $baseUriString);
 

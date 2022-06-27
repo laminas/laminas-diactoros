@@ -8,7 +8,7 @@ use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class XForwardedRequestFilter implements FilterServerRequestInterface
+final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 {
     public const HEADER_HOST  = 'X-FORWARDED-HOST';
     public const HEADER_PORT  = 'X-FORWARDED-PORT';
@@ -28,7 +28,7 @@ final class XForwardedRequestFilter implements FilterServerRequestInterface
 
     /**
      * @var string[]
-     * @psalm-var array<array-key, XForwardedRequestFilter::HEADER_*>
+     * @psalm-var array<array-key, FilterUsingXForwardedHeaders::HEADER_*>
      */
     private $trustedHeaders = [];
 
