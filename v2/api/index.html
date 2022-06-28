@@ -166,6 +166,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
@@ -194,6 +200,12 @@
                 
     <li class="subnavigation__list-item ">
         <a href="../migration/" class="subnavigation__link">Migration to Version 2</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../forward-migration/" class="subnavigation__link">Preparing for Version 3</a>
     </li>
 
             
@@ -459,10 +471,10 @@ $jsonResponse = new JsonResponse($data, 422, [
     'Content-Type' =&gt; [ 'application/problem+json' ],
 ]);</code></pre>
 <h2 id="serverrequestfactory">ServerRequestFactory</h2>
-<p>This static class can be used to marshal a <code>ServerRequest</code> instance from the PHP environment. The
-primary entry point is <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array
-$query, array $body, array $cookies, array $files)</code>. This method will create a new <code>ServerRequest</code>
-instance with the data provided. Examples of usage are:</p>
+<p>This static class can be used to marshal a <code>ServerRequest</code> instance from the PHP environment.
+The primary entry point is <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array $query, array $body, array $cookies, array $files, ?Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface $requestFilter)</code>.
+This method will create a new <code>ServerRequest</code> instance with the data provided.
+Examples of usage are:</p>
 <pre class="highlight"><code class="language-php">// Returns new ServerRequest instance, using values from superglobals:
 $request = ServerRequestFactory::fromGlobals();
 
@@ -476,7 +488,19 @@ $request = ServerRequestFactory::fromGlobals(
     $_POST,
     $_COOKIE,
     $_FILES
-);</code></pre>
+);
+
+### Request Filters
+
+Since version 2.11.1, this method takes the additional optional argument `$requestFilter`.
+This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface`](server-request-filters.md).
+For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\FilerUsingXForwardedHeaders`](server-request-filters.md#filterusingxforwardedheaders) instance configured as follows:
+
+```php
+$requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();</code></pre>
+<p>The request filter is called on the generated server request instance, and its result is returned from <code>fromGlobals()</code>.</p>
+<p><strong>For version 3 releases, this method will switch to using a <code>Laminas\Diactoros\ServerRequestFilter\DoNotFilter</code> by default.</strong>
+If you are using this factory method directly, please be aware and update your code accordingly.</p>
 <h3 id="serverrequestfactory-helper-functions">ServerRequestFactory Helper Functions</h3>
 <p>In order to create the various artifacts required by a <code>ServerRequest</code> instance,
 Diactoros also provides a number of functions under the <code>Laminas\Diactoros</code>
@@ -487,8 +511,10 @@ and even the <code>Cookie</code> header. These include:</p>
   (its main purpose is to aggregate the <code>Authorization</code> header in the SAPI params
   when under Apache)</li>
 <li><code>Laminas\Diactoros\marshalProtocolVersionFromSapi(array $server) : string</code></li>
-<li><code>Laminas\Diactoros\marshalMethodFromSapi(array $server) : string</code></li>
-<li><code>Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers) : Uri</code></li>
+<li><code>Laminas\Diactoros\marshalMethodFromSapi(array $server) : string</code>.</li>
+<li><code>Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers) : Uri</code>.
+  Please note: <strong>this function is deprecated as of version 2.11.1</strong>, and no longer used in <code>ServerRequestFactory::fromGlobals()</code>.
+  Use <code>ServerRequestFactory::fromGlobals()</code> instead.</li>
 <li><code>Laminas\Diactoros\marshalHeadersFromSapi(array $server) : array</code></li>
 <li><code>Laminas\Diactoros\parseCookieHeader(string $header) : array</code></li>
 <li><code>Laminas\Diactoros\createUploadedFile(array $spec) : UploadedFile</code> (creates the
@@ -632,6 +658,12 @@ as a stream or moving it to a filesystem location.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
@@ -660,6 +692,12 @@ as a stream or moving it to a filesystem location.</p>
                 
     <li class="subnavigation__list-item ">
         <a href="../migration/" class="subnavigation__link">Migration to Version 2</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../forward-migration/" class="subnavigation__link">Preparing for Version 3</a>
     </li>
 
             
@@ -743,7 +781,7 @@ as a stream or moving it to a filesystem location.</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-diactorosblob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-diactoros/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -752,7 +790,7 @@ as a stream or moving it to a filesystem location.</p>
                         <h4 class="footer__headline">Copyright</h4>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
-                            <a href="https://github.com/laminas/laminas-diactorosgraphs/contributors">contributors</a>.<br>-->
+                            <a href="https://github.com/laminas/laminas-diactoros/graphs/contributors">contributors</a>.<br>-->
                             &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>

@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-diactoros">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v1/serialization/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v2/forward-migration/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Serialization - laminas-diactoros - Laminas Docs</title>
+    <title>Preparing for Version 3 - laminas-diactoros - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,14 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -168,19 +160,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Serialization</a>
+        <a href="../serialization/" class="subnavigation__link">Serialization</a>
     </li>
 
             
@@ -193,6 +191,35 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 2</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Preparing for Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -241,13 +268,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v2
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v2/overview/" class="dropdown-item">
+                    <a href="../overview/" class="dropdown-item active">
                         
                             v2 (latest)
                         
@@ -255,7 +282,7 @@
                 
             
                 
-                    <a href="../overview/" class="dropdown-item active">
+                    <a href="../../v1/overview/" class="dropdown-item">
                         
                             v1
                         
@@ -295,11 +322,7 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#string" class="toc__link nav-link">String</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#array" class="toc__link nav-link">Array</a>
+                        <a href="#serverrequestfilterinterface-defaults" class="toc__link nav-link">ServerRequestFilterInterface defaults</a>
                     </li>
                 
             </ul>
@@ -327,12 +350,12 @@
                     
                         
                         
-                            <li class="breadcrumb-item">Reference</li>
+                            <li class="breadcrumb-item">Migration</li>
                         
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Serialization</li>
+                <li class="breadcrumb-item active" aria-current="page">Preparing for Version 3</li>
             
         
     </ol>
@@ -340,72 +363,28 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
-        <h2 class="chapter__headline">Reference</h2>
+        <h2 class="chapter__headline">Migration</h2>
     
 
-    <h1 id="serialization">Serialization</h1>
-<h2 id="string">String</h2>
-<p>At times, it's useful to either create a string representation of a message (serialization), or to
-cast a string or stream message to an object (deserialization). This package provides features for
-this in <code>Laminas\Diactoros\Request\Serializer</code> and <code>Laminas\Diactoros\Response\Serializer</code>; each provides
-the following static methods:</p>
-<ul>
-<li><code>fromString($message)</code> will create either a <code>Request</code> or <code>Response</code> instance (based on the
-  serializer used) from the string message.</li>
-<li><code>fromStream(Psr\Http\Message\StreamInterface $stream)</code> will create either a <code>Request</code> or
-  <code>Response</code> instance (based on the serializer used) from the provided stream.</li>
-<li><code>toString(Psr\Http\Message\RequestInterface|Psr\Http\Message\ResponseInterface $message)</code> will
-  create either a string from the provided message.</li>
-</ul>
-<p>The deserialization methods (<code>from*()</code>) will raise exceptions if errors occur while parsing the
-message. The serialization methods (<code>toString()</code>) will raise exceptions if required data for
-serialization is not present in the message instance.</p>
-<h2 id="array">Array</h2>
-<p>This package also provides features for array serialization using
-<code>Laminas\Diactoros\Request\ArraySerializer</code> and <code>Laminas\Diactoros\Response\ArraySerializer</code>; each provides
-the following static methods:</p>
-<ul>
-<li><code>fromArray(array $message)</code> will create either a <code>Request</code> or <code>Response</code> instance (based on the
-  serializer used) from the array message.</li>
-<li><code>toArray(Psr\Http\Message\RequestInterface|Psr\Http\Message\ResponseInterface $message)</code> will
-  create an array from the provided message.</li>
-</ul>
-<p>The deserialization methods (<code>fromArray()</code>) will raise exceptions if errors occur while parsing the
-message.</p>
-<h3 id="example-usage">Example Usage</h3>
-<p>Array serialization can be usesful for log messages:</p>
-<pre class="highlight"><code class="language-php">class LoggerMiddleware
-{
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
-    {
-        $response = $next($request, $response);
-
-        $this-&gt;logger-&gt;debug('Request/Response', [
-            'request' =&gt; \Laminas\Diactoros\Request\ArraySerializer::toArray($request),
-            'response' =&gt; \Laminas\Diactoros\Response\ArraySerializer::toArray($response),
-        ]);
-
-        return $response;
-    }
-}</code></pre>
+    <h1 id="preparing-for-version-3">Preparing for Version 3</h1>
+<h2 id="serverrequestfilterinterface-defaults">ServerRequestFilterInterface defaults</h2>
+<p>Introduced in version 2.11.1, the <code>Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface</code> is used by <code>ServerRequestFactory::fromGlobals()</code> to allow modifying the generated <code>ServerRequest</code> instance prior to returning it.
+The primary use case is to allow modifying the generated URI based on the presence of headers such as <code>X-Forwarded-Host</code>.
+When operating behind a reverse proxy, the <code>Host</code> header is often rewritten to the name of the node to which the request is being forwarded, and an <code>X-Forwarded-Host</code> header is generated with the original <code>Host</code> value to allow the server to determine the original host the request was intended for.
+(We have always examined the <code>X-Forwarded-Proto</code> header; as of 2.11.1, we also examine the <code>X-Forwarded-Port</code> header.)</p>
+<p>To accommodate this use case, we created <code>Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders</code>.</p>
+<p>Due to potential security issues, it is generally best to only accept these headers if you trust the reverse proxy that has initiated the request.
+(This value is found in <code>$_SERVER['REMOTE_ADDR']</code>, which is present as <code>$request-&gt;getServerParams()['REMOTE_ADDR']</code> within PSR-7 implementations.)
+<code>FilterUsingXForwardedHeaders</code> provides named constructors to allow you to trust these headers from any source (which has been the default behavior of Diactoros since the beginning), or to specify specific IP addresses or CIDR subnets to trust, along with which headers are trusted.
+To prevent backwards compatibility breaks, we use this filter by default, marked to trust <strong>only proxies on private subnets</strong>.</p>
+<p>Features will be added to the 3.11.0 version of <a href="https://github.com/mezzio/mezzio">mezzio/mezzio</a> that will allow configuring the <code>Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface</code> instance, and we recommend explicitly configuring this to utilize the <code>FilterUsingXForwardedHeaders</code> if you depend on this functionality.
+If you <strong>do not</strong> need the functionality, we recommend specifying <code>Laminas\Diactoros\ServerRequestFilter\DoNotFilter</code> as the configured <code>FilterServerRequestInterface</code> in your application immediately.</p>
+<p>We will update this documentation with a link to the related functionality in mezzio/mezzio when it is published.</p>
 
 
 
@@ -416,10 +395,10 @@ message.</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../emitting-responses/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../migration/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Emitting Responses
+                    Migration to Version 2
                 </a>
             
         </li>
@@ -427,9 +406,9 @@ message.</p>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../api/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../../v1/overview/">
                     <small class="page-nav__label">Next</small>
-                    API
+                    Overview
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -472,14 +451,6 @@ message.</p>
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -506,19 +477,25 @@ message.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Serialization</a>
+        <a href="../serialization/" class="subnavigation__link">Serialization</a>
     </li>
 
             
@@ -531,6 +508,35 @@ message.</p>
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 2</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Preparing for Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
