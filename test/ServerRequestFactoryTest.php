@@ -6,11 +6,11 @@ namespace LaminasTest\Diactoros;
 
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Laminas\Diactoros\UploadedFile;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
-use ReflectionMethod;
-use ReflectionProperty;
+use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 
 use function Laminas\Diactoros\marshalHeadersFromSapi;
@@ -721,5 +721,35 @@ class ServerRequestFactoryTest extends TestCase
 
         $this->assertSame($expectedHeaderValue, $request->getHeaderLine($headerName));
         $this->assertSame($expectedServerValue, $request->getServerParams()[$key]);
+    }
+
+    public function testReturnsFilteredRequestBasedOnRequestFilterProvided(): void
+    {
+        $expectedRequest = new ServerRequest();
+        $filter = new class($expectedRequest) implements FilterServerRequestInterface {
+            /** @var ServerRequestInterface */
+            private $request;
+
+            public function __construct(ServerRequestInterface $request)
+            {
+                $this->request = $request;
+            }
+
+            public function __invoke(ServerRequestInterface $request): ServerRequestInterface
+            {
+                return $this->request;
+            }
+        };
+
+        $request = ServerRequestFactory::fromGlobals(
+            ['REMOTE_ADDR' => '127.0.0.1'],
+            ['foo' => 'bar'],
+            null,
+            null,
+            null,
+            $filter
+        );
+
+        $this->assertSame($expectedRequest, $request);
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.21.0@d8bec4c7aaee111a532daec32fb09de5687053d1">
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|callable</code>
@@ -242,12 +242,44 @@
     </ParamNameMismatch>
   </file>
   <file src="src/ServerRequestFactory.php">
+    <LessSpecificReturnStatement occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$headers['cookie']</code>
     </MixedArgument>
+    <MixedAssignment occurrences="3">
+      <code>$iisUrlRewritten</code>
+      <code>$requestUri</code>
+      <code>$unencodedUrl</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array{string, int|null}</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$defaults</code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>ServerRequest</code>
+    </MoreSpecificReturnType>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_callable(self::$apacheRequestHeaders)</code>
     </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/ServerRequestFilter/FilterUsingXForwardedHeaders.php">
+    <ImpureMethodCall occurrences="7">
+      <code>getHeaderLine</code>
+      <code>getServerParams</code>
+      <code>getUri</code>
+      <code>withHost</code>
+      <code>withPort</code>
+      <code>withScheme</code>
+      <code>withUri</code>
+    </ImpureMethodCall>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$proxyCIDRList</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>list&lt;non-empty-string&gt;</code>
+    </MoreSpecificReturnType>
   </file>
   <file src="src/Stream.php">
     <InvalidArgument occurrences="1"/>

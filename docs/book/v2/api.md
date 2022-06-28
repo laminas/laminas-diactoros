@@ -104,10 +104,10 @@ $jsonResponse = new JsonResponse($data, 422, [
 
 ## ServerRequestFactory
 
-This static class can be used to marshal a `ServerRequest` instance from the PHP environment. The
-primary entry point is `Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array
-$query, array $body, array $cookies, array $files)`. This method will create a new `ServerRequest`
-instance with the data provided. Examples of usage are:
+This static class can be used to marshal a `ServerRequest` instance from the PHP environment.
+The primary entry point is `Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array $query, array $body, array $cookies, array $files, ?Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface $requestFilter)`.
+This method will create a new `ServerRequest` instance with the data provided.
+Examples of usage are:
 
 ```php
 // Returns new ServerRequest instance, using values from superglobals:
@@ -124,7 +124,21 @@ $request = ServerRequestFactory::fromGlobals(
     $_COOKIE,
     $_FILES
 );
+
+### Request Filters
+
+Since version 2.11.1, this method takes the additional optional argument `$requestFilter`.
+This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface`](server-request-filters.md).
+For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\FilerUsingXForwardedHeaders`](server-request-filters.md#filterusingxforwardedheaders) instance configured as follows:
+
+```php
+$requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();
 ```
+
+The request filter is called on the generated server request instance, and its result is returned from `fromGlobals()`.
+
+**For version 3 releases, this method will switch to using a `Laminas\Diactoros\ServerRequestFilter\DoNotFilter` by default.**
+If you are using this factory method directly, please be aware and update your code accordingly.
 
 ### ServerRequestFactory Helper Functions
 
@@ -137,8 +151,10 @@ and even the `Cookie` header. These include:
   (its main purpose is to aggregate the `Authorization` header in the SAPI params
   when under Apache)
 - `Laminas\Diactoros\marshalProtocolVersionFromSapi(array $server) : string`
-- `Laminas\Diactoros\marshalMethodFromSapi(array $server) : string`
-- `Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers) : Uri`
+- `Laminas\Diactoros\marshalMethodFromSapi(array $server) : string`.
+- `Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers) : Uri`.
+  Please note: **this function is deprecated as of version 2.11.1**, and no longer used in `ServerRequestFactory::fromGlobals()`.
+  Use `ServerRequestFactory::fromGlobals()` instead.
 - `Laminas\Diactoros\marshalHeadersFromSapi(array $server) : array`
 - `Laminas\Diactoros\parseCookieHeader(string $header) : array`
 - `Laminas\Diactoros\createUploadedFile(array $spec) : UploadedFile` (creates the
