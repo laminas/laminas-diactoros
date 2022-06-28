@@ -29,10 +29,6 @@ The first approach may fail if libraries you depend on specifically require a
 version 1 release. The second approach may leave you on a version 1 release in
 situations where other libraries you depend on require version 1.
 
-In all cases, if you are only using the PSR-7 implementations and/or the
-`ServerRequestFactory::fromGlobals()` functionality, upgrading to version 2 will
-pose no backwards compatibility issues.
-
 ## Changed
 
 - `Laminas\Diactoros\RequestTrait` now raises an `InvalidArgumentException` in
@@ -41,6 +37,12 @@ pose no backwards compatibility issues.
 - `Laminas\Diactoros\Serializer\Request::toString()` no longer raises an
   `UnexpectedValueException` due to an unexpected HTTP method; this is due to the
   fact that the HTTP method value can no longer be set to an invalid value.
+
+- `Laminas\Diactoros\marshalHeadersFromSapi()` is parsing headers differently compared to the legacy implementation.
+   As a consequence Headers with `'0'` as values will be part of the parsed Headers.
+   In former versions those headers were ignored.
+   Usages of `\Laminas\Diactoros\MessageTrait::hasHeader()` and `\Laminas\Diactoros\MessageTrait::getHeader()`
+   might be affected if you are using `ServerRequestFactory::fromGlobals()` functionality.
 
 ## Removed
 
