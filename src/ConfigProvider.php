@@ -13,6 +13,11 @@ use Psr\Http\Message\UriFactoryInterface;
 
 class ConfigProvider
 {
+    public const CONFIG_KEY = 'laminas-diactoros';
+    public const X_FORWARDED = 'x-forwarded-request-filter';
+    public const X_FORWARDED_TRUSTED_PROXIES = 'trusted-proxies';
+    public const X_FORWARDED_TRUSTED_HEADERS = 'trusted-headers';
+
     /**
      * Retrieve configuration for laminas-diactoros.
      *
@@ -22,6 +27,7 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
+            self::CONFIG_KEY => $this->getComponentConfig(),
         ];
     }
 
@@ -31,6 +37,7 @@ class ConfigProvider
      */
     public function getDependencies() : array
     {
+        // @codingStandardsIgnoreStart
         return [
             'invokables' => [
                 RequestFactoryInterface::class => RequestFactory::class,
@@ -39,6 +46,17 @@ class ConfigProvider
                 ServerRequestFactoryInterface::class => ServerRequestFactory::class,
                 UploadedFileFactoryInterface::class => UploadedFileFactory::class,
                 UriFactoryInterface::class => UriFactory::class
+            ],
+        ];
+        // @codingStandardsIgnoreEnd
+    }
+
+    public function getComponentConfig(): array
+    {
+        return [
+            self::X_FORWARDED => [
+                self::X_FORWARDED_TRUSTED_PROXIES => '',
+                self::X_FORWARDED_TRUSTED_HEADERS => [],
             ],
         ];
     }
