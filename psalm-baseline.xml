@@ -243,9 +243,13 @@
   </file>
   <file src="src/ServerRequestFactory.php">
     <LessSpecificReturnStatement occurrences="1"/>
-    <MixedArgument occurrences="1">
+    <MixedArgument occurrences="2">
       <code>$headers['cookie']</code>
+      <code>$host</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$headers</code>
+    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="3">
       <code>$iisUrlRewritten</code>
       <code>$requestUri</code>
@@ -257,6 +261,9 @@
     <MixedReturnStatement occurrences="1">
       <code>$defaults</code>
     </MixedReturnStatement>
+    <MixedReturnTypeCoercion occurrences="1">
+      <code>self::marshalHostAndPortFromHeader($host)</code>
+    </MixedReturnTypeCoercion>
     <MoreSpecificReturnType occurrences="1">
       <code>ServerRequest</code>
     </MoreSpecificReturnType>

@@ -6,6 +6,7 @@ namespace LaminasTest\Diactoros;
 
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
 use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Laminas\Diactoros\UploadedFile;
 use Laminas\Diactoros\Uri;
@@ -751,5 +752,38 @@ class ServerRequestFactoryTest extends TestCase
         );
 
         $this->assertSame($expectedRequest, $request);
+    }
+
+    public function testHonorsHostHeaderOverServerNameWhenMarshalingUrl(): void
+    {
+        $server = [
+            'SERVER_NAME' => 'localhost',
+            'SERVER_PORT' => '80',
+            'SERVER_ADDR' => '172.22.0.4',
+            'REMOTE_PORT' => '36852',
+            'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'DOCUMENT_ROOT' => '/var/www/public',
+            'DOCUMENT_URI' => '/index.php',
+            'REQUEST_URI' => '/api/messagebox-schema',
+            'PATH_TRANSLATED' => '/var/www/public',
+            'PATH_INFO' => '',
+            'SCRIPT_NAME' => '/index.php',
+            'REQUEST_METHOD' => 'GET',
+            'SCRIPT_FILENAME' => '/var/www/public/index.php',
+            // headers
+            'HTTP_HOST' => 'example.com',
+        ];
+
+        $request = ServerRequestFactory::fromGlobals(
+            $server,
+            null,
+            null,
+            null,
+            null,
+            new DoNotFilter()
+        );
+
+        $uri = $request->getUri();
+        $this->assertSame('example.com', $uri->getHost());
     }
 }
