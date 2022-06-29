@@ -83,7 +83,8 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
                     $uri = $uri->withPort((int) $header);
                     break;
                 case self::HEADER_PROTO:
-                    $uri = $uri->withScheme($header);
+                    $scheme = strtolower($header) === 'https' ? 'https' : 'http';
+                    $uri = $uri->withScheme($scheme);
                     break;
             }
         }
