@@ -75,7 +75,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         return $requestFilter(new ServerRequest(
             $server,
             $files,
-            self::marshalUriFromSapi($server),
+            self::marshalUriFromSapi($server, $headers),
             marshalMethodFromSapi($server),
             'php://input',
             $headers,
@@ -105,9 +105,10 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Marshal a Uri instance based on the values present in the $_SERVER array and headers.
      *
+     * @param array<string, string|list<string>> $headers
      * @param array $server SAPI parameters
      */
-    private static function marshalUriFromSapi(array $server) : Uri
+    private static function marshalUriFromSapi(array $server, array $headers) : Uri
     {
         $uri = new Uri('');
 
@@ -122,7 +123,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $uri = $uri->withScheme($https ? 'https' : 'http');
 
         // Set the host
-        [$host, $port] = self::marshalHostAndPort($server);
+        [$host, $port] = self::marshalHostAndPort($server, $headers);
         if (! empty($host)) {
             $uri = $uri->withHost($host);
             if (! empty($port)) {
@@ -157,12 +158,18 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Marshal the host and port from the PHP environment.
      *
+     * @param array<string, string|list<string>> $headers
      * @return array{string, int|null} Array of two items, host and port,
      *     in that order (can be passed to a list() operation).
      */
-    private static function marshalHostAndPort(array $server) : array
+    private static function marshalHostAndPort(array $server, array $headers) : array
     {
         static $defaults = ['', null];
+
+        $host = self::getHeaderFromArray('host', $headers, false);
+        if ($host !== false) {
+            return self::marshalHostAndPortFromHeader($host);
+        }
 
         if (! isset($server['SERVER_NAME'])) {
             return $defaults;
@@ -255,5 +262,49 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         }
 
         return 'on' === strtolower($https);
+    }
+
+    /**
+     * @param string|list<string> $host
+     * @return array Array of two items, host and port, in that order (can be
+     *     passed to a list() operation).
+     */
+    private static function marshalHostAndPortFromHeader($host): array
+    {
+        if (is_array($host)) {
+            $host = implode(', ', $host);
+        }
+
+        $port = null;
+
+        // works for regname, IPv4 & IPv6
+        if (preg_match('|\:(\d+)$|', $host, $matches)) {
+            $host = substr($host, 0, -1 * (strlen($matches[1]) + 1));
+            $port = (int) $matches[1];
+        }
+
+        return [$host, $port];
+    }
+
+    /**
+     * Retrieve a header value from an array of headers using a case-insensitive lookup.
+     *
+     * @param array<string, string|list<string>> $headers Key/value header pairs
+     * @param mixed $default Default value to return if header not found
+     * @return mixed
+     */
+    private static function getHeaderFromArray(string $name, array $headers, $default = null)
+    {
+        $header  = strtolower($name);
+        $headers = array_change_key_case($headers, CASE_LOWER);
+        if (! array_key_exists($header, $headers)) {
+            return $default;
+        }
+
+        if (is_string($headers[$header])) {
+            return $headers[$header];
+        }
+
+        return implode(', ', $headers[$header]);
     }
 }

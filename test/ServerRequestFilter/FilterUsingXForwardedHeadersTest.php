@@ -331,4 +331,41 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $filteredRequest = $filter($request);
         $this->assertSame($request, $filteredRequest);
     }
+
+    /** @psalm-return iterable<string, array{0: string, 1: string}> */
+    public function xForwardedProtoValues() : iterable
+    {
+        yield 'https-lowercase'  => ['https', 'https'];
+        yield 'https-uppercase'  => ['HTTPS', 'https'];
+        yield 'https-mixed-case' => ['hTTpS', 'https'];
+        yield 'http-lowercase'   => ['http', 'http'];
+        yield 'http-uppercase'   => ['HTTP', 'http'];
+        yield 'http-mixed-case'  => ['hTTp', 'http'];
+        yield 'unknown-value'    => ['foo', 'http'];
+        yield 'empty'            => ['', 'http'];
+    }
+
+    /** @dataProvider xForwardedProtoValues */
+    public function testOnlyHonorsXForwardedProtoIfValueResolvesToHTTPS(
+        string $xForwarededProto,
+        string $expectedScheme
+    ): void {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.0.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Proto' => $xForwarededProto,
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustReservedSubnets();
+
+        $filteredRequest = $filter($request);
+        $uri = $filteredRequest->getUri();
+        $this->assertSame($expectedScheme, $uri->getScheme());
+    }
 }
