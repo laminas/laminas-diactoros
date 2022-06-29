@@ -269,7 +269,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @return array Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
      */
-    private static function marshalHostAndPortFromHeader($host)
+    private static function marshalHostAndPortFromHeader($host): array
     {
         if (is_array($host)) {
             $host = implode(', ', $host);
