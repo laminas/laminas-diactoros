@@ -289,9 +289,10 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Retrieve a header value from an array of headers using a case-insensitive lookup.
      *
+     * @template T
      * @param array<string, string|list<string>> $headers Key/value header pairs
-     * @param mixed $default Default value to return if header not found
-     * @return mixed
+     * @param T $default Default value to return if header not found
+     * @return string|T
      */
     private static function getHeaderFromArray(string $name, array $headers, $default = null)
     {
