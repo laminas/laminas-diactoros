@@ -786,4 +786,40 @@ class ServerRequestFactoryTest extends TestCase
         $uri = $request->getUri();
         $this->assertSame('example.com', $uri->getHost());
     }
+
+    /**
+     * @psalm-return iterable<string, array{
+     *     0: string
+     * }>
+     */
+    public function invalidHostHeaders(): iterable
+    {
+        return [
+            'comma' => ['example.com,example.net'],
+            'space' => ['example com'],
+            'tab' => ["example\tcom"],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidHostHeaders
+     */
+    public function testRejectsDuplicatedHostHeader(string $host): void
+    {
+        $server = [
+            'HTTP_HOST' => $host,
+        ];
+
+        $request = ServerRequestFactory::fromGlobals(
+            $server,
+            null,
+            null,
+            null,
+            null,
+            new DoNotFilter()
+        );
+
+        $uri = $request->getUri();
+        $this->assertSame('', $uri->getHost());
+    }
 }
