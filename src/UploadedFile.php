@@ -190,9 +190,9 @@ class UploadedFile implements UploadedFileInterface
 
                 if ($this->stream instanceof StreamInterface) {
                     $this->stream->close();
-                    if (is_string($this->file) && file_exists($this->file)) {
-                        unlink($this->file);
-                    }
+                }
+                if (is_string($this->file) && file_exists($this->file)) {
+                    unlink($this->file);
                 }
                 break;
             default:
