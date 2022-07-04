@@ -32,17 +32,25 @@ use const UPLOAD_ERR_PARTIAL;
 
 class UploadedFileTest extends TestCase
 {
+    /** @var false|null|string */
+    protected $orgFile;
+
     protected $tmpFile;
 
     protected function setUp() : void
     {
-        $this->tmpfile = null;
+        $this->tmpFile = null;
+        $this->orgFile = null;
     }
 
     protected function tearDown() : void
     {
         if (is_string($this->tmpFile) && file_exists($this->tmpFile)) {
             unlink($this->tmpFile);
+        }
+
+        if (is_string($this->orgFile) && file_exists($this->orgFile)) {
+            unlink($this->orgFile);
         }
     }
 
@@ -142,17 +150,21 @@ class UploadedFileTest extends TestCase
         $this->assertSame($stream, $r->getValue($uploadStream));
     }
 
+    /**
+     * @return void
+     */
     public function testMovesFileToDesignatedPath()
     {
+        $originalContents = 'Foo bar!';
         $stream = new Stream('php://temp', 'wb+');
-        $stream->write('Foo bar!');
+        $stream->write($originalContents);
         $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
 
         $this->tmpFile = $to = tempnam(sys_get_temp_dir(), 'diac');
         $upload->moveTo($to);
         $this->assertTrue(file_exists($to));
         $contents = file_get_contents($to);
-        $this->assertSame($stream->__toString(), $contents);
+        $this->assertSame($originalContents, $contents);
     }
 
     public function invalidMovePaths()
@@ -271,18 +283,22 @@ class UploadedFileTest extends TestCase
 
     /**
      * @group 82
+     * @return void
      */
     public function testMoveToCreatesStreamIfOnlyAFilenameWasProvided()
     {
+        $this->orgFile = tempnam(sys_get_temp_dir(), 'ORG');
         $this->tmpFile = tempnam(sys_get_temp_dir(), 'DIA');
+        file_put_contents($this->orgFile, 'Hello');
 
-        $uploadedFile = new UploadedFile(__FILE__, 100, UPLOAD_ERR_OK, basename(__FILE__), 'text/plain');
+        $original = file_get_contents($this->orgFile);
+
+        $uploadedFile = new UploadedFile($this->orgFile, 100, UPLOAD_ERR_OK, basename($this->orgFile), 'text/plain');
         $uploadedFile->moveTo($this->tmpFile);
 
-        $original = file_get_contents(__FILE__);
-        $test     = file_get_contents($this->tmpFile);
+        $contents = file_get_contents($this->tmpFile);
 
-        $this->assertSame($original, $test);
+        $this->assertSame($original, $contents);
     }
 
     public function errorConstantsAndMessages()
@@ -319,5 +335,20 @@ class UploadedFileTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($message);
         $uploadedFile->moveTo('/tmp/foo');
+    }
+
+    /**
+     * @return void
+     */
+    public function testMoveToInCLIShouldRemoveOriginalFile()
+    {
+        $this->orgFile = tempnam(sys_get_temp_dir(), 'ORG');
+        file_put_contents($this->orgFile, 'Hello');
+        $upload = new UploadedFile($this->orgFile, 0, UPLOAD_ERR_OK);
+
+        $this->tmpFile = $to = tempnam(sys_get_temp_dir(), 'diac');
+        $upload->moveTo($to);
+        $this->assertFalse(file_exists($this->orgFile));
+        $this->assertTrue(file_exists($to));
     }
 }
