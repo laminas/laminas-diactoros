@@ -14,25 +14,10 @@
       <code>$previous-&gt;getCode()</code>
     </InvalidScalarArgument>
   </file>
-  <file src="src/Exception/InvalidStreamPointerPositionException.php">
-    <MissingParamType occurrences="1">
-      <code>$code</code>
-    </MissingParamType>
-    <MixedArgument occurrences="1">
-      <code>$code</code>
-    </MixedArgument>
-  </file>
-  <file src="src/Exception/UploadedFileAlreadyMovedException.php">
-    <MissingParamType occurrences="1">
-      <code>$code</code>
-    </MissingParamType>
-    <MixedArgument occurrences="1">
-      <code>$code</code>
-    </MixedArgument>
-  </file>
   <file src="src/MessageTrait.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="3">
       <code>! is_string($name)</code>
+      <code>! is_string($stream) &amp;&amp; ! is_resource($stream)</code>
       <code>is_string($version)</code>
     </DocblockTypeContradiction>
     <InvalidArrayOffset occurrences="4">
@@ -44,9 +29,6 @@
     <InvalidPropertyAssignmentValue occurrences="1">
       <code>$headerNames</code>
     </InvalidPropertyAssignmentValue>
-    <MissingParamType occurrences="1">
-      <code>$stream</code>
-    </MissingParamType>
     <MixedArgumentTypeCoercion occurrences="2">
       <code>$header</code>
       <code>$header</code>
@@ -451,12 +433,11 @@
       <code>$headers[$header]</code>
       <code>$host</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="5">
+    <MixedAssignment occurrences="4">
       <code>$host</code>
       <code>$iisUrlRewritten</code>
       <code>$origPathInfo</code>
       <code>$unencodedUrl</code>
-      <code>$value</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="2">
       <code>array</code>
@@ -514,9 +495,6 @@
     <MixedReturnStatement occurrences="1"/>
   </file>
   <file src="src/functions/parse_cookie_header.legacy.php">
-    <MissingParamType occurrences="1">
-      <code>$cookieHeader</code>
-    </MissingParamType>
     <MixedArgument occurrences="1">
       <code>func_get_args()</code>
     </MixedArgument>
@@ -537,8 +515,6 @@
   </file>
   <file src="test/MessageTraitTest.php">
     <MixedArgument occurrences="2">
-      <code>$value</code>
-      <code>$value</code>
       <code>$value</code>
       <code>$version</code>
     </MixedArgument>
