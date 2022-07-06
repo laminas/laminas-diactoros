@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|callable</code>
@@ -289,12 +289,6 @@
   </file>
   <file src="src/Stream.php">
     <InvalidArgument occurrences="1"/>
-    <MixedInferredReturnType occurrences="1">
-      <code>?int</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$stats['size']</code>
-    </MixedReturnStatement>
     <PossiblyInvalidArgument occurrences="1">
       <code>$resource</code>
     </PossiblyInvalidArgument>
@@ -363,9 +357,18 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/functions/create_uploaded_file.legacy.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>laminas_createUploadedFile(...func_get_args())</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>UploadedFile</code>
+    </InvalidReturnType>
     <MixedArgument occurrences="1">
       <code>func_get_args()</code>
     </MixedArgument>
+    <UndefinedClass occurrences="1">
+      <code>UploadedFile</code>
+    </UndefinedClass>
   </file>
   <file src="src/functions/create_uploaded_file.php">
     <MixedArgument occurrences="4">
@@ -411,9 +414,18 @@
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.legacy.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>laminas_marshalUriFromSapi(...func_get_args())</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>Uri</code>
+    </InvalidReturnType>
     <MixedArgument occurrences="1">
       <code>func_get_args()</code>
     </MixedArgument>
+    <UndefinedClass occurrences="1">
+      <code>Uri</code>
+    </UndefinedClass>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.php">
     <MissingClosureParamType occurrences="3">
