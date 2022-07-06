@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
-use GMP;
 use InvalidArgumentException;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +21,6 @@ use function fstat;
 use function ftok;
 use function function_exists;
 use function fwrite;
-use function gmp_init;
 use function imagecreate;
 use function is_resource;
 use function shmop_open;
@@ -624,7 +622,7 @@ class StreamTest extends TestCase
         $stream->attach($resource);
     }
 
-    /** @return resource|false|GMP */
+    /** @return resource|false */
     public function getResourceFor67()
     {
         if (function_exists('curl_init')) {
@@ -633,10 +631,6 @@ class StreamTest extends TestCase
 
         if (function_exists('shmop_open')) {
             return shmop_open(ftok(__FILE__, 't'), 'c', 0644, 100);
-        }
-
-        if (function_exists('gmp_init')) {
-            return gmp_init(1);
         }
 
         if (function_exists('imagecreate')) {
