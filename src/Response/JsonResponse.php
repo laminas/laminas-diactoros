@@ -66,7 +66,7 @@ class JsonResponse extends Response
      * @param int $status Integer status code for the response; 200 by default.
      * @param array $headers Array of headers to use at initialization.
      * @param int $encodingOptions JSON encoding options to use.
-     * @throws Exception\InvalidArgumentException if unable to encode the $data to JSON.
+     * @throws Exception\InvalidArgumentException If unable to encode the $data to JSON.
      */
     public function __construct(
         $data,
@@ -128,7 +128,7 @@ class JsonResponse extends Response
      * Encode the provided data to JSON.
      *
      * @param mixed $data
-     * @throws Exception\InvalidArgumentException if unable to encode the $data to JSON.
+     * @throws Exception\InvalidArgumentException If unable to encode the $data to JSON.
      */
     private function jsonEncode($data, int $encodingOptions): string
     {
@@ -144,7 +144,7 @@ class JsonResponse extends Response
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unable to encode data to JSON in %s: %s',
-                __CLASS__,
+                self::class,
                 json_last_error_msg()
             ));
         }

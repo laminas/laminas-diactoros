@@ -18,7 +18,7 @@ trait InjectContentTypeTrait
     private function injectContentType(string $contentType, array $headers): array
     {
         $hasContentType = array_reduce(array_keys($headers), function ($carry, $item) {
-            return $carry ?: (strtolower($item) === 'content-type');
+            return $carry ?: strtolower($item) === 'content-type';
         }, false);
 
         if (! $hasContentType) {

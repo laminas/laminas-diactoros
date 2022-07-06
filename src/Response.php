@@ -120,7 +120,7 @@ class Response implements ResponseInterface
      * @param string|resource|StreamInterface $body Stream identifier and/or actual stream resource
      * @param int $status Status code for the response, if any.
      * @param array $headers Headers for the response, if any.
-     * @throws Exception\InvalidArgumentException on any invalid element.
+     * @throws Exception\InvalidArgumentException On any invalid element.
      */
     public function __construct($body = 'php://memory', int $status = 200, array $headers = [])
     {
@@ -160,7 +160,7 @@ class Response implements ResponseInterface
      *
      * @param int $code
      * @param string $reasonPhrase
-     * @throws Exception\InvalidArgumentException on an invalid status code.
+     * @throws Exception\InvalidArgumentException On an invalid status code.
      */
     private function setStatusCode($code, $reasonPhrase = ''): void
     {

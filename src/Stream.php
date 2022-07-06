@@ -105,9 +105,8 @@ class Stream implements StreamInterface
      * Attach a new stream/resource to the instance.
      *
      * @param string|resource $resource
-     * @throws Exception\InvalidArgumentException for stream identifier that cannot be
-     *     cast to a resource
-     * @throws Exception\InvalidArgumentException for non-resource stream
+     * @throws Exception\InvalidArgumentException For stream identifier that cannot be cast to a resource.
+     * @throws Exception\InvalidArgumentException For non-resource stream.
      */
     public function attach($resource, string $mode = 'r'): void
     {
@@ -213,13 +212,11 @@ class Stream implements StreamInterface
         $meta = stream_get_meta_data($this->resource);
         $mode = $meta['mode'];
 
-        return (
-            strstr($mode, 'x')
+        return strstr($mode, 'x')
             || strstr($mode, 'w')
             || strstr($mode, 'c')
             || strstr($mode, 'a')
-            || strstr($mode, '+')
-        );
+            || strstr($mode, '+');
     }
 
     /**
@@ -256,7 +253,7 @@ class Stream implements StreamInterface
         $meta = stream_get_meta_data($this->resource);
         $mode = $meta['mode'];
 
-        return (strstr($mode, 'r') || strstr($mode, '+'));
+        return strstr($mode, 'r') || strstr($mode, '+');
     }
 
     /**
@@ -319,7 +316,7 @@ class Stream implements StreamInterface
      *
      * @param string|resource $stream String stream target or stream resource.
      * @param string $mode Resource mode for stream target.
-     * @throws Exception\InvalidArgumentException for invalid streams or resources.
+     * @throws Exception\InvalidArgumentException For invalid streams or resources.
      */
     private function setStream($stream, string $mode = 'r'): void
     {

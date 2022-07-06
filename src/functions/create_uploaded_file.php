@@ -10,7 +10,7 @@ use function sprintf;
  * Create an uploaded file instance from an array of values.
  *
  * @param array $spec A single $_FILES entry.
- * @throws Exception\InvalidArgumentException if one or more of the tmp_name,
+ * @throws Exception\InvalidArgumentException If one or more of the tmp_name,
  *     size, or error keys are missing from $spec.
  */
 function createUploadedFile(array $spec): UploadedFile

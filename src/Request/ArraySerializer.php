@@ -39,7 +39,7 @@ final class ArraySerializer
     /**
      * Deserialize a request array to a request instance.
      *
-     * @throws Exception\DeserializationException when cannot deserialize response
+     * @throws Exception\DeserializationException When the response cannot be deserialized.
      */
     public static function fromArray(array $serializedRequest): Request
     {

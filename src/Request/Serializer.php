@@ -29,7 +29,7 @@ final class Serializer extends AbstractSerializer
      *
      * Internally, casts the message to a stream and invokes fromStream().
      *
-     * @throws Exception\SerializationException when errors occur parsing the message.
+     * @throws Exception\SerializationException When errors occur parsing the message.
      */
     public static function fromString(string $message): Request
     {
@@ -41,9 +41,8 @@ final class Serializer extends AbstractSerializer
     /**
      * Deserialize a request stream to a request instance.
      *
-     * @throws Exception\InvalidArgumentException if the message stream is not
-     *     readable or seekable.
-     * @throws Exception\SerializationException if an invalid request line is detected.
+     * @throws Exception\InvalidArgumentException If the message stream is not readable or seekable.
+     * @throws Exception\SerializationException If an invalid request line is detected.
      */
     public static function fromStream(StreamInterface $stream): Request
     {

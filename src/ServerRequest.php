@@ -62,7 +62,7 @@ class ServerRequest implements ServerRequestInterface
      * @param array $queryParams Query params for the message, if any.
      * @param null|array|object $parsedBody The deserialized body parameters, if any.
      * @param string $protocol HTTP protocol version.
-     * @throws Exception\InvalidArgumentException for any invalid value.
+     * @throws Exception\InvalidArgumentException For any invalid value.
      */
     public function __construct(
         array $serverParams = [],
@@ -223,7 +223,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * Recursively validate the structure in an uploaded files array.
      *
-     * @throws Exception\InvalidArgumentException if any leaf is not an UploadedFileInterface instance.
+     * @throws Exception\InvalidArgumentException If any leaf is not an UploadedFileInterface instance.
      */
     private function validateUploadedFiles(array $uploadedFiles): void
     {

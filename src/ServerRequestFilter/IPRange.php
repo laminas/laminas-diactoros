@@ -84,7 +84,7 @@ final class IPRange
         $ip     = inet_pton($ip);
         $subnet = inet_pton($subnet);
 
-        if (false == $ip || false == $subnet) {
+        if (false === $ip || false === $subnet) {
             // Invalid data
             return false;
         }

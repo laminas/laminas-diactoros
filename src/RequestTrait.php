@@ -53,7 +53,7 @@ trait RequestTrait
      * @param null|string $method HTTP method for the request, if any.
      * @param string|resource|StreamInterface $body Message body, if any.
      * @param array $headers Headers for the message, if any.
-     * @throws Exception\InvalidArgumentException for any invalid value.
+     * @throws Exception\InvalidArgumentException For any invalid value.
      */
     private function initialize(
         $uri = null,
@@ -157,7 +157,7 @@ trait RequestTrait
      *     request-target forms allowed in request messages)
      *
      * @param string $requestTarget
-     * @throws Exception\InvalidArgumentException if the request target is invalid.
+     * @throws Exception\InvalidArgumentException If the request target is invalid.
      */
     public function withRequestTarget($requestTarget): RequestInterface
     {
@@ -194,7 +194,7 @@ trait RequestTrait
      * changed request method.
      *
      * @param string $method Case-insensitive method.
-     * @throws Exception\InvalidArgumentException for invalid HTTP methods.
+     * @throws Exception\InvalidArgumentException For invalid HTTP methods.
      */
     public function withMethod($method): RequestInterface
     {
@@ -281,7 +281,7 @@ trait RequestTrait
      * Set and validate the HTTP method
      *
      * @param string $method
-     * @throws Exception\InvalidArgumentException on invalid HTTP method.
+     * @throws Exception\InvalidArgumentException On invalid HTTP method.
      */
     private function setMethod($method): void
     {

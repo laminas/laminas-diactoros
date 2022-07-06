@@ -9,12 +9,10 @@ use Psr\Http\Message\StreamInterface;
 use const SEEK_SET;
 
 /**
- * Class RelativeStream
- *
  * Wrapper for default Stream class, representing subpart (starting from given offset) of initial stream.
  * It can be used to avoid copying full stream, conserving memory.
  *
- * @example see Laminas\Diactoros\AbstractSerializer::splitStream()
+ * @see AbstractSerializer::splitStream()
  */
 final class RelativeStream implements StreamInterface
 {
@@ -24,9 +22,6 @@ final class RelativeStream implements StreamInterface
     /** @var int */
     private $offset;
 
-    /**
-     * Class constructor
-     */
     public function __construct(StreamInterface $decoratedStream, ?int $offset)
     {
         $this->decoratedStream = $decoratedStream;
@@ -97,7 +92,7 @@ final class RelativeStream implements StreamInterface
      */
     public function seek($offset, $whence = SEEK_SET): void
     {
-        if ($whence == SEEK_SET) {
+        if ($whence === SEEK_SET) {
             $this->decoratedStream->seek($offset + $this->offset, $whence);
             return;
         }

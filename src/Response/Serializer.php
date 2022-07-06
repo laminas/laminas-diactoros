@@ -19,7 +19,7 @@ final class Serializer extends AbstractSerializer
     /**
      * Deserialize a response string to a response instance.
      *
-     * @throws Exception\SerializationException when errors occur parsing the message.
+     * @throws Exception\SerializationException When errors occur parsing the message.
      */
     public static function fromString(string $message): Response
     {
@@ -31,8 +31,8 @@ final class Serializer extends AbstractSerializer
     /**
      * Parse a response from a stream.
      *
-     * @throws Exception\InvalidArgumentException when the stream is not readable.
-     * @throws Exception\SerializationException when errors occur parsing the message.
+     * @throws Exception\InvalidArgumentException When the stream is not readable.
+     * @throws Exception\SerializationException When errors occur parsing the message.
      */
     public static function fromStream(StreamInterface $stream): Response
     {
@@ -70,7 +70,7 @@ final class Serializer extends AbstractSerializer
             $format,
             $response->getProtocolVersion(),
             $response->getStatusCode(),
-            ($reasonPhrase ? ' ' . $reasonPhrase : ''),
+            $reasonPhrase ? ' ' . $reasonPhrase : '',
             $headers,
             $body
         );
@@ -80,7 +80,7 @@ final class Serializer extends AbstractSerializer
      * Retrieve the status line for the message.
      *
      * @return array Array with three elements: 0 => version, 1 => status, 2 => reason
-     * @throws Exception\SerializationException if line is malformed
+     * @throws Exception\SerializationException If line is malformed.
      */
     private static function getStatusLine(StreamInterface $stream): array
     {

@@ -17,12 +17,6 @@ use function strlen;
 
 /**
  * Provide security tools around HTTP headers to prevent common injection vectors.
- *
- * Code is largely lifted from the Laminas\Http\Header\HeaderValue implementation in
- * Laminas, released with the copyright and license below.
- *
- * @copyright Copyright (c) 2005-2015 Laminas (https://www.zend.com)
- * @license   https://getlaminas.org/license/new-bsd New BSD License
  */
 final class HeaderSecurity
 {
@@ -128,14 +122,14 @@ final class HeaderSecurity
      * Assert a header value is valid.
      *
      * @param mixed $value Value to be tested. This method asserts it is a string or number.
-     * @throws Exception\InvalidArgumentException for invalid values
+     * @throws Exception\InvalidArgumentException For invalid values.
      */
     public static function assertValid($value): void
     {
         if (! is_string($value) && ! is_numeric($value)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid header value type; must be a string or numeric; received %s',
-                (is_object($value) ? get_class($value) : gettype($value))
+                is_object($value) ? get_class($value) : gettype($value)
             ));
         }
         if (! self::isValid($value)) {
@@ -159,7 +153,7 @@ final class HeaderSecurity
         if (! is_string($name)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid header name type; expected string; received %s',
-                (is_object($name) ? get_class($name) : gettype($name))
+                is_object($name) ? get_class($name) : gettype($name)
             ));
         }
         if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/', $name)) {

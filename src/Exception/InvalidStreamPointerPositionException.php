@@ -9,6 +9,7 @@ use Throwable;
 
 class InvalidStreamPointerPositionException extends RuntimeException implements ExceptionInterface
 {
+    /** @param int $code */
     public function __construct(
         string $message = 'Invalid pointer position',
         $code = 0,

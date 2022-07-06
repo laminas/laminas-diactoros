@@ -67,8 +67,6 @@ class UploadedFile implements UploadedFileInterface
 
     /**
      * @param string|resource|StreamInterface $streamOrFile
-     * @param string|null $clientFilename
-     * @param string|null $clientMediaType
      * @throws Exception\InvalidArgumentException
      */
     public function __construct(
@@ -110,8 +108,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * {@inheritdoc}
      *
-     * @throws Exception\UploadedFileAlreadyMovedException if the upload was
-     *     not successful.
+     * @throws Exception\UploadedFileAlreadyMovedException If the upload was not successful.
      */
     public function getStream(): StreamInterface
     {
@@ -140,9 +137,9 @@ class UploadedFile implements UploadedFileInterface
      * @see http://php.net/move_uploaded_file
      *
      * @param string $targetPath Path to which to move the uploaded file.
-     * @throws Exception\UploadedFileErrorException if the upload was not successful.
-     * @throws Exception\InvalidArgumentException if the $path specified is invalid.
-     * @throws Exception\UploadedFileErrorException on any error during the
+     * @throws Exception\UploadedFileErrorException If the upload was not successful.
+     * @throws Exception\InvalidArgumentException If the $path specified is invalid.
+     * @throws Exception\UploadedFileErrorException On any error during the
      *     move operation, or on the second or subsequent call to the method.
      */
     public function moveTo($targetPath): void
@@ -170,7 +167,7 @@ class UploadedFile implements UploadedFileInterface
 
         $sapi = PHP_SAPI;
         switch (true) {
-            case (empty($sapi) || 0 === strpos($sapi, 'cli') || 0 === strpos($sapi, 'phpdbg') || ! $this->file):
+            case empty($sapi) || 0 === strpos($sapi, 'cli') || 0 === strpos($sapi, 'phpdbg') || ! $this->file:
                 // Non-SAPI environment, or no filename present
                 $this->writeFile($targetPath);
 

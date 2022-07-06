@@ -16,7 +16,7 @@ use function sprintf;
  * arrays are normalized.
  *
  * @return UploadedFileInterface[]
- * @throws Exception\InvalidArgumentException for unrecognized values
+ * @throws Exception\InvalidArgumentException For unrecognized values.
  */
 function normalizeUploadedFiles(array $files): array
 {

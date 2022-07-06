@@ -46,8 +46,7 @@ function marshalUriFromSapi(array $server, array $headers): Uri
         $header  = strtolower($name);
         $headers = array_change_key_case($headers, CASE_LOWER);
         if (array_key_exists($header, $headers)) {
-            $value = is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
-            return $value;
+            return is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
         }
 
         return $default;

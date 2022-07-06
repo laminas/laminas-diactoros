@@ -193,7 +193,7 @@ trait MessageTrait
      * @param string $name Case-insensitive header field name.
      * @param string|string[] $value Header value(s).
      * @return static
-     * @throws Exception\InvalidArgumentException for invalid header names or values.
+     * @throws Exception\InvalidArgumentException For invalid header names or values.
      */
     public function withHeader($name, $value): MessageInterface
     {
@@ -229,7 +229,7 @@ trait MessageTrait
      * @param string $name Case-insensitive header field name to add.
      * @param string|string[] $value Header value(s).
      * @return static
-     * @throws Exception\InvalidArgumentException for invalid header names or values.
+     * @throws Exception\InvalidArgumentException For invalid header names or values.
      */
     public function withAddedHeader($name, $value): MessageInterface
     {
@@ -303,6 +303,9 @@ trait MessageTrait
         return $new;
     }
 
+    /**
+     * @param StreamInterface|string|resource $stream
+     */
     private function getStream($stream, string $modeIfNotInstance): StreamInterface
     {
         if ($stream instanceof StreamInterface) {
@@ -348,7 +351,7 @@ trait MessageTrait
      * Validate the HTTP protocol version
      *
      * @param string $version
-     * @throws Exception\InvalidArgumentException on invalid HTTP protocol version
+     * @throws Exception\InvalidArgumentException On invalid HTTP protocol version.
      */
     private function validateProtocolVersion($version): void
     {
@@ -360,7 +363,7 @@ trait MessageTrait
         if (! is_string($version)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP protocol version; must be a string, received %s',
-                (is_object($version) ? get_class($version) : gettype($version))
+                is_object($version) ? get_class($version) : gettype($version)
             ));
         }
 

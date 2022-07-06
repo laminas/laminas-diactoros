@@ -9,6 +9,7 @@ use Throwable;
 
 class UploadedFileAlreadyMovedException extends RuntimeException implements ExceptionInterface
 {
+    /** @param int $code */
     public function __construct(
         string $message = 'Cannot retrieve stream after it has already moved',
         $code = 0,
