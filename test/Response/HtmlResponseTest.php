@@ -14,7 +14,7 @@ class HtmlResponseTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testConstructorAcceptsHtmlString()
+    public function testConstructorAcceptsHtmlString(): void
     {
         $body = '<html>Uh oh not found</html>';
 
@@ -23,7 +23,7 @@ class HtmlResponseTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testConstructorAllowsPassingStatus()
+    public function testConstructorAllowsPassingStatus(): void
     {
         $body   = '<html>Uh oh not found</html>';
         $status = 404;
@@ -33,7 +33,7 @@ class HtmlResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testConstructorAllowsPassingHeaders()
+    public function testConstructorAllowsPassingHeaders(): void
     {
         $body    = '<html>Uh oh not found</html>';
         $status  = 404;
@@ -48,7 +48,7 @@ class HtmlResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testAllowsStreamsForResponseBody()
+    public function testAllowsStreamsForResponseBody(): void
     {
         $stream   = $this->prophesize(StreamInterface::class);
         $body     = $stream->reveal();
@@ -56,7 +56,8 @@ class HtmlResponseTest extends TestCase
         $this->assertSame($body, $response->getBody());
     }
 
-    public function invalidHtmlContent()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidHtmlContent(): array
     {
         return [
             'null'       => [null],
@@ -73,15 +74,17 @@ class HtmlResponseTest extends TestCase
 
     /**
      * @dataProvider invalidHtmlContent
+     * @param mixed $body
      */
-    public function testRaisesExceptionforNonStringNonStreamBodyContent($body)
+    public function testRaisesExceptionForNonStringNonStreamBodyContent($body): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress MixedArgument */
         new HtmlResponse($body);
     }
 
-    public function testConstructorRewindsBodyStream()
+    public function testConstructorRewindsBodyStream(): void
     {
         $html     = '<p>test data</p>';
         $response = new HtmlResponse($html);

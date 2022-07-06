@@ -11,7 +11,7 @@ use function Laminas\Diactoros\normalizeUploadedFiles;
 
 class NormalizeUploadedFilesTest extends TestCase
 {
-    public function testCreatesUploadedFileFromFlatFileSpecification()
+    public function testCreatesUploadedFileFromFlatFileSpecification(): void
     {
         $files = [
             'avatar' => [
@@ -30,7 +30,7 @@ class NormalizeUploadedFilesTest extends TestCase
         $this->assertEquals('my-avatar.png', $normalised['avatar']->getClientFilename());
     }
 
-    public function testTraversesNestedFileSpecificationToExtractUploadedFile()
+    public function testTraversesNestedFileSpecificationToExtractUploadedFile(): void
     {
         $files = [
             'my-form' => [
@@ -52,7 +52,7 @@ class NormalizeUploadedFilesTest extends TestCase
         $this->assertEquals('my-avatar.png', $normalised['my-form']['details']['avatar']->getClientFilename());
     }
 
-    public function testTraversesNestedFileSpecificationContainingNumericIndicesToExtractUploadedFiles()
+    public function testTraversesNestedFileSpecificationContainingNumericIndicesToExtractUploadedFiles(): void
     {
         $files = [
             'my-form' => [
@@ -100,7 +100,7 @@ class NormalizeUploadedFilesTest extends TestCase
      * This case covers upfront numeric index which moves the tmp_name/size/etc
      * fields further up the array tree
      */
-    public function testTraversesDenormalizedNestedTreeOfIndicesToExtractUploadedFiles()
+    public function testTraversesDenormalizedNestedTreeOfIndicesToExtractUploadedFiles(): void
     {
         $files = [
             'slide-shows' => [

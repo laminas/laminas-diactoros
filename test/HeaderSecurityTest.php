@@ -8,15 +8,14 @@ use InvalidArgumentException;
 use Laminas\Diactoros\HeaderSecurity;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for Laminas\Diactoros\HeaderSecurity.
- */
 class HeaderSecurityTest extends TestCase
 {
     /**
      * Data for filter value
+     *
+     * @return array<int, array{0: string, 1: string}>
      */
-    public function getFilterValues()
+    public function getFilterValues(): array
     {
         return [
             ["This is a\n test", "This is a test"],
@@ -35,14 +34,14 @@ class HeaderSecurityTest extends TestCase
 
     /**
      * @dataProvider getFilterValues
-     * @group ZF2015-04
      */
-    public function testFiltersValuesPerRfc7230($value, $expected)
+    public function testFiltersValuesPerRfc7230(string $value, string $expected): void
     {
         $this->assertSame($expected, HeaderSecurity::filter($value));
     }
 
-    public function validateValues()
+    /** @return array<int, array{0: string, 1: string}> */
+    public function validateValues(): array
     {
         return [
             ["This is a\n test", 'assertFalse'],
@@ -64,14 +63,14 @@ class HeaderSecurityTest extends TestCase
 
     /**
      * @dataProvider validateValues
-     * @group ZF2015-04
      */
-    public function testValidatesValuesPerRfc7230($value, $assertion)
+    public function testValidatesValuesPerRfc7230(string $value, string $assertion): void
     {
         $this->{$assertion}(HeaderSecurity::isValid($value));
     }
 
-    public function assertValues()
+    /** @return array<int, array{0: string}> */
+    public function assertValues(): array
     {
         return [
             ["This is a\n test"],
@@ -89,9 +88,8 @@ class HeaderSecurityTest extends TestCase
 
     /**
      * @dataProvider assertValues
-     * @group ZF2015-04
      */
-    public function testAssertValidRaisesExceptionForInvalidValue($value)
+    public function testAssertValidRaisesExceptionForInvalidValue(string $value): void
     {
         $this->expectException(InvalidArgumentException::class);
 

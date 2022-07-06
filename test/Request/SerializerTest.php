@@ -65,6 +65,7 @@ class SerializerTest extends TestCase
         $this->assertStringContainsString("X-Foo-Bar: Bat", $message);
     }
 
+    /** @return array<string, array{0: string, 1: string, 2:array<string, string>}> */
     public function originForms(): array
     {
         return [
@@ -83,9 +84,13 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider originForms
+     * @param array<string, string> $expectations
      */
-    public function testCanDeserializeRequestWithOriginForm($line, $requestTarget, $expectations): void
-    {
+    public function testCanDeserializeRequestWithOriginForm(
+        string $line,
+        string $requestTarget,
+        array $expectations
+    ): void {
         $message = $line . "\r\nX-Foo-Bar: Baz\r\n\r\nContent";
         $request = Serializer::fromString($message);
 
@@ -98,6 +103,7 @@ class SerializerTest extends TestCase
         }
     }
 
+    /** @return array<string, array{0: string, 1: string, 2:array<string, string|int>}> */
     public function absoluteForms(): array
     {
         return [
@@ -148,9 +154,13 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider absoluteForms
+     * @param array<string, string|int> $expectations
      */
-    public function testCanDeserializeRequestWithAbsoluteForm($line, $requestTarget, $expectations): void
-    {
+    public function testCanDeserializeRequestWithAbsoluteForm(
+        string $line,
+        string $requestTarget,
+        array $expectations
+    ): void {
         $message = $line . "\r\nX-Foo-Bar: Baz\r\n\r\nContent";
         $request = Serializer::fromString($message);
 
@@ -190,6 +200,7 @@ class SerializerTest extends TestCase
         $this->assertSame('www.example.com', $request->getHeaderLine('Host'));
     }
 
+    /** @return array<string, array{0: string}> */
     public function invalidRequestLines(): array
     {
         return [
@@ -203,7 +214,7 @@ class SerializerTest extends TestCase
     /**
      * @dataProvider invalidRequestLines
      */
-    public function testRaisesExceptionDuringDeserializationForInvalidRequestLine($line): void
+    public function testRaisesExceptionDuringDeserializationForInvalidRequestLine(string $line): void
     {
         $message = $line . "\r\nX-Foo-Bar: Baz\r\n\r\nContent";
 
@@ -225,6 +236,7 @@ class SerializerTest extends TestCase
         $this->assertSame(['Baz', 'Bat'], $values);
     }
 
+    /** @return array<string, array{0: string}> */
     public function headersWithContinuationLines(): array
     {
         return [
@@ -236,7 +248,7 @@ class SerializerTest extends TestCase
     /**
      * @dataProvider headersWithContinuationLines
      */
-    public function testCanDeserializeRequestWithHeaderContinuations($text): void
+    public function testCanDeserializeRequestWithHeaderContinuations(string $text): void
     {
         $request = Serializer::fromString($text);
 
@@ -271,6 +283,7 @@ class SerializerTest extends TestCase
         $this->assertSame('Baz', $request->getHeaderLine('X-Foo-Bar'));
     }
 
+    /** @return array<string, array{0: string, 1: string}> */
     public function messagesWithInvalidHeaders(): array
     {
         return [
@@ -292,8 +305,10 @@ class SerializerTest extends TestCase
     /**
      * @dataProvider messagesWithInvalidHeaders
      */
-    public function testDeserializationRaisesExceptionForMalformedHeaders($message, $exceptionMessage): void
-    {
+    public function testDeserializationRaisesExceptionForMalformedHeaders(
+        string $message,
+        string $exceptionMessage
+    ): void {
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage($exceptionMessage);
 

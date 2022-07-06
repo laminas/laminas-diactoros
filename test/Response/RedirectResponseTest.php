@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class RedirectResponseTest extends TestCase
 {
-    public function testConstructorAcceptsStringUriAndProduces302ResponseWithLocationHeader()
+    public function testConstructorAcceptsStringUriAndProduces302ResponseWithLocationHeader(): void
     {
         $response = new RedirectResponse('/foo/bar');
         $this->assertSame(302, $response->getStatusCode());
@@ -19,7 +19,7 @@ class RedirectResponseTest extends TestCase
         $this->assertSame('/foo/bar', $response->getHeaderLine('Location'));
     }
 
-    public function testConstructorAcceptsUriInstanceAndProduces302ResponseWithLocationHeader()
+    public function testConstructorAcceptsUriInstanceAndProduces302ResponseWithLocationHeader(): void
     {
         $uri      = new Uri('https://example.com:10082/foo/bar');
         $response = new RedirectResponse($uri);
@@ -28,7 +28,7 @@ class RedirectResponseTest extends TestCase
         $this->assertSame((string) $uri, $response->getHeaderLine('Location'));
     }
 
-    public function testConstructorAllowsSpecifyingAlternateStatusCode()
+    public function testConstructorAllowsSpecifyingAlternateStatusCode(): void
     {
         $response = new RedirectResponse('/foo/bar', 301);
         $this->assertSame(301, $response->getStatusCode());
@@ -36,7 +36,7 @@ class RedirectResponseTest extends TestCase
         $this->assertSame('/foo/bar', $response->getHeaderLine('Location'));
     }
 
-    public function testConstructorAllowsSpecifyingHeaders()
+    public function testConstructorAllowsSpecifyingHeaders(): void
     {
         $response = new RedirectResponse('/foo/bar', 302, ['X-Foo' => ['Bar']]);
         $this->assertSame(302, $response->getStatusCode());
@@ -46,7 +46,8 @@ class RedirectResponseTest extends TestCase
         $this->assertSame('Bar', $response->getHeaderLine('X-Foo'));
     }
 
-    public function invalidUris()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidUris(): array
     {
         return [
             'null'       => [null],
@@ -63,12 +64,14 @@ class RedirectResponseTest extends TestCase
 
     /**
      * @dataProvider invalidUris
+     * @param mixed $uri
      */
-    public function testConstructorRaisesExceptionOnInvalidUri($uri)
+    public function testConstructorRaisesExceptionOnInvalidUri($uri): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Uri');
 
+        /** @psalm-suppress MixedArgument */
         new RedirectResponse($uri);
     }
 }

@@ -43,19 +43,19 @@ class ResponseTest extends TestCase
         $this->response = new Response();
     }
 
-    public function testStatusCodeIs200ByDefault()
+    public function testStatusCodeIs200ByDefault(): void
     {
         $this->assertSame(200, $this->response->getStatusCode());
     }
 
-    public function testStatusCodeMutatorReturnsCloneWithChanges()
+    public function testStatusCodeMutatorReturnsCloneWithChanges(): void
     {
         $response = $this->response->withStatus(400);
         $this->assertNotSame($this->response, $response);
         $this->assertSame(400, $response->getStatusCode());
     }
 
-    public function testReasonPhraseDefaultsToStandards()
+    public function testReasonPhraseDefaultsToStandards(): void
     {
         $response = $this->response->withStatus(422);
         $this->assertSame('Unprocessable Content', $response->getReasonPhrase());
@@ -104,7 +104,7 @@ class ResponseTest extends TestCase
             return $ianaHttpStatusCodes;
         }
 
-        if ($responseCode === 200 && is_string($response) && $response != '') {
+        if ($responseCode === 200 && is_string($response) && $response !== '') {
             $downloadedIanaHttpStatusCodes = new DOMDocument();
             $downloadedIanaHttpStatusCodes->loadXML($response);
             if ($downloadedIanaHttpStatusCodes->relaxNGValidate(__DIR__ . '/TestAsset/http-status-codes.rng')) {
@@ -119,7 +119,8 @@ class ResponseTest extends TestCase
         self::fail('Unable to retrieve IANA response status codes due to timeout or invalid XML');
     }
 
-    public function ianaCodesReasonPhrasesProvider()
+    /** @return list<array{string, string}> */
+    public function ianaCodesReasonPhrasesProvider(): array
     {
         $ianaHttpStatusCodes = $this->fetchIanaStatusCodes();
 
@@ -152,20 +153,23 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider ianaCodesReasonPhrasesProvider
+     * @param string|numeric $code
      */
-    public function testReasonPhraseDefaultsAgainstIana($code, $reasonPhrase)
+    public function testReasonPhraseDefaultsAgainstIana($code, string $reasonPhrase): void
     {
+        /** @psalm-suppress InvalidScalarArgument */
         $response = $this->response->withStatus($code);
         $this->assertSame($reasonPhrase, $response->getReasonPhrase());
     }
 
-    public function testCanSetCustomReasonPhrase()
+    public function testCanSetCustomReasonPhrase(): void
     {
         $response = $this->response->withStatus(422, 'Foo Bar!');
         $this->assertSame('Foo Bar!', $response->getReasonPhrase());
     }
 
-    public function invalidReasonPhrases()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidReasonPhrases(): array
     {
         return [
             'true'    => [true],
@@ -180,22 +184,25 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidReasonPhrases
+     * @param mixed $invalidReasonPhrase
      */
-    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases($invalidReasonPhrase)
+    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases($invalidReasonPhrase): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress MixedArgument */
         $this->response->withStatus(422, $invalidReasonPhrase);
     }
 
-    public function testConstructorRaisesExceptionForInvalidStream()
+    public function testConstructorRaisesExceptionForInvalidStream(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress InvalidArgument */
         new Response(['TOTALLY INVALID']);
     }
 
-    public function testConstructorCanAcceptAllMessageParts()
+    public function testConstructorCanAcceptAllMessageParts(): void
     {
         $body    = new Stream('php://memory');
         $status  = 302;
@@ -211,9 +218,11 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider validStatusCodes
+     * @param numeric $code
      */
-    public function testCreateWithValidStatusCodes($code)
+    public function testCreateWithValidStatusCodes($code): void
     {
+        /** @psalm-suppress InvalidScalarArgument */
         $response = $this->response->withStatus($code);
 
         $result = $response->getStatusCode();
@@ -222,7 +231,8 @@ class ResponseTest extends TestCase
         $this->assertIsInt($result);
     }
 
-    public function validStatusCodes()
+    /** @return array<string, array{0: numeric}> */
+    public function validStatusCodes(): array
     {
         return [
             'minimum'        => [100],
@@ -234,15 +244,18 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidStatusCodes
+     * @param mixed $code
      */
-    public function testCannotSetInvalidStatusCode($code)
+    public function testCannotSetInvalidStatusCode($code): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress MixedArgument */
         $this->response->withStatus($code);
     }
 
-    public function invalidStatusCodes()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidStatusCodes(): array
     {
         return [
             'true'     => [true],
@@ -257,7 +270,8 @@ class ResponseTest extends TestCase
         ];
     }
 
-    public function invalidResponseBody()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidResponseBody(): array
     {
         return [
             'true'     => [true],
@@ -271,16 +285,19 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidResponseBody
+     * @param mixed $body
      */
-    public function testConstructorRaisesExceptionForInvalidBody($body)
+    public function testConstructorRaisesExceptionForInvalidBody($body): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
 
+        /** @psalm-suppress MixedArgument */
         new Response($body);
     }
 
-    public function invalidHeaderTypes()
+    /** @return array<string, array{0: array, 1?: string}> */
+    public function invalidHeaderTypes(): array
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
@@ -293,24 +310,26 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidHeaderTypes
-     * @group 99
      */
-    public function testConstructorRaisesExceptionForInvalidHeaders($headers, $contains = 'header value type')
-    {
+    public function testConstructorRaisesExceptionForInvalidHeaders(
+        array $headers,
+        string $contains = 'header value type'
+    ): void {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);
 
         new Response('php://memory', 200, $headers);
     }
 
-    public function testReasonPhraseCanBeEmpty()
+    public function testReasonPhraseCanBeEmpty(): void
     {
         $response = $this->response->withStatus(555);
         $this->assertIsString($response->getReasonPhrase());
         $this->assertEmpty($response->getReasonPhrase());
     }
 
-    public function headersWithInjectionVectors()
+    /** @return array<string, array{0: string, 1: string|list<string>}> */
+    public function headersWithInjectionVectors(): array
     {
         return [
             'name-with-cr'           => ["X-Foo\r-Bar", 'value'],
@@ -329,10 +348,10 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @group ZF2015-04
+     * @param string|list<string> $value
      * @dataProvider headersWithInjectionVectors
      */
-    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value)
+    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value): void
     {
         $this->expectException(InvalidArgumentException::class);
 

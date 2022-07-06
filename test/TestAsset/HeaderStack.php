@@ -15,7 +15,7 @@ class HeaderStack
     /**
      * Reset state
      */
-    public static function reset()
+    public static function reset(): void
     {
         self::$data = [];
     }
@@ -25,7 +25,7 @@ class HeaderStack
      *
      * @param string[] $header
      */
-    public static function push(array $header)
+    public static function push(array $header): void
     {
         self::$data[] = $header;
     }
@@ -35,7 +35,7 @@ class HeaderStack
      *
      * @return string[][]
      */
-    public static function stack()
+    public static function stack(): array
     {
         return self::$data;
     }
@@ -44,9 +44,8 @@ class HeaderStack
      * Verify if there's a header line on the stack
      *
      * @param string $header
-     * @return bool
      */
-    public static function has($header)
+    public static function has($header): bool
     {
         foreach (self::$data as $item) {
             if ($item['header'] === $header) {

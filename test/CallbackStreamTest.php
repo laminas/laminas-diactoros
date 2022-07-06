@@ -173,6 +173,7 @@ class CallbackStreamTest extends TestCase
         $this->assertNull($notExists);
     }
 
+    /** @return array<string, array{0: callable, 1: string}> */
     public function phpCallbacksForStreams(): array
     {
         $class = TestAsset\CallbacksForCallbackStreamTest::class;
@@ -190,7 +191,7 @@ class CallbackStreamTest extends TestCase
     /**
      * @dataProvider phpCallbacksForStreams
      */
-    public function testAllowsArbitraryPhpCallbacks($callback, $expected): void
+    public function testAllowsArbitraryPhpCallbacks(callable $callback, string $expected): void
     {
         $stream   = new CallbackStream($callback);
         $contents = $stream->getContents();

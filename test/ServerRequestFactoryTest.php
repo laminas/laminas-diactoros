@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use Generator;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
@@ -27,7 +28,7 @@ use function strtolower;
 
 class ServerRequestFactoryTest extends TestCase
 {
-    public function testReturnsServerValueUnchangedIfHttpAuthorizationHeaderIsPresent()
+    public function testReturnsServerValueUnchangedIfHttpAuthorizationHeaderIsPresent(): void
     {
         $server = [
             'HTTP_AUTHORIZATION' => 'token',
@@ -36,7 +37,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($server, normalizeServer($server));
     }
 
-    public function testMarshalsExpectedHeadersFromServerArray()
+    public function testMarshalsExpectedHeadersFromServerArray(): void
     {
         $server = [
             'HTTP_COOKIE'        => 'COOKIE',
@@ -61,7 +62,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($expected, marshalHeadersFromSapi($server));
     }
 
-    public function testMarshalInvalidHeadersStrippedFromServerArray()
+    public function testMarshalInvalidHeadersStrippedFromServerArray(): void
     {
         $server = [
             'COOKIE'             => 'COOKIE',
@@ -78,7 +79,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($expected, marshalHeadersFromSapi($server));
     }
 
-    public function testMarshalsVariablesPrefixedByApacheFromServerArray()
+    public function testMarshalsVariablesPrefixedByApacheFromServerArray(): void
     {
         // Non-prefixed versions will be preferred
         $server = [
@@ -95,7 +96,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertEquals($expected, marshalHeadersFromSapi($server));
     }
 
-    public function testMarshalRequestUriUsesIISUnencodedUrlValueIfPresentAndUrlWasRewritten()
+    public function testMarshalRequestUriUsesIISUnencodedUrlValueIfPresentAndUrlWasRewritten(): void
     {
         $server = [
             'IIS_WasUrlRewritten' => '1',
@@ -107,7 +108,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($server['UNENCODED_URL'], $uri->getPath());
     }
 
-    public function testMarshalRequestUriStripsSchemeHostAndPortInformationWhenPresent()
+    public function testMarshalRequestUriStripsSchemeHostAndPortInformationWhenPresent(): void
     {
         $server = [
             'REQUEST_URI' => 'http://example.com:8000/foo/bar',
@@ -118,7 +119,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('/foo/bar', $uri->getPath());
     }
 
-    public function testMarshalRequestUriUsesOrigPathInfoIfPresent()
+    public function testMarshalRequestUriUsesOrigPathInfoIfPresent(): void
     {
         $server = [
             'ORIG_PATH_INFO' => '/foo/bar',
@@ -129,7 +130,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('/foo/bar', $uri->getPath());
     }
 
-    public function testMarshalRequestUriFallsBackToRoot()
+    public function testMarshalRequestUriFallsBackToRoot(): void
     {
         $server = [];
 
@@ -138,7 +139,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('/', $uri->getPath());
     }
 
-    public function testMarshalHostAndPortUsesHostHeaderWhenPresent()
+    public function testMarshalHostAndPortUsesHostHeaderWhenPresent(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -151,7 +152,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertNull($uri->getPort());
     }
 
-    public function testMarshalHostAndPortWillDetectPortInHostHeaderWhenPresent()
+    public function testMarshalHostAndPortWillDetectPortInHostHeaderWhenPresent(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com:8000/'));
@@ -164,7 +165,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame(8000, $uri->getPort());
     }
 
-    public function testMarshalHostAndPortReturnsEmptyValuesIfNoHostHeaderAndNoServerName()
+    public function testMarshalHostAndPortReturnsEmptyValuesIfNoHostHeaderAndNoServerName(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
@@ -175,7 +176,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertNull($uri->getPort());
     }
 
-    public function testMarshalHostAndPortReturnsServerNameForHostWhenPresent()
+    public function testMarshalHostAndPortReturnsServerNameForHostWhenPresent(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -190,7 +191,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertNull($uri->getPort());
     }
 
-    public function testMarshalHostAndPortReturnsServerPortForPortWhenPresentWithServerName()
+    public function testMarshalHostAndPortReturnsServerPortForPortWhenPresentWithServerName(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
@@ -206,7 +207,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame(8000, $uri->getPort());
     }
 
-    public function testMarshalHostAndPortReturnsServerNameForHostIfServerAddrPresentButHostIsNotIpv6Address()
+    public function testMarshalHostAndPortReturnsServerNameForHostIfServerAddrPresentButHostIsNotIpv6Address(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -221,7 +222,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('example.com', $uri->getHost());
     }
 
-    public function testMarshalHostAndPortReturnsServerAddrForHostIfPresentAndHostIsIpv6Address()
+    public function testMarshalHostAndPortReturnsServerAddrForHostIfPresentAndHostIsIpv6Address(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
@@ -238,7 +239,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame(8000, $uri->getPort());
     }
 
-    public function testMarshalHostAndPortWillDetectPortInIpv6StyleHost()
+    public function testMarshalHostAndPortWillDetectPortInIpv6StyleHost(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
@@ -255,9 +256,9 @@ class ServerRequestFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array{0: string}>
      */
-    public function httpsParamProvider()
+    public function httpsParamProvider(): array
     {
         return [
             'lowercase' => ['https'],
@@ -267,9 +268,8 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider httpsParamProvider
-     * @param string $param
      */
-    public function testMarshalUriDetectsHttpsSchemeFromServerValue($param)
+    public function testMarshalUriDetectsHttpsSchemeFromServerValue(string $param): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -286,9 +286,9 @@ class ServerRequestFactoryTest extends TestCase
     }
 
     /**
-     * @return iterable
+     * @return Generator<string, array{0: string, 1: string}>
      */
-    public function httpsDisableParamProvider()
+    public function httpsDisableParamProvider(): Generator
     {
         foreach ($this->httpsParamProvider() as $key => $data) {
             $param = array_shift($data);
@@ -302,10 +302,8 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider httpsDisableParamProvider
-     * @param string $param
-     * @param string $value
      */
-    public function testMarshalUriUsesHttpSchemeIfHttpsServerValueEqualsOff($param, $value)
+    public function testMarshalUriUsesHttpSchemeIfHttpsServerValueEqualsOff(string $param, string $value): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -323,9 +321,8 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider httpsParamProvider
-     * @param string $xForwardedProto
      */
-    public function testMarshalUriDetectsHttpsSchemeFromXForwardedProtoValue($xForwardedProto)
+    public function testMarshalUriDetectsHttpsSchemeFromXForwardedProtoValue(string $xForwardedProto): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -340,7 +337,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('https', $uri->getScheme());
     }
 
-    public function testMarshalUriStripsQueryStringFromRequestUri()
+    public function testMarshalUriStripsQueryStringFromRequestUri(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -356,7 +353,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('/foo/bar', $uri->getPath());
     }
 
-    public function testMarshalUriInjectsQueryStringFromServer()
+    public function testMarshalUriInjectsQueryStringFromServer(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -373,7 +370,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('bar=baz', $uri->getQuery());
     }
 
-    public function testMarshalUriInjectsFragmentFromServer()
+    public function testMarshalUriInjectsFragmentFromServer(): void
     {
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
@@ -389,7 +386,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('foo', $uri->getFragment());
     }
 
-    public function testCanCreateServerRequestViaFromGlobalsMethod()
+    public function testCanCreateServerRequestViaFromGlobalsMethod(): void
     {
         $server = [
             'SERVER_PROTOCOL' => '1.1',
@@ -430,7 +427,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('1.1', $request->getProtocolVersion());
     }
 
-    public function testFromGlobalsUsesCookieHeaderInsteadOfCookieSuperGlobal()
+    public function testFromGlobalsUsesCookieHeaderInsteadOfCookieSuperGlobal(): void
     {
         $_COOKIE                = [
             'foo_bar' => 'bat',
@@ -445,7 +442,7 @@ class ServerRequestFactoryTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState
      */
-    public function testCreateFromGlobalsShouldPreserveKeysWhenCreatedWithAZeroValue()
+    public function testCreateFromGlobalsShouldPreserveKeysWhenCreatedWithAZeroValue(): void
     {
         $_SERVER['HTTP_ACCEPT']    = '0';
         $_SERVER['CONTENT_LENGTH'] = '0';
@@ -459,7 +456,7 @@ class ServerRequestFactoryTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState
      */
-    public function testCreateFromGlobalsShouldNotPreserveKeysWhenCreatedWithAnEmptyValue()
+    public function testCreateFromGlobalsShouldNotPreserveKeysWhenCreatedWithAnEmptyValue(): void
     {
         $_SERVER['HTTP_ACCEPT']    = '';
         $_SERVER['CONTENT_LENGTH'] = '';
@@ -474,7 +471,7 @@ class ServerRequestFactoryTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testFromGlobalsUsesCookieSuperGlobalWhenCookieHeaderIsNotSet()
+    public function testFromGlobalsUsesCookieSuperGlobalWhenCookieHeaderIsNotSet(): void
     {
         $_COOKIE = [
             'foo_bar' => 'bat',
@@ -484,7 +481,8 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame(['foo_bar' => 'bat'], $request->getCookieParams());
     }
 
-    public function cookieHeaderValues()
+    /** @return array<string, array{0: string, 1: array}> */
+    public function cookieHeaderValues(): array
     {
         return [
             'ows-without-fold'    => [
@@ -516,10 +514,9 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider cookieHeaderValues
-     * @param string $cookieHeader
      * @param array $expectedCookies
      */
-    public function testCookieHeaderVariations($cookieHeader, array $expectedCookies)
+    public function testCookieHeaderVariations(string $cookieHeader, array $expectedCookies): void
     {
         $_SERVER['HTTP_COOKIE'] = $cookieHeader;
 
@@ -527,7 +524,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($expectedCookies, $request->getCookieParams());
     }
 
-    public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent()
+    public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
         $server = normalizeServer([], function () {
             return ['Authorization' => 'foobar'];
@@ -537,7 +534,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
     }
 
-    public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent()
+    public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
         $server = normalizeServer([], function () {
             return ['authorization' => 'foobar'];
@@ -547,7 +544,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
     }
 
-    public function testNormalizeServerReturnsArrayUnalteredIfApacheHeadersDoNotContainAuthorization()
+    public function testNormalizeServerReturnsArrayUnalteredIfApacheHeadersDoNotContainAuthorization(): void
     {
         $expected = ['FOO_BAR' => 'BAZ'];
 
@@ -558,11 +555,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($expected, $server);
     }
 
-    /**
-     * @group 57
-     * @group 56
-     */
-    public function testNormalizeFilesReturnsOnlyActualFilesWhenOriginalFilesContainsNestedAssociativeArrays()
+    public function testNormalizeFilesReturnsOnlyActualFilesWhenOriginalFilesContainsNestedAssociativeArrays(): void
     {
         $files = [
             'fooFiles' => [
@@ -579,13 +572,13 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertCount(1, $normalizedFiles['fooFiles']);
     }
 
-    public function testMarshalProtocolVersionRisesExceptionIfVersionIsNotRecognized()
+    public function testMarshalProtocolVersionRisesExceptionIfVersionIsNotRecognized(): void
     {
         $this->expectException(UnexpectedValueException::class);
         marshalProtocolVersionFromSapi(['SERVER_PROTOCOL' => 'dadsa/1.0']);
     }
 
-    public function testMarshalProtocolReturnsDefaultValueIfHeaderIsNotPresent()
+    public function testMarshalProtocolReturnsDefaultValueIfHeaderIsNotPresent(): void
     {
         $version = marshalProtocolVersionFromSapi([]);
         $this->assertSame('1.1', $version);
@@ -594,13 +587,14 @@ class ServerRequestFactoryTest extends TestCase
     /**
      * @dataProvider marshalProtocolVersionProvider
      */
-    public function testMarshalProtocolVersionReturnsHttpVersions($protocol, $expected)
+    public function testMarshalProtocolVersionReturnsHttpVersions(string $protocol, string $expected): void
     {
         $version = marshalProtocolVersionFromSapi(['SERVER_PROTOCOL' => $protocol]);
         $this->assertSame($expected, $version);
     }
 
-    public function marshalProtocolVersionProvider()
+    /** @return array<string, array{0: string, 1: string}> */
+    public function marshalProtocolVersionProvider(): array
     {
         return [
             'HTTP/1.0' => ['HTTP/1.0', '1.0'],
@@ -609,7 +603,7 @@ class ServerRequestFactoryTest extends TestCase
         ];
     }
 
-    public function testMarshalRequestUriPrefersRequestUriServerParamWhenXOriginalUrlButNoXRewriteUrlPresent()
+    public function testMarshalRequestUriPrefersRequestUriServerParamWhenXOriginalUrlButNoXRewriteUrlPresent(): void
     {
         $headers = [
             'X-Original-URL' => '/hijack-attempt',
@@ -622,7 +616,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('/requested/path', $uri->getPath());
     }
 
-    public function testServerRequestFactoryHasAWritableEmptyBody()
+    public function testServerRequestFactoryHasAWritableEmptyBody(): void
     {
         $factory = new ServerRequestFactory();
         $request = $factory->createServerRequest('GET', '/');

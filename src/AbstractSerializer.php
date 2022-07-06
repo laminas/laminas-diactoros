@@ -31,7 +31,7 @@ abstract class AbstractSerializer
      * Retrieves a line from the stream; a line is defined as a sequence of
      * characters ending in a CRLF sequence.
      *
-     * @throws Exception\DeserializationException if the sequence contains a CR
+     * @throws Exception\DeserializationException If the sequence contains a CR
      *     or LF in isolation, or ends in a CR.
      */
     protected static function getLine(StreamInterface $stream): string

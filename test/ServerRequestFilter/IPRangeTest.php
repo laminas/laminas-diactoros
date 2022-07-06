@@ -52,6 +52,7 @@ class IPRangeTest extends TestCase
      */
     public function IPv6Data(): array
     {
+        // @codingStandardsIgnoreStart
         return [
             'valid - ipv4 subnet'                                 => [true, '2a01:198:603:0:396e:4789:8e99:890f', '2a01:198:603:0::/65'],
             'valid - exact'                                       => [true, '0:0:0:0:0:0:0:1', '::1'],
@@ -64,6 +65,7 @@ class IPRangeTest extends TestCase
             'invalid - invalid cidr'                              => [false, '2a01:198:603:0:396e:4789:8e99:890f', 'unknown'],
             'invalid - empty IP address'                          => [false, '', '::1'],
         ];
+        // @codingStandardsIgnoreEnd
     }
 
     /**

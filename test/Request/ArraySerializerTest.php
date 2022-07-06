@@ -13,7 +13,7 @@ use UnexpectedValueException;
 
 class ArraySerializerTest extends TestCase
 {
-    public function testSerializeToArray()
+    public function testSerializeToArray(): void
     {
         $stream = new Stream('php://memory', 'wb+');
         $stream->write('{"test":"value"}');
@@ -49,7 +49,7 @@ class ArraySerializerTest extends TestCase
         ], $message);
     }
 
-    public function testDeserializeFromArray()
+    public function testDeserializeFromArray(): void
     {
         $serializedRequest = [
             'method'           => 'POST',
@@ -87,7 +87,7 @@ class ArraySerializerTest extends TestCase
         $this->assertSame(Request\Serializer::toString($request), Request\Serializer::toString($message));
     }
 
-    public function testMissingBodyParamInSerializedRequestThrowsException()
+    public function testMissingBodyParamInSerializedRequestThrowsException(): void
     {
         $serializedRequest = [
             'method'           => 'POST',

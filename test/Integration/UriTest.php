@@ -9,7 +9,10 @@ use Laminas\Diactoros\Uri;
 
 class UriTest extends UriIntegrationTest
 {
-    public function createUri($uri)
+    /**
+     * @param string $uri
+     */
+    public function createUri($uri): Uri
     {
         return new Uri($uri);
     }

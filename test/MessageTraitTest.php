@@ -201,6 +201,7 @@ class MessageTraitTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid header value');
 
+        /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->message->withHeader('X-Foo', [$value]);
     }
 
@@ -224,6 +225,7 @@ class MessageTraitTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid header value');
 
+        /** @psalm-suppress MixedArgument */
         $this->message->withHeader('X-Foo', $value);
     }
 
@@ -420,7 +422,6 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidArrayHeaderValues
-     * @group 99
      * @param mixed $value
      */
     public function testWithHeaderShouldRaiseExceptionForInvalidHeaderValuesInArrays($value): void
@@ -428,12 +429,12 @@ class MessageTraitTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('header value type');
 
+        /** @psalm-suppress MixedArgumentTypeCoercion */
         $this->message->withHeader('X-Test-Array', [$value]);
     }
 
     /**
      * @dataProvider invalidHeaderValueTypes
-     * @group 99
      * @param mixed $value
      */
     public function testWithHeaderShouldRaiseExceptionForInvalidHeaderScalarValues($value): void
@@ -441,6 +442,7 @@ class MessageTraitTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('header value type');
 
+        /** @psalm-suppress MixedArgument */
         $this->message->withHeader('X-Test-Scalar', $value);
     }
 }

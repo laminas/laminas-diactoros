@@ -9,7 +9,7 @@ use Laminas\Diactoros\Request;
 
 class RequestTest extends RequestIntegrationTest
 {
-    public function createSubject()
+    public function createSubject(): Request
     {
         return new Request('/', 'GET');
     }

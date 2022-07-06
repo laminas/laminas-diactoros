@@ -12,7 +12,7 @@ use UnexpectedValueException;
 
 class ArraySerializerTest extends TestCase
 {
-    public function testSerializeToArray()
+    public function testSerializeToArray(): void
     {
         $response = $this->createResponse();
 
@@ -21,7 +21,7 @@ class ArraySerializerTest extends TestCase
         $this->assertSame($this->createSerializedResponse(), $message);
     }
 
-    public function testDeserializeFromArray()
+    public function testDeserializeFromArray(): void
     {
         $serializedResponse = $this->createSerializedResponse();
 
@@ -32,7 +32,7 @@ class ArraySerializerTest extends TestCase
         $this->assertSame(Response\Serializer::toString($response), Response\Serializer::toString($message));
     }
 
-    public function testMissingBodyParamInSerializedRequestThrowsException()
+    public function testMissingBodyParamInSerializedRequestThrowsException(): void
     {
         $serializedRequest = $this->createSerializedResponse();
         unset($serializedRequest['body']);
@@ -42,7 +42,7 @@ class ArraySerializerTest extends TestCase
         ArraySerializer::fromArray($serializedRequest);
     }
 
-    private function createResponse()
+    private function createResponse(): Response
     {
         $stream = new Stream('php://memory', 'wb+');
         $stream->write('{"test":"value"}');
@@ -56,7 +56,7 @@ class ArraySerializerTest extends TestCase
             ->withBody($stream);
     }
 
-    private function createSerializedResponse()
+    private function createSerializedResponse(): array
     {
         return [
             'status_code'      => 201,

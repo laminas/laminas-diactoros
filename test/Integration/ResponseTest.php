@@ -9,7 +9,7 @@ use Laminas\Diactoros\Response;
 
 class ResponseTest extends ResponseIntegrationTest
 {
-    public function createSubject()
+    public function createSubject(): Response
     {
         return new Response();
     }

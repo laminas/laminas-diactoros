@@ -10,7 +10,10 @@ use Psr\Http\Message\StreamInterface;
 
 class StreamTest extends StreamIntegrationTest
 {
-    public function createStream($data)
+    /**
+     * @param string|resource|StreamInterface $data
+     */
+    public function createStream($data): StreamInterface
     {
         if ($data instanceof StreamInterface) {
             return $data;

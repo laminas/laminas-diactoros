@@ -9,6 +9,7 @@ use Laminas\Diactoros\Request;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 class RequestTest extends TestCase
@@ -21,19 +22,20 @@ class RequestTest extends TestCase
         $this->request = new Request();
     }
 
-    public function testMethodIsGetByDefault()
+    public function testMethodIsGetByDefault(): void
     {
         $this->assertSame('GET', $this->request->getMethod());
     }
 
-    public function testMethodMutatorReturnsCloneWithChangedMethod()
+    public function testMethodMutatorReturnsCloneWithChangedMethod(): void
     {
         $request = $this->request->withMethod('POST');
         $this->assertNotSame($this->request, $request);
         $this->assertEquals('POST', $request->getMethod());
     }
 
-    public function invalidMethod()
+    /** @return array<int, array{0: mixed}> */
+    public function invalidMethod(): array
     {
         return [
             [null],
@@ -43,14 +45,16 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidMethod
+     * @param mixed $method
      */
-    public function testWithInvalidMethod($method)
+    public function testWithInvalidMethod($method): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @psalm-suppress MixedArgument */
         $this->request->withMethod($method);
     }
 
-    public function testReturnsUnpopulatedUriByDefault()
+    public function testReturnsUnpopulatedUriByDefault(): void
     {
         $uri = $this->request->getUri();
         $this->assertInstanceOf(UriInterface::class, $uri);
@@ -64,14 +68,15 @@ class RequestTest extends TestCase
         $this->assertEmpty($uri->getFragment());
     }
 
-    public function testConstructorRaisesExceptionForInvalidStream()
+    public function testConstructorRaisesExceptionForInvalidStream(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress InvalidArgument */
         new Request(['TOTALLY INVALID']);
     }
 
-    public function testWithUriReturnsNewInstanceWithNewUri()
+    public function testWithUriReturnsNewInstanceWithNewUri(): void
     {
         $request = $this->request->withUri(new Uri('https://example.com:10082/foo/bar?baz=bat'));
         $this->assertNotSame($this->request, $request);
@@ -81,7 +86,7 @@ class RequestTest extends TestCase
         $this->assertSame('/baz/bat?foo=bar', (string) $request2->getUri());
     }
 
-    public function testConstructorCanAcceptAllMessageParts()
+    public function testConstructorCanAcceptAllMessageParts(): void
     {
         $uri     = new Uri('http://example.com/');
         $body    = new Stream('php://memory');
@@ -105,7 +110,7 @@ class RequestTest extends TestCase
         }
     }
 
-    public function testDefaultStreamIsWritable()
+    public function testDefaultStreamIsWritable(): void
     {
         $request = new Request();
         $request->getBody()->write("test");
@@ -113,7 +118,8 @@ class RequestTest extends TestCase
         $this->assertSame("test", (string) $request->getBody());
     }
 
-    public function invalidRequestUri()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidRequestUri(): array
     {
         return [
             'true'     => [true],
@@ -127,16 +133,19 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidRequestUri
+     * @param mixed $uri
      */
-    public function testConstructorRaisesExceptionForInvalidUri($uri)
+    public function testConstructorRaisesExceptionForInvalidUri($uri): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid URI');
 
+        /** @psalm-suppress MixedArgument */
         new Request($uri);
     }
 
-    public function invalidRequestMethod()
+    /** @return array<string, array{0: string}> */
+    public function invalidRequestMethod(): array
     {
         return [
             'bad-string' => ['BOGUS METHOD'],
@@ -146,7 +155,7 @@ class RequestTest extends TestCase
     /**
      * @dataProvider invalidRequestMethod
      */
-    public function testConstructorRaisesExceptionForInvalidMethod($method)
+    public function testConstructorRaisesExceptionForInvalidMethod(string $method): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported HTTP method');
@@ -154,7 +163,8 @@ class RequestTest extends TestCase
         new Request(null, $method);
     }
 
-    public function customRequestMethods()
+    /** @return array<string, array{0: string}> */
+    public function customRequestMethods(): array
     {
         return [
             /* WebDAV methods */
@@ -174,15 +184,15 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider customRequestMethods
-     * @group 29
      */
-    public function testAllowsCustomRequestMethodsThatFollowSpec($method)
+    public function testAllowsCustomRequestMethodsThatFollowSpec(string $method): void
     {
         $request = new Request(null, $method);
         $this->assertSame($method, $request->getMethod());
     }
 
-    public function invalidRequestBody()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidRequestBody(): array
     {
         return [
             'true'     => [true],
@@ -196,16 +206,19 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidRequestBody
+     * @param mixed $body
      */
-    public function testConstructorRaisesExceptionForInvalidBody($body)
+    public function testConstructorRaisesExceptionForInvalidBody($body): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
 
+        /** @psalm-suppress MixedArgument */
         new Request(null, null, $body);
     }
 
-    public function invalidHeaderTypes()
+    /** @return array<string, array{0: mixed[], 1?: string}> */
+    public function invalidHeaderTypes(): array
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
@@ -218,30 +231,33 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidHeaderTypes
-     * @group 99
+     * @param mixed[] $headers
      */
-    public function testConstructorRaisesExceptionForInvalidHeaders($headers, $contains = 'header value type')
-    {
+    public function testConstructorRaisesExceptionForInvalidHeaders(
+        array $headers,
+        string $contains = 'header value type'
+    ): void {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);
 
         new Request(null, null, 'php://memory', $headers);
     }
 
-    public function testRequestTargetIsSlashWhenNoUriPresent()
+    public function testRequestTargetIsSlashWhenNoUriPresent(): void
     {
         $request = new Request();
         $this->assertSame('/', $request->getRequestTarget());
     }
 
-    public function testRequestTargetIsSlashWhenUriHasNoPathOrQuery()
+    public function testRequestTargetIsSlashWhenUriHasNoPathOrQuery(): void
     {
         $request = (new Request())
             ->withUri(new Uri('http://example.com'));
         $this->assertSame('/', $request->getRequestTarget());
     }
 
-    public function requestsWithUri()
+    /** @return array<string, array{0: RequestInterface, 1: string}> */
+    public function requestsWithUri(): array
     {
         return [
             'absolute-uri'            => [
@@ -274,12 +290,13 @@ class RequestTest extends TestCase
     /**
      * @dataProvider requestsWithUri
      */
-    public function testReturnsRequestTargetWhenUriIsPresent($request, $expected)
+    public function testReturnsRequestTargetWhenUriIsPresent(RequestInterface $request, string $expected): void
     {
         $this->assertSame($expected, $request->getRequestTarget());
     }
 
-    public function validRequestTargets()
+    /** @return array<string, array{0:string}> */
+    public function validRequestTargets(): array
     {
         return [
             'asterisk-form'         => ['*'],
@@ -294,13 +311,13 @@ class RequestTest extends TestCase
     /**
      * @dataProvider validRequestTargets
      */
-    public function testCanProvideARequestTarget($requestTarget)
+    public function testCanProvideARequestTarget(string $requestTarget): void
     {
         $request = (new Request())->withRequestTarget($requestTarget);
         $this->assertSame($requestTarget, $request->getRequestTarget());
     }
 
-    public function testRequestTargetCannotContainWhitespace()
+    public function testRequestTargetCannotContainWhitespace(): void
     {
         $request = new Request();
 
@@ -310,7 +327,7 @@ class RequestTest extends TestCase
         $request->withRequestTarget('foo bar baz');
     }
 
-    public function testRequestTargetDoesNotCacheBetweenInstances()
+    public function testRequestTargetDoesNotCacheBetweenInstances(): void
     {
         $request    = (new Request())->withUri(new Uri('https://example.com/foo/bar'));
         $original   = $request->getRequestTarget();
@@ -318,7 +335,7 @@ class RequestTest extends TestCase
         $this->assertNotSame($original, $newRequest->getRequestTarget());
     }
 
-    public function testSettingNewUriResetsRequestTarget()
+    public function testSettingNewUriResetsRequestTarget(): void
     {
         $request    = (new Request())->withUri(new Uri('https://example.com/foo/bar'));
         $newRequest = $request->withUri(new Uri('http://mwop.net/bar/baz'));
@@ -326,10 +343,7 @@ class RequestTest extends TestCase
         $this->assertNotSame($request->getRequestTarget(), $newRequest->getRequestTarget());
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHeadersContainsHostHeaderIfUriWithHostIsPresent()
+    public function testGetHeadersContainsHostHeaderIfUriWithHostIsPresent(): void
     {
         $request = new Request('http://example.com');
         $headers = $request->getHeaders();
@@ -337,10 +351,7 @@ class RequestTest extends TestCase
         $this->assertStringContainsString('example.com', $headers['Host'][0]);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHeadersContainsHostHeaderIfUriWithHostIsDeleted()
+    public function testGetHeadersContainsHostHeaderIfUriWithHostIsDeleted(): void
     {
         $request = (new Request('http://example.com'))->withoutHeader('host');
         $headers = $request->getHeaders();
@@ -348,106 +359,79 @@ class RequestTest extends TestCase
         $this->assertContains('example.com', $headers['Host']);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHeadersContainsNoHostHeaderIfNoUriPresent()
+    public function testGetHeadersContainsNoHostHeaderIfNoUriPresent(): void
     {
         $request = new Request();
         $headers = $request->getHeaders();
         $this->assertArrayNotHasKey('Host', $headers);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHeadersContainsNoHostHeaderIfUriDoesNotContainHost()
+    public function testGetHeadersContainsNoHostHeaderIfUriDoesNotContainHost(): void
     {
         $request = new Request(new Uri());
         $headers = $request->getHeaders();
         $this->assertArrayNotHasKey('Host', $headers);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderReturnsUriHostWhenPresent()
+    public function testGetHostHeaderReturnsUriHostWhenPresent(): void
     {
         $request = new Request('http://example.com');
         $header  = $request->getHeader('host');
         $this->assertSame(['example.com'], $header);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderReturnsUriHostWhenHostHeaderDeleted()
+    public function testGetHostHeaderReturnsUriHostWhenHostHeaderDeleted(): void
     {
         $request = (new Request('http://example.com'))->withoutHeader('host');
         $header  = $request->getHeader('host');
         $this->assertSame(['example.com'], $header);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderReturnsEmptyArrayIfNoUriPresent()
+    public function testGetHostHeaderReturnsEmptyArrayIfNoUriPresent(): void
     {
         $request = new Request();
         $this->assertSame([], $request->getHeader('host'));
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderReturnsEmptyArrayIfUriDoesNotContainHost()
+    public function testGetHostHeaderReturnsEmptyArrayIfUriDoesNotContainHost(): void
     {
         $request = new Request(new Uri());
         $this->assertSame([], $request->getHeader('host'));
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderLineReturnsUriHostWhenPresent()
+    public function testGetHostHeaderLineReturnsUriHostWhenPresent(): void
     {
         $request = new Request('http://example.com');
         $header  = $request->getHeaderLine('host');
         $this->assertStringContainsString('example.com', $header);
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderLineReturnsEmptyStringIfNoUriPresent()
+    public function testGetHostHeaderLineReturnsEmptyStringIfNoUriPresent(): void
     {
         $request = new Request();
         $this->assertEmpty($request->getHeaderLine('host'));
     }
 
-    /**
-     * @group 39
-     */
-    public function testGetHostHeaderLineReturnsEmptyStringIfUriDoesNotContainHost()
+    public function testGetHostHeaderLineReturnsEmptyStringIfUriDoesNotContainHost(): void
     {
         $request = new Request(new Uri());
         $this->assertEmpty($request->getHeaderLine('host'));
     }
 
-    public function testHostHeaderSetFromUriOnCreationIfNoHostHeaderSpecified()
+    public function testHostHeaderSetFromUriOnCreationIfNoHostHeaderSpecified(): void
     {
         $request = new Request('http://www.example.com');
         $this->assertTrue($request->hasHeader('Host'));
         $this->assertSame('www.example.com', $request->getHeaderLine('host'));
     }
 
-    public function testHostHeaderNotSetFromUriOnCreationIfHostHeaderSpecified()
+    public function testHostHeaderNotSetFromUriOnCreationIfHostHeaderSpecified(): void
     {
         $request = new Request('http://www.example.com', null, 'php://memory', ['Host' => 'www.test.com']);
         $this->assertSame('www.test.com', $request->getHeaderLine('host'));
     }
 
-    public function testPassingPreserveHostFlagWhenUpdatingUriDoesNotUpdateHostHeader()
+    public function testPassingPreserveHostFlagWhenUpdatingUriDoesNotUpdateHostHeader(): void
     {
         $request = (new Request())
             ->withAddedHeader('Host', 'example.com');
@@ -458,7 +442,7 @@ class RequestTest extends TestCase
         $this->assertSame('example.com', $new->getHeaderLine('Host'));
     }
 
-    public function testNotPassingPreserveHostFlagWhenUpdatingUriWithoutHostDoesNotUpdateHostHeader()
+    public function testNotPassingPreserveHostFlagWhenUpdatingUriWithoutHostDoesNotUpdateHostHeader(): void
     {
         $request = (new Request())
             ->withAddedHeader('Host', 'example.com');
@@ -469,7 +453,7 @@ class RequestTest extends TestCase
         $this->assertSame('example.com', $new->getHeaderLine('Host'));
     }
 
-    public function testHostHeaderUpdatesToUriHostAndPortWhenPreserveHostDisabledAndNonStandardPort()
+    public function testHostHeaderUpdatesToUriHostAndPortWhenPreserveHostDisabledAndNonStandardPort(): void
     {
         $request = (new Request())
             ->withAddedHeader('Host', 'example.com');
@@ -482,7 +466,8 @@ class RequestTest extends TestCase
         $this->assertSame('www.example.com:10081', $new->getHeaderLine('Host'));
     }
 
-    public function headersWithInjectionVectors()
+    /** @return array<string, array{0: string, 1: string|list<string>}> */
+    public function headersWithInjectionVectors(): array
     {
         return [
             'name-with-cr'           => ["X-Foo\r-Bar", 'value'],
@@ -501,17 +486,18 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group ZF2015-04
      * @dataProvider headersWithInjectionVectors
+     * @param string|list<string> $value
      */
-    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value)
+    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         new Request(null, null, 'php://memory', [$name => $value]);
     }
 
-    public function hostHeaderKeys()
+    /** @return array<string, array{0: string}> */
+    public function hostHeaderKeys(): array
     {
         return [
             'lowercase'         => ['host'],
@@ -534,10 +520,9 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group 91
      * @dataProvider hostHeaderKeys
      */
-    public function testWithUriAndNoPreserveHostWillOverwriteHostHeaderRegardlessOfOriginalCase($hostKey)
+    public function testWithUriAndNoPreserveHostWillOverwriteHostHeaderRegardlessOfOriginalCase(string $hostKey): void
     {
         $request = (new Request())
             ->withHeader($hostKey, 'example.com');

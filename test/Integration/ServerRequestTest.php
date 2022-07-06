@@ -9,7 +9,7 @@ use Laminas\Diactoros\ServerRequest;
 
 class ServerRequestTest extends ServerRequestIntegrationTest
 {
-    public function createSubject()
+    public function createSubject(): ServerRequest
     {
         return new ServerRequest($_SERVER);
     }

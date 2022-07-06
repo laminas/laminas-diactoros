@@ -14,7 +14,7 @@ class TextResponseTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testConstructorAcceptsBodyAsString()
+    public function testConstructorAcceptsBodyAsString(): void
     {
         $body = 'Uh oh not found';
 
@@ -23,7 +23,7 @@ class TextResponseTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testConstructorAllowsPassingStatus()
+    public function testConstructorAllowsPassingStatus(): void
     {
         $body   = 'Uh oh not found';
         $status = 404;
@@ -33,7 +33,7 @@ class TextResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testConstructorAllowsPassingHeaders()
+    public function testConstructorAllowsPassingHeaders(): void
     {
         $body    = 'Uh oh not found';
         $status  = 404;
@@ -48,7 +48,7 @@ class TextResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testAllowsStreamsForResponseBody()
+    public function testAllowsStreamsForResponseBody(): void
     {
         $stream   = $this->prophesize(StreamInterface::class);
         $body     = $stream->reveal();
@@ -56,7 +56,8 @@ class TextResponseTest extends TestCase
         $this->assertSame($body, $response->getBody());
     }
 
-    public function invalidContent()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidContent(): array
     {
         return [
             'null'       => [null],
@@ -73,18 +74,17 @@ class TextResponseTest extends TestCase
 
     /**
      * @dataProvider invalidContent
+     * @param mixed $body
      */
-    public function testRaisesExceptionforNonStringNonStreamBodyContent($body)
+    public function testRaisesExceptionForNonStringNonStreamBodyContent($body): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress MixedArgument */
         new TextResponse($body);
     }
 
-    /**
-     * @group 115
-     */
-    public function testConstructorRewindsBodyStream()
+    public function testConstructorRewindsBodyStream(): void
     {
         $text     = 'test data';
         $response = new TextResponse($text);

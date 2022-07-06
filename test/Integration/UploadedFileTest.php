@@ -12,7 +12,7 @@ use const UPLOAD_ERR_OK;
 
 class UploadedFileTest extends UploadedFileIntegrationTest
 {
-    public function createSubject()
+    public function createSubject(): UploadedFile
     {
         $stream = new Stream('php://memory', 'rw');
         $stream->write('foobar');
