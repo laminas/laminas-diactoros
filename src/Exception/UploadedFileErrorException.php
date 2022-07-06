@@ -31,7 +31,7 @@ class UploadedFileErrorException extends RuntimeException implements ExceptionIn
     public static function dueToUnwritableTarget(string $targetDirectory) : self
     {
         return new self(sprintf(
-            'The target directory `%s` does not exists or is not writable',
+            'The target directory `%s` does not exist or is not writable',
             $targetDirectory
         ));
     }
