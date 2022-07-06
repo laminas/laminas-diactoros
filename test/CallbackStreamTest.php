@@ -11,9 +11,9 @@ use RuntimeException;
 /**
  * @covers \Laminas\Diactoros\CallbackStream
  */
-class CallbackStreamTest extends TestCase
+final class CallbackStreamTest extends TestCase
 {
-    public function testToString() : void
+    public function testToString(): void
     {
         $stream = new CallbackStream(function () {
             return 'foobarbaz';
@@ -23,7 +23,7 @@ class CallbackStreamTest extends TestCase
         $this->assertSame('foobarbaz', $ret);
     }
 
-    public function testClose() : void
+    public function testClose(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -35,20 +35,20 @@ class CallbackStreamTest extends TestCase
         $this->assertNull($callback);
     }
 
-    public function testDetach() : void
+    public function testDetach(): void
     {
         $callback = function () {
         };
-        $stream = new CallbackStream($callback);
-        $ret = $stream->detach();
+        $stream   = new CallbackStream($callback);
+        $ret      = $stream->detach();
         $this->assertSame($callback, $ret);
     }
 
-    public function testEof() : void
+    public function testEof(): void
     {
         $stream = new CallbackStream(function () {
         });
-        $ret = $stream->eof();
+        $ret    = $stream->eof();
         $this->assertFalse($ret);
 
         $stream->getContents();
@@ -56,15 +56,15 @@ class CallbackStreamTest extends TestCase
         $this->assertTrue($ret);
     }
 
-    public function testGetSize() : void
+    public function testGetSize(): void
     {
         $stream = new CallbackStream(function () {
         });
-        $ret = $stream->getSize();
+        $ret    = $stream->getSize();
         $this->assertNull($ret);
     }
 
-    public function testTell() : void
+    public function testTell(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -74,31 +74,31 @@ class CallbackStreamTest extends TestCase
         $stream->tell();
     }
 
-    public function testIsSeekable() : void
+    public function testIsSeekable(): void
     {
         $stream = new CallbackStream(function () {
         });
-        $ret = $stream->isSeekable();
+        $ret    = $stream->isSeekable();
         $this->assertFalse($ret);
     }
 
-    public function testIsWritable() : void
+    public function testIsWritable(): void
     {
         $stream = new CallbackStream(function () {
         });
-        $ret = $stream->isWritable();
+        $ret    = $stream->isWritable();
         $this->assertFalse($ret);
     }
 
-    public function testIsReadable() : void
+    public function testIsReadable(): void
     {
         $stream = new CallbackStream(function () {
         });
-        $ret = $stream->isReadable();
+        $ret    = $stream->isReadable();
         $this->assertFalse($ret);
     }
 
-    public function testSeek() : void
+    public function testSeek(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -108,7 +108,7 @@ class CallbackStreamTest extends TestCase
         $stream->seek(0);
     }
 
-    public function testRewind() : void
+    public function testRewind(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -118,7 +118,7 @@ class CallbackStreamTest extends TestCase
         $stream->rewind();
     }
 
-    public function testWrite() : void
+    public function testWrite(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -128,7 +128,7 @@ class CallbackStreamTest extends TestCase
         $stream->write('foobarbaz');
     }
 
-    public function testRead() : void
+    public function testRead(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -138,7 +138,7 @@ class CallbackStreamTest extends TestCase
         $stream->read(3);
     }
 
-    public function testGetContents() : void
+    public function testGetContents(): void
     {
         $stream = new CallbackStream(function () {
             return 'foobarbaz';
@@ -148,7 +148,7 @@ class CallbackStreamTest extends TestCase
         $this->assertSame('foobarbaz', $ret);
     }
 
-    public function testGetMetadata() : void
+    public function testGetMetadata(): void
     {
         $stream = new CallbackStream(function () {
         });
@@ -164,16 +164,17 @@ class CallbackStreamTest extends TestCase
 
         $all = $stream->getMetadata();
         $this->assertSame([
-            'eof' => false,
+            'eof'         => false,
             'stream_type' => 'callback',
-            'seekable' => false,
+            'seekable'    => false,
         ], $all);
 
         $notExists = $stream->getMetadata('boo');
         $this->assertNull($notExists);
     }
 
-    public function phpCallbacksForStreams() : array
+    /** @return non-empty-array<non-empty-string, array{callable(): string, non-empty-string}> */
+    public function phpCallbacksForStreams(): array
     {
         $class = TestAsset\CallbacksForCallbackStreamTest::class;
 
@@ -189,10 +190,12 @@ class CallbackStreamTest extends TestCase
 
     /**
      * @dataProvider phpCallbacksForStreams
+     * @param callable(): string $callback
+     * @param non-empty-string $expected
      */
-    public function testAllowsArbitraryPhpCallbacks($callback, $expected) : void
+    public function testAllowsArbitraryPhpCallbacks(callable $callback, string $expected): void
     {
-        $stream = new CallbackStream($callback);
+        $stream   = new CallbackStream($callback);
         $contents = $stream->getContents();
         $this->assertSame($expected, $contents);
     }

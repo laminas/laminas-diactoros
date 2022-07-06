@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
-<ruleset name="Laminas coding standard">
-    <rule ref="./vendor/laminas/laminas-coding-standard/ruleset.xml"/>
+<ruleset
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+>
+    <rule ref="LaminasCodingStandard">
+        <!-- headers are long, and our code is full of scenarios with long headers and constants! -->
+        <exclude name="Generic.Files.LineLength.TooLong"/>
+        <!-- changing parameter names, in a world of PHP with named parameters, is an unnecessary BC break --> 
+        <exclude name="WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCaps"/>
+        
+    </rule>
 
     <!-- Paths to check -->
     <file>src</file>

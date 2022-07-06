@@ -6,10 +6,11 @@ namespace LaminasTest\Diactoros\Integration;
 
 use Http\Psr7Test\ServerRequestIntegrationTest;
 use Laminas\Diactoros\ServerRequestFactory;
+use Psr\Http\Message\ServerRequestInterface;
 
-class ServerRequestFactoryTest extends ServerRequestIntegrationTest
+final class ServerRequestFactoryTest extends ServerRequestIntegrationTest
 {
-    public function createSubject()
+    public function createSubject(): ServerRequestInterface
     {
         return (new ServerRequestFactory())->createServerRequest('GET', '/', $_SERVER);
     }

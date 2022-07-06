@@ -42,7 +42,7 @@ class ArraySerializerTest extends TestCase
         ArraySerializer::fromArray($serializedRequest);
     }
 
-    private function createResponse()
+    private function createResponse(): Response
     {
         $stream = new Stream('php://memory', 'wb+');
         $stream->write('{"test":"value"}');
@@ -56,22 +56,31 @@ class ArraySerializerTest extends TestCase
             ->withBody($stream);
     }
 
-    private function createSerializedResponse()
+    /**
+     * @return array{
+     *     status_code: positive-int,
+     *     reason_phrase: non-empty-string,
+     *     protocol_version: non-empty-string,
+     *     headers: array<non-empty-string, non-empty-list<string>>,
+     *     body: string,
+     * }
+     */
+    private function createSerializedResponse(): array
     {
         return [
-            'status_code' => 201,
-            'reason_phrase' => 'Custom',
+            'status_code'      => 201,
+            'reason_phrase'    => 'Custom',
             'protocol_version' => '1.1',
-            'headers' => [
-                'Accept' => [
+            'headers'          => [
+                'Accept'    => [
                     'application/json',
                 ],
                 'X-Foo-Bar' => [
                     'Baz',
-                    'Bat'
+                    'Bat',
                 ],
             ],
-            'body' => '{"test":"value"}',
+            'body'             => '{"test":"value"}',
         ];
     }
 }

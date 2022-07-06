@@ -18,8 +18,10 @@ use function curl_init;
 use function curl_setopt;
 use function file_exists;
 use function file_put_contents;
+use function getenv;
 use function gmdate;
 use function in_array;
+use function is_string;
 use function preg_match;
 use function sprintf;
 use function strtotime;
@@ -28,43 +30,42 @@ use const CURLINFO_HTTP_CODE;
 use const CURLOPT_HTTPHEADER;
 use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_TIMEOUT;
+use const CURLOPT_USERAGENT;
 use const LOCK_EX;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
-    /**
-     * @var Response
-    */
+    /** @var Response */
     protected $response;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->response = new Response();
     }
 
-    public function testStatusCodeIs200ByDefault()
+    public function testStatusCodeIs200ByDefault(): void
     {
         $this->assertSame(200, $this->response->getStatusCode());
     }
 
-    public function testStatusCodeMutatorReturnsCloneWithChanges()
+    public function testStatusCodeMutatorReturnsCloneWithChanges(): void
     {
         $response = $this->response->withStatus(400);
         $this->assertNotSame($this->response, $response);
         $this->assertSame(400, $response->getStatusCode());
     }
 
-    public function testReasonPhraseDefaultsToStandards()
+    public function testReasonPhraseDefaultsToStandards(): void
     {
         $response = $this->response->withStatus(422);
         $this->assertSame('Unprocessable Content', $response->getReasonPhrase());
     }
 
-    private function fetchIanaStatusCodes() : DOMDocument
+    private function fetchIanaStatusCodes(): DOMDocument
     {
-        $updated = null;
+        $updated                 = null;
         $ianaHttpStatusCodesFile = __DIR__ . '/TestAsset/.cache/http-status-codes.xml';
-        $ianaHttpStatusCodes = null;
+        $ianaHttpStatusCodes     = null;
         if (file_exists($ianaHttpStatusCodesFile)) {
             $ianaHttpStatusCodes = new DOMDocument();
             $ianaHttpStatusCodes->load($ianaHttpStatusCodesFile);
@@ -94,7 +95,7 @@ class ResponseTest extends TestCase
             );
             curl_setopt($ch, CURLOPT_HTTPHEADER, [$ifModifiedSince]);
         }
-        $response = curl_exec($ch);
+        $response     = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -103,7 +104,7 @@ class ResponseTest extends TestCase
             return $ianaHttpStatusCodes;
         }
 
-        if ($responseCode === 200 && is_string($response) && $response != '') {
+        if ($responseCode === 200 && is_string($response) && $response !== '') {
             $downloadedIanaHttpStatusCodes = new DOMDocument();
             $downloadedIanaHttpStatusCodes->loadXML($response);
             if ($downloadedIanaHttpStatusCodes->relaxNGValidate(__DIR__ . '/TestAsset/http-status-codes.rng')) {
@@ -118,7 +119,8 @@ class ResponseTest extends TestCase
         self::fail('Unable to retrieve IANA response status codes due to timeout or invalid XML');
     }
 
-    public function ianaCodesReasonPhrasesProvider()
+    /** @return list<array{numeric-string, non-empty-string}> */
+    public function ianaCodesReasonPhrasesProvider(): array
     {
         $ianaHttpStatusCodes = $this->fetchIanaStatusCodes();
 
@@ -130,7 +132,7 @@ class ResponseTest extends TestCase
         $records = $xpath->query('//ns:record');
 
         foreach ($records as $record) {
-            $value = $xpath->query('.//ns:value', $record)->item(0)->nodeValue;
+            $value       = $xpath->query('.//ns:value', $record)->item(0)->nodeValue;
             $description = $xpath->query('.//ns:description', $record)->item(0)->nodeValue;
 
             if (in_array($description, ['Unassigned', '(Unused)'])) {
@@ -151,55 +153,59 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider ianaCodesReasonPhrasesProvider
+     * @param numeric-string $code
+     * @param non-empty-string $reasonPhrase
      */
-    public function testReasonPhraseDefaultsAgainstIana($code, $reasonPhrase)
+    public function testReasonPhraseDefaultsAgainstIana(string $code, string $reasonPhrase): void
     {
         $response = $this->response->withStatus($code);
         $this->assertSame($reasonPhrase, $response->getReasonPhrase());
     }
 
-    public function testCanSetCustomReasonPhrase()
+    public function testCanSetCustomReasonPhrase(): void
     {
         $response = $this->response->withStatus(422, 'Foo Bar!');
         $this->assertSame('Foo Bar!', $response->getReasonPhrase());
     }
 
-    public function invalidReasonPhrases()
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
+    public function invalidReasonPhrases(): array
     {
         return [
-            'true' => [ true ],
-            'false' => [ false ],
-            'array' => [ [ 200 ] ],
-            'object' => [ (object) [ 'reasonPhrase' => 'Ok' ] ],
+            'true'    => [true],
+            'false'   => [false],
+            'array'   => [[200]],
+            'object'  => [(object) ['reasonPhrase' => 'Ok']],
             'integer' => [99],
-            'float' => [400.5],
-            'null' => [null],
+            'float'   => [400.5],
+            'null'    => [null],
         ];
     }
 
     /**
      * @dataProvider invalidReasonPhrases
+     * @param mixed $invalidReasonPhrase
      */
-    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases($invalidReasonPhrase)
+    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases($invalidReasonPhrase): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         $this->response->withStatus(422, $invalidReasonPhrase);
     }
 
-    public function testConstructorRaisesExceptionForInvalidStream()
+    public function testConstructorRaisesExceptionForInvalidStream(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new Response([ 'TOTALLY INVALID' ]);
+        new Response(['TOTALLY INVALID']);
     }
 
-    public function testConstructorCanAcceptAllMessageParts()
+    public function testConstructorCanAcceptAllMessageParts(): void
     {
-        $body = new Stream('php://memory');
-        $status = 302;
+        $body    = new Stream('php://memory');
+        $status  = 302;
         $headers = [
-            'location' => [ 'http://example.com/' ],
+            'location' => ['http://example.com/'],
         ];
 
         $response = new Response($body, $status, $headers);
@@ -210,8 +216,9 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider validStatusCodes
+     * @param int|numeric-string $code
      */
-    public function testCreateWithValidStatusCodes($code)
+    public function testCreateWithValidStatusCodes($code): void
     {
         $response = $this->response->withStatus($code);
 
@@ -221,18 +228,20 @@ class ResponseTest extends TestCase
         $this->assertIsInt($result);
     }
 
-    public function validStatusCodes()
+    /** @return non-empty-array<non-empty-string, array{int|numeric-string}> */
+    public function validStatusCodes(): array
     {
         return [
-            'minimum' => [100],
-            'middle' => [300],
+            'minimum'        => [100],
+            'middle'         => [300],
             'string-integer' => ['300'],
-            'maximum' => [599],
+            'maximum'        => [599],
         ];
     }
 
     /**
      * @dataProvider invalidStatusCodes
+     * @param mixed $code
      */
     public function testCannotSetInvalidStatusCode($code)
     {
@@ -241,37 +250,40 @@ class ResponseTest extends TestCase
         $this->response->withStatus($code);
     }
 
-    public function invalidStatusCodes()
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
+    public function invalidStatusCodes(): array
     {
         return [
-            'true' => [ true ],
-            'false' => [ false ],
-            'array' => [ [ 200 ] ],
-            'object' => [ (object) [ 'statusCode' => 200 ] ],
-            'too-low' => [99],
-            'float' => [400.5],
+            'true'     => [true],
+            'false'    => [false],
+            'array'    => [[200]],
+            'object'   => [(object) ['statusCode' => 200]],
+            'too-low'  => [99],
+            'float'    => [400.5],
             'too-high' => [600],
-            'null' => [null],
-            'string' => ['foo'],
+            'null'     => [null],
+            'string'   => ['foo'],
         ];
     }
 
-    public function invalidResponseBody()
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
+    public function invalidResponseBody(): array
     {
         return [
-            'true'       => [ true ],
-            'false'      => [ false ],
-            'int'        => [ 1 ],
-            'float'      => [ 1.1 ],
-            'array'      => [ ['BODY'] ],
-            'stdClass'   => [ (object) [ 'body' => 'BODY'] ],
+            'true'     => [true],
+            'false'    => [false],
+            'int'      => [1],
+            'float'    => [1.1],
+            'array'    => [['BODY']],
+            'stdClass' => [(object) ['body' => 'BODY']],
         ];
     }
 
     /**
      * @dataProvider invalidResponseBody
+     * @param mixed $body
      */
-    public function testConstructorRaisesExceptionForInvalidBody($body)
+    public function testConstructorRaisesExceptionForInvalidBody($body): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
@@ -279,23 +291,25 @@ class ResponseTest extends TestCase
         new Response($body);
     }
 
-
-    public function invalidHeaderTypes()
+    /** @return non-empty-array<non-empty-string, array{0: array<mixed>, 1?: non-empty-string}> */
+    public function invalidHeaderTypes(): array
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
-            'null' => [['x-invalid-null' => null]],
-            'true' => [['x-invalid-true' => true]],
-            'false' => [['x-invalid-false' => false]],
-            'object' => [['x-invalid-object' => (object) ['INVALID']]],
+            'null'          => [['x-invalid-null' => null]],
+            'true'          => [['x-invalid-true' => true]],
+            'false'         => [['x-invalid-false' => false]],
+            'object'        => [['x-invalid-object' => (object) ['INVALID']]],
         ];
     }
 
     /**
      * @dataProvider invalidHeaderTypes
      * @group 99
+     * @param array<mixed> $headers
+     * @param non-empty-string $contains
      */
-    public function testConstructorRaisesExceptionForInvalidHeaders($headers, $contains = 'header value type')
+    public function testConstructorRaisesExceptionForInvalidHeaders(array $headers, string $contains = 'header value type'): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);
@@ -303,14 +317,15 @@ class ResponseTest extends TestCase
         new Response('php://memory', 200, $headers);
     }
 
-    public function testReasonPhraseCanBeEmpty()
+    public function testReasonPhraseCanBeEmpty(): void
     {
         $response = $this->response->withStatus(555);
         $this->assertIsString($response->getReasonPhrase());
         $this->assertEmpty($response->getReasonPhrase());
     }
 
-    public function headersWithInjectionVectors()
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string|non-empty-list<non-empty-string>}> */
+    public function headersWithInjectionVectors(): array
     {
         return [
             'name-with-cr'           => ["X-Foo\r-Bar", 'value'],
@@ -331,8 +346,9 @@ class ResponseTest extends TestCase
     /**
      * @group ZF2015-04
      * @dataProvider headersWithInjectionVectors
+     * @param string|non-empty-list<non-empty-string> $value
      */
-    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value)
+    public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value): void
     {
         $this->expectException(InvalidArgumentException::class);
 

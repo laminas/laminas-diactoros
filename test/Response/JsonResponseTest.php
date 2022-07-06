@@ -7,6 +7,7 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\JsonResponse;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function fopen;
 use function json_decode;
@@ -22,7 +23,7 @@ use const JSON_UNESCAPED_SLASHES;
 
 class JsonResponseTest extends TestCase
 {
-    public function testConstructorAcceptsDataAndCreatesJsonEncodedMessageBody()
+    public function testConstructorAcceptsDataAndCreatesJsonEncodedMessageBody(): void
     {
         $data = [
             'nested' => [
@@ -39,6 +40,7 @@ class JsonResponseTest extends TestCase
         $this->assertSame($json, (string) $response->getBody());
     }
 
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function scalarValuesForJSON()
     {
         return [
@@ -56,8 +58,9 @@ class JsonResponseTest extends TestCase
 
     /**
      * @dataProvider scalarValuesForJSON
+     * @param mixed $value
      */
-    public function testScalarValuePassedToConstructorJsonEncodesDirectly($value)
+    public function testScalarValuePassedToConstructorJsonEncodesDirectly($value): void
     {
         $response = new JsonResponse($value);
         $this->assertSame(200, $response->getStatusCode());
@@ -66,7 +69,7 @@ class JsonResponseTest extends TestCase
         $this->assertSame(json_encode($value, 15), (string) $response->getBody());
     }
 
-    public function testCanProvideStatusCodeToConstructor()
+    public function testCanProvideStatusCodeToConstructor(): void
     {
         $response = new JsonResponse(null, 404);
         $this->assertSame(404, $response->getStatusCode());
@@ -78,7 +81,7 @@ class JsonResponseTest extends TestCase
         $this->assertSame('foo/json', $response->getHeaderLine('content-type'));
     }
 
-    public function testJsonErrorHandlingOfResources()
+    public function testJsonErrorHandlingOfResources(): void
     {
         // Serializing something that is not serializable.
         $resource = fopen('php://memory', 'r');
@@ -88,7 +91,7 @@ class JsonResponseTest extends TestCase
         new JsonResponse($resource);
     }
 
-    public function testJsonErrorHandlingOfBadEmbeddedData()
+    public function testJsonErrorHandlingOfBadEmbeddedData(): void
     {
         // Serializing something that is not serializable.
         $data = [
@@ -101,7 +104,8 @@ class JsonResponseTest extends TestCase
         new JsonResponse($data);
     }
 
-    public function valuesToJsonEncode()
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
+    public function valuesToJsonEncode(): array
     {
         return [
             'uri'    => ['https://example.com/foo?bar=baz&baz=bat', 'uri'],
@@ -112,8 +116,10 @@ class JsonResponseTest extends TestCase
 
     /**
      * @dataProvider valuesToJsonEncode
+     * @param non-empty-string $value
+     * @param non-empty-string $key
      */
-    public function testUsesSaneDefaultJsonEncodingFlags($value, string $key)
+    public function testUsesSaneDefaultJsonEncodingFlags($value, string $key): void
     {
         $defaultFlags = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES;
 
@@ -129,26 +135,26 @@ class JsonResponseTest extends TestCase
         );
     }
 
-    public function testConstructorRewindsBodyStream()
+    public function testConstructorRewindsBodyStream(): void
     {
-        $json = ['test' => 'data'];
+        $json     = ['test' => 'data'];
         $response = new JsonResponse($json);
 
         $actual = json_decode($response->getBody()->getContents(), true);
         $this->assertSame($json, $actual);
     }
 
-    public function testPayloadGetter()
+    public function testPayloadGetter(): void
     {
-        $payload = ['test' => 'data'];
+        $payload  = ['test' => 'data'];
         $response = new JsonResponse($payload);
         $this->assertSame($payload, $response->getPayload());
     }
 
-    public function testWithPayload()
+    public function testWithPayload(): void
     {
-        $response = new JsonResponse(['test' => 'data']);
-        $json = [ 'foo' => 'bar'];
+        $response    = new JsonResponse(['test' => 'data']);
+        $json        = ['foo' => 'bar'];
         $newResponse = $response->withPayload($json);
         $this->assertNotSame($response, $newResponse);
 
@@ -157,15 +163,15 @@ class JsonResponseTest extends TestCase
         $this->assertSame($json, $decodedBody);
     }
 
-    public function testEncodingOptionsGetter()
+    public function testEncodingOptionsGetter(): void
     {
         $response = new JsonResponse([]);
         $this->assertSame(JsonResponse::DEFAULT_JSON_FLAGS, $response->getEncodingOptions());
     }
 
-    public function testWithEncodingOptions()
+    public function testWithEncodingOptions(): void
     {
-        $response = new JsonResponse([ 'foo' => 'bar']);
+        $response = new JsonResponse(['foo' => 'bar']);
         $expected = <<<JSON
 {"foo":"bar"}
 JSON;
@@ -185,15 +191,15 @@ JSON;
         $this->assertSame($expected, $newResponse->getBody()->getContents());
     }
 
-    public function testModifyingThePayloadDoesntMutateResponseInstance()
+    public function testModifyingThePayloadDoesntMutateResponseInstance(): void
     {
-        $payload = new \stdClass();
+        $payload      = new stdClass();
         $payload->foo = 'bar';
 
         $response = new JsonResponse($payload);
 
         $originalPayload = clone $payload;
-        $payload->bar = 'baz';
+        $payload->bar    = 'baz';
 
         $this->assertEquals($originalPayload, $response->getPayload());
         $this->assertNotSame($payload, $response->getPayload());

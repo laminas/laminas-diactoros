@@ -6,11 +6,10 @@ namespace LaminasTest\Diactoros\Integration;
 
 use Http\Psr7Test\RequestIntegrationTest;
 use Laminas\Diactoros\Request;
-use Laminas\Diactoros\RequestFactory;
 
-class RequestTest extends RequestIntegrationTest
+final class RequestTest extends RequestIntegrationTest
 {
-    public function createSubject()
+    public function createSubject(): Request
     {
         return new Request('/', 'GET');
     }

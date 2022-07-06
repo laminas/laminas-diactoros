@@ -53,16 +53,16 @@ class IPRangeTest extends TestCase
     public function IPv6Data(): array
     {
         return [
-            'valid - ipv4 subnet' => [true, '2a01:198:603:0:396e:4789:8e99:890f', '2a01:198:603:0::/65'],
-            'valid - exact' => [true, '0:0:0:0:0:0:0:1', '::1'],
-            'valid - all subnets' => [true, '0:0:603:0:396e:4789:8e99:0001', '::/0'],
-            'valid - subnet expands to all' => [true, '0:0:603:0:396e:4789:8e99:0001', '2a01:198:603:0::/0'],
-            'invalid - not in subnet' => [false, '2a00:198:603:0:396e:4789:8e99:890f', '2a01:198:603:0::/65'],
-            'invalid - does not match exact' => [false, '2a01:198:603:0:396e:4789:8e99:890f', '::1'],
+            'valid - ipv4 subnet'                                 => [true, '2a01:198:603:0:396e:4789:8e99:890f', '2a01:198:603:0::/65'],
+            'valid - exact'                                       => [true, '0:0:0:0:0:0:0:1', '::1'],
+            'valid - all subnets'                                 => [true, '0:0:603:0:396e:4789:8e99:0001', '::/0'],
+            'valid - subnet expands to all'                       => [true, '0:0:603:0:396e:4789:8e99:0001', '2a01:198:603:0::/0'],
+            'invalid - not in subnet'                             => [false, '2a00:198:603:0:396e:4789:8e99:890f', '2a01:198:603:0::/65'],
+            'invalid - does not match exact'                      => [false, '2a01:198:603:0:396e:4789:8e99:890f', '::1'],
             'invalid - compressed notation, does not match exact' => [false, '0:0:603:0:396e:4789:8e99:0001', '::1'],
-            'invalid - garbage IP' => [false, '}__test|O:21:&quot;JDatabaseDriverMysqli&quot;:3:{s:2', '::1'],
-            'invalid - invalid cidr' => [false, '2a01:198:603:0:396e:4789:8e99:890f', 'unknown'],
-            'invalid - empty IP address' => [false, '', '::1'],
+            'invalid - garbage IP'                                => [false, '}__test|O:21:&quot;JDatabaseDriverMysqli&quot;:3:{s:2', '::1'],
+            'invalid - invalid cidr'                              => [false, '2a01:198:603:0:396e:4789:8e99:890f', 'unknown'],
+            'invalid - empty IP address'                          => [false, '', '::1'],
         ];
     }
 

@@ -44,14 +44,10 @@ class JsonResponse extends Response
         | JSON_HEX_QUOT
         | JSON_UNESCAPED_SLASHES;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $payload;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $encodingOptions;
 
     /**
@@ -70,7 +66,7 @@ class JsonResponse extends Response
      * @param int $status Integer status code for the response; 200 by default.
      * @param array $headers Array of headers to use at initialization.
      * @param int $encodingOptions JSON encoding options to use.
-     * @throws Exception\InvalidArgumentException if unable to encode the $data to JSON.
+     * @throws Exception\InvalidArgumentException If unable to encode the $data to JSON.
      */
     public function __construct(
         $data,
@@ -100,26 +96,26 @@ class JsonResponse extends Response
     /**
      * @param mixed $data
      */
-    public function withPayload($data) : JsonResponse
+    public function withPayload($data): JsonResponse
     {
         $new = clone $this;
         $new->setPayload($data);
         return $this->updateBodyFor($new);
     }
 
-    public function getEncodingOptions() : int
+    public function getEncodingOptions(): int
     {
         return $this->encodingOptions;
     }
 
-    public function withEncodingOptions(int $encodingOptions) : JsonResponse
+    public function withEncodingOptions(int $encodingOptions): JsonResponse
     {
-        $new = clone $this;
+        $new                  = clone $this;
         $new->encodingOptions = $encodingOptions;
         return $this->updateBodyFor($new);
     }
 
-    private function createBodyFromJson(string $json) : Stream
+    private function createBodyFromJson(string $json): Stream
     {
         $body = new Stream('php://temp', 'wb+');
         $body->write($json);
@@ -132,9 +128,9 @@ class JsonResponse extends Response
      * Encode the provided data to JSON.
      *
      * @param mixed $data
-     * @throws Exception\InvalidArgumentException if unable to encode the $data to JSON.
+     * @throws Exception\InvalidArgumentException If unable to encode the $data to JSON.
      */
-    private function jsonEncode($data, int $encodingOptions) : string
+    private function jsonEncode($data, int $encodingOptions): string
     {
         if (is_resource($data)) {
             throw new Exception\InvalidArgumentException('Cannot JSON encode resources');
@@ -148,7 +144,7 @@ class JsonResponse extends Response
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unable to encode data to JSON in %s: %s',
-                __CLASS__,
+                self::class,
                 json_last_error_msg()
             ));
         }
@@ -159,7 +155,7 @@ class JsonResponse extends Response
     /**
      * @param mixed $data
      */
-    private function setPayload($data) : void
+    private function setPayload($data): void
     {
         if (is_object($data)) {
             $data = clone $data;
@@ -174,7 +170,7 @@ class JsonResponse extends Response
      * @param self $toUpdate Instance to update.
      * @return JsonResponse Returns a new instance with an updated body.
      */
-    private function updateBodyFor(JsonResponse $toUpdate) : JsonResponse
+    private function updateBodyFor(JsonResponse $toUpdate): JsonResponse
     {
         $json = $this->jsonEncode($toUpdate->payload, $toUpdate->encodingOptions);
         $body = $this->createBodyFromJson($json);

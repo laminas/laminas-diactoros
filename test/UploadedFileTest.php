@@ -14,8 +14,9 @@ use RuntimeException;
 use function basename;
 use function file_exists;
 use function file_get_contents;
+use function file_put_contents;
 use function fopen;
-use function is_scalar;
+use function is_string;
 use function sys_get_temp_dir;
 use function tempnam;
 use function uniqid;
@@ -38,13 +39,13 @@ final class UploadedFileTest extends TestCase
     /** @var mixed */
     private $tmpFile;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->tmpFile = null;
         $this->orgFile = null;
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         if (is_string($this->tmpFile) && file_exists($this->tmpFile)) {
             unlink($this->tmpFile);
@@ -59,17 +60,17 @@ final class UploadedFileTest extends TestCase
     public function invalidStreams(): array
     {
         return [
-            'null'         => [null],
-            'true'         => [true],
-            'false'        => [false],
-            'int'          => [1],
-            'float'        => [1.1],
+            'null'  => [null],
+            'true'  => [true],
+            'false' => [false],
+            'int'   => [1],
+            'float' => [1.1],
             /* Have not figured out a valid way to test an invalid path yet; null byte injection
              * appears to get caught by fopen()
             'invalid-path' => [ ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) ? '[:]' : 'foo' . chr(0) ],
              */
-            'array'        => [['filename']],
-            'object'       => [(object) ['filename']],
+            'array'  => [['filename']],
+            'object' => [(object) ['filename']],
         ];
     }
 
@@ -138,8 +139,8 @@ final class UploadedFileTest extends TestCase
 
     public function testGetStreamReturnsWrappedPhpStream(): void
     {
-        $stream = fopen('php://temp', 'wb+');
-        $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
+        $stream       = fopen('php://temp', 'wb+');
+        $upload       = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
         $uploadStream = $upload->getStream()->detach();
         $this->assertSame($stream, $uploadStream);
     }
@@ -147,9 +148,9 @@ final class UploadedFileTest extends TestCase
     public function testGetStreamReturnsStreamForFile(): void
     {
         $this->tmpFile = $stream = tempnam(sys_get_temp_dir(), 'diac');
-        $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
-        $uploadStream = $upload->getStream();
-        $r = new ReflectionProperty($uploadStream, 'stream');
+        $upload        = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
+        $uploadStream  = $upload->getStream();
+        $r             = new ReflectionProperty($uploadStream, 'stream');
         $r->setAccessible(true);
         $this->assertSame($stream, $r->getValue($uploadStream));
     }
@@ -157,7 +158,7 @@ final class UploadedFileTest extends TestCase
     public function testMovesFileToDesignatedPath(): void
     {
         $originalContents = 'Foo bar!';
-        $stream = new Stream('php://temp', 'wb+');
+        $stream           = new Stream('php://temp', 'wb+');
         $stream->write($originalContents);
         $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
 
@@ -185,7 +186,6 @@ final class UploadedFileTest extends TestCase
 
     /**
      * @dataProvider invalidMovePaths
-     *
      * @param mixed $path
      */
     public function testMoveRaisesExceptionForInvalidPath($path): void
@@ -238,13 +238,13 @@ final class UploadedFileTest extends TestCase
     public function nonOkErrorStatus(): array
     {
         return [
-            'UPLOAD_ERR_INI_SIZE'   => [ UPLOAD_ERR_INI_SIZE ],
-            'UPLOAD_ERR_FORM_SIZE'  => [ UPLOAD_ERR_FORM_SIZE ],
-            'UPLOAD_ERR_PARTIAL'    => [ UPLOAD_ERR_PARTIAL ],
-            'UPLOAD_ERR_NO_FILE'    => [ UPLOAD_ERR_NO_FILE ],
-            'UPLOAD_ERR_NO_TMP_DIR' => [ UPLOAD_ERR_NO_TMP_DIR ],
-            'UPLOAD_ERR_CANT_WRITE' => [ UPLOAD_ERR_CANT_WRITE ],
-            'UPLOAD_ERR_EXTENSION'  => [ UPLOAD_ERR_EXTENSION ],
+            'UPLOAD_ERR_INI_SIZE'   => [UPLOAD_ERR_INI_SIZE],
+            'UPLOAD_ERR_FORM_SIZE'  => [UPLOAD_ERR_FORM_SIZE],
+            'UPLOAD_ERR_PARTIAL'    => [UPLOAD_ERR_PARTIAL],
+            'UPLOAD_ERR_NO_FILE'    => [UPLOAD_ERR_NO_FILE],
+            'UPLOAD_ERR_NO_TMP_DIR' => [UPLOAD_ERR_NO_TMP_DIR],
+            'UPLOAD_ERR_CANT_WRITE' => [UPLOAD_ERR_CANT_WRITE],
+            'UPLOAD_ERR_EXTENSION'  => [UPLOAD_ERR_EXTENSION],
         ];
     }
 

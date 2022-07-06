@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Diactoros\Integration;
 
 use Http\Psr7Test\UriIntegrationTest;
-use Laminas\Diactoros\RequestFactory;
 use Laminas\Diactoros\Uri;
 
-class UriTest extends UriIntegrationTest
+final class UriTest extends UriIntegrationTest
 {
-    public function createUri($uri)
+    /** {@inheritDoc} */
+    public function createUri($uri): Uri
     {
         return new Uri($uri);
     }

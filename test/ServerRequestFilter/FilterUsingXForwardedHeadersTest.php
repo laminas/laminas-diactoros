@@ -6,8 +6,8 @@ namespace LaminasTest\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
-use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use PHPUnit\Framework\TestCase;
 
 class FilterUsingXForwardedHeadersTest extends TestCase
@@ -208,8 +208,8 @@ class FilterUsingXForwardedHeadersTest extends TestCase
             'GET',
             'php://temp',
             [
-                'Host'              => 'localhost',
-                'X-Forwarded-Host'  => 'example.com,proxy.api.example.com',
+                'Host'             => 'localhost',
+                'X-Forwarded-Host' => 'example.com,proxy.api.example.com',
             ]
         );
 
@@ -227,8 +227,8 @@ class FilterUsingXForwardedHeadersTest extends TestCase
             'GET',
             'php://temp',
             [
-                'Host'              => 'localhost',
-                'X-Forwarded-Port'  => '8080,9000',
+                'Host'             => 'localhost',
+                'X-Forwarded-Port' => '8080,9000',
             ]
         );
 
@@ -333,7 +333,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     }
 
     /** @psalm-return iterable<string, array{0: string, 1: string}> */
-    public function xForwardedProtoValues() : iterable
+    public function xForwardedProtoValues(): iterable
     {
         yield 'https-lowercase'  => ['https', 'https'];
         yield 'https-uppercase'  => ['HTTPS', 'https'];
@@ -365,7 +365,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $filter = FilterUsingXForwardedHeaders::trustReservedSubnets();
 
         $filteredRequest = $filter($request);
-        $uri = $filteredRequest->getUri();
+        $uri             = $filteredRequest->getUri();
         $this->assertSame($expectedScheme, $uri->getScheme());
     }
 }
