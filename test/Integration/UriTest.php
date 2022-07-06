@@ -7,11 +7,9 @@ namespace LaminasTest\Diactoros\Integration;
 use Http\Psr7Test\UriIntegrationTest;
 use Laminas\Diactoros\Uri;
 
-class UriTest extends UriIntegrationTest
+final class UriTest extends UriIntegrationTest
 {
-    /**
-     * @param string $uri
-     */
+    /** {@inheritDoc} */
     public function createUri($uri): Uri
     {
         return new Uri($uri);

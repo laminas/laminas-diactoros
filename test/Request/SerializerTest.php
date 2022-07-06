@@ -65,7 +65,7 @@ class SerializerTest extends TestCase
         $this->assertStringContainsString("X-Foo-Bar: Bat", $message);
     }
 
-    /** @return array<string, array{0: string, 1: string, 2:array<string, string>}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string, array<non-empty-string, non-empty-string>}> */
     public function originForms(): array
     {
         return [
@@ -84,7 +84,9 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider originForms
-     * @param array<string, string> $expectations
+     * @param non-empty-string                          $line
+     * @param non-empty-string                          $requestTarget
+     * @param array<non-empty-string, non-empty-string> $expectations
      */
     public function testCanDeserializeRequestWithOriginForm(
         string $line,
@@ -103,7 +105,23 @@ class SerializerTest extends TestCase
         }
     }
 
-    /** @return array<string, array{0: string, 1: string, 2:array<string, string|int>}> */
+    /**
+     * @return non-empty-array<
+     *     non-empty-string,
+     *     array{
+     *         non-empty-string,
+     *         non-empty-string,
+     *         array{
+     *             getScheme?: non-empty-string,
+     *             getUserInfo?: non-empty-string,
+     *             getHost?: non-empty-string,
+     *             getPort?: positive-int,
+     *             getPath?: non-empty-string,
+     *             getQuery?: non-empty-string
+     *         }
+     *     }
+     * >
+     */
     public function absoluteForms(): array
     {
         return [
@@ -152,15 +170,19 @@ class SerializerTest extends TestCase
         ];
     }
 
+    // @codingStandardsIgnoreStart if we split these line, phpcs can't associate parameter name and docblock anymore (phpcs limitation)
     /**
      * @dataProvider absoluteForms
-     * @param array<string, string|int> $expectations
+     * @param non-empty-string $line
+     * @param non-empty-string $requestTarget
+     * @param array{getScheme?: non-empty-string, getUserInfo?: non-empty-string, getHost?: non-empty-string, getPort?: positive-int, getPath?: non-empty-string, getQuery?: non-empty-string} $expectations
      */
     public function testCanDeserializeRequestWithAbsoluteForm(
         string $line,
         string $requestTarget,
         array $expectations
     ): void {
+        // @codingStandardsIgnoreEnd
         $message = $line . "\r\nX-Foo-Bar: Baz\r\n\r\nContent";
         $request = Serializer::fromString($message);
 
@@ -200,7 +222,7 @@ class SerializerTest extends TestCase
         $this->assertSame('www.example.com', $request->getHeaderLine('Host'));
     }
 
-    /** @return array<string, array{0: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
     public function invalidRequestLines(): array
     {
         return [
@@ -213,6 +235,7 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider invalidRequestLines
+     * @param non-empty-string $line
      */
     public function testRaisesExceptionDuringDeserializationForInvalidRequestLine(string $line): void
     {
@@ -236,7 +259,7 @@ class SerializerTest extends TestCase
         $this->assertSame(['Baz', 'Bat'], $values);
     }
 
-    /** @return array<string, array{0: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
     public function headersWithContinuationLines(): array
     {
         return [
@@ -247,6 +270,7 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider headersWithContinuationLines
+     * @param non-empty-string $text
      */
     public function testCanDeserializeRequestWithHeaderContinuations(string $text): void
     {
@@ -283,7 +307,7 @@ class SerializerTest extends TestCase
         $this->assertSame('Baz', $request->getHeaderLine('X-Foo-Bar'));
     }
 
-    /** @return array<string, array{0: string, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
     public function messagesWithInvalidHeaders(): array
     {
         return [
@@ -304,6 +328,8 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider messagesWithInvalidHeaders
+     * @param non-empty-string $message
+     * @param non-empty-string $exceptionMessage
      */
     public function testDeserializationRaisesExceptionForMalformedHeaders(
         string $message,

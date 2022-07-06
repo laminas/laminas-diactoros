@@ -56,6 +56,15 @@ class ArraySerializerTest extends TestCase
             ->withBody($stream);
     }
 
+    /**
+     * @return array{
+     *     status_code: positive-int,
+     *     reason_phrase: non-empty-string,
+     *     protocol_version: non-empty-string,
+     *     headers: array<non-empty-string, non-empty-list<string>>,
+     *     body: string,
+     * }
+     */
     private function createSerializedResponse(): array
     {
         return [

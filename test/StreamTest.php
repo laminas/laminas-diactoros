@@ -32,10 +32,10 @@ use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
-class StreamTest extends TestCase
+final class StreamTest extends TestCase
 {
-    /** @var string|null */
-    public $tmpnam;
+    /** @var string|null|false */
+    private $tmpnam;
 
     /** @var Stream */
     protected $stream;
@@ -146,6 +146,9 @@ class StreamTest extends TestCase
         $this->assertSame($resource, $detached);
     }
 
+    /**
+     * @group 42
+     */
     public function testSizeReportsNullWhenNoResourcePresent(): void
     {
         $this->stream->detach();
@@ -286,7 +289,7 @@ class StreamTest extends TestCase
         $this->assertTrue($stream->isWritable());
     }
 
-    /** @return array<int, array{0: string, 1: bool, 2: bool}> */
+    /** @return non-empty-list<array{non-empty-string, bool, bool}> */
     public function provideDataForIsWritable(): array
     {
         return [
@@ -316,17 +319,16 @@ class StreamTest extends TestCase
 
     private function findNonExistentTempName(): string
     {
-        while (true) {
+        do {
             $tmpnam = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'diac' . uniqid();
-            if (! file_exists(sys_get_temp_dir() . $tmpnam)) {
-                break;
-            }
-        }
+        } while (file_exists(sys_get_temp_dir() . $tmpnam));
+
         return $tmpnam;
     }
 
     /**
      * @dataProvider provideDataForIsWritable
+     * @param non-empty-string $mode
      */
     public function testIsWritableReturnsCorrectFlagForMode(string $mode, bool $fileShouldExist, bool $flag): void
     {
@@ -342,7 +344,7 @@ class StreamTest extends TestCase
         $this->assertSame($flag, $stream->isWritable());
     }
 
-    /** @return array<int, array{0: string, 1: bool, 2: bool}> */
+    /** @return non-empty-list<array{non-empty-string, bool, bool}> */
     public function provideDataForIsReadable(): array
     {
         return [
@@ -372,6 +374,7 @@ class StreamTest extends TestCase
 
     /**
      * @dataProvider provideDataForIsReadable
+     * @param non-empty-string $mode
      */
     public function testIsReadableReturnsCorrectFlagForMode(string $mode, bool $fileShouldExist, bool $flag): void
     {
@@ -460,7 +463,7 @@ class StreamTest extends TestCase
         $stream->getContents();
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidResources(): array
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
@@ -584,6 +587,9 @@ class StreamTest extends TestCase
         $this->assertNull($this->stream->getMetadata('TOTALLY_MADE_UP'));
     }
 
+    /**
+     * @group 42
+     */
     public function testGetSizeReturnsStreamSize(): void
     {
         $resource = fopen(__FILE__, 'r');
@@ -592,6 +598,9 @@ class StreamTest extends TestCase
         $this->assertSame($expected['size'], $stream->getSize());
     }
 
+    /**
+     * @group 67
+     */
     public function testRaisesExceptionOnConstructionForNonStreamResources(): void
     {
         $resource = $this->getResourceFor67();
@@ -606,6 +615,9 @@ class StreamTest extends TestCase
         new Stream($resource);
     }
 
+    /**
+     * @group 67
+     */
     public function testRaisesExceptionOnAttachForNonStreamResources(): void
     {
         $resource = $this->getResourceFor67();
@@ -657,6 +669,9 @@ class StreamTest extends TestCase
         $this->assertSame('FOO BAR', $stream->__toString());
     }
 
+    /**
+     * @group 42
+     */
     public function testSizeReportsNullForPhpInputStreams(): void
     {
         $resource = fopen('php://input', 'r');

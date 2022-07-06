@@ -11,7 +11,7 @@ use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
-class ServerRequestTest extends TestCase
+final class ServerRequestTest extends TestCase
 {
     /** @var ServerRequest */
     protected $request;
@@ -101,7 +101,7 @@ class ServerRequestTest extends TestCase
         $this->assertNull($new->getAttribute('foo', null));
     }
 
-    /** @return array<string, array{0: string|null, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string|null, non-empty-string}> */
     public function provideMethods(): array
     {
         return [
@@ -113,6 +113,8 @@ class ServerRequestTest extends TestCase
 
     /**
      * @dataProvider provideMethods
+     * @param non-empty-string|null $parameterMethod
+     * @param non-empty-string $methodReturned
      */
     public function testUsesProvidedConstructorArguments(?string $parameterMethod, string $methodReturned): void
     {
@@ -171,6 +173,9 @@ class ServerRequestTest extends TestCase
         $this->assertSame('php://memory', $stream);
     }
 
+    /**
+     * @group 46
+     */
     public function testCookieParamsAreAnEmptyArrayAtInitialization(): void
     {
         $request = new ServerRequest();
@@ -178,6 +183,9 @@ class ServerRequestTest extends TestCase
         $this->assertCount(0, $request->getCookieParams());
     }
 
+    /**
+     * @group 46
+     */
     public function testQueryParamsAreAnEmptyArrayAtInitialization(): void
     {
         $request = new ServerRequest();
@@ -185,6 +193,9 @@ class ServerRequestTest extends TestCase
         $this->assertCount(0, $request->getQueryParams());
     }
 
+    /**
+     * @group 46
+     */
     public function testParsedBodyIsNullAtInitialization(): void
     {
         $request = new ServerRequest();

@@ -422,6 +422,7 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidArrayHeaderValues
+     * @group 99
      * @param mixed $value
      */
     public function testWithHeaderShouldRaiseExceptionForInvalidHeaderValuesInArrays($value): void
@@ -435,6 +436,7 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidHeaderValueTypes
+     * @group 99
      * @param mixed $value
      */
     public function testWithHeaderShouldRaiseExceptionForInvalidHeaderScalarValues($value): void

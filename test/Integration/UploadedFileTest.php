@@ -10,7 +10,7 @@ use Laminas\Diactoros\UploadedFile;
 
 use const UPLOAD_ERR_OK;
 
-class UploadedFileTest extends UploadedFileIntegrationTest
+final class UploadedFileTest extends UploadedFileIntegrationTest
 {
     public function createSubject(): UploadedFile
     {

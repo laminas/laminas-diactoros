@@ -8,7 +8,7 @@ use Http\Psr7Test\ServerRequestIntegrationTest;
 use Laminas\Diactoros\ServerRequestFactory;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ServerRequestFactoryTest extends ServerRequestIntegrationTest
+final class ServerRequestFactoryTest extends ServerRequestIntegrationTest
 {
     public function createSubject(): ServerRequestInterface
     {

@@ -8,11 +8,9 @@ use Http\Psr7Test\StreamIntegrationTest;
 use Laminas\Diactoros\Stream;
 use Psr\Http\Message\StreamInterface;
 
-class StreamTest extends StreamIntegrationTest
+final class StreamTest extends StreamIntegrationTest
 {
-    /**
-     * @param string|resource|StreamInterface $data
-     */
+    /** {@inheritDoc} */
     public function createStream($data): StreamInterface
     {
         if ($data instanceof StreamInterface) {

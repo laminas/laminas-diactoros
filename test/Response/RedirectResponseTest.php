@@ -46,7 +46,7 @@ class RedirectResponseTest extends TestCase
         $this->assertSame('Bar', $response->getHeaderLine('X-Foo'));
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidUris(): array
     {
         return [

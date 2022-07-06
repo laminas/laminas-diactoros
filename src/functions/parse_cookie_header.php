@@ -16,7 +16,7 @@ use const PREG_SET_ORDER;
  * overwriting. Thus, the server request should take the cookies from the request header instead.
  *
  * @param string $cookieHeader A string cookie header value.
- * @return array key/value cookie pairs.
+ * @return array<string, string> key/value cookie pairs.
  */
 function parseCookieHeader($cookieHeader): array
 {
