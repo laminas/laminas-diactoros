@@ -169,6 +169,7 @@ final class RelativeStream implements StreamInterface
 
     /**
      * {@inheritdoc}
+     * @return mixed
      */
     public function getMetadata($key = null)
     {

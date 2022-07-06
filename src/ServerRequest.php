@@ -165,6 +165,7 @@ class ServerRequest implements ServerRequestInterface
 
     /**
      * {@inheritdoc}
+     * @return array|object|null
      */
     public function getParsedBody()
     {
@@ -199,6 +200,7 @@ class ServerRequest implements ServerRequestInterface
 
     /**
      * {@inheritdoc}
+     * @return mixed
      */
     public function getAttribute($attribute, $default = null)
     {
