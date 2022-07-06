@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "764b8219d976768c2309b08663989ae9",
+    "content-hash": "b18fbd2edf66315a12f5bdba7eeda7a0",
     "packages": [
         {
             "name": "psr/http-factory",
@@ -783,16 +783,16 @@
         },
         {
             "name": "http-interop/http-factory-tests",
-            "version": "0.8.0",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/http-interop/http-factory-tests.git",
-                "reference": "7384d93cd4841647b16b3c9bfd56c0367a40fce1"
+                "reference": "642056c5360e8a74779cbf133afbc8aa2c174e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/http-interop/http-factory-tests/zipball/7384d93cd4841647b16b3c9bfd56c0367a40fce1",
-                "reference": "7384d93cd4841647b16b3c9bfd56c0367a40fce1",
+                "url": "https://api.github.com/repos/http-interop/http-factory-tests/zipball/642056c5360e8a74779cbf133afbc8aa2c174e15",
+                "reference": "642056c5360e8a74779cbf133afbc8aa2c174e15",
                 "shasum": ""
             },
             "require": {
@@ -826,9 +826,9 @@
             ],
             "support": {
                 "issues": "https://github.com/http-interop/http-factory-tests/issues",
-                "source": "https://github.com/http-interop/http-factory-tests/tree/0.8.0"
+                "source": "https://github.com/http-interop/http-factory-tests/tree/0.9.0"
             },
-            "time": "2020-11-02T14:43:36+00:00"
+            "time": "2021-03-21T14:26:06+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
@@ -2024,16 +2024,16 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.14.0",
+            "version": "0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "f5147be764449ff5a11bded483b622e1e868f8ab"
+                "reference": "45951541beef07e93e3ad197daf01da88e85c31d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/f5147be764449ff5a11bded483b622e1e868f8ab",
-                "reference": "f5147be764449ff5a11bded483b622e1e868f8ab",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/45951541beef07e93e3ad197daf01da88e85c31d",
+                "reference": "45951541beef07e93e3ad197daf01da88e85c31d",
                 "shasum": ""
             },
             "require": {
@@ -2041,7 +2041,7 @@
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "ext-simplexml": "*",
                 "php": "^7.1 || ^8.0",
-                "vimeo/psalm": "dev-master || dev-4.x || ^4.0"
+                "vimeo/psalm": "dev-master || dev-4.x || ^4.5"
             },
             "conflict": {
                 "phpunit/phpunit": "<7.5"
@@ -2078,9 +2078,9 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.14.0"
+                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.17.0"
             },
-            "time": "2020-12-08T22:25:25+00:00"
+            "time": "2022-06-14T17:05:57+00:00"
         },
         {
             "name": "psr/container",
@@ -4338,5 +4338,5 @@
     "platform-overrides": {
         "php": "7.3.99"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
