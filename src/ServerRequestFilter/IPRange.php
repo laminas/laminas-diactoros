@@ -4,6 +4,18 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\ServerRequestFilter;
 
+use function explode;
+use function inet_pton;
+use function intval;
+use function ip2long;
+use function pack;
+use function sprintf;
+use function str_pad;
+use function str_repeat;
+use function strpos;
+use function substr_compare;
+use function unpack;
+
 /** @internal */
 final class IPRange
 {
@@ -32,7 +44,7 @@ final class IPRange
 
         if (false !== strpos($cidr, '/')) {
             [$subnet, $mask] = explode('/', $cidr, 2);
-            $mask = (int) $mask;
+            $mask            = (int) $mask;
         }
 
         if ($mask < 0 || $mask > 32) {
@@ -62,7 +74,7 @@ final class IPRange
 
         if (false !== strpos($cidr, '/')) {
             [$subnet, $mask] = explode('/', $cidr, 2);
-            $mask = (int) $mask;
+            $mask            = (int) $mask;
         }
 
         if ($mask < 0 || $mask > 128) {
@@ -72,7 +84,7 @@ final class IPRange
         $ip     = inet_pton($ip);
         $subnet = inet_pton($subnet);
 
-        if (false == $ip || false == $subnet) {
+        if (false === $ip || false === $subnet) {
             // Invalid data
             return false;
         }

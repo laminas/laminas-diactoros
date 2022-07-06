@@ -8,6 +8,17 @@ use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function explode;
+use function filter_var;
+use function in_array;
+use function is_string;
+use function strpos;
+use function strtolower;
+
+use const FILTER_FLAG_IPV4;
+use const FILTER_FLAG_IPV6;
+use const FILTER_VALIDATE_IP;
+
 /**
  * Modify the URI to reflect the X-Forwarded-* headers.
  *
@@ -30,9 +41,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         self::HEADER_PROTO,
     ];
 
-    /**
-     * @var list<FilterUsingXForwardedHeaders::HEADER_*>
-     */
+    /** @var list<FilterUsingXForwardedHeaders::HEADER_*> */
     private $trustedHeaders;
 
     /** @var list<non-empty-string> */
@@ -84,7 +93,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
                     break;
                 case self::HEADER_PROTO:
                     $scheme = strtolower($header) === 'https' ? 'https' : 'http';
-                    $uri = $uri->withScheme($scheme);
+                    $uri    = $uri->withScheme($scheme);
                     break;
             }
         }
@@ -229,7 +238,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         $mask    = null;
         if (false !== strpos($cidr, '/')) {
             [$address, $mask] = explode('/', $cidr, 2);
-            $mask = (int) $mask;
+            $mask             = (int) $mask;
         }
 
         if (false !== strpos($address, ':')) {

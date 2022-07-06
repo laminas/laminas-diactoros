@@ -6,3 +6,4 @@
 /test/TestAsset/.cache/
 /vendor/
 .phpunit.result.cache
+.phpcs.cache

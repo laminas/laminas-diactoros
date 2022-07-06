@@ -9,7 +9,7 @@ class CallbacksForCallbackStreamTest
     /**
      * Sample callback to use with testing.
      */
-    public function sampleCallback() : string
+    public function sampleCallback(): string
     {
         return __METHOD__;
     }
@@ -17,7 +17,7 @@ class CallbacksForCallbackStreamTest
     /**
      * Sample static callback to use with testing.
      */
-    public static function sampleStaticCallback() : string
+    public static function sampleStaticCallback(): string
     {
         return __METHOD__;
     }

@@ -7,14 +7,14 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\TextResponse;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Http\Message\StreamInterface;
 
 class TextResponseTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testConstructorAcceptsBodyAsString()
+    public function testConstructorAcceptsBodyAsString(): void
     {
         $body = 'Uh oh not found';
 
@@ -23,9 +23,9 @@ class TextResponseTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testConstructorAllowsPassingStatus()
+    public function testConstructorAllowsPassingStatus(): void
     {
-        $body = 'Uh oh not found';
+        $body   = 'Uh oh not found';
         $status = 404;
 
         $response = new TextResponse($body, $status);
@@ -33,12 +33,12 @@ class TextResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testConstructorAllowsPassingHeaders()
+    public function testConstructorAllowsPassingHeaders(): void
     {
-        $body = 'Uh oh not found';
-        $status = 404;
+        $body    = 'Uh oh not found';
+        $status  = 404;
         $headers = [
-            'x-custom' => [ 'foo-bar' ],
+            'x-custom' => ['foo-bar'],
         ];
 
         $response = new TextResponse($body, $status, $headers);
@@ -48,15 +48,16 @@ class TextResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testAllowsStreamsForResponseBody()
+    public function testAllowsStreamsForResponseBody(): void
     {
-        $stream = $this->prophesize(StreamInterface::class);
-        $body   = $stream->reveal();
+        $stream   = $this->prophesize(StreamInterface::class);
+        $body     = $stream->reveal();
         $response = new TextResponse($body);
         $this->assertSame($body, $response->getBody());
     }
 
-    public function invalidContent()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidContent(): array
     {
         return [
             'null'       => [null],
@@ -73,20 +74,19 @@ class TextResponseTest extends TestCase
 
     /**
      * @dataProvider invalidContent
+     * @param mixed $body
      */
-    public function testRaisesExceptionforNonStringNonStreamBodyContent($body)
+    public function testRaisesExceptionForNonStringNonStreamBodyContent($body): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress MixedArgument */
         new TextResponse($body);
     }
 
-    /**
-     * @group 115
-     */
-    public function testConstructorRewindsBodyStream()
+    public function testConstructorRewindsBodyStream(): void
     {
-        $text = 'test data';
+        $text     = 'test data';
         $response = new TextResponse($text);
 
         $actual = $response->getBody()->getContents();

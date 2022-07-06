@@ -11,15 +11,15 @@ use function Laminas\Diactoros\normalizeUploadedFiles;
 
 class NormalizeUploadedFilesTest extends TestCase
 {
-    public function testCreatesUploadedFileFromFlatFileSpecification()
+    public function testCreatesUploadedFileFromFlatFileSpecification(): void
     {
         $files = [
             'avatar' => [
                 'tmp_name' => 'phpUxcOty',
-                'name' => 'my-avatar.png',
-                'size' => 90996,
-                'type' => 'image/png',
-                'error' => 0,
+                'name'     => 'my-avatar.png',
+                'size'     => 90996,
+                'type'     => 'image/png',
+                'error'    => 0,
             ],
         ];
 
@@ -30,17 +30,17 @@ class NormalizeUploadedFilesTest extends TestCase
         $this->assertEquals('my-avatar.png', $normalised['avatar']->getClientFilename());
     }
 
-    public function testTraversesNestedFileSpecificationToExtractUploadedFile()
+    public function testTraversesNestedFileSpecificationToExtractUploadedFile(): void
     {
         $files = [
             'my-form' => [
                 'details' => [
                     'avatar' => [
                         'tmp_name' => 'phpUxcOty',
-                        'name' => 'my-avatar.png',
-                        'size' => 90996,
-                        'type' => 'image/png',
-                        'error' => 0,
+                        'name'     => 'my-avatar.png',
+                        'size'     => 90996,
+                        'type'     => 'image/png',
+                        'error'    => 0,
                     ],
                 ],
             ],
@@ -52,7 +52,7 @@ class NormalizeUploadedFilesTest extends TestCase
         $this->assertEquals('my-avatar.png', $normalised['my-form']['details']['avatar']->getClientFilename());
     }
 
-    public function testTraversesNestedFileSpecificationContainingNumericIndicesToExtractUploadedFiles()
+    public function testTraversesNestedFileSpecificationContainingNumericIndicesToExtractUploadedFiles(): void
     {
         $files = [
             'my-form' => [
@@ -63,22 +63,22 @@ class NormalizeUploadedFilesTest extends TestCase
                             1 => 'duck123',
                             2 => 'goose123',
                         ],
-                        'name' => [
+                        'name'     => [
                             0 => 'file1.txt',
                             1 => 'file2.txt',
                             2 => 'file3.txt',
                         ],
-                        'size' => [
+                        'size'     => [
                             0 => 100,
                             1 => 240,
                             2 => 750,
                         ],
-                        'type' => [
+                        'type'     => [
                             0 => 'plain/txt',
                             1 => 'image/jpg',
                             2 => 'image/png',
                         ],
-                        'error' => [
+                        'error'    => [
                             0 => 0,
                             1 => 0,
                             2 => 0,
@@ -100,7 +100,7 @@ class NormalizeUploadedFilesTest extends TestCase
      * This case covers upfront numeric index which moves the tmp_name/size/etc
      * fields further up the array tree
      */
-    public function testTraversesDenormalizedNestedTreeOfIndicesToExtractUploadedFiles()
+    public function testTraversesDenormalizedNestedTreeOfIndicesToExtractUploadedFiles(): void
     {
         $files = [
             'slide-shows' => [
@@ -113,7 +113,7 @@ class NormalizeUploadedFilesTest extends TestCase
                         ],
                     ],
                 ],
-                'error' => [
+                'error'    => [
                     0 => [
                         'slides' => [
                             0 => 0,
@@ -121,7 +121,7 @@ class NormalizeUploadedFilesTest extends TestCase
                         ],
                     ],
                 ],
-                'name' => [
+                'name'     => [
                     0 => [
                         'slides' => [
                             0 => 'foo.txt',
@@ -129,7 +129,7 @@ class NormalizeUploadedFilesTest extends TestCase
                         ],
                     ],
                 ],
-                'size' => [
+                'size'     => [
                     0 => [
                         'slides' => [
                             0 => 123,
@@ -137,7 +137,7 @@ class NormalizeUploadedFilesTest extends TestCase
                         ],
                     ],
                 ],
-                'type' => [
+                'type'     => [
                     0 => [
                         'slides' => [
                             0 => 'text/plain',

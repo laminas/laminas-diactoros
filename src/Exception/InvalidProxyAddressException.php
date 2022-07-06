@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\Exception;
 
+use function get_class;
+use function gettype;
+use function is_object;
+use function sprintf;
+
 class InvalidProxyAddressException extends RuntimeException implements ExceptionInterface
 {
     /** @param mixed $proxy */

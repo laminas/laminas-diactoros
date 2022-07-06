@@ -7,8 +7,8 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\XmlResponse;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Http\Message\StreamInterface;
 
 use const PHP_EOL;
 
@@ -16,7 +16,7 @@ class XmlResponseTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testConstructorAcceptsBodyAsString()
+    public function testConstructorAcceptsBodyAsString(): void
     {
         $body = 'Super valid XML';
 
@@ -25,9 +25,9 @@ class XmlResponseTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testConstructorAllowsPassingStatus()
+    public function testConstructorAllowsPassingStatus(): void
     {
-        $body = 'More valid XML';
+        $body   = 'More valid XML';
         $status = 404;
 
         $response = new XmlResponse($body, $status);
@@ -35,12 +35,12 @@ class XmlResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testConstructorAllowsPassingHeaders()
+    public function testConstructorAllowsPassingHeaders(): void
     {
-        $body = '<nearly>Valid XML</nearly>';
-        $status = 404;
+        $body    = '<nearly>Valid XML</nearly>';
+        $status  = 404;
         $headers = [
-            'x-custom' => [ 'foo-bar' ],
+            'x-custom' => ['foo-bar'],
         ];
 
         $response = new XmlResponse($body, $status, $headers);
@@ -50,15 +50,16 @@ class XmlResponseTest extends TestCase
         $this->assertSame($body, (string) $response->getBody());
     }
 
-    public function testAllowsStreamsForResponseBody()
+    public function testAllowsStreamsForResponseBody(): void
     {
-        $stream = $this->prophesize(StreamInterface::class);
-        $body   = $stream->reveal();
+        $stream   = $this->prophesize(StreamInterface::class);
+        $body     = $stream->reveal();
         $response = new XmlResponse($body);
         $this->assertSame($body, $response->getBody());
     }
 
-    public function invalidContent()
+    /** @return array<string, array{0: mixed}> */
+    public function invalidContent(): array
     {
         return [
             'null'       => [null],
@@ -75,20 +76,19 @@ class XmlResponseTest extends TestCase
 
     /**
      * @dataProvider invalidContent
+     * @param mixed $body
      */
     public function testRaisesExceptionforNonStringNonStreamBodyContent($body)
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress MixedArgument */
         new XmlResponse($body);
     }
 
-    /**
-     * @group 115
-     */
-    public function testConstructorRewindsBodyStream()
+    public function testConstructorRewindsBodyStream(): void
     {
-        $body = '<?xml version="1.0"?>' . PHP_EOL . '<something>Valid XML</something>';
+        $body     = '<?xml version="1.0"?>' . PHP_EOL . '<something>Valid XML</something>';
         $response = new XmlResponse($body);
 
         $actual = $response->getBody()->getContents();

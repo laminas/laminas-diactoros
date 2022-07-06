@@ -13,7 +13,7 @@ use UnexpectedValueException;
 
 class ArraySerializerTest extends TestCase
 {
-    public function testSerializeToArray()
+    public function testSerializeToArray(): void
     {
         $stream = new Stream('php://memory', 'wb+');
         $stream->write('{"test":"value"}');
@@ -29,46 +29,46 @@ class ArraySerializerTest extends TestCase
         $message = ArraySerializer::toArray($request);
 
         $this->assertSame([
-            'method' => 'POST',
-            'request_target' => '/foo/bar?baz=bat',
-            'uri' => 'http://example.com/foo/bar?baz=bat',
+            'method'           => 'POST',
+            'request_target'   => '/foo/bar?baz=bat',
+            'uri'              => 'http://example.com/foo/bar?baz=bat',
             'protocol_version' => '1.1',
-            'headers' => [
-                'Host' => [
+            'headers'          => [
+                'Host'      => [
                     'example.com',
                 ],
-                'Accept' => [
+                'Accept'    => [
                     'application/json',
                 ],
                 'X-Foo-Bar' => [
                     'Baz',
-                    'Bat'
+                    'Bat',
                 ],
             ],
-            'body' => '{"test":"value"}',
+            'body'             => '{"test":"value"}',
         ], $message);
     }
 
-    public function testDeserializeFromArray()
+    public function testDeserializeFromArray(): void
     {
         $serializedRequest = [
-            'method' => 'POST',
-            'request_target' => '/foo/bar?baz=bat',
-            'uri' => 'http://example.com/foo/bar?baz=bat',
+            'method'           => 'POST',
+            'request_target'   => '/foo/bar?baz=bat',
+            'uri'              => 'http://example.com/foo/bar?baz=bat',
             'protocol_version' => '1.1',
-            'headers' => [
-                'Host' => [
+            'headers'          => [
+                'Host'      => [
                     'example.com',
                 ],
-                'Accept' => [
+                'Accept'    => [
                     'application/json',
                 ],
                 'X-Foo-Bar' => [
                     'Baz',
-                    'Bat'
+                    'Bat',
                 ],
             ],
-            'body' => '{"test":"value"}',
+            'body'             => '{"test":"value"}',
         ];
 
         $message = ArraySerializer::fromArray($serializedRequest);
@@ -87,23 +87,23 @@ class ArraySerializerTest extends TestCase
         $this->assertSame(Request\Serializer::toString($request), Request\Serializer::toString($message));
     }
 
-    public function testMissingBodyParamInSerializedRequestThrowsException()
+    public function testMissingBodyParamInSerializedRequestThrowsException(): void
     {
         $serializedRequest = [
-            'method' => 'POST',
-            'request_target' => '/foo/bar?baz=bat',
-            'uri' => 'http://example.com/foo/bar?baz=bat',
+            'method'           => 'POST',
+            'request_target'   => '/foo/bar?baz=bat',
+            'uri'              => 'http://example.com/foo/bar?baz=bat',
             'protocol_version' => '1.1',
-            'headers' => [
-                'Host' => [
+            'headers'          => [
+                'Host'      => [
                     'example.com',
                 ],
-                'Accept' => [
+                'Accept'    => [
                     'application/json',
                 ],
                 'X-Foo-Bar' => [
                     'Baz',
-                    'Bat'
+                    'Bat',
                 ],
             ],
         ];

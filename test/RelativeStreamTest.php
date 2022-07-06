@@ -20,7 +20,7 @@ class RelativeStreamTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testToString()
+    public function testToString(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->isSeekable()->willReturn(true);
@@ -29,11 +29,11 @@ class RelativeStreamTest extends TestCase
         $decorated->getContents()->shouldBeCalled()->willReturn('foobarbaz');
 
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->__toString();
+        $ret    = $stream->__toString();
         $this->assertSame('foobarbaz', $ret);
     }
 
-    public function testClose()
+    public function testClose(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->close()->shouldBeCalled();
@@ -41,61 +41,61 @@ class RelativeStreamTest extends TestCase
         $stream->close();
     }
 
-    public function testDetach()
+    public function testDetach(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->detach()->shouldBeCalled()->willReturn(250);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->detach();
+        $ret    = $stream->detach();
         $this->assertSame(250, $ret);
     }
 
-    public function testGetSize()
+    public function testGetSize(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->getSize()->shouldBeCalled()->willReturn(250);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->getSize();
+        $ret    = $stream->getSize();
         $this->assertSame(150, $ret);
     }
 
-    public function testTell()
+    public function testTell(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->shouldBeCalled()->willReturn(188);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->tell();
+        $ret    = $stream->tell();
         $this->assertSame(88, $ret);
     }
 
-    public function testIsSeekable()
+    public function testIsSeekable(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->isSeekable()->shouldBeCalled()->willReturn(true);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->isSeekable();
+        $ret    = $stream->isSeekable();
         $this->assertSame(true, $ret);
     }
 
-    public function testIsWritable()
+    public function testIsWritable(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->isWritable()->shouldBeCalled()->willReturn(true);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->isWritable();
+        $ret    = $stream->isWritable();
         $this->assertSame(true, $ret);
     }
 
-    public function testIsReadable()
+    public function testIsReadable(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->isReadable()->shouldBeCalled()->willReturn(false);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->isReadable();
+        $ret    = $stream->isReadable();
         $this->assertSame(false, $ret);
     }
 
-    public function testSeek()
+    public function testSeek(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->seek(126, SEEK_SET)->shouldBeCalled();
@@ -103,7 +103,7 @@ class RelativeStreamTest extends TestCase
         $this->assertNull($stream->seek(26));
     }
 
-    public function testRewind()
+    public function testRewind(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->seek(100, SEEK_SET)->shouldBeCalled();
@@ -111,46 +111,46 @@ class RelativeStreamTest extends TestCase
         $this->assertNull($stream->rewind());
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->willReturn(100);
         $decorated->write("foobaz")->shouldBeCalled()->willReturn(6);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->write("foobaz");
+        $ret    = $stream->write("foobaz");
         $this->assertSame(6, $ret);
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->willReturn(100);
         $decorated->read(3)->shouldBeCalled()->willReturn("foo");
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->read(3);
+        $ret    = $stream->read(3);
         $this->assertSame("foo", $ret);
     }
 
-    public function testGetContents()
+    public function testGetContents(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->willReturn(100);
         $decorated->getContents()->shouldBeCalled()->willReturn("foo");
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->getContents();
+        $ret    = $stream->getContents();
         $this->assertSame("foo", $ret);
     }
 
-    public function testGetMetadata()
+    public function testGetMetadata(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->getMetadata("bar")->shouldBeCalled()->willReturn("foo");
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->getMetadata("bar");
+        $ret    = $stream->getMetadata("bar");
         $this->assertSame("foo", $ret);
     }
 
-    public function testWriteRaisesExceptionWhenPointerIsBehindOffset()
+    public function testWriteRaisesExceptionWhenPointerIsBehindOffset(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->shouldBeCalled()->willReturn(0);
@@ -163,7 +163,7 @@ class RelativeStreamTest extends TestCase
         $stream->write("foobaz");
     }
 
-    public function testReadRaisesExceptionWhenPointerIsBehindOffset()
+    public function testReadRaisesExceptionWhenPointerIsBehindOffset(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->shouldBeCalled()->willReturn(0);
@@ -176,7 +176,7 @@ class RelativeStreamTest extends TestCase
         $stream->read(3);
     }
 
-    public function testGetContentsRaisesExceptionWhenPointerIsBehindOffset()
+    public function testGetContentsRaisesExceptionWhenPointerIsBehindOffset(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->shouldBeCalled()->willReturn(0);
@@ -189,7 +189,7 @@ class RelativeStreamTest extends TestCase
         $stream->getContents();
     }
 
-    public function testCanReadContentFromNotSeekableResource()
+    public function testCanReadContentFromNotSeekableResource(): void
     {
         $decorated = $this->prophesize(Stream::class);
         $decorated->isSeekable()->willReturn(false);
