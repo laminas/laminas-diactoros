@@ -270,13 +270,6 @@
     </MoreSpecificReturnType>
   </file>
   <file src="src/Stream.php">
-    <InvalidArgument occurrences="1"/>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$resource</code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidPropertyAssignmentValue occurrences="1">
-      <code>$resource</code>
-    </PossiblyInvalidPropertyAssignmentValue>
     <PossiblyNullArgument occurrences="4">
       <code>$resource</code>
       <code>$this-&gt;resource</code>
@@ -286,9 +279,6 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$stream</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_resource($resource)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/StreamFactory.php">
     <ParamNameMismatch occurrences="1">

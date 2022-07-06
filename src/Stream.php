@@ -7,6 +7,7 @@ namespace Laminas\Diactoros;
 use GdImage;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
+use Throwable;
 
 use function array_key_exists;
 use function fclose;
@@ -22,13 +23,11 @@ use function in_array;
 use function is_int;
 use function is_resource;
 use function is_string;
-use function restore_error_handler;
-use function set_error_handler;
+use function sprintf;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function strstr;
 
-use const E_WARNING;
 use const PHP_VERSION_ID;
 use const SEEK_SET;
 
@@ -320,23 +319,18 @@ class Stream implements StreamInterface
      */
     private function setStream($stream, string $mode = 'r'): void
     {
-        $error    = null;
         $resource = $stream;
 
         if (is_string($stream)) {
-            set_error_handler(function ($e) use (&$error) {
-                if ($e !== E_WARNING) {
-                    return;
-                }
-
-                $error = $e;
-            });
-            $resource = fopen($stream, $mode);
-            restore_error_handler();
-        }
-
-        if ($error) {
-            throw new Exception\RuntimeException('Invalid stream reference provided');
+            try {
+                $resource = fopen($stream, $mode);
+            } catch (Throwable $error) {
+                throw new Exception\RuntimeException(
+                    sprintf('Invalid stream reference provided: %s', $error->getMessage()),
+                    0,
+                    $error
+                );
+            }
         }
 
         if (! $this->isValidStreamResourceType($resource)) {
@@ -355,7 +349,8 @@ class Stream implements StreamInterface
     /**
      * Determine if a resource is one of the resource types allowed to instantiate a Stream
      *
-     * @param resource $resource Stream resource.
+     * @param mixed $resource Stream resource.
+     * @psalm-assert-if-true resource $resource
      */
     private function isValidStreamResourceType($resource): bool
     {
