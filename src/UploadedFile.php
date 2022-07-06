@@ -187,6 +187,13 @@ class UploadedFile implements UploadedFileInterface
             case (empty($sapi) || 0 === strpos($sapi, 'cli') || 0 === strpos($sapi, 'phpdbg') || ! $this->file):
                 // Non-SAPI environment, or no filename present
                 $this->writeFile($targetPath);
+
+                if ($this->stream instanceof StreamInterface) {
+                    $this->stream->close();
+                }
+                if (is_string($this->file) && file_exists($this->file)) {
+                    unlink($this->file);
+                }
                 break;
             default:
                 // SAPI environment, with file present
