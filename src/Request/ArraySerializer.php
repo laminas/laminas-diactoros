@@ -23,6 +23,15 @@ final class ArraySerializer
 {
     /**
      * Serialize a request message to an array.
+     *
+     * @return array{
+     *     method: string,
+     *     request_target: string,
+     *     uri: string,
+     *     protocol_version: string,
+     *     headers: array<array<string>>,
+     *     body: string
+     * }
      */
     public static function toArray(RequestInterface $request): array
     {

@@ -7,15 +7,12 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\XmlResponse;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\StreamInterface;
 
 use const PHP_EOL;
 
 class XmlResponseTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testConstructorAcceptsBodyAsString(): void
     {
         $body = 'Super valid XML';
@@ -52,13 +49,12 @@ class XmlResponseTest extends TestCase
 
     public function testAllowsStreamsForResponseBody(): void
     {
-        $stream   = $this->prophesize(StreamInterface::class);
-        $body     = $stream->reveal();
+        $body     = $this->createMock(StreamInterface::class);
         $response = new XmlResponse($body);
         $this->assertSame($body, $response->getBody());
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidContent(): array
     {
         return [
@@ -78,7 +74,7 @@ class XmlResponseTest extends TestCase
      * @dataProvider invalidContent
      * @param mixed $body
      */
-    public function testRaisesExceptionforNonStringNonStreamBodyContent($body)
+    public function testRaisesExceptionforNonStringNonStreamBodyContent($body): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -86,6 +82,9 @@ class XmlResponseTest extends TestCase
         new XmlResponse($body);
     }
 
+    /**
+     * @group 115
+     */
     public function testConstructorRewindsBodyStream(): void
     {
         $body     = '<?xml version="1.0"?>' . PHP_EOL . '<something>Valid XML</something>';

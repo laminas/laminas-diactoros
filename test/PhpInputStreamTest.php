@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use function file_get_contents;
 use function substr;
 
-class PhpInputStreamTest extends TestCase
+final class PhpInputStreamTest extends TestCase
 {
     /** @var string */
     protected $file;

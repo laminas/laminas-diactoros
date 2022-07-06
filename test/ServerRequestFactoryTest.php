@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
-use Generator;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
@@ -26,7 +25,7 @@ use function str_replace;
 use function strpos;
 use function strtolower;
 
-class ServerRequestFactoryTest extends TestCase
+final class ServerRequestFactoryTest extends TestCase
 {
     public function testReturnsServerValueUnchangedIfHttpAuthorizationHeaderIsPresent(): void
     {
@@ -255,9 +254,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertNull($uri->getPort());
     }
 
-    /**
-     * @return array<string, array{0: string}>
-     */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
     public function httpsParamProvider(): array
     {
         return [
@@ -268,6 +265,7 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider httpsParamProvider
+     * @param non-empty-string $param
      */
     public function testMarshalUriDetectsHttpsSchemeFromServerValue(string $param): void
     {
@@ -285,10 +283,8 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame('https', $uri->getScheme());
     }
 
-    /**
-     * @return Generator<string, array{0: string, 1: string}>
-     */
-    public function httpsDisableParamProvider(): Generator
+    /** @return iterable<string, array{non-empty-string, 'off'|'OFF'}> */
+    public function httpsDisableParamProvider(): iterable
     {
         foreach ($this->httpsParamProvider() as $key => $data) {
             $param = array_shift($data);
@@ -302,6 +298,8 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider httpsDisableParamProvider
+     * @param non-empty-string $param
+     * @param 'off'|'OFF' $value
      */
     public function testMarshalUriUsesHttpSchemeIfHttpsServerValueEqualsOff(string $param, string $value): void
     {
@@ -321,6 +319,7 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider httpsParamProvider
+     * @param non-empty-string $xForwardedProto
      */
     public function testMarshalUriDetectsHttpsSchemeFromXForwardedProtoValue(string $xForwardedProto): void
     {
@@ -481,7 +480,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame(['foo_bar' => 'bat'], $request->getCookieParams());
     }
 
-    /** @return array<string, array{0: string, 1: array}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, array<non-empty-string, non-empty-string>}> */
     public function cookieHeaderValues(): array
     {
         return [
@@ -514,7 +513,8 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider cookieHeaderValues
-     * @param array $expectedCookies
+     * @param non-empty-string $cookieHeader
+     * @param array<non-empty-string, non-empty-string> $expectedCookies
      */
     public function testCookieHeaderVariations(string $cookieHeader, array $expectedCookies): void
     {
@@ -555,6 +555,10 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($expected, $server);
     }
 
+    /**
+     * @group 57
+     * @group 56
+     */
     public function testNormalizeFilesReturnsOnlyActualFilesWhenOriginalFilesContainsNestedAssociativeArrays(): void
     {
         $files = [
@@ -586,6 +590,8 @@ class ServerRequestFactoryTest extends TestCase
 
     /**
      * @dataProvider marshalProtocolVersionProvider
+     * @param non-empty-string $protocol
+     * @param non-empty-string $expected
      */
     public function testMarshalProtocolVersionReturnsHttpVersions(string $protocol, string $expected): void
     {
@@ -593,7 +599,7 @@ class ServerRequestFactoryTest extends TestCase
         $this->assertSame($expected, $version);
     }
 
-    /** @return array<string, array{0: string, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
     public function marshalProtocolVersionProvider(): array
     {
         return [

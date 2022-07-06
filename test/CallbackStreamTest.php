@@ -11,7 +11,7 @@ use RuntimeException;
 /**
  * @covers \Laminas\Diactoros\CallbackStream
  */
-class CallbackStreamTest extends TestCase
+final class CallbackStreamTest extends TestCase
 {
     public function testToString(): void
     {
@@ -173,7 +173,7 @@ class CallbackStreamTest extends TestCase
         $this->assertNull($notExists);
     }
 
-    /** @return array<string, array{0: callable, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{callable(): string, non-empty-string}> */
     public function phpCallbacksForStreams(): array
     {
         $class = TestAsset\CallbacksForCallbackStreamTest::class;
@@ -190,6 +190,8 @@ class CallbackStreamTest extends TestCase
 
     /**
      * @dataProvider phpCallbacksForStreams
+     * @param callable(): string $callback
+     * @param non-empty-string $expected
      */
     public function testAllowsArbitraryPhpCallbacks(callable $callback, string $expected): void
     {

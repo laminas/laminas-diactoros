@@ -23,6 +23,14 @@ final class ArraySerializer
 {
     /**
      * Serialize a response message to an array.
+     *
+     * @return array{
+     *     status_code: int,
+     *     reason_phrase: string,
+     *     protocol_version: string,
+     *     headers: array<array<string>>,
+     *     body: string
+     * }
      */
     public static function toArray(ResponseInterface $response): array
     {

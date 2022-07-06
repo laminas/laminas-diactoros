@@ -7,13 +7,10 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\TextResponse;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\StreamInterface;
 
 class TextResponseTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testConstructorAcceptsBodyAsString(): void
     {
         $body = 'Uh oh not found';
@@ -50,13 +47,12 @@ class TextResponseTest extends TestCase
 
     public function testAllowsStreamsForResponseBody(): void
     {
-        $stream   = $this->prophesize(StreamInterface::class);
-        $body     = $stream->reveal();
+        $body     = $this->createMock(StreamInterface::class);
         $response = new TextResponse($body);
         $this->assertSame($body, $response->getBody());
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidContent(): array
     {
         return [
@@ -84,6 +80,9 @@ class TextResponseTest extends TestCase
         new TextResponse($body);
     }
 
+    /**
+     * @group 115
+     */
     public function testConstructorRewindsBodyStream(): void
     {
         $text     = 'test data';

@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use UnexpectedValueException;
 
-class SerializerTest extends TestCase
+final class SerializerTest extends TestCase
 {
     public function testSerializesBasicResponse(): void
     {
@@ -99,7 +99,7 @@ class SerializerTest extends TestCase
         $this->assertSame(['Baz', 'Bat'], $values);
     }
 
-    /** @return array<string, array{0: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
     public function headersWithContinuationLines(): array
     {
         return [
@@ -110,6 +110,7 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider headersWithContinuationLines
+     * @param non-empty-string $text
      */
     public function testCanDeserializeResponseWithHeaderContinuations(string $text): void
     {
@@ -197,7 +198,7 @@ class SerializerTest extends TestCase
         Serializer::fromString($text);
     }
 
-    /** @return array<string, array{0: string, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
     public function messagesWithInvalidHeaders(): array
     {
         return [
@@ -218,6 +219,8 @@ class SerializerTest extends TestCase
 
     /**
      * @dataProvider messagesWithInvalidHeaders
+     * @param non-empty-string $message
+     * @param non-empty-string $exceptionMessage
      */
     public function testDeserializationRaisesExceptionForMalformedHeaders(
         string $message,
@@ -259,6 +262,9 @@ class SerializerTest extends TestCase
         Serializer::fromStream($stream);
     }
 
+    /**
+     * @group 113
+     */
     public function testDeserializeCorrectlyCastsStatusCodeToInteger(): void
     {
         $response = Response\Serializer::fromString('HTTP/1.0 204');

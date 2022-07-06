@@ -33,7 +33,7 @@ use const CURLOPT_TIMEOUT;
 use const CURLOPT_USERAGENT;
 use const LOCK_EX;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     /** @var Response */
     protected $response;
@@ -119,7 +119,7 @@ class ResponseTest extends TestCase
         self::fail('Unable to retrieve IANA response status codes due to timeout or invalid XML');
     }
 
-    /** @return list<array{string, string}> */
+    /** @return list<array{numeric-string, non-empty-string}> */
     public function ianaCodesReasonPhrasesProvider(): array
     {
         $ianaHttpStatusCodes = $this->fetchIanaStatusCodes();
@@ -153,9 +153,10 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider ianaCodesReasonPhrasesProvider
-     * @param string|numeric $code
+     * @param numeric-string $code
+     * @param non-empty-string $reasonPhrase
      */
-    public function testReasonPhraseDefaultsAgainstIana($code, string $reasonPhrase): void
+    public function testReasonPhraseDefaultsAgainstIana(string $code, string $reasonPhrase): void
     {
         /** @psalm-suppress InvalidScalarArgument */
         $response = $this->response->withStatus($code);
@@ -168,7 +169,7 @@ class ResponseTest extends TestCase
         $this->assertSame('Foo Bar!', $response->getReasonPhrase());
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidReasonPhrases(): array
     {
         return [
@@ -218,7 +219,7 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider validStatusCodes
-     * @param numeric $code
+     * @param int|numeric-string $code
      */
     public function testCreateWithValidStatusCodes($code): void
     {
@@ -231,7 +232,7 @@ class ResponseTest extends TestCase
         $this->assertIsInt($result);
     }
 
-    /** @return array<string, array{0: numeric}> */
+    /** @return non-empty-array<non-empty-string, array{int|numeric-string}> */
     public function validStatusCodes(): array
     {
         return [
@@ -254,7 +255,7 @@ class ResponseTest extends TestCase
         $this->response->withStatus($code);
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidStatusCodes(): array
     {
         return [
@@ -270,7 +271,7 @@ class ResponseTest extends TestCase
         ];
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidResponseBody(): array
     {
         return [
@@ -296,7 +297,7 @@ class ResponseTest extends TestCase
         new Response($body);
     }
 
-    /** @return array<string, array{0: array, 1?: string}> */
+    /** @return non-empty-array<non-empty-string, array{0: array<mixed>, 1?: non-empty-string}> */
     public function invalidHeaderTypes(): array
     {
         return [
@@ -310,6 +311,9 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidHeaderTypes
+     * @group 99
+     * @param array<mixed> $headers
+     * @param non-empty-string $contains
      */
     public function testConstructorRaisesExceptionForInvalidHeaders(
         array $headers,
@@ -328,7 +332,7 @@ class ResponseTest extends TestCase
         $this->assertEmpty($response->getReasonPhrase());
     }
 
-    /** @return array<string, array{0: string, 1: string|list<string>}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string|non-empty-list<non-empty-string>}> */
     public function headersWithInjectionVectors(): array
     {
         return [
@@ -350,6 +354,7 @@ class ResponseTest extends TestCase
     /**
      * @param string|list<string> $value
      * @dataProvider headersWithInjectionVectors
+     * @param string|non-empty-list<non-empty-string> $value
      */
     public function testConstructorRaisesExceptionForHeadersWithCRLFVectors(string $name, $value): void
     {
