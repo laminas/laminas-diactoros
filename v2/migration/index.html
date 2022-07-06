@@ -400,9 +400,6 @@ options for doing so:</p>
 <p>The first approach may fail if libraries you depend on specifically require a
 version 1 release. The second approach may leave you on a version 1 release in
 situations where other libraries you depend on require version 1.</p>
-<p>In all cases, if you are only using the PSR-7 implementations and/or the
-<code>ServerRequestFactory::fromGlobals()</code> functionality, upgrading to version 2 will
-pose no backwards compatibility issues.</p>
 <h2 id="changed">Changed</h2>
 <ul>
 <li>
@@ -413,6 +410,13 @@ pose no backwards compatibility issues.</p>
 <p><code>Laminas\Diactoros\Serializer\Request::toString()</code> no longer raises an
   <code>UnexpectedValueException</code> due to an unexpected HTTP method; this is due to the
   fact that the HTTP method value can no longer be set to an invalid value.</p>
+</li>
+<li>
+<p><code>Laminas\Diactoros\marshalHeadersFromSapi()</code> is parsing headers differently compared to the legacy implementation.
+   As a consequence Headers with <code>'0'</code> as values will be part of the parsed Headers.
+   In former versions those headers were ignored.
+   Usages of <code>\Laminas\Diactoros\MessageTrait::hasHeader()</code> and <code>\Laminas\Diactoros\MessageTrait::getHeader()</code>
+   might be affected if you are using <code>ServerRequestFactory::fromGlobals()</code> functionality.</p>
 </li>
 </ul>
 <h2 id="removed">Removed</h2>
