@@ -168,7 +168,15 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
 
         $host = self::getHeaderFromArray('host', $headers, false);
         if ($host !== false) {
-            return self::marshalHostAndPortFromHeader($host);
+            // Ignore obviously malformed host headers:
+            // - Whitespace is invalid within a hostname and break the URI representation within HTTP.
+            //   non-printable characters other than SPACE and TAB are already rejected by HeaderSecurity.
+            // - A comma indicates that multiple host headers have been sent which is not legal
+            //   and might be used in an attack where a load balancer sees a different host header
+            //   than Diactoros.
+            if (! \preg_match('/[\\t ,]/', $host)) {
+                return self::marshalHostAndPortFromHeader($host);
+            }
         }
 
         if (! isset($server['SERVER_NAME'])) {
@@ -289,9 +297,10 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Retrieve a header value from an array of headers using a case-insensitive lookup.
      *
+     * @template T
      * @param array<string, string|list<string>> $headers Key/value header pairs
-     * @param mixed $default Default value to return if header not found
-     * @return mixed
+     * @param T $default Default value to return if header not found
+     * @return string|T
      */
     private static function getHeaderFromArray(string $name, array $headers, $default = null)
     {

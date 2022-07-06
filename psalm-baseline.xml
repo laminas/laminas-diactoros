@@ -243,9 +243,8 @@
   </file>
   <file src="src/ServerRequestFactory.php">
     <LessSpecificReturnStatement occurrences="1"/>
-    <MixedArgument occurrences="2">
+    <MixedArgument occurrences="1">
       <code>$headers['cookie']</code>
-      <code>$host</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$headers</code>
