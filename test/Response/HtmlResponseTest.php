@@ -7,8 +7,8 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\HtmlResponse;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Http\Message\StreamInterface;
 
 class HtmlResponseTest extends TestCase
 {
@@ -25,7 +25,7 @@ class HtmlResponseTest extends TestCase
 
     public function testConstructorAllowsPassingStatus()
     {
-        $body = '<html>Uh oh not found</html>';
+        $body   = '<html>Uh oh not found</html>';
         $status = 404;
 
         $response = new HtmlResponse($body, $status);
@@ -35,10 +35,10 @@ class HtmlResponseTest extends TestCase
 
     public function testConstructorAllowsPassingHeaders()
     {
-        $body = '<html>Uh oh not found</html>';
-        $status = 404;
+        $body    = '<html>Uh oh not found</html>';
+        $status  = 404;
         $headers = [
-            'x-custom' => [ 'foo-bar' ],
+            'x-custom' => ['foo-bar'],
         ];
 
         $response = new HtmlResponse($body, $status, $headers);
@@ -50,8 +50,8 @@ class HtmlResponseTest extends TestCase
 
     public function testAllowsStreamsForResponseBody()
     {
-        $stream = $this->prophesize(StreamInterface::class);
-        $body   = $stream->reveal();
+        $stream   = $this->prophesize(StreamInterface::class);
+        $body     = $stream->reveal();
         $response = new HtmlResponse($body);
         $this->assertSame($body, $response->getBody());
     }
@@ -83,7 +83,7 @@ class HtmlResponseTest extends TestCase
 
     public function testConstructorRewindsBodyStream()
     {
-        $html = '<p>test data</p>';
+        $html     = '<p>test data</p>';
         $response = new HtmlResponse($html);
 
         $actual = $response->getBody()->getContents();

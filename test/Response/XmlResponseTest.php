@@ -7,8 +7,8 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\XmlResponse;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Http\Message\StreamInterface;
 
 use const PHP_EOL;
 
@@ -27,7 +27,7 @@ class XmlResponseTest extends TestCase
 
     public function testConstructorAllowsPassingStatus()
     {
-        $body = 'More valid XML';
+        $body   = 'More valid XML';
         $status = 404;
 
         $response = new XmlResponse($body, $status);
@@ -37,10 +37,10 @@ class XmlResponseTest extends TestCase
 
     public function testConstructorAllowsPassingHeaders()
     {
-        $body = '<nearly>Valid XML</nearly>';
-        $status = 404;
+        $body    = '<nearly>Valid XML</nearly>';
+        $status  = 404;
         $headers = [
-            'x-custom' => [ 'foo-bar' ],
+            'x-custom' => ['foo-bar'],
         ];
 
         $response = new XmlResponse($body, $status, $headers);
@@ -52,8 +52,8 @@ class XmlResponseTest extends TestCase
 
     public function testAllowsStreamsForResponseBody()
     {
-        $stream = $this->prophesize(StreamInterface::class);
-        $body   = $stream->reveal();
+        $stream   = $this->prophesize(StreamInterface::class);
+        $body     = $stream->reveal();
         $response = new XmlResponse($body);
         $this->assertSame($body, $response->getBody());
     }
@@ -88,7 +88,7 @@ class XmlResponseTest extends TestCase
      */
     public function testConstructorRewindsBodyStream()
     {
-        $body = '<?xml version="1.0"?>' . PHP_EOL . '<something>Valid XML</something>';
+        $body     = '<?xml version="1.0"?>' . PHP_EOL . '<something>Valid XML</something>';
         $response = new XmlResponse($body);
 
         $actual = $response->getBody()->getContents();

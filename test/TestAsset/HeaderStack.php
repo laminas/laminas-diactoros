@@ -9,9 +9,7 @@ namespace LaminasTest\Diactoros\TestAsset;
  */
 class HeaderStack
 {
-    /**
-     * @var string[][]
-     */
+    /** @var string[][] */
     private static $data = [];
 
     /**
@@ -46,7 +44,6 @@ class HeaderStack
      * Verify if there's a header line on the stack
      *
      * @param string $header
-     *
      * @return bool
      */
     public static function has($header)

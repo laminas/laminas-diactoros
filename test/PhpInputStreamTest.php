@@ -12,19 +12,15 @@ use function substr;
 
 class PhpInputStreamTest extends TestCase
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $file;
 
-    /**
-     * @var PhpInputStream
-     */
+    /** @var PhpInputStream */
     protected $stream;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
-        $this->file = __DIR__ . '/TestAsset/php-input-stream.txt';
+        $this->file   = __DIR__ . '/TestAsset/php-input-stream.txt';
         $this->stream = new PhpInputStream($this->file);
     }
 
@@ -81,7 +77,7 @@ class PhpInputStreamTest extends TestCase
 
     public function testMultipleCastsToStringReturnSameContentsEvenIfReadsOccur()
     {
-        $first  = (string) $this->stream;
+        $first = (string) $this->stream;
         $this->stream->read(128);
         $second = (string) $this->stream;
         $this->assertSame($first, $second);

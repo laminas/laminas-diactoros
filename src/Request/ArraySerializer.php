@@ -24,7 +24,7 @@ final class ArraySerializer
     /**
      * Serialize a request message to an array.
      */
-    public static function toArray(RequestInterface $request) : array
+    public static function toArray(RequestInterface $request): array
     {
         return [
             'method'           => $request->getMethod(),
@@ -41,12 +41,12 @@ final class ArraySerializer
      *
      * @throws Exception\DeserializationException when cannot deserialize response
      */
-    public static function fromArray(array $serializedRequest) : Request
+    public static function fromArray(array $serializedRequest): Request
     {
         try {
-            $uri             = self::getValueFromKey($serializedRequest, 'uri');
-            $method          = self::getValueFromKey($serializedRequest, 'method');
-            $body            = new Stream('php://memory', 'wb+');
+            $uri    = self::getValueFromKey($serializedRequest, 'uri');
+            $method = self::getValueFromKey($serializedRequest, 'method');
+            $body   = new Stream('php://memory', 'wb+');
             $body->write(self::getValueFromKey($serializedRequest, 'body'));
             $headers         = self::getValueFromKey($serializedRequest, 'headers');
             $requestTarget   = self::getValueFromKey($serializedRequest, 'request_target');
@@ -64,7 +64,7 @@ final class ArraySerializer
      * @return mixed
      * @throws Exception\DeserializationException
      */
-    private static function getValueFromKey(array $data, string $key, string $message = null)
+    private static function getValueFromKey(array $data, string $key, ?string $message = null)
     {
         if (isset($data[$key])) {
             return $data[$key];

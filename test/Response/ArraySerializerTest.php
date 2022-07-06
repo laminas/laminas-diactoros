@@ -59,19 +59,19 @@ class ArraySerializerTest extends TestCase
     private function createSerializedResponse()
     {
         return [
-            'status_code' => 201,
-            'reason_phrase' => 'Custom',
+            'status_code'      => 201,
+            'reason_phrase'    => 'Custom',
             'protocol_version' => '1.1',
-            'headers' => [
-                'Accept' => [
+            'headers'          => [
+                'Accept'    => [
                     'application/json',
                 ],
                 'X-Foo-Bar' => [
                     'Baz',
-                    'Bat'
+                    'Bat',
                 ],
             ],
-            'body' => '{"test":"value"}',
+            'body'             => '{"test":"value"}',
         ];
     }
 }

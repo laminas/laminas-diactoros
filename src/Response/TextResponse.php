@@ -52,7 +52,7 @@ class TextResponse extends Response
      * @param string|StreamInterface $text
      * @throws Exception\InvalidArgumentException if $text is neither a string or stream.
      */
-    private function createBody($text) : StreamInterface
+    private function createBody($text): StreamInterface
     {
         if ($text instanceof StreamInterface) {
             return $text;

@@ -15,10 +15,10 @@ use function substr;
  * @param array $server Values obtained from the SAPI (generally `$_SERVER`).
  * @return array Header/value pairs
  */
-function marshalHeadersFromSapi(array $server) : array
+function marshalHeadersFromSapi(array $server): array
 {
     $contentHeaderLookup = isset($server['LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP'])
-        ? static function (string $key) : bool {
+        ? static function (string $key): bool {
             static $contentHeaders = [
                 'CONTENT_TYPE'   => true,
                 'CONTENT_LENGTH' => true,
@@ -53,13 +53,13 @@ function marshalHeadersFromSapi(array $server) : array
         }
 
         if (strpos($key, 'HTTP_') === 0) {
-            $name = strtr(strtolower(substr($key, 5)), '_', '-');
+            $name           = strtr(strtolower(substr($key, 5)), '_', '-');
             $headers[$name] = $value;
             continue;
         }
 
         if ($contentHeaderLookup($key)) {
-            $name = strtr(strtolower($key), '_', '-');
+            $name           = strtr(strtolower($key), '_', '-');
             $headers[$name] = $value;
             continue;
         }

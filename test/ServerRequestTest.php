@@ -13,12 +13,10 @@ use ReflectionProperty;
 
 class ServerRequestTest extends TestCase
 {
-    /**
-     * @var ServerRequest
-     */
+    /** @var ServerRequest */
     protected $request;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->request = new ServerRequest();
     }
@@ -35,7 +33,7 @@ class ServerRequestTest extends TestCase
 
     public function testQueryParamsMutatorReturnsCloneWithChanges()
     {
-        $value = ['foo' => 'bar'];
+        $value   = ['foo' => 'bar'];
         $request = $this->request->withQueryParams($value);
         $this->assertNotSame($this->request, $request);
         $this->assertSame($value, $request->getQueryParams());
@@ -48,7 +46,7 @@ class ServerRequestTest extends TestCase
 
     public function testCookiesMutatorReturnsCloneWithChanges()
     {
-        $value = ['foo' => 'bar'];
+        $value   = ['foo' => 'bar'];
         $request = $this->request->withCookieParams($value);
         $this->assertNotSame($this->request, $request);
         $this->assertSame($value, $request->getCookieParams());
@@ -66,7 +64,7 @@ class ServerRequestTest extends TestCase
 
     public function testParsedBodyMutatorReturnsCloneWithChanges()
     {
-        $value = ['foo' => 'bar'];
+        $value   = ['foo' => 'bar'];
         $request = $this->request->withParsedBody($value);
         $this->assertNotSame($this->request, $request);
         $this->assertSame($value, $request->getParsedBody());
@@ -81,6 +79,7 @@ class ServerRequestTest extends TestCase
     {
         $this->assertEmpty($this->request->getAttribute('does-not-exist'));
     }
+
     /**
      * @depends testAttributesAreEmptyByDefault
      */
@@ -127,18 +126,18 @@ class ServerRequestTest extends TestCase
             'files' => new UploadedFile('php://temp', 0, 0),
         ];
 
-        $uri = new Uri('http://example.com');
-        $headers = [
+        $uri         = new Uri('http://example.com');
+        $headers     = [
             'host' => ['example.com'],
         ];
-        $cookies = [
+        $cookies     = [
             'boo' => 'foo',
         ];
         $queryParams = [
             'bar' => 'bat',
         ];
-        $parsedBody = 'bazbar';
-        $protocol = '1.2';
+        $parsedBody  = 'bazbar';
+        $protocol    = '1.2';
 
         $request = new ServerRequest(
             $server,
@@ -165,7 +164,7 @@ class ServerRequestTest extends TestCase
         $this->assertSame($protocol, $request->getProtocolVersion());
 
         $body = $request->getBody();
-        $r = new ReflectionProperty($body, 'stream');
+        $r    = new ReflectionProperty($body, 'stream');
         $r->setAccessible(true);
         $stream = $r->getValue($body);
         $this->assertSame('php://memory', $stream);
@@ -232,7 +231,7 @@ class ServerRequestTest extends TestCase
             [
                 new UploadedFile('php://temp', 0, 0),
                 new UploadedFile('php://temp', 0, 0),
-            ]
+            ],
         ];
 
         $request = $request->withUploadedFiles($uploadedFiles);

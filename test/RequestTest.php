@@ -13,12 +13,10 @@ use Psr\Http\Message\UriInterface;
 
 class RequestTest extends TestCase
 {
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->request = new Request();
     }
@@ -112,18 +110,18 @@ class RequestTest extends TestCase
         $request = new Request();
         $request->getBody()->write("test");
 
-        $this->assertSame("test", (string)$request->getBody());
+        $this->assertSame("test", (string) $request->getBody());
     }
 
     public function invalidRequestUri()
     {
         return [
-            'true'     => [ true ],
-            'false'    => [ false ],
-            'int'      => [ 1 ],
-            'float'    => [ 1.1 ],
-            'array'    => [ ['http://example.com'] ],
-            'stdClass' => [ (object) [ 'href'         => 'http://example.com'] ],
+            'true'     => [true],
+            'false'    => [false],
+            'int'      => [1],
+            'float'    => [1.1],
+            'array'    => [['http://example.com']],
+            'stdClass' => [(object) ['href' => 'http://example.com']],
         ];
     }
 
@@ -141,7 +139,7 @@ class RequestTest extends TestCase
     public function invalidRequestMethod()
     {
         return [
-            'bad-string' => [ 'BOGUS METHOD' ],
+            'bad-string' => ['BOGUS METHOD'],
         ];
     }
 
@@ -158,7 +156,7 @@ class RequestTest extends TestCase
 
     public function customRequestMethods()
     {
-        return[
+        return [
             /* WebDAV methods */
             'TRACE'     => ['TRACE'],
             'PROPFIND'  => ['PROPFIND'],
@@ -187,12 +185,12 @@ class RequestTest extends TestCase
     public function invalidRequestBody()
     {
         return [
-            'true'       => [ true ],
-            'false'      => [ false ],
-            'int'        => [ 1 ],
-            'float'      => [ 1.1 ],
-            'array'      => [ ['BODY'] ],
-            'stdClass'   => [ (object) [ 'body' => 'BODY'] ],
+            'true'     => [true],
+            'false'    => [false],
+            'int'      => [1],
+            'float'    => [1.1],
+            'array'    => [['BODY']],
+            'stdClass' => [(object) ['body' => 'BODY']],
         ];
     }
 
@@ -211,10 +209,10 @@ class RequestTest extends TestCase
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
-            'null' => [['x-invalid-null' => null]],
-            'true' => [['x-invalid-true' => true]],
-            'false' => [['x-invalid-false' => false]],
-            'object' => [['x-invalid-object' => (object) ['INVALID']]],
+            'null'          => [['x-invalid-null' => null]],
+            'true'          => [['x-invalid-true' => true]],
+            'false'         => [['x-invalid-false' => false]],
+            'object'        => [['x-invalid-object' => (object) ['INVALID']]],
         ];
     }
 
@@ -246,29 +244,29 @@ class RequestTest extends TestCase
     public function requestsWithUri()
     {
         return [
-            'absolute-uri' => [
+            'absolute-uri'            => [
                 (new Request())
                 ->withUri(new Uri('https://api.example.com/user'))
                 ->withMethod('POST'),
-                '/user'
+                '/user',
             ],
             'absolute-uri-with-query' => [
                 (new Request())
                 ->withUri(new Uri('https://api.example.com/user?foo=bar'))
                 ->withMethod('POST'),
-                '/user?foo=bar'
+                '/user?foo=bar',
             ],
-            'relative-uri' => [
+            'relative-uri'            => [
                 (new Request())
                 ->withUri(new Uri('/user'))
                 ->withMethod('GET'),
-                '/user'
+                '/user',
             ],
             'relative-uri-with-query' => [
                 (new Request())
                 ->withUri(new Uri('/user?foo=bar'))
                 ->withMethod('GET'),
-                '/user?foo=bar'
+                '/user?foo=bar',
             ],
         ];
     }
@@ -284,12 +282,12 @@ class RequestTest extends TestCase
     public function validRequestTargets()
     {
         return [
-            'asterisk-form'         => [ '*' ],
-            'authority-form'        => [ 'api.example.com' ],
-            'absolute-form'         => [ 'https://api.example.com/users' ],
-            'absolute-form-query'   => [ 'https://api.example.com/users?foo=bar' ],
-            'origin-form-path-only' => [ '/users' ],
-            'origin-form'           => [ '/users?id=foo' ],
+            'asterisk-form'         => ['*'],
+            'authority-form'        => ['api.example.com'],
+            'absolute-form'         => ['https://api.example.com/users'],
+            'absolute-form-query'   => ['https://api.example.com/users?foo=bar'],
+            'origin-form-path-only' => ['/users'],
+            'origin-form'           => ['/users?id=foo'],
         ];
     }
 
@@ -314,15 +312,15 @@ class RequestTest extends TestCase
 
     public function testRequestTargetDoesNotCacheBetweenInstances()
     {
-        $request = (new Request())->withUri(new Uri('https://example.com/foo/bar'));
-        $original = $request->getRequestTarget();
+        $request    = (new Request())->withUri(new Uri('https://example.com/foo/bar'));
+        $original   = $request->getRequestTarget();
         $newRequest = $request->withUri(new Uri('http://mwop.net/bar/baz'));
         $this->assertNotSame($original, $newRequest->getRequestTarget());
     }
 
     public function testSettingNewUriResetsRequestTarget()
     {
-        $request = (new Request())->withUri(new Uri('https://example.com/foo/bar'));
+        $request    = (new Request())->withUri(new Uri('https://example.com/foo/bar'));
         $newRequest = $request->withUri(new Uri('http://mwop.net/bar/baz'));
 
         $this->assertNotSame($request->getRequestTarget(), $newRequest->getRequestTarget());
@@ -376,7 +374,7 @@ class RequestTest extends TestCase
     public function testGetHostHeaderReturnsUriHostWhenPresent()
     {
         $request = new Request('http://example.com');
-        $header = $request->getHeader('host');
+        $header  = $request->getHeader('host');
         $this->assertSame(['example.com'], $header);
     }
 
@@ -386,7 +384,7 @@ class RequestTest extends TestCase
     public function testGetHostHeaderReturnsUriHostWhenHostHeaderDeleted()
     {
         $request = (new Request('http://example.com'))->withoutHeader('host');
-        $header = $request->getHeader('host');
+        $header  = $request->getHeader('host');
         $this->assertSame(['example.com'], $header);
     }
 
@@ -414,7 +412,7 @@ class RequestTest extends TestCase
     public function testGetHostHeaderLineReturnsUriHostWhenPresent()
     {
         $request = new Request('http://example.com');
-        $header = $request->getHeaderLine('host');
+        $header  = $request->getHeaderLine('host');
         $this->assertStringContainsString('example.com', $header);
     }
 
@@ -516,22 +514,22 @@ class RequestTest extends TestCase
     public function hostHeaderKeys()
     {
         return [
-            'lowercase'            => ['host'],
-            'mixed-4'              => ['hosT'],
-            'mixed-3-4'            => ['hoST'],
-            'reverse-titlecase'    => ['hOST'],
-            'uppercase'            => ['HOST'],
-            'mixed-1-2-3'          => ['HOSt'],
-            'mixed-1-2'            => ['HOst'],
-            'titlecase'            => ['Host'],
-            'mixed-1-4'            => ['HosT'],
-            'mixed-1-2-4'          => ['HOsT'],
-            'mixed-1-3-4'          => ['HoST'],
-            'mixed-1-3'            => ['HoSt'],
-            'mixed-2-3'            => ['hOSt'],
-            'mixed-2-4'            => ['hOsT'],
-            'mixed-2'              => ['hOst'],
-            'mixed-3'              => ['hoSt'],
+            'lowercase'         => ['host'],
+            'mixed-4'           => ['hosT'],
+            'mixed-3-4'         => ['hoST'],
+            'reverse-titlecase' => ['hOST'],
+            'uppercase'         => ['HOST'],
+            'mixed-1-2-3'       => ['HOSt'],
+            'mixed-1-2'         => ['HOst'],
+            'titlecase'         => ['Host'],
+            'mixed-1-4'         => ['HosT'],
+            'mixed-1-2-4'       => ['HOsT'],
+            'mixed-1-3-4'       => ['HoST'],
+            'mixed-1-3'         => ['HoSt'],
+            'mixed-2-3'         => ['hOSt'],
+            'mixed-2-4'         => ['hOsT'],
+            'mixed-2'           => ['hOst'],
+            'mixed-3'           => ['hoSt'],
         ];
     }
 

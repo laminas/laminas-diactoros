@@ -14,11 +14,16 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 
+use function array_shift;
 use function Laminas\Diactoros\marshalHeadersFromSapi;
 use function Laminas\Diactoros\marshalProtocolVersionFromSapi;
 use function Laminas\Diactoros\marshalUriFromSapi;
 use function Laminas\Diactoros\normalizeServer;
 use function Laminas\Diactoros\normalizeUploadedFiles;
+use function sprintf;
+use function str_replace;
+use function strpos;
+use function strtolower;
 
 class ServerRequestFactoryTest extends TestCase
 {
@@ -26,7 +31,7 @@ class ServerRequestFactoryTest extends TestCase
     {
         $server = [
             'HTTP_AUTHORIZATION' => 'token',
-            'HTTP_X_Foo' => 'bar',
+            'HTTP_X_Foo'         => 'bar',
         ];
         $this->assertSame($server, normalizeServer($server));
     }
@@ -34,22 +39,22 @@ class ServerRequestFactoryTest extends TestCase
     public function testMarshalsExpectedHeadersFromServerArray()
     {
         $server = [
-            'HTTP_COOKIE' => 'COOKIE',
+            'HTTP_COOKIE'        => 'COOKIE',
             'HTTP_AUTHORIZATION' => 'token',
-            'HTTP_CONTENT_TYPE' => 'application/json',
-            'HTTP_ACCEPT' => 'application/json',
-            'HTTP_X_FOO_BAR' => 'FOOBAR',
-            'CONTENT_MD5' => 'CONTENT-MD5',
-            'CONTENT_LENGTH' => 'UNSPECIFIED',
+            'HTTP_CONTENT_TYPE'  => 'application/json',
+            'HTTP_ACCEPT'        => 'application/json',
+            'HTTP_X_FOO_BAR'     => 'FOOBAR',
+            'CONTENT_MD5'        => 'CONTENT-MD5',
+            'CONTENT_LENGTH'     => 'UNSPECIFIED',
         ];
 
         $expected = [
-            'cookie' => 'COOKIE',
-            'authorization' => 'token',
-            'content-type' => 'application/json',
-            'accept' => 'application/json',
-            'x-foo-bar' => 'FOOBAR',
-            'content-md5' => 'CONTENT-MD5',
+            'cookie'         => 'COOKIE',
+            'authorization'  => 'token',
+            'content-type'   => 'application/json',
+            'accept'         => 'application/json',
+            'x-foo-bar'      => 'FOOBAR',
+            'content-md5'    => 'CONTENT-MD5',
             'content-length' => 'UNSPECIFIED',
         ];
 
@@ -59,15 +64,15 @@ class ServerRequestFactoryTest extends TestCase
     public function testMarshalInvalidHeadersStrippedFromServerArray()
     {
         $server = [
-            'COOKIE' => 'COOKIE',
+            'COOKIE'             => 'COOKIE',
             'HTTP_AUTHORIZATION' => 'token',
-            'MD5' => 'CONTENT-MD5',
-            'CONTENT_LENGTH' => 'UNSPECIFIED',
+            'MD5'                => 'CONTENT-MD5',
+            'CONTENT_LENGTH'     => 'UNSPECIFIED',
         ];
 
         //Headers that don't begin with HTTP_ or CONTENT_ will not be returned
         $expected = [
-            'authorization' => 'token',
+            'authorization'  => 'token',
             'content-length' => 'UNSPECIFIED',
         ];
         $this->assertSame($expected, marshalHeadersFromSapi($server));
@@ -77,14 +82,14 @@ class ServerRequestFactoryTest extends TestCase
     {
         // Non-prefixed versions will be preferred
         $server = [
-            'HTTP_X_FOO_BAR' => 'nonprefixed',
+            'HTTP_X_FOO_BAR'              => 'nonprefixed',
             'REDIRECT_HTTP_AUTHORIZATION' => 'token',
-            'REDIRECT_HTTP_X_FOO_BAR' => 'prefixed',
+            'REDIRECT_HTTP_X_FOO_BAR'     => 'prefixed',
         ];
 
         $expected = [
             'authorization' => 'token',
-            'x-foo-bar' => 'nonprefixed',
+            'x-foo-bar'     => 'nonprefixed',
         ];
 
         $this->assertEquals($expected, marshalHeadersFromSapi($server));
@@ -94,7 +99,7 @@ class ServerRequestFactoryTest extends TestCase
     {
         $server = [
             'IIS_WasUrlRewritten' => '1',
-            'UNENCODED_URL' => '/foo/bar',
+            'UNENCODED_URL'       => '/foo/bar',
         ];
 
         $uri = marshalUriFromSapi($server, []);
@@ -175,7 +180,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
 
-        $server  = [
+        $server = [
             'SERVER_NAME' => 'example.com',
         ];
 
@@ -190,7 +195,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
 
-        $server  = [
+        $server = [
             'SERVER_NAME' => 'example.com',
             'SERVER_PORT' => 8000,
         ];
@@ -206,7 +211,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withUri(new Uri('http://example.com/'));
 
-        $server  = [
+        $server = [
             'SERVER_ADDR' => '127.0.0.1',
             'SERVER_NAME' => 'example.com',
         ];
@@ -221,7 +226,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
 
-        $server  = [
+        $server = [
             'SERVER_ADDR' => 'FE80::0202:B3FF:FE1E:8329',
             'SERVER_NAME' => '[FE80::0202:B3FF:FE1E:8329]',
             'SERVER_PORT' => 8000,
@@ -238,7 +243,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withUri(new Uri());
 
-        $server  = [
+        $server = [
             'SERVER_ADDR' => 'FE80::0202:B3FF:FE1E:8329',
             'SERVER_NAME' => '[FE80::0202:B3FF:FE1E:8329:80]',
         ];
@@ -270,7 +275,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = $request->withUri(new Uri('http://example.com/'));
         $request = $request->withHeader('Host', 'example.com');
 
-        $server  = [
+        $server = [
             $param => 'on',
         ];
 
@@ -288,7 +293,7 @@ class ServerRequestFactoryTest extends TestCase
         foreach ($this->httpsParamProvider() as $key => $data) {
             $param = array_shift($data);
             foreach (['lowercase-off', 'uppercase-off'] as $type) {
-                $key = sprintf('%s-%s', $key, $type);
+                $key   = sprintf('%s-%s', $key, $type);
                 $value = false !== strpos($type, 'lowercase') ? 'off' : 'OFF';
                 yield $key => [$param, $value];
             }
@@ -306,7 +311,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = $request->withUri(new Uri('http://example.com/'));
         $request = $request->withHeader('Host', 'example.com');
 
-        $server  = [
+        $server = [
             $param => $value,
         ];
 
@@ -327,7 +332,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = $request->withHeader('Host', 'example.com');
         $request = $request->withHeader('X-Forwarded-Proto', $xForwardedProto);
 
-        $server  = [];
+        $server = [];
 
         $uri = marshalUriFromSapi($server, $request->getHeaders());
 
@@ -358,7 +363,7 @@ class ServerRequestFactoryTest extends TestCase
         $request = $request->withHeader('Host', 'example.com');
 
         $server = [
-            'REQUEST_URI' => '/foo/bar?foo=bar',
+            'REQUEST_URI'  => '/foo/bar?foo=bar',
             'QUERY_STRING' => 'bar=baz',
         ];
 
@@ -388,11 +393,11 @@ class ServerRequestFactoryTest extends TestCase
     {
         $server = [
             'SERVER_PROTOCOL' => '1.1',
-            'HTTP_HOST' => 'example.com',
-            'HTTP_ACCEPT' => 'application/json',
-            'REQUEST_METHOD' => 'POST',
-            'REQUEST_URI' => '/foo/bar',
-            'QUERY_STRING' => 'bar=baz',
+            'HTTP_HOST'       => 'example.com',
+            'HTTP_ACCEPT'     => 'application/json',
+            'REQUEST_METHOD'  => 'POST',
+            'REQUEST_URI'     => '/foo/bar',
+            'QUERY_STRING'    => 'bar=baz',
         ];
 
         $cookies = $query = $body = [
@@ -402,15 +407,17 @@ class ServerRequestFactoryTest extends TestCase
         $cookies['cookies'] = true;
         $query['query']     = true;
         $body['body']       = true;
-        $files              = [ 'files' => [
-            'tmp_name' => 'php://temp',
-            'size'     => 0,
-            'error'    => 0,
-            'name'     => 'foo.bar',
-            'type'     => 'text/plain',
-        ]];
-        $expectedFiles = [
-            'files' => new UploadedFile('php://temp', 0, 0, 'foo.bar', 'text/plain')
+        $files              = [
+            'files' => [
+                'tmp_name' => 'php://temp',
+                'size'     => 0,
+                'error'    => 0,
+                'name'     => 'foo.bar',
+                'type'     => 'text/plain',
+            ],
+        ];
+        $expectedFiles      = [
+            'files' => new UploadedFile('php://temp', 0, 0, 'foo.bar', 'text/plain'),
         ];
 
         $request = ServerRequestFactory::fromGlobals($server, $query, $body, $cookies, $files);
@@ -425,7 +432,7 @@ class ServerRequestFactoryTest extends TestCase
 
     public function testFromGlobalsUsesCookieHeaderInsteadOfCookieSuperGlobal()
     {
-        $_COOKIE = [
+        $_COOKIE                = [
             'foo_bar' => 'bat',
         ];
         $_SERVER['HTTP_COOKIE'] = 'foo_bar=baz';
@@ -440,7 +447,7 @@ class ServerRequestFactoryTest extends TestCase
      */
     public function testCreateFromGlobalsShouldPreserveKeysWhenCreatedWithAZeroValue()
     {
-        $_SERVER['HTTP_ACCEPT'] = '0';
+        $_SERVER['HTTP_ACCEPT']    = '0';
         $_SERVER['CONTENT_LENGTH'] = '0';
 
         $request = ServerRequestFactory::fromGlobals();
@@ -454,7 +461,7 @@ class ServerRequestFactoryTest extends TestCase
      */
     public function testCreateFromGlobalsShouldNotPreserveKeysWhenCreatedWithAnEmptyValue()
     {
-        $_SERVER['HTTP_ACCEPT'] = '';
+        $_SERVER['HTTP_ACCEPT']    = '';
         $_SERVER['CONTENT_LENGTH'] = '';
 
         $request = ServerRequestFactory::fromGlobals();
@@ -480,11 +487,11 @@ class ServerRequestFactoryTest extends TestCase
     public function cookieHeaderValues()
     {
         return [
-            'ows-without-fold' => [
+            'ows-without-fold'    => [
                 "\tfoo=bar ",
                 ['foo' => 'bar'],
             ],
-            'url-encoded-value' => [
+            'url-encoded-value'   => [
                 'foo=bar%3B+',
                 ['foo' => 'bar; '],
             ],
@@ -492,15 +499,15 @@ class ServerRequestFactoryTest extends TestCase
                 'foo="bar"',
                 ['foo' => 'bar'],
             ],
-            'multiple-pairs' => [
+            'multiple-pairs'      => [
                 'foo=bar; baz="bat"; bau=bai',
                 ['foo' => 'bar', 'baz' => 'bat', 'bau' => 'bai'],
             ],
-            'same-name-pairs' => [
+            'same-name-pairs'     => [
                 'foo=bar; foo="bat"',
                 ['foo' => 'bat'],
             ],
-            'period-in-name' => [
+            'period-in-name'      => [
                 'foo.bar=baz',
                 ['foo.bar' => 'baz'],
             ],
@@ -557,13 +564,15 @@ class ServerRequestFactoryTest extends TestCase
      */
     public function testNormalizeFilesReturnsOnlyActualFilesWhenOriginalFilesContainsNestedAssociativeArrays()
     {
-        $files = [ 'fooFiles' => [
-            'tmp_name' => ['file' => 'php://temp'],
-            'size'     => ['file' => 0],
-            'error'    => ['file' => 0],
-            'name'     => ['file' => 'foo.bar'],
-            'type'     => ['file' => 'text/plain'],
-        ]];
+        $files = [
+            'fooFiles' => [
+                'tmp_name' => ['file' => 'php://temp'],
+                'size'     => ['file' => 0],
+                'error'    => ['file' => 0],
+                'name'     => ['file' => 'foo.bar'],
+                'type'     => ['file' => 'text/plain'],
+            ],
+        ];
 
         $normalizedFiles = normalizeUploadedFiles($files);
 
@@ -605,7 +614,7 @@ class ServerRequestFactoryTest extends TestCase
         $headers = [
             'X-Original-URL' => '/hijack-attempt',
         ];
-        $server = [
+        $server  = [
             'REQUEST_URI' => 'https://example.com/requested/path',
         ];
 
@@ -617,7 +626,7 @@ class ServerRequestFactoryTest extends TestCase
     {
         $factory = new ServerRequestFactory();
         $request = $factory->createServerRequest('GET', '/');
-        $body = $request->getBody();
+        $body    = $request->getBody();
 
         $this->assertTrue($body->isWritable());
         $this->assertTrue($body->isSeekable());
@@ -717,7 +726,7 @@ class ServerRequestFactoryTest extends TestCase
         string $expectedHeaderValue,
         string $expectedServerValue
     ): void {
-        $request = ServerRequestFactory::fromGlobals($server);
+        $request    = ServerRequestFactory::fromGlobals($server);
         $headerName = str_replace('_', '-', $key);
 
         $this->assertSame($expectedHeaderValue, $request->getHeaderLine($headerName));
@@ -727,7 +736,7 @@ class ServerRequestFactoryTest extends TestCase
     public function testReturnsFilteredRequestBasedOnRequestFilterProvided(): void
     {
         $expectedRequest = new ServerRequest();
-        $filter = new class($expectedRequest) implements FilterServerRequestInterface {
+        $filter          = new class ($expectedRequest) implements FilterServerRequestInterface {
             /** @var ServerRequestInterface */
             private $request;
 
@@ -757,18 +766,18 @@ class ServerRequestFactoryTest extends TestCase
     public function testHonorsHostHeaderOverServerNameWhenMarshalingUrl(): void
     {
         $server = [
-            'SERVER_NAME' => 'localhost',
-            'SERVER_PORT' => '80',
-            'SERVER_ADDR' => '172.22.0.4',
-            'REMOTE_PORT' => '36852',
+            'SERVER_NAME'     => 'localhost',
+            'SERVER_PORT'     => '80',
+            'SERVER_ADDR'     => '172.22.0.4',
+            'REMOTE_PORT'     => '36852',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
-            'DOCUMENT_ROOT' => '/var/www/public',
-            'DOCUMENT_URI' => '/index.php',
-            'REQUEST_URI' => '/api/messagebox-schema',
+            'DOCUMENT_ROOT'   => '/var/www/public',
+            'DOCUMENT_URI'    => '/index.php',
+            'REQUEST_URI'     => '/api/messagebox-schema',
             'PATH_TRANSLATED' => '/var/www/public',
-            'PATH_INFO' => '',
-            'SCRIPT_NAME' => '/index.php',
-            'REQUEST_METHOD' => 'GET',
+            'PATH_INFO'       => '',
+            'SCRIPT_NAME'     => '/index.php',
+            'REQUEST_METHOD'  => 'GET',
             'SCRIPT_FILENAME' => '/var/www/public/index.php',
             // headers
             'HTTP_HOST' => 'example.com',
@@ -797,7 +806,7 @@ class ServerRequestFactoryTest extends TestCase
         return [
             'comma' => ['example.com,example.net'],
             'space' => ['example com'],
-            'tab' => ["example\tcom"],
+            'tab'   => ["example\tcom"],
         ];
     }
 

@@ -29,7 +29,7 @@ class RelativeStreamTest extends TestCase
         $decorated->getContents()->shouldBeCalled()->willReturn('foobarbaz');
 
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->__toString();
+        $ret    = $stream->__toString();
         $this->assertSame('foobarbaz', $ret);
     }
 
@@ -46,7 +46,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->detach()->shouldBeCalled()->willReturn(250);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->detach();
+        $ret    = $stream->detach();
         $this->assertSame(250, $ret);
     }
 
@@ -55,7 +55,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->getSize()->shouldBeCalled()->willReturn(250);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->getSize();
+        $ret    = $stream->getSize();
         $this->assertSame(150, $ret);
     }
 
@@ -64,7 +64,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->tell()->shouldBeCalled()->willReturn(188);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->tell();
+        $ret    = $stream->tell();
         $this->assertSame(88, $ret);
     }
 
@@ -73,7 +73,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->isSeekable()->shouldBeCalled()->willReturn(true);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->isSeekable();
+        $ret    = $stream->isSeekable();
         $this->assertSame(true, $ret);
     }
 
@@ -82,7 +82,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->isWritable()->shouldBeCalled()->willReturn(true);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->isWritable();
+        $ret    = $stream->isWritable();
         $this->assertSame(true, $ret);
     }
 
@@ -91,7 +91,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->isReadable()->shouldBeCalled()->willReturn(false);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->isReadable();
+        $ret    = $stream->isReadable();
         $this->assertSame(false, $ret);
     }
 
@@ -117,7 +117,7 @@ class RelativeStreamTest extends TestCase
         $decorated->tell()->willReturn(100);
         $decorated->write("foobaz")->shouldBeCalled()->willReturn(6);
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->write("foobaz");
+        $ret    = $stream->write("foobaz");
         $this->assertSame(6, $ret);
     }
 
@@ -127,7 +127,7 @@ class RelativeStreamTest extends TestCase
         $decorated->tell()->willReturn(100);
         $decorated->read(3)->shouldBeCalled()->willReturn("foo");
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->read(3);
+        $ret    = $stream->read(3);
         $this->assertSame("foo", $ret);
     }
 
@@ -137,7 +137,7 @@ class RelativeStreamTest extends TestCase
         $decorated->tell()->willReturn(100);
         $decorated->getContents()->shouldBeCalled()->willReturn("foo");
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->getContents();
+        $ret    = $stream->getContents();
         $this->assertSame("foo", $ret);
     }
 
@@ -146,7 +146,7 @@ class RelativeStreamTest extends TestCase
         $decorated = $this->prophesize(Stream::class);
         $decorated->getMetadata("bar")->shouldBeCalled()->willReturn("foo");
         $stream = new RelativeStream($decorated->reveal(), 100);
-        $ret = $stream->getMetadata("bar");
+        $ret    = $stream->getMetadata("bar");
         $this->assertSame("foo", $ret);
     }
 

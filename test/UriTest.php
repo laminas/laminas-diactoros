@@ -134,9 +134,9 @@ class UriTest extends TestCase
     public function validPorts()
     {
         return [
-            'null'         => [ null ],
-            'int'          => [ 3000 ],
-            'string-int'   => [ '3000' ],
+            'null'       => [null],
+            'int'        => [3000],
+            'string-int' => ['3000'],
         ];
     }
 
@@ -166,15 +166,15 @@ class UriTest extends TestCase
     public function invalidPorts()
     {
         return [
-            'true'       => [ true ],
-            'false'      => [ false ],
-            'string'     => [ 'string' ],
-            'float'      => [ 55.5 ],
-            'array'      => [ [ 3000 ] ],
-            'object'     => [ (object) ['port' => 3000 ] ],
-            'zero'       => [ 0 ],
-            'too-small'  => [ -1 ],
-            'too-big'    => [ 65536 ],
+            'true'      => [true],
+            'false'     => [false],
+            'string'    => ['string'],
+            'float'     => [55.5],
+            'array'     => [[3000]],
+            'object'    => [(object) ['port' => 3000]],
+            'zero'      => [0],
+            'too-small' => [-1],
+            'too-big'   => [65536],
         ];
     }
 
@@ -212,13 +212,13 @@ class UriTest extends TestCase
     public function invalidPaths()
     {
         return [
-            'null'      => [ null ],
-            'true'      => [ true ],
-            'false'     => [ false ],
-            'array'     => [ [ '/bar/baz' ] ],
-            'object'    => [ (object) [ '/bar/baz' ] ],
-            'query'     => [ '/bar/baz?bat=quz' ],
-            'fragment'  => [ '/bar/baz#bat' ],
+            'null'     => [null],
+            'true'     => [true],
+            'false'    => [false],
+            'array'    => [['/bar/baz']],
+            'object'   => [(object) ['/bar/baz']],
+            'query'    => ['/bar/baz?bat=quz'],
+            'fragment' => ['/bar/baz#bat'],
         ];
     }
 
@@ -247,12 +247,12 @@ class UriTest extends TestCase
     public function invalidQueryStrings()
     {
         return [
-            'null'      => [ null ],
-            'true'      => [ true ],
-            'false'     => [ false ],
-            'array'     => [ [ 'baz=bat' ] ],
-            'object'    => [ (object) [ 'baz=bat' ] ],
-            'fragment'  => [ 'baz=bat#quz' ],
+            'null'     => [null],
+            'true'     => [true],
+            'false'    => [false],
+            'array'    => [['baz=bat']],
+            'object'   => [(object) ['baz=bat']],
+            'fragment' => ['baz=bat#quz'],
         ];
     }
 
@@ -290,10 +290,10 @@ class UriTest extends TestCase
     public function authorityInfo()
     {
         return [
-            'host-only'      => [ 'http://foo.com/bar',         'foo.com' ],
-            'host-port'      => [ 'http://foo.com:3000/bar',    'foo.com:3000' ],
-            'user-host'      => [ 'http://me@foo.com/bar',      'me@foo.com' ],
-            'user-host-port' => [ 'http://me@foo.com:3000/bar', 'me@foo.com:3000' ],
+            'host-only'      => ['http://foo.com/bar',         'foo.com'],
+            'host-port'      => ['http://foo.com:3000/bar',    'foo.com:3000'],
+            'user-host'      => ['http://me@foo.com/bar',      'me@foo.com'],
+            'user-host-port' => ['http://me@foo.com:3000/bar', 'me@foo.com:3000'],
         ];
     }
 
@@ -362,11 +362,11 @@ class UriTest extends TestCase
     public function invalidSchemes()
     {
         return [
-            'mailto' => [ 'mailto' ],
-            'ftp'    => [ 'ftp' ],
-            'telnet' => [ 'telnet' ],
-            'ssh'    => [ 'ssh' ],
-            'git'    => [ 'git' ],
+            'mailto' => ['mailto'],
+            'ftp'    => ['ftp'],
+            'telnet' => ['telnet'],
+            'ssh'    => ['ssh'],
+            'git'    => ['git'],
         ];
     }
 
@@ -425,8 +425,8 @@ class UriTest extends TestCase
     public function standardSchemePortCombinations()
     {
         return [
-            'http'  => [ 'http', 80 ],
-            'https' => [ 'https', 443 ],
+            'http'  => ['http', 80],
+            'https' => ['https', 443],
         ];
     }
 
@@ -461,7 +461,7 @@ class UriTest extends TestCase
      */
     public function testMutationResetsUriStringPropertyInClone($method, $value)
     {
-        $uri = new Uri('http://example.com/path?query=string#fragment');
+        $uri    = new Uri('http://example.com/path?query=string#fragment');
         $string = (string) $uri;
 
         $r = new ReflectionObject($uri);
@@ -470,8 +470,8 @@ class UriTest extends TestCase
         $this->assertSame($string, $p->getValue($uri));
 
         $test = $uri->{$method}($value);
-        $r2 = new ReflectionObject($uri);
-        $p2 = $r2->getProperty('uriString');
+        $r2   = new ReflectionObject($uri);
+        $p2   = $r2->getProperty('uriString');
         $p2->setAccessible(true);
         $this->assertNull($p2->getValue($test));
 
@@ -483,14 +483,14 @@ class UriTest extends TestCase
      */
     public function testPathIsProperlyEncoded()
     {
-        $uri = (new Uri())->withPath('/foo^bar');
+        $uri      = (new Uri())->withPath('/foo^bar');
         $expected = '/foo%5Ebar';
         $this->assertSame($expected, $uri->getPath());
     }
 
     public function testPathDoesNotBecomeDoubleEncoded()
     {
-        $uri = (new Uri())->withPath('/foo%5Ebar');
+        $uri      = (new Uri())->withPath('/foo%5Ebar');
         $expected = '/foo%5Ebar';
         $this->assertSame($expected, $uri->getPath());
     }
@@ -498,11 +498,11 @@ class UriTest extends TestCase
     public function queryStringsForEncoding()
     {
         return [
-            'key-only' => ['k^ey', 'k%5Eey'],
-            'key-value' => ['k^ey=valu`', 'k%5Eey=valu%60'],
-            'array-key-only' => ['key[]', 'key%5B%5D'],
+            'key-only'        => ['k^ey', 'k%5Eey'],
+            'key-value'       => ['k^ey=valu`', 'k%5Eey=valu%60'],
+            'array-key-only'  => ['key[]', 'key%5B%5D'],
             'array-key-value' => ['key[]=valu`', 'key%5B%5D=valu%60'],
-            'complex' => ['k^ey&key[]=valu`&f<>=`bar', 'k%5Eey&key%5B%5D=valu%60&f%3C%3E=%60bar'],
+            'complex'         => ['k^ey&key[]=valu`&f<>=`bar', 'k%5Eey&key%5B%5D=valu%60&f%3C%3E=%60bar'],
         ];
     }
 
@@ -531,7 +531,7 @@ class UriTest extends TestCase
      */
     public function testFragmentIsProperlyEncoded()
     {
-        $uri = (new Uri())->withFragment('/p^th?key^=`bar#b@z');
+        $uri      = (new Uri())->withFragment('/p^th?key^=`bar#b@z');
         $expected = '/p%5Eth?key%5E=%60bar%23b@z';
         $this->assertSame($expected, $uri->getFragment());
     }
@@ -542,7 +542,7 @@ class UriTest extends TestCase
     public function testFragmentIsNotDoubleEncoded()
     {
         $expected = '/p%5Eth?key%5E=%60bar%23b@z';
-        $uri = (new Uri())->withFragment($expected);
+        $uri      = (new Uri())->withFragment($expected);
         $this->assertSame($expected, $uri->getFragment());
     }
 
@@ -573,13 +573,13 @@ class UriTest extends TestCase
             'zero-float' => 0.0,
             'float'      => 1.1,
             'array'      => ['value'],
-            'object'     => (object)['value' => 'value'],
+            'object'     => (object) ['value' => 'value'],
         ];
 
         $combinations = [];
         foreach ($methods as $method) {
             foreach ($values as $type => $value) {
-                $key = sprintf('%s-%s', $method, $type);
+                $key                = sprintf('%s-%s', $method, $type);
                 $combinations[$key] = [$method, $value];
             }
         }
@@ -616,7 +616,6 @@ class UriTest extends TestCase
 
         $this->assertSame($result, $uri->getPath());
     }
-
 
     public function utf8PathsDataProvider()
     {
@@ -684,11 +683,10 @@ class UriTest extends TestCase
         $this->assertSame('new-host.com', $uri->getHost());
     }
 
-
     public function testUriDistinguishZeroFromEmptyString()
     {
         $expected = 'https://0:0@0:1/0?0#0';
-        $uri = new Uri($expected);
+        $uri      = new Uri($expected);
         $this->assertSame($expected, (string) $uri);
     }
 }

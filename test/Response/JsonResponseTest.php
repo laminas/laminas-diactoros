@@ -7,6 +7,7 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\JsonResponse;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function fopen;
 use function json_decode;
@@ -131,7 +132,7 @@ class JsonResponseTest extends TestCase
 
     public function testConstructorRewindsBodyStream()
     {
-        $json = ['test' => 'data'];
+        $json     = ['test' => 'data'];
         $response = new JsonResponse($json);
 
         $actual = json_decode($response->getBody()->getContents(), true);
@@ -140,15 +141,15 @@ class JsonResponseTest extends TestCase
 
     public function testPayloadGetter()
     {
-        $payload = ['test' => 'data'];
+        $payload  = ['test' => 'data'];
         $response = new JsonResponse($payload);
         $this->assertSame($payload, $response->getPayload());
     }
 
     public function testWithPayload()
     {
-        $response = new JsonResponse(['test' => 'data']);
-        $json = [ 'foo' => 'bar'];
+        $response    = new JsonResponse(['test' => 'data']);
+        $json        = ['foo' => 'bar'];
         $newResponse = $response->withPayload($json);
         $this->assertNotSame($response, $newResponse);
 
@@ -165,7 +166,7 @@ class JsonResponseTest extends TestCase
 
     public function testWithEncodingOptions()
     {
-        $response = new JsonResponse([ 'foo' => 'bar']);
+        $response = new JsonResponse(['foo' => 'bar']);
         $expected = <<<JSON
 {"foo":"bar"}
 JSON;
@@ -187,13 +188,13 @@ JSON;
 
     public function testModifyingThePayloadDoesntMutateResponseInstance()
     {
-        $payload = new \stdClass();
+        $payload      = new stdClass();
         $payload->foo = 'bar';
 
         $response = new JsonResponse($payload);
 
         $originalPayload = clone $payload;
-        $payload->bar = 'baz';
+        $payload->bar    = 'baz';
 
         $this->assertEquals($originalPayload, $response->getPayload());
         $this->assertNotSame($payload, $response->getPayload());

@@ -34,7 +34,7 @@ abstract class AbstractSerializer
      * @throws Exception\DeserializationException if the sequence contains a CR
      *     or LF in isolation, or ends in a CR.
      */
-    protected static function getLine(StreamInterface $stream) : string
+    protected static function getLine(StreamInterface $stream): string
     {
         $line    = '';
         $crFound = false;
@@ -84,7 +84,7 @@ abstract class AbstractSerializer
      *
      * @throws Exception\DeserializationException For invalid headers.
      */
-    protected static function splitStream(StreamInterface $stream) : array
+    protected static function splitStream(StreamInterface $stream): array
     {
         $headers       = [];
         $currentHeader = false;
@@ -108,7 +108,7 @@ abstract class AbstractSerializer
             }
 
             // Append continuation to last header value found
-            $value = array_pop($headers[$currentHeader]);
+            $value                     = array_pop($headers[$currentHeader]);
             $headers[$currentHeader][] = $value . ' ' . trim($line, "\t ");
         }
 
@@ -121,7 +121,7 @@ abstract class AbstractSerializer
      *
      * @psalm-param array<string, string[]> $headers
      */
-    protected static function serializeHeaders(array $headers) : string
+    protected static function serializeHeaders(array $headers): string
     {
         $lines = [];
         foreach ($headers as $header => $values) {
@@ -139,7 +139,7 @@ abstract class AbstractSerializer
      *
      * @param string $header
      */
-    protected static function filterHeader($header) : string
+    protected static function filterHeader($header): string
     {
         $filtered = str_replace('-', ' ', $header);
         $filtered = ucwords($filtered);

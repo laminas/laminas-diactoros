@@ -21,7 +21,7 @@ class RedirectResponseTest extends TestCase
 
     public function testConstructorAcceptsUriInstanceAndProduces302ResponseWithLocationHeader()
     {
-        $uri = new Uri('https://example.com:10082/foo/bar');
+        $uri      = new Uri('https://example.com:10082/foo/bar');
         $response = new RedirectResponse($uri);
         $this->assertSame(302, $response->getStatusCode());
         $this->assertTrue($response->hasHeader('Location'));
@@ -49,15 +49,15 @@ class RedirectResponseTest extends TestCase
     public function invalidUris()
     {
         return [
-            'null'       => [ null ],
-            'false'      => [ false ],
-            'true'       => [ true ],
-            'zero'       => [ 0 ],
-            'int'        => [ 1 ],
-            'zero-float' => [ 0.0 ],
-            'float'      => [ 1.1 ],
-            'array'      => [ [ '/foo/bar' ] ],
-            'object'     => [ (object) [ '/foo/bar' ] ],
+            'null'       => [null],
+            'false'      => [false],
+            'true'       => [true],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+            'array'      => [['/foo/bar']],
+            'object'     => [(object) ['/foo/bar']],
         ];
     }
 

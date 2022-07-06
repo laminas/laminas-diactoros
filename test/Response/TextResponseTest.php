@@ -7,8 +7,8 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\TextResponse;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Http\Message\StreamInterface;
 
 class TextResponseTest extends TestCase
 {
@@ -25,7 +25,7 @@ class TextResponseTest extends TestCase
 
     public function testConstructorAllowsPassingStatus()
     {
-        $body = 'Uh oh not found';
+        $body   = 'Uh oh not found';
         $status = 404;
 
         $response = new TextResponse($body, $status);
@@ -35,10 +35,10 @@ class TextResponseTest extends TestCase
 
     public function testConstructorAllowsPassingHeaders()
     {
-        $body = 'Uh oh not found';
-        $status = 404;
+        $body    = 'Uh oh not found';
+        $status  = 404;
         $headers = [
-            'x-custom' => [ 'foo-bar' ],
+            'x-custom' => ['foo-bar'],
         ];
 
         $response = new TextResponse($body, $status, $headers);
@@ -50,8 +50,8 @@ class TextResponseTest extends TestCase
 
     public function testAllowsStreamsForResponseBody()
     {
-        $stream = $this->prophesize(StreamInterface::class);
-        $body   = $stream->reveal();
+        $stream   = $this->prophesize(StreamInterface::class);
+        $body     = $stream->reveal();
         $response = new TextResponse($body);
         $this->assertSame($body, $response->getBody());
     }
@@ -86,7 +86,7 @@ class TextResponseTest extends TestCase
      */
     public function testConstructorRewindsBodyStream()
     {
-        $text = 'test data';
+        $text     = 'test data';
         $response = new TextResponse($text);
 
         $actual = $response->getBody()->getContents();

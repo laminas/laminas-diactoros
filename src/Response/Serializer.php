@@ -21,7 +21,7 @@ final class Serializer extends AbstractSerializer
      *
      * @throws Exception\SerializationException when errors occur parsing the message.
      */
-    public static function fromString(string $message) : Response
+    public static function fromString(string $message): Response
     {
         $stream = new Stream('php://temp', 'wb+');
         $stream->write($message);
@@ -34,7 +34,7 @@ final class Serializer extends AbstractSerializer
      * @throws Exception\InvalidArgumentException when the stream is not readable.
      * @throws Exception\SerializationException when errors occur parsing the message.
      */
-    public static function fromStream(StreamInterface $stream) : Response
+    public static function fromStream(StreamInterface $stream): Response
     {
         if (! $stream->isReadable() || ! $stream->isSeekable()) {
             throw new Exception\InvalidArgumentException('Message stream must be both readable and seekable');
@@ -53,7 +53,7 @@ final class Serializer extends AbstractSerializer
     /**
      * Create a string representation of a response.
      */
-    public static function toString(ResponseInterface $response) : string
+    public static function toString(ResponseInterface $response): string
     {
         $reasonPhrase = $response->getReasonPhrase();
         $headers      = self::serializeHeaders($response->getHeaders());
@@ -82,15 +82,17 @@ final class Serializer extends AbstractSerializer
      * @return array Array with three elements: 0 => version, 1 => status, 2 => reason
      * @throws Exception\SerializationException if line is malformed
      */
-    private static function getStatusLine(StreamInterface $stream) : array
+    private static function getStatusLine(StreamInterface $stream): array
     {
         $line = self::getLine($stream);
 
-        if (! preg_match(
-            '#^HTTP/(?P<version>[1-9]\d*\.\d) (?P<status>[1-5]\d{2})(\s+(?P<reason>.+))?$#',
-            $line,
-            $matches
-        )) {
+        if (
+            ! preg_match(
+                '#^HTTP/(?P<version>[1-9]\d*\.\d) (?P<status>[1-5]\d{2})(\s+(?P<reason>.+))?$#',
+                $line,
+                $matches
+            )
+        ) {
             throw Exception\SerializationException::forInvalidStatusLine();
         }
 

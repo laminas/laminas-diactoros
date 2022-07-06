@@ -18,8 +18,10 @@ use function curl_init;
 use function curl_setopt;
 use function file_exists;
 use function file_put_contents;
+use function getenv;
 use function gmdate;
 use function in_array;
+use function is_string;
 use function preg_match;
 use function sprintf;
 use function strtotime;
@@ -28,16 +30,15 @@ use const CURLINFO_HTTP_CODE;
 use const CURLOPT_HTTPHEADER;
 use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_TIMEOUT;
+use const CURLOPT_USERAGENT;
 use const LOCK_EX;
 
 class ResponseTest extends TestCase
 {
-    /**
-     * @var Response
-    */
+    /** @var Response */
     protected $response;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->response = new Response();
     }
@@ -60,11 +61,11 @@ class ResponseTest extends TestCase
         $this->assertSame('Unprocessable Content', $response->getReasonPhrase());
     }
 
-    private function fetchIanaStatusCodes() : DOMDocument
+    private function fetchIanaStatusCodes(): DOMDocument
     {
-        $updated = null;
+        $updated                 = null;
         $ianaHttpStatusCodesFile = __DIR__ . '/TestAsset/.cache/http-status-codes.xml';
-        $ianaHttpStatusCodes = null;
+        $ianaHttpStatusCodes     = null;
         if (file_exists($ianaHttpStatusCodesFile)) {
             $ianaHttpStatusCodes = new DOMDocument();
             $ianaHttpStatusCodes->load($ianaHttpStatusCodesFile);
@@ -94,7 +95,7 @@ class ResponseTest extends TestCase
             );
             curl_setopt($ch, CURLOPT_HTTPHEADER, [$ifModifiedSince]);
         }
-        $response = curl_exec($ch);
+        $response     = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -130,7 +131,7 @@ class ResponseTest extends TestCase
         $records = $xpath->query('//ns:record');
 
         foreach ($records as $record) {
-            $value = $xpath->query('.//ns:value', $record)->item(0)->nodeValue;
+            $value       = $xpath->query('.//ns:value', $record)->item(0)->nodeValue;
             $description = $xpath->query('.//ns:description', $record)->item(0)->nodeValue;
 
             if (in_array($description, ['Unassigned', '(Unused)'])) {
@@ -167,13 +168,13 @@ class ResponseTest extends TestCase
     public function invalidReasonPhrases()
     {
         return [
-            'true' => [ true ],
-            'false' => [ false ],
-            'array' => [ [ 200 ] ],
-            'object' => [ (object) [ 'reasonPhrase' => 'Ok' ] ],
+            'true'    => [true],
+            'false'   => [false],
+            'array'   => [[200]],
+            'object'  => [(object) ['reasonPhrase' => 'Ok']],
             'integer' => [99],
-            'float' => [400.5],
-            'null' => [null],
+            'float'   => [400.5],
+            'null'    => [null],
         ];
     }
 
@@ -191,15 +192,15 @@ class ResponseTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new Response([ 'TOTALLY INVALID' ]);
+        new Response(['TOTALLY INVALID']);
     }
 
     public function testConstructorCanAcceptAllMessageParts()
     {
-        $body = new Stream('php://memory');
-        $status = 302;
+        $body    = new Stream('php://memory');
+        $status  = 302;
         $headers = [
-            'location' => [ 'http://example.com/' ],
+            'location' => ['http://example.com/'],
         ];
 
         $response = new Response($body, $status, $headers);
@@ -224,10 +225,10 @@ class ResponseTest extends TestCase
     public function validStatusCodes()
     {
         return [
-            'minimum' => [100],
-            'middle' => [300],
+            'minimum'        => [100],
+            'middle'         => [300],
             'string-integer' => ['300'],
-            'maximum' => [599],
+            'maximum'        => [599],
         ];
     }
 
@@ -244,27 +245,27 @@ class ResponseTest extends TestCase
     public function invalidStatusCodes()
     {
         return [
-            'true' => [ true ],
-            'false' => [ false ],
-            'array' => [ [ 200 ] ],
-            'object' => [ (object) [ 'statusCode' => 200 ] ],
-            'too-low' => [99],
-            'float' => [400.5],
+            'true'     => [true],
+            'false'    => [false],
+            'array'    => [[200]],
+            'object'   => [(object) ['statusCode' => 200]],
+            'too-low'  => [99],
+            'float'    => [400.5],
             'too-high' => [600],
-            'null' => [null],
-            'string' => ['foo'],
+            'null'     => [null],
+            'string'   => ['foo'],
         ];
     }
 
     public function invalidResponseBody()
     {
         return [
-            'true'       => [ true ],
-            'false'      => [ false ],
-            'int'        => [ 1 ],
-            'float'      => [ 1.1 ],
-            'array'      => [ ['BODY'] ],
-            'stdClass'   => [ (object) [ 'body' => 'BODY'] ],
+            'true'     => [true],
+            'false'    => [false],
+            'int'      => [1],
+            'float'    => [1.1],
+            'array'    => [['BODY']],
+            'stdClass' => [(object) ['body' => 'BODY']],
         ];
     }
 
@@ -279,15 +280,14 @@ class ResponseTest extends TestCase
         new Response($body);
     }
 
-
     public function invalidHeaderTypes()
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
-            'null' => [['x-invalid-null' => null]],
-            'true' => [['x-invalid-true' => true]],
-            'false' => [['x-invalid-false' => false]],
-            'object' => [['x-invalid-object' => (object) ['INVALID']]],
+            'null'          => [['x-invalid-null' => null]],
+            'true'          => [['x-invalid-true' => true]],
+            'false'         => [['x-invalid-false' => false]],
+            'object'        => [['x-invalid-object' => (object) ['INVALID']]],
         ];
     }
 

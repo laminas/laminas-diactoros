@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function sprintf;
+
 /**
  * Create an uploaded file instance from an array of values.
  *
@@ -11,9 +13,10 @@ namespace Laminas\Diactoros;
  * @throws Exception\InvalidArgumentException if one or more of the tmp_name,
  *     size, or error keys are missing from $spec.
  */
-function createUploadedFile(array $spec) : UploadedFile
+function createUploadedFile(array $spec): UploadedFile
 {
-    if (! isset($spec['tmp_name'])
+    if (
+        ! isset($spec['tmp_name'])
         || ! isset($spec['size'])
         || ! isset($spec['error'])
     ) {

@@ -24,7 +24,7 @@ final class ArraySerializer
     /**
      * Serialize a response message to an array.
      */
-    public static function toArray(ResponseInterface $response) : array
+    public static function toArray(ResponseInterface $response): array
     {
         return [
             'status_code'      => $response->getStatusCode(),
@@ -40,7 +40,7 @@ final class ArraySerializer
      *
      * @throws Exception\DeserializationException when cannot deserialize response
      */
-    public static function fromArray(array $serializedResponse) : Response
+    public static function fromArray(array $serializedResponse): Response
     {
         try {
             $body = new Stream('php://memory', 'wb+');
@@ -61,12 +61,10 @@ final class ArraySerializer
 
     /**
      * @param array $data
-     * @param string $key
-     * @param string $message
      * @return mixed
      * @throws Exception\DeserializationException
      */
-    private static function getValueFromKey(array $data, string $key, string $message = null)
+    private static function getValueFromKey(array $data, string $key, ?string $message = null)
     {
         if (isset($data[$key])) {
             return $data[$key];

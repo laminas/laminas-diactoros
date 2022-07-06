@@ -28,6 +28,7 @@ final class HeaderSecurity
 {
     /**
      * Private constructor; non-instantiable.
+     *
      * @codeCoverageIgnore
      */
     private function __construct()
@@ -48,7 +49,7 @@ final class HeaderSecurity
      *
      * @see http://en.wikipedia.org/wiki/HTTP_response_splitting
      */
-    public static function filter(string $value) : string
+    public static function filter(string $value): string
     {
         $length = strlen($value);
         $string = '';
@@ -61,7 +62,7 @@ final class HeaderSecurity
                 $ws = ord($value[$i + 2]);
                 if ($lf === 10 && in_array($ws, [9, 32], true)) {
                     $string .= $value[$i] . $value[$i + 1];
-                    $i += 1;
+                    $i      += 1;
                 }
 
                 continue;
@@ -72,7 +73,8 @@ final class HeaderSecurity
             // 32-126, 128-254 === visible
             // 127 === DEL
             // 255 === null byte
-            if (($ascii < 32 && $ascii !== 9)
+            if (
+                ($ascii < 32 && $ascii !== 9)
                 || $ascii === 127
                 || $ascii > 254
             ) {
@@ -92,12 +94,13 @@ final class HeaderSecurity
      * tabs are allowed in values; header continuations MUST consist of
      * a single CRLF sequence followed by a space or horizontal tab.
      *
-     * @param string|int|float $value
      * @see http://en.wikipedia.org/wiki/HTTP_response_splitting
+     *
+     * @param string|int|float $value
      */
-    public static function isValid($value) : bool
+    public static function isValid($value): bool
     {
-        $value  = (string) $value;
+        $value = (string) $value;
 
         // Look for:
         // \n not preceded by \r, OR
@@ -127,7 +130,7 @@ final class HeaderSecurity
      * @param mixed $value Value to be tested. This method asserts it is a string or number.
      * @throws Exception\InvalidArgumentException for invalid values
      */
-    public static function assertValid($value) : void
+    public static function assertValid($value): void
     {
         if (! is_string($value) && ! is_numeric($value)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -147,10 +150,11 @@ final class HeaderSecurity
      * Assert whether or not a header name is valid.
      *
      * @see http://tools.ietf.org/html/rfc7230#section-3.2
+     *
      * @param mixed $name
      * @throws Exception\InvalidArgumentException
      */
-    public static function assertValidName($name) : void
+    public static function assertValidName($name): void
     {
         if (! is_string($name)) {
             throw new Exception\InvalidArgumentException(sprintf(

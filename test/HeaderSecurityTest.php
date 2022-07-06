@@ -10,12 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Laminas\Diactoros\HeaderSecurity.
- *
- * Tests are largely derived from those for Laminas\Http\Header\HeaderValue in
- * Laminas, released with the copyright and license below.
- *
- * @copyright Copyright (c) 2005-2015 Laminas (https://www.zend.com)
- * @license   https://getlaminas.org/license/new-bsd New BSD License
  */
 class HeaderSecurityTest extends TestCase
 {
@@ -35,7 +29,7 @@ class HeaderSecurityTest extends TestCase
             ["This is a\r\r test", "This is a test"],
             ["This is a \r\r\n test", "This is a \r\n test"],
             ["This is a \r\n\r\ntest", "This is a test"],
-            ["This is a \r\n\n\r\n test", "This is a \r\n test"]
+            ["This is a \r\n\n\r\n test", "This is a \r\n test"],
         ];
     }
 
@@ -89,7 +83,7 @@ class HeaderSecurityTest extends TestCase
             ["This is a\r\r test"],
             ["This is a \r\r\n test"],
             ["This is a \r\n\r\ntest"],
-            ["This is a \r\n\n\r\n test"]
+            ["This is a \r\n\n\r\n test"],
         ];
     }
 

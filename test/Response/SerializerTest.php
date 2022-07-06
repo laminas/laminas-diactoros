@@ -67,7 +67,7 @@ class SerializerTest extends TestCase
 
     public function testCanDeserializeBasicResponse()
     {
-        $text = "HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\n\r\nContent!";
+        $text     = "HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\n\r\nContent!";
         $response = Serializer::fromString($text);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -88,7 +88,7 @@ class SerializerTest extends TestCase
 
     public function testCanDeserializeResponseWithMultipleHeadersOfSameName()
     {
-        $text = "HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\nX-Foo-Bar: Bat\r\n\r\nContent!";
+        $text     = "HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\nX-Foo-Bar: Bat\r\n\r\nContent!";
         $response = Serializer::fromString($text);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -103,7 +103,7 @@ class SerializerTest extends TestCase
     {
         return [
             'space' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz;\r\n Bat\r\n\r\nContent!"],
-            'tab' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz;\r\n\tBat\r\n\r\nContent!"],
+            'tab'   => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz;\r\n\tBat\r\n\r\nContent!"],
         ];
     }
 
@@ -125,11 +125,11 @@ class SerializerTest extends TestCase
     public function headersWithWhitespace(): array
     {
         return [
-            'no' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz\r\n\r\nContent!"],
-            'leading' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\n\r\nContent!"],
+            'no'       => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz\r\n\r\nContent!"],
+            'leading'  => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz\r\n\r\nContent!"],
             'trailing' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz \r\n\r\nContent!"],
-            'both' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz \r\n\r\nContent!"],
-            'mixed' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: \t Baz\t \t\r\n\r\nContent!"],
+            'both'     => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz \r\n\r\nContent!"],
+            'mixed'    => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: \t Baz\t \t\r\n\r\nContent!"],
         ];
     }
 
@@ -147,7 +147,7 @@ class SerializerTest extends TestCase
 
     public function testCanDeserializeResponseWithoutBody()
     {
-        $text = "HTTP/1.0 204\r\nX-Foo-Bar: Baz";
+        $text     = "HTTP/1.0 204\r\nX-Foo-Bar: Baz";
         $response = Serializer::fromString($text);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -162,7 +162,7 @@ class SerializerTest extends TestCase
 
     public function testCanDeserializeResponseWithoutHeadersOrBody()
     {
-        $text = "HTTP/1.0 204";
+        $text     = "HTTP/1.0 204";
         $response = Serializer::fromString($text);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -175,7 +175,7 @@ class SerializerTest extends TestCase
 
     public function testCanDeserializeResponseWithoutHeadersButContainingBody()
     {
-        $text = "HTTP/1.0 204\r\n\r\nContent!";
+        $text     = "HTTP/1.0 204\r\n\r\nContent!";
         $response = Serializer::fromString($text);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -199,17 +199,17 @@ class SerializerTest extends TestCase
     public function messagesWithInvalidHeaders()
     {
         return [
-            'invalid-name' => [
+            'invalid-name'         => [
                 "HTTP/1.1 204\r\nThi;-I()-Invalid: value",
-                'Invalid header detected'
+                'Invalid header detected',
             ],
-            'invalid-format' => [
+            'invalid-format'       => [
                 "HTTP/1.1 204\r\nThis is not a header\r\n\r\nContent",
-                'Invalid header detected'
+                'Invalid header detected',
             ],
             'invalid-continuation' => [
                 "HTTP/1.1 204\r\nX-Foo-Bar: Baz\r\nInvalid continuation\r\nContent",
-                'Invalid header continuation'
+                'Invalid header continuation',
             ],
         ];
     }

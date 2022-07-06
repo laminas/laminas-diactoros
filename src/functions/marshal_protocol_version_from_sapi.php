@@ -12,7 +12,7 @@ use function preg_match;
  * @throws Exception\UnrecognizedProtocolVersionException if the
  *     $server['SERVER_PROTOCOL'] value is malformed.
  */
-function marshalProtocolVersionFromSapi(array $server) : string
+function marshalProtocolVersionFromSapi(array $server): string
 {
     if (! isset($server['SERVER_PROTOCOL'])) {
         return '1.1';
