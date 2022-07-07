@@ -11,7 +11,7 @@ use function Laminas\Diactoros\parseCookieHeader as laminas_parseCookieHeader;
  * @deprecated Use {@see \Laminas\Diactoros\parseCookieHeader} instead
  *
  * @param string $cookieHeader A string cookie header value.
- * @return array<string, string> key/value cookie pairs.
+ * @return array<non-empty-string, string> key/value cookie pairs.
  */
 function parseCookieHeader($cookieHeader): array
 {

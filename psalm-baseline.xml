@@ -471,6 +471,14 @@
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
+  <file src="src/functions/parse_cookie_header.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$cookies</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>array&lt;non-empty-string, string&gt;</code>
+    </MoreSpecificReturnType>
+  </file>
   <file src="test/CallbackStreamTest.php">
     <MissingClosureReturnType occurrences="1">
       <code>function () {</code>
