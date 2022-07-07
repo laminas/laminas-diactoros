@@ -87,7 +87,7 @@ class UriTest extends TestCase
         $this->assertSame('https://user:pass@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
-    /** @return array<string, array{0: string, 1: string, 2: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string, non-empty-string}> */
     public function userInfoProvider(): array
     {
         // @codingStandardsIgnoreStart
@@ -105,6 +105,9 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider userInfoProvider
+     * @param non-empty-string $user
+     * @param non-empty-string $credential
+     * @param non-empty-string $expected
      */
     public function testWithUserInfoEncodesUsernameAndPassword(string $user, string $credential, string $expected): void
     {
@@ -132,7 +135,7 @@ class UriTest extends TestCase
         $this->assertSame('https://user:pass@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
-    /** @return array<string, array{0: numeric|null}> */
+    /** @return non-empty-array<non-empty-string, array{null|positive-int|numeric-string}> */
     public function validPorts(): array
     {
         return [
@@ -144,7 +147,7 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider validPorts
-     * @param numeric|null $port
+     * @param null|positive-int|numeric-string $port
      */
     public function testWithPortReturnsNewInstanceWithProvidedPort($port): void
     {
@@ -168,7 +171,7 @@ class UriTest extends TestCase
         $this->assertSame(3001, $new->getPort());
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidPorts(): array
     {
         return [
@@ -217,7 +220,7 @@ class UriTest extends TestCase
         $this->assertSame('https://user:pass@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidPaths(): array
     {
         return [
@@ -255,7 +258,7 @@ class UriTest extends TestCase
         $this->assertSame('https://user:pass@local.example.com:3001/foo?baz=bat#quz', (string) $new);
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function invalidQueryStrings(): array
     {
         return [
@@ -301,7 +304,7 @@ class UriTest extends TestCase
         $this->assertSame('https://user:pass@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
-    /** @return array<string, array{0: string, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
     public function authorityInfo(): array
     {
         return [
@@ -314,6 +317,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider authorityInfo
+     * @param non-empty-string $url
+     * @param non-empty-string $expected
      */
     public function testRetrievingAuthorityReturnsExpectedValues(string $url, string $expected): void
     {
@@ -374,7 +379,7 @@ class UriTest extends TestCase
         $this->assertSame('', $new->getScheme());
     }
 
-    /** @return array<string, array{0: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
     public function invalidSchemes(): array
     {
         return [
@@ -388,6 +393,7 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider invalidSchemes
+     * @param non-empty-string $scheme
      */
     public function testConstructWithUnsupportedSchemeRaisesAnException(string $scheme): void
     {
@@ -399,6 +405,7 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider invalidSchemes
+     * @param non-empty-string $scheme
      */
     public function testMutatingWithUnsupportedSchemeRaisesAnException(string $scheme): void
     {
@@ -438,7 +445,7 @@ class UriTest extends TestCase
         $this->assertSame('%23/foo/bar', $new->getFragment());
     }
 
-    /** @return array<string, array{0: string, 1: int}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, positive-int}> */
     public function standardSchemePortCombinations(): array
     {
         return [
@@ -449,6 +456,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider standardSchemePortCombinations
+     * @param non-empty-string $scheme
+     * @param positive-int $port
      */
     public function testAuthorityOmitsPortForStandardSchemePortCombinations(string $scheme, int $port): void
     {
@@ -459,7 +468,7 @@ class UriTest extends TestCase
         $this->assertSame('example.com', $uri->getAuthority());
     }
 
-    /** @return array<string, array{0: string, 1: string|int}> */
+    /** @return non-empty-array<string, array{'withScheme'|'withUserInfo'|'withHost'|'withPort'|'withPath'|'withQuery'|'withFragment', non-empty-string|positive-int}> */
     public function mutations(): array
     {
         return [
@@ -475,7 +484,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider mutations
-     * @param string|int $value
+     * @param 'withScheme'|'withUserInfo'|'withHost'|'withPort'|'withPath'|'withQuery'|'withFragment' $method
+     * @param non-empty-string|positive-int $value
      */
     public function testMutationResetsUriStringPropertyInClone(string $method, $value): void
     {
@@ -496,6 +506,9 @@ class UriTest extends TestCase
         $this->assertSame($string, $p->getValue($uri));
     }
 
+    /**
+     * @group 40
+     */
     public function testPathIsProperlyEncoded(): void
     {
         $uri      = (new Uri())->withPath('/foo^bar');
@@ -510,7 +523,7 @@ class UriTest extends TestCase
         $this->assertSame($expected, $uri->getPath());
     }
 
-    /** @return array<string, array{0: string, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
     public function queryStringsForEncoding(): array
     {
         return [
@@ -524,6 +537,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider queryStringsForEncoding
+     * @param non-empty-string $query
+     * @param non-empty-string $expected
      */
     public function testQueryIsProperlyEncoded(string $query, string $expected): void
     {
@@ -533,6 +548,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider queryStringsForEncoding
+     * @param non-empty-string $query
+     * @param non-empty-string $expected
      */
     public function testQueryIsNotDoubleEncoded(string $query, string $expected): void
     {
@@ -540,6 +557,9 @@ class UriTest extends TestCase
         $this->assertSame($expected, $uri->getQuery());
     }
 
+    /**
+     * @group 40
+     */
     public function testFragmentIsProperlyEncoded(): void
     {
         $uri      = (new Uri())->withFragment('/p^th?key^=`bar#b@z');
@@ -547,6 +567,9 @@ class UriTest extends TestCase
         $this->assertSame($expected, $uri->getFragment());
     }
 
+    /**
+     * @group 40
+     */
     public function testFragmentIsNotDoubleEncoded(): void
     {
         $expected = '/p%5Eth?key%5E=%60bar%23b@z';
@@ -561,7 +584,7 @@ class UriTest extends TestCase
         $this->assertSame('http://example.org/zend.com', (string) $uri);
     }
 
-    /** @return array<string, array{0: string, 1: mixed}> */
+    /** @return non-empty-array<string, array{'withScheme'|'withUserInfo'|'withHost'|'withPath'|'withQuery'|'withFragment', mixed}> */
     public function invalidStringComponentValues(): array
     {
         $methods = [
@@ -598,6 +621,7 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider invalidStringComponentValues
+     * @param 'withScheme'|'withUserInfo'|'withHost'|'withPath'|'withQuery'|'withFragment' $method
      * @param mixed $value
      */
     public function testPassingInvalidValueToWithMethodRaisesException(string $method, $value): void
@@ -618,6 +642,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider utf8PathsDataProvider
+     * @param non-empty-string $url
+     * @param non-empty-string $result
      */
     public function testUtf8Path(string $url, string $result): void
     {
@@ -626,7 +652,7 @@ class UriTest extends TestCase
         $this->assertSame($result, $uri->getPath());
     }
 
-    /** @return array<int, array{0: string, 1: string}> */
+    /** @return non-empty-list<array{non-empty-string, non-empty-string}> */
     public function utf8PathsDataProvider(): array
     {
         return [
@@ -639,6 +665,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider utf8QueryStringsDataProvider
+     * @param non-empty-string $url
+     * @param non-empty-string $result
      */
     public function testUtf8Query(string $url, string $result): void
     {
@@ -647,7 +675,7 @@ class UriTest extends TestCase
         $this->assertSame($result, $uri->getQuery());
     }
 
-    /** @return array<int, array{0: string, 1: string}> */
+    /** @return non-empty-list<array{non-empty-string, non-empty-string}> */
     public function utf8QueryStringsDataProvider(): array
     {
         return [

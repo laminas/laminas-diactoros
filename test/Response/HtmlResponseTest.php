@@ -56,7 +56,7 @@ class HtmlResponseTest extends TestCase
         $this->assertSame($body, $response->getBody());
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return array<non-empty-string, array{mixed}> */
     public function invalidHtmlContent(): array
     {
         return [

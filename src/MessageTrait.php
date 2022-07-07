@@ -303,9 +303,7 @@ trait MessageTrait
         return $new;
     }
 
-    /**
-     * @param StreamInterface|string|resource $stream
-     */
+    /** @param StreamInterface|string|resource $stream */
     private function getStream($stream, string $modeIfNotInstance): StreamInterface
     {
         if ($stream instanceof StreamInterface) {

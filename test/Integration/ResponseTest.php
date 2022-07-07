@@ -7,7 +7,7 @@ namespace LaminasTest\Diactoros\Integration;
 use Http\Psr7Test\ResponseIntegrationTest;
 use Laminas\Diactoros\Response;
 
-class ResponseTest extends ResponseIntegrationTest
+final class ResponseTest extends ResponseIntegrationTest
 {
     public function createSubject(): Response
     {

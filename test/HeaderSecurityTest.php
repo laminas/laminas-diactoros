@@ -8,12 +8,12 @@ use InvalidArgumentException;
 use Laminas\Diactoros\HeaderSecurity;
 use PHPUnit\Framework\TestCase;
 
-class HeaderSecurityTest extends TestCase
+final class HeaderSecurityTest extends TestCase
 {
     /**
      * Data for filter value
      *
-     * @return array<int, array{0: string, 1: string}>
+     * @return non-empty-list<array{non-empty-string, non-empty-string}>
      */
     public function getFilterValues(): array
     {
@@ -34,42 +34,47 @@ class HeaderSecurityTest extends TestCase
 
     /**
      * @dataProvider getFilterValues
+     * @group ZF2015-04
+     * @param non-empty-string $value
+     * @param non-empty-string $expected
      */
     public function testFiltersValuesPerRfc7230(string $value, string $expected): void
     {
         $this->assertSame($expected, HeaderSecurity::filter($value));
     }
 
-    /** @return array<int, array{0: string, 1: string}> */
+    /** @return non-empty-list<array{non-empty-string, bool}> */
     public function validateValues(): array
     {
         return [
-            ["This is a\n test", 'assertFalse'],
-            ["This is a\r test", 'assertFalse'],
-            ["This is a\n\r test", 'assertFalse'],
-            ["This is a\r\n  test", 'assertTrue'],
-            ["This is a \r\ntest", 'assertFalse'],
-            ["This is a \r\n\n test", 'assertFalse'],
-            ["This is a\n\n test", 'assertFalse'],
-            ["This is a\r\r test", 'assertFalse'],
-            ["This is a \r\r\n test", 'assertFalse'],
-            ["This is a \r\n\r\ntest", 'assertFalse'],
-            ["This is a \r\n\n\r\n test", 'assertFalse'],
-            ["This is a \xFF test", 'assertFalse'],
-            ["This is a \x7F test", 'assertFalse'],
-            ["This is a \x7E test", 'assertTrue'],
+            ["This is a\n test", false],
+            ["This is a\r test", false],
+            ["This is a\n\r test", false],
+            ["This is a\r\n  test", true],
+            ["This is a \r\ntest", false],
+            ["This is a \r\n\n test", false],
+            ["This is a\n\n test", false],
+            ["This is a\r\r test", false],
+            ["This is a \r\r\n test", false],
+            ["This is a \r\n\r\ntest", false],
+            ["This is a \r\n\n\r\n test", false],
+            ["This is a \xFF test", false],
+            ["This is a \x7F test", false],
+            ["This is a \x7E test", true],
         ];
     }
 
     /**
      * @dataProvider validateValues
+     * @group ZF2015-04
+     * @param non-empty-string $value
      */
-    public function testValidatesValuesPerRfc7230(string $value, string $assertion): void
+    public function testValidatesValuesPerRfc7230(string $value, bool $expected): void
     {
-        $this->{$assertion}(HeaderSecurity::isValid($value));
+        self::assertSame($expected, HeaderSecurity::isValid($value));
     }
 
-    /** @return array<int, array{0: string}> */
+    /** @return non-empty-list<array{non-empty-string}> */
     public function assertValues(): array
     {
         return [
@@ -88,6 +93,8 @@ class HeaderSecurityTest extends TestCase
 
     /**
      * @dataProvider assertValues
+     * @group ZF2015-04
+     * @param non-empty-string $value
      */
     public function testAssertValidRaisesExceptionForInvalidValue(string $value): void
     {

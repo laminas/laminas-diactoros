@@ -7,7 +7,7 @@ namespace LaminasTest\Diactoros\Integration;
 use Http\Psr7Test\ServerRequestIntegrationTest;
 use Laminas\Diactoros\ServerRequest;
 
-class ServerRequestTest extends ServerRequestIntegrationTest
+final class ServerRequestTest extends ServerRequestIntegrationTest
 {
     public function createSubject(): ServerRequest
     {

@@ -40,7 +40,7 @@ class JsonResponseTest extends TestCase
         $this->assertSame($json, (string) $response->getBody());
     }
 
-    /** @return array<string, array{0: mixed}> */
+    /** @return non-empty-array<non-empty-string, array{mixed}> */
     public function scalarValuesForJSON()
     {
         return [
@@ -104,7 +104,7 @@ class JsonResponseTest extends TestCase
         new JsonResponse($data);
     }
 
-    /** @return array<string, array{0: string, 1: string}> */
+    /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
     public function valuesToJsonEncode(): array
     {
         return [
@@ -116,6 +116,8 @@ class JsonResponseTest extends TestCase
 
     /**
      * @dataProvider valuesToJsonEncode
+     * @param non-empty-string $value
+     * @param non-empty-string $key
      */
     public function testUsesSaneDefaultJsonEncodingFlags(string $value, string $key): void
     {

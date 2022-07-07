@@ -329,18 +329,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/functions/create_uploaded_file.legacy.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>laminas_createUploadedFile(...func_get_args())</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>UploadedFile</code>
-    </InvalidReturnType>
     <MixedArgument occurrences="1">
       <code>func_get_args()</code>
     </MixedArgument>
-    <UndefinedClass occurrences="1">
-      <code>UploadedFile</code>
-    </UndefinedClass>
   </file>
   <file src="src/functions/create_uploaded_file.php">
     <MixedArgument occurrences="4">
@@ -386,18 +377,9 @@
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.legacy.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>laminas_marshalUriFromSapi(...func_get_args())</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>Uri</code>
-    </InvalidReturnType>
     <MixedArgument occurrences="1">
       <code>func_get_args()</code>
     </MixedArgument>
-    <UndefinedClass occurrences="1">
-      <code>Uri</code>
-    </UndefinedClass>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.php">
     <MissingClosureParamType occurrences="3">
@@ -489,6 +471,14 @@
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
+  <file src="src/functions/parse_cookie_header.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$cookies</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>array&lt;non-empty-string, string&gt;</code>
+    </MoreSpecificReturnType>
+  </file>
   <file src="test/CallbackStreamTest.php">
     <MissingClosureReturnType occurrences="1">
       <code>function () {</code>
@@ -529,19 +519,20 @@
     </MixedOperand>
   </file>
   <file src="test/RequestTest.php">
-    <DuplicateArrayKey occurrences="1">
-      <code>'UNLOCK'    =&gt; ['UNLOCK']</code>
-    </DuplicateArrayKey>
-  </file>
-  <file src="test/Response/XmlResponseTest.php">
-    <MissingReturnType occurrences="1">
-      <code>testRaisesExceptionforNonStringNonStreamBodyContent</code>
-    </MissingReturnType>
+    <MixedArgument occurrences="1">
+      <code>$headers</code>
+    </MixedArgument>
   </file>
   <file src="test/ResponseTest.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$ianaCodesReasonPhrases</code>
+    </LessSpecificReturnStatement>
     <MixedAssignment occurrences="1">
       <code>$responseCode</code>
     </MixedAssignment>
+    <MoreSpecificReturnType occurrences="1">
+      <code>list&lt;array{numeric-string, non-empty-string}&gt;</code>
+    </MoreSpecificReturnType>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>assertIsInt</code>
     </RedundantConditionGivenDocblockType>

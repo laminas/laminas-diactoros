@@ -56,7 +56,7 @@ class MarshalUriFromSapiTest extends TestCase
         self::assertSame($expectedScheme, $url->getScheme());
     }
 
-    /** @return array<string, array{0:string, 1: string}> */
+    /** @return array<non-empty-string, array{string, non-empty-string}> */
     public function returnsUrlWithCorrectHttpSchemeFromArraysProvider(): array
     {
         return [
@@ -83,7 +83,7 @@ class MarshalUriFromSapiTest extends TestCase
         self::assertSame($expectedHost, $uri->getHost());
     }
 
-    /** @return array<string, array{0:string, 1: string, 2: array, 3: array}> */
+    /** @return array<string, array{non-empty-string, non-empty-string, array<non-empty-string, non-empty-string>, array<non-empty-string, non-empty-string>}> */
     public function returnsUrlWithCorrectSchemeAndHostFromArrays(): array
     {
         return [
