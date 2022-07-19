@@ -368,4 +368,30 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $uri             = $filteredRequest->getUri();
         $this->assertSame($expectedScheme, $uri->getScheme());
     }
+
+    public function testPortExtractedFromXForwardedHostHeader(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.1.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Host'  => 'example.com:4433',
+                'X-Forwarded-Port'  => '4433',
+                'X-Forwarded-Proto' => 'https',
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustAny();
+
+        $filteredRequest = $filter($request);
+        $filteredUri     = $filteredRequest->getUri();
+        $this->assertNotSame($request->getUri(), $filteredUri);
+        $this->assertSame('example.com', $filteredUri->getHost());
+        $this->assertSame(4433, $filteredUri->getPort());
+        $this->assertSame('https', $filteredUri->getScheme());
+    }
 }
