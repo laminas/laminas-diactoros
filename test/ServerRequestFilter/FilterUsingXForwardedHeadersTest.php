@@ -380,7 +380,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
             [
                 'Host'              => 'localhost',
                 'X-Forwarded-Host'  => 'example.com:4433',
-                'X-Forwarded-Port'  => '4433',
+                'X-Forwarded-Port'  => '8433',
                 'X-Forwarded-Proto' => 'https',
             ]
         );
