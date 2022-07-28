@@ -69,7 +69,6 @@
     </PossiblyNullOperand>
   </file>
   <file src="src/Request/ArraySerializer.php">
-    <LessSpecificReturnStatement occurrences="1"/>
     <MixedArgument occurrences="6">
       <code>$headers</code>
       <code>$method</code>
@@ -85,12 +84,8 @@
       <code>$requestTarget</code>
       <code>$uri</code>
     </MixedAssignment>
-    <MoreSpecificReturnType occurrences="1">
-      <code>Request</code>
-    </MoreSpecificReturnType>
   </file>
   <file src="src/Request/Serializer.php">
-    <LessSpecificReturnStatement occurrences="1"/>
     <MixedArgument occurrences="5">
       <code>$body</code>
       <code>$headers</code>
@@ -101,19 +96,11 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$request-&gt;getHeaders()</code>
     </MixedArgumentTypeCoercion>
-    <MoreSpecificReturnType occurrences="1">
-      <code>Request</code>
-    </MoreSpecificReturnType>
   </file>
   <file src="src/RequestTrait.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($method)</code>
     </DocblockTypeContradiction>
-    <LessSpecificImplementedReturnType occurrences="3">
-      <code>RequestInterface</code>
-      <code>RequestInterface</code>
-      <code>RequestInterface</code>
-    </LessSpecificImplementedReturnType>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$requestTarget</code>
     </MoreSpecificImplementedParamType>

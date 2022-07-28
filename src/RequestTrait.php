@@ -158,6 +158,7 @@ trait RequestTrait
      *
      * @param string $requestTarget
      * @throws Exception\InvalidArgumentException If the request target is invalid.
+     * @return static
      */
     public function withRequestTarget($requestTarget): RequestInterface
     {
@@ -195,6 +196,7 @@ trait RequestTrait
      *
      * @param string $method Case-insensitive method.
      * @throws Exception\InvalidArgumentException For invalid HTTP methods.
+     * @return static
      */
     public function withMethod($method): RequestInterface
     {
@@ -242,6 +244,7 @@ trait RequestTrait
      *
      * @param UriInterface $uri New request URI to use.
      * @param bool $preserveHost Preserve the original state of the Host header.
+     * @return static
      */
     public function withUri(UriInterface $uri, $preserveHost = false): RequestInterface
     {
