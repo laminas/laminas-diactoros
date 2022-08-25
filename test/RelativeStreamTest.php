@@ -7,8 +7,6 @@ namespace LaminasTest\Diactoros;
 use Laminas\Diactoros\RelativeStream;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use RuntimeException;
 
 use const SEEK_SET;
@@ -18,144 +16,142 @@ use const SEEK_SET;
  */
 class RelativeStreamTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testToString(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->isSeekable()->willReturn(true);
-        $decorated->tell()->willReturn(100);
-        $decorated->seek(100, SEEK_SET)->shouldBeCalled();
-        $decorated->getContents()->shouldBeCalled()->willReturn('foobarbaz');
+        $decorated = $this->createMock(Stream::class);
+        $decorated->method('isSeekable')->willReturn(true);
+        $decorated->method('tell')->willReturn(100);
+        $decorated->expects(self::once())->method('seek')->with(100, SEEK_SET);
+        $decorated->expects(self::once())->method('getContents')->willReturn('foobarbaz');
 
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->__toString();
         $this->assertSame('foobarbaz', $ret);
     }
 
     public function testClose(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->close()->shouldBeCalled();
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('close');
+        $stream = new RelativeStream($decorated, 100);
         $stream->close();
     }
 
     public function testDetach(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->detach()->shouldBeCalled()->willReturn(250);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('detach')->willReturn(250);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->detach();
         $this->assertSame(250, $ret);
     }
 
     public function testGetSize(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->getSize()->shouldBeCalled()->willReturn(250);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('getSize')->willReturn(250);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->getSize();
         $this->assertSame(150, $ret);
     }
 
     public function testTell(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->shouldBeCalled()->willReturn(188);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('tell')->willReturn(188);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->tell();
         $this->assertSame(88, $ret);
     }
 
     public function testIsSeekable(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->isSeekable()->shouldBeCalled()->willReturn(true);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('isSeekable')->willReturn(true);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->isSeekable();
         $this->assertSame(true, $ret);
     }
 
     public function testIsWritable(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->isWritable()->shouldBeCalled()->willReturn(true);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('isWritable')->willReturn(true);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->isWritable();
         $this->assertSame(true, $ret);
     }
 
     public function testIsReadable(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->isReadable()->shouldBeCalled()->willReturn(false);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('isReadable')->willReturn(false);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->isReadable();
         $this->assertSame(false, $ret);
     }
 
     public function testSeek(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->seek(126, SEEK_SET)->shouldBeCalled();
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('seek')->with(126, SEEK_SET);
+        $stream = new RelativeStream($decorated, 100);
         $this->assertNull($stream->seek(26));
     }
 
     public function testRewind(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->seek(100, SEEK_SET)->shouldBeCalled();
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('seek')->with(100, SEEK_SET);
+        $stream = new RelativeStream($decorated, 100);
         $this->assertNull($stream->rewind());
     }
 
     public function testWrite(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->willReturn(100);
-        $decorated->write("foobaz")->shouldBeCalled()->willReturn(6);
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->method('tell')->willReturn(100);
+        $decorated->expects(self::once())->method('write')->with('foobaz')->willReturn(6);
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->write("foobaz");
         $this->assertSame(6, $ret);
     }
 
     public function testRead(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->willReturn(100);
-        $decorated->read(3)->shouldBeCalled()->willReturn("foo");
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->method('tell')->willReturn(100);
+        $decorated->expects(self::once())->method('read')->with(3)->willReturn('foo');
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->read(3);
         $this->assertSame("foo", $ret);
     }
 
     public function testGetContents(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->willReturn(100);
-        $decorated->getContents()->shouldBeCalled()->willReturn("foo");
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->method('tell')->willReturn(100);
+        $decorated->expects(self::once())->method('getContents')->willReturn('foo');
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->getContents();
         $this->assertSame("foo", $ret);
     }
 
     public function testGetMetadata(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->getMetadata("bar")->shouldBeCalled()->willReturn("foo");
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('getMetadata')->with('bar')->willReturn('foo');
+        $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->getMetadata("bar");
         $this->assertSame("foo", $ret);
     }
 
     public function testWriteRaisesExceptionWhenPointerIsBehindOffset(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->shouldBeCalled()->willReturn(0);
-        $decorated->write("foobaz")->shouldNotBeCalled();
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('tell')->willReturn(0);
+        $decorated->expects(self::never())->method('write')->with('foobaz');
+        $stream = new RelativeStream($decorated, 100);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid pointer position');
@@ -165,10 +161,10 @@ class RelativeStreamTest extends TestCase
 
     public function testReadRaisesExceptionWhenPointerIsBehindOffset(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->shouldBeCalled()->willReturn(0);
-        $decorated->read(3)->shouldNotBeCalled();
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('tell')->willReturn(0);
+        $decorated->expects(self::never())->method('read')->with(3);
+        $stream = new RelativeStream($decorated, 100);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid pointer position');
@@ -178,10 +174,10 @@ class RelativeStreamTest extends TestCase
 
     public function testGetContentsRaisesExceptionWhenPointerIsBehindOffset(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->tell()->shouldBeCalled()->willReturn(0);
-        $decorated->getContents()->shouldNotBeCalled();
-        $stream = new RelativeStream($decorated->reveal(), 100);
+        $decorated = $this->createMock(Stream::class);
+        $decorated->expects(self::once())->method('tell')->willReturn(0);
+        $decorated->expects(self::never())->method('getContents');
+        $stream = new RelativeStream($decorated, 100);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid pointer position');
@@ -191,13 +187,13 @@ class RelativeStreamTest extends TestCase
 
     public function testCanReadContentFromNotSeekableResource(): void
     {
-        $decorated = $this->prophesize(Stream::class);
-        $decorated->isSeekable()->willReturn(false);
-        $decorated->seek(Argument::any())->shouldNotBeCalled();
-        $decorated->tell()->willReturn(3);
-        $decorated->getContents()->willReturn('CONTENTS');
+        $decorated = $this->createMock(Stream::class);
+        $decorated->method('isSeekable')->willReturn(false);
+        $decorated->expects(self::never())->method('seek');
+        $decorated->method('tell')->willReturn(3);
+        $decorated->method('getContents')->willReturn('CONTENTS');
 
-        $stream = new RelativeStream($decorated->reveal(), 3);
+        $stream = new RelativeStream($decorated, 3);
         $this->assertSame('CONTENTS', $stream->__toString());
     }
 }

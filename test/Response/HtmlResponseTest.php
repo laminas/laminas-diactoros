@@ -7,13 +7,10 @@ namespace LaminasTest\Diactoros\Response;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\HtmlResponse;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\StreamInterface;
 
 class HtmlResponseTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testConstructorAcceptsHtmlString(): void
     {
         $body = '<html>Uh oh not found</html>';
@@ -50,8 +47,7 @@ class HtmlResponseTest extends TestCase
 
     public function testAllowsStreamsForResponseBody(): void
     {
-        $stream   = $this->prophesize(StreamInterface::class);
-        $body     = $stream->reveal();
+        $body     = $this->createStub(StreamInterface::class);
         $response = new HtmlResponse($body);
         $this->assertSame($body, $response->getBody());
     }
