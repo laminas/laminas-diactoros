@@ -30,7 +30,7 @@ function normalizeUploadedFiles(array $files): array
      * @param string[]|array[]|null $typeTree
      * @return UploadedFile[]|array[]
      */
-    $recursiveNormalize = function (
+    $recursiveNormalize = static function (
         array $tmpNameTree,
         array $sizeTree,
         array $errorTree,
@@ -75,7 +75,7 @@ function normalizeUploadedFiles(array $files): array
      * @param array $files
      * @return UploadedFile[]
      */
-    $normalizeUploadedFileSpecification = function (array $files = []) use (&$recursiveNormalize): array {
+    $normalizeUploadedFileSpecification = static function (array $files = []) use (&$recursiveNormalize): array {
         if (
             ! isset($files['tmp_name']) || ! is_array($files['tmp_name'])
             || ! isset($files['size']) || ! is_array($files['size'])

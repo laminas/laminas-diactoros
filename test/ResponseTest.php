@@ -35,8 +35,7 @@ use const LOCK_EX;
 
 final class ResponseTest extends TestCase
 {
-    /** @var Response */
-    protected $response;
+    protected Response $response;
 
     protected function setUp(): void
     {

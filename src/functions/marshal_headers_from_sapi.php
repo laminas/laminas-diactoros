@@ -26,9 +26,7 @@ function marshalHeadersFromSapi(array $server): array
             ];
             return isset($contentHeaders[$key]);
         }
-        : static function (string $key): bool {
-            return strpos($key, 'CONTENT_') === 0;
-        };
+        : static fn(string $key): bool => strpos($key, 'CONTENT_') === 0;
 
     $headers = [];
     foreach ($server as $key => $value) {

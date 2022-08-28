@@ -37,8 +37,7 @@ final class StreamTest extends TestCase
     /** @var string|null|false */
     private $tmpnam;
 
-    /** @var Stream */
-    protected $stream;
+    protected Stream $stream;
 
     protected function setUp(): void
     {

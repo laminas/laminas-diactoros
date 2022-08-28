@@ -526,9 +526,7 @@ final class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
-        $server = normalizeServer([], function () {
-            return ['Authorization' => 'foobar'];
-        });
+        $server = normalizeServer([], static fn() => ['Authorization' => 'foobar']);
 
         $this->assertArrayHasKey('HTTP_AUTHORIZATION', $server);
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
@@ -536,9 +534,7 @@ final class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
-        $server = normalizeServer([], function () {
-            return ['authorization' => 'foobar'];
-        });
+        $server = normalizeServer([], static fn() => ['authorization' => 'foobar']);
 
         $this->assertArrayHasKey('HTTP_AUTHORIZATION', $server);
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
@@ -548,9 +544,7 @@ final class ServerRequestFactoryTest extends TestCase
     {
         $expected = ['FOO_BAR' => 'BAZ'];
 
-        $server = normalizeServer($expected, function () {
-            return [];
-        });
+        $server = normalizeServer($expected, static fn() => []);
 
         $this->assertSame($expected, $server);
     }
@@ -737,8 +731,7 @@ final class ServerRequestFactoryTest extends TestCase
     {
         $expectedRequest = new ServerRequest();
         $filter          = new class ($expectedRequest) implements FilterServerRequestInterface {
-            /** @var ServerRequestInterface */
-            private $request;
+            private ServerRequestInterface $request;
 
             public function __construct(ServerRequestInterface $request)
             {

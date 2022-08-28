@@ -33,10 +33,9 @@ class Response implements ResponseInterface
     /**
      * Map of standard HTTP status code/reason phrases
      *
-     * @var array
      * @psalm-var array<positive-int, non-empty-string>
      */
-    private $phrases = [
+    private array $phrases = [
         // INFORMATIONAL CODES
         100 => 'Continue',
         101 => 'Switching Protocols',
@@ -110,11 +109,9 @@ class Response implements ResponseInterface
         599 => 'Network Connect Timeout Error',
     ];
 
-    /** @var string */
-    private $reasonPhrase;
+    private string $reasonPhrase;
 
-    /** @var int */
-    private $statusCode;
+    private int $statusCode;
 
     /**
      * @param string|resource|StreamInterface $body Stream identifier and/or actual stream resource

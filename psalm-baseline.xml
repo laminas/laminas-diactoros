@@ -375,8 +375,8 @@
       <code>$https</code>
     </MissingClosureParamType>
     <MissingClosureReturnType occurrences="2">
-      <code>function ($host) {</code>
-      <code>function (string $name, array $headers, $default = null) {</code>
+      <code>static function ($host) {</code>
+      <code>static function (string $name, array $headers, $default = null) {</code>
     </MissingClosureReturnType>
     <MixedArgument occurrences="8">
       <code>$getHeaderFromArray('x-forwarded-proto', $headers, '')</code>
@@ -493,7 +493,7 @@
   </file>
   <file src="test/Request/SerializerTest.php">
     <MissingClosureReturnType occurrences="1">
-      <code>function () use ($payload) {</code>
+      <code>static function () use ($payload) {</code>
     </MissingClosureReturnType>
     <MixedArrayOffset occurrences="1">
       <code>$payload[$i++]</code>

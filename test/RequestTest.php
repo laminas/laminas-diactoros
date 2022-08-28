@@ -14,8 +14,7 @@ use Psr\Http\Message\UriInterface;
 
 final class RequestTest extends TestCase
 {
-    /** @var Request */
-    protected $request;
+    protected Request $request;
 
     protected function setUp(): void
     {
