@@ -42,7 +42,7 @@ function marshalUriFromSapi(array $server, array $headers): Uri
      * @param mixed $default Default value to return if header not found
      * @return mixed
      */
-    $getHeaderFromArray = function (string $name, array $headers, $default = null) {
+    $getHeaderFromArray = static function (string $name, array $headers, $default = null) {
         $header  = strtolower($name);
         $headers = array_change_key_case($headers, CASE_LOWER);
         if (array_key_exists($header, $headers)) {
@@ -58,13 +58,13 @@ function marshalUriFromSapi(array $server, array $headers): Uri
      * @return array Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
      */
-    $marshalHostAndPort = function (array $headers, array $server) use ($getHeaderFromArray): array {
+    $marshalHostAndPort = static function (array $headers, array $server) use ($getHeaderFromArray): array {
         /**
-        * @param string|array $host
-        * @return array Array of two items, host and port, in that order (can be
-        *     passed to a list() operation).
-        */
-        $marshalHostAndPortFromHeader = function ($host) {
+         * @param string|array $host
+         * @return array Array of two items, host and port, in that order (can be
+         *     passed to a list() operation).
+         */
+        $marshalHostAndPortFromHeader = static function ($host) {
             if (is_array($host)) {
                 $host = implode(', ', $host);
             }
@@ -81,10 +81,10 @@ function marshalUriFromSapi(array $server, array $headers): Uri
         };
 
         /**
-        * @return array Array of two items, host and port, in that order (can be
-        *     passed to a list() operation).
-        */
-        $marshalIpv6HostAndPort = function (array $server, ?int $port): array {
+         * @return array Array of two items, host and port, in that order (can be
+         *     passed to a list() operation).
+         */
+        $marshalIpv6HostAndPort = static function (array $server, ?int $port): array {
             $host = '[' . $server['SERVER_ADDR'] . ']';
             $port = $port ?: 80;
             if ($port . ']' === substr($host, strrpos($host, ':') + 1)) {
@@ -138,7 +138,7 @@ function marshalUriFromSapi(array $server, array $headers): Uri
      *
      * From Laminas\Http\PhpEnvironment\Request class
      */
-    $marshalRequestPath = function (array $server): string {
+    $marshalRequestPath = static function (array $server): string {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
         $iisUrlRewritten = $server['IIS_WasUrlRewritten'] ?? null;
@@ -165,7 +165,7 @@ function marshalUriFromSapi(array $server, array $headers): Uri
 
     // URI scheme
     $scheme            = 'http';
-    $marshalHttpsValue = function ($https): bool {
+    $marshalHttpsValue = static function ($https): bool {
         if (is_bool($https)) {
             return $https;
         }

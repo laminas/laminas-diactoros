@@ -15,9 +15,7 @@ final class CallbackStreamTest extends TestCase
 {
     public function testToString(): void
     {
-        $stream = new CallbackStream(function () {
-            return 'foobarbaz';
-        });
+        $stream = new CallbackStream(static fn() => 'foobarbaz');
 
         $ret = $stream->__toString();
         $this->assertSame('foobarbaz', $ret);
@@ -25,7 +23,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testClose(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $stream->close();
@@ -37,7 +35,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testDetach(): void
     {
-        $callback = function () {
+        $callback = static function (): void {
         };
         $stream   = new CallbackStream($callback);
         $ret      = $stream->detach();
@@ -46,7 +44,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testEof(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
         $ret    = $stream->eof();
         $this->assertFalse($ret);
@@ -58,7 +56,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testGetSize(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
         $ret    = $stream->getSize();
         $this->assertNull($ret);
@@ -66,7 +64,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testTell(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $this->expectException(RuntimeException::class);
@@ -76,7 +74,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testIsSeekable(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
         $ret    = $stream->isSeekable();
         $this->assertFalse($ret);
@@ -84,7 +82,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testIsWritable(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
         $ret    = $stream->isWritable();
         $this->assertFalse($ret);
@@ -92,7 +90,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testIsReadable(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
         $ret    = $stream->isReadable();
         $this->assertFalse($ret);
@@ -100,7 +98,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testSeek(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $this->expectException(RuntimeException::class);
@@ -110,7 +108,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testRewind(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $this->expectException(RuntimeException::class);
@@ -120,7 +118,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testWrite(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $this->expectException(RuntimeException::class);
@@ -130,7 +128,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testRead(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $this->expectException(RuntimeException::class);
@@ -140,9 +138,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testGetContents(): void
     {
-        $stream = new CallbackStream(function () {
-            return 'foobarbaz';
-        });
+        $stream = new CallbackStream(static fn() => 'foobarbaz');
 
         $ret = $stream->getContents();
         $this->assertSame('foobarbaz', $ret);
@@ -150,7 +146,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testGetMetadata(): void
     {
-        $stream = new CallbackStream(function () {
+        $stream = new CallbackStream(static function (): void {
         });
 
         $ret = $stream->getMetadata('stream_type');

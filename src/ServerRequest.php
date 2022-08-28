@@ -33,23 +33,18 @@ class ServerRequest implements ServerRequestInterface
 {
     use RequestTrait;
 
-    /** @var array */
-    private $attributes = [];
+    private array $attributes = [];
 
-    /** @var array */
-    private $cookieParams = [];
+    private array $cookieParams = [];
 
     /** @var null|array|object */
     private $parsedBody;
 
-    /** @var array */
-    private $queryParams = [];
+    private array $queryParams = [];
 
-    /** @var array */
-    private $serverParams;
+    private array $serverParams;
 
-    /** @var array */
-    private $uploadedFiles;
+    private array $uploadedFiles;
 
     /**
      * @param array $serverParams Server parameters, typically from $_SERVER

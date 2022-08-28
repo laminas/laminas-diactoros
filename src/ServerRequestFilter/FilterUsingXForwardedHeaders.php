@@ -42,10 +42,10 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     ];
 
     /** @var list<FilterUsingXForwardedHeaders::HEADER_*> */
-    private $trustedHeaders;
+    private array $trustedHeaders;
 
     /** @var list<non-empty-string> */
-    private $trustedProxies;
+    private array $trustedProxies;
 
     /**
      * Only allow construction via named constructors

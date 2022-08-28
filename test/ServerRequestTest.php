@@ -13,8 +13,7 @@ use ReflectionProperty;
 
 final class ServerRequestTest extends TestCase
 {
-    /** @var ServerRequest */
-    protected $request;
+    protected ServerRequest $request;
 
     protected function setUp(): void
     {

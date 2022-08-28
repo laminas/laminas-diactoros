@@ -47,8 +47,7 @@ class JsonResponse extends Response
     /** @var mixed */
     private $payload;
 
-    /** @var int */
-    private $encodingOptions;
+    private int $encodingOptions;
 
     /**
      * Create a JSON response with the given data.

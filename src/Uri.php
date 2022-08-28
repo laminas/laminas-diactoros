@@ -59,33 +59,25 @@ class Uri implements UriInterface
         'https' => 443,
     ];
 
-    /** @var string */
-    private $scheme = '';
+    private string $scheme = '';
 
-    /** @var string */
-    private $userInfo = '';
+    private string $userInfo = '';
 
-    /** @var string */
-    private $host = '';
+    private string $host = '';
 
     /** @var int|null */
     private $port;
 
-    /** @var string */
-    private $path = '';
+    private string $path = '';
 
-    /** @var string */
-    private $query = '';
+    private string $query = '';
 
-    /** @var string */
-    private $fragment = '';
+    private string $fragment = '';
 
     /**
      * generated uri string cache
-     *
-     * @var string|null
      */
-    private $uriString;
+    private ?string $uriString = null;
 
     public function __construct(string $uri = '')
     {

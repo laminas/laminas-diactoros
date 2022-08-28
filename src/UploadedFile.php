@@ -44,23 +44,17 @@ class UploadedFile implements UploadedFileInterface
         UPLOAD_ERR_EXTENSION  => 'A PHP extension stopped the file upload.',
     ];
 
-    /** @var string|null */
-    private $clientFilename;
+    private ?string $clientFilename;
 
-    /** @var string|null */
-    private $clientMediaType;
+    private ?string $clientMediaType;
 
-    /** @var int */
-    private $error;
+    private int $error;
 
-    /** @var null|string */
-    private $file;
+    private ?string $file = null;
 
-    /** @var bool */
-    private $moved = false;
+    private bool $moved = false;
 
-    /** @var int */
-    private $size;
+    private int $size;
 
     /** @var null|StreamInterface */
     private $stream;

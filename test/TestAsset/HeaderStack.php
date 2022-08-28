@@ -10,7 +10,7 @@ namespace LaminasTest\Diactoros\TestAsset;
 class HeaderStack
 {
     /** @var string[][] */
-    private static $data = [];
+    private static array $data = [];
 
     /**
      * Reset state

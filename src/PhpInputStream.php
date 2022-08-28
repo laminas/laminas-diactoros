@@ -11,11 +11,9 @@ use function stream_get_contents;
  */
 class PhpInputStream extends Stream
 {
-    /** @var string */
-    private $cache = '';
+    private string $cache = '';
 
-    /** @var bool */
-    private $reachedEof = false;
+    private bool $reachedEof = false;
 
     /**
      * @param  string|resource $stream
