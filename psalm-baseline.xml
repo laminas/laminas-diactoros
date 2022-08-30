@@ -314,6 +314,9 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>gettype($port)</code>
     </RedundantConditionGivenDocblockType>
+    <UndefinedAttributeClass occurrences="1">
+      <code>SensitiveParameter</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/functions/create_uploaded_file.legacy.php">
     <MixedArgument occurrences="1">
@@ -467,9 +470,6 @@
     </MoreSpecificReturnType>
   </file>
   <file src="test/CallbackStreamTest.php">
-    <MissingClosureReturnType occurrences="1">
-      <code>function () {</code>
-    </MissingClosureReturnType>
     <MixedAssignment occurrences="2">
       <code>$ret</code>
       <code>$ret</code>
