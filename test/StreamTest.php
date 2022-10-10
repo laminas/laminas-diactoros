@@ -70,7 +70,7 @@ final class StreamTest extends TestCase
     {
         $resource = imagecreate(1, 1);
         self::assertInstanceOf(GdImage::class, $resource);
-        $stream   = new Stream($resource);
+        $stream = new Stream($resource);
         $this->assertInstanceOf(Stream::class, $stream);
     }
 

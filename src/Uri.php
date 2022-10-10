@@ -9,7 +9,6 @@ use SensitiveParameter;
 
 use function array_keys;
 use function explode;
-use function get_class;
 use function gettype;
 use function implode;
 use function is_float;
@@ -212,7 +211,7 @@ class Uri implements UriInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a string argument; received %s',
                 __METHOD__,
-                is_object($scheme) ? get_class($scheme) : gettype($scheme)
+                is_object($scheme) ? $scheme::class : gettype($scheme)
             ));
         }
 
@@ -249,14 +248,14 @@ class Uri implements UriInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a string user argument; received %s',
                 __METHOD__,
-                is_object($user) ? get_class($user) : gettype($user)
+                is_object($user) ? $user::class : gettype($user)
             ));
         }
         if (null !== $password && ! is_string($password)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a string or null password argument; received %s',
                 __METHOD__,
-                is_object($password) ? get_class($password) : gettype($password)
+                is_object($password) ? $password::class : gettype($password)
             ));
         }
 
@@ -287,7 +286,7 @@ class Uri implements UriInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a string argument; received %s',
                 __METHOD__,
-                is_object($host) ? get_class($host) : gettype($host)
+                is_object($host) ? $host::class : gettype($host)
             ));
         }
 
@@ -311,7 +310,7 @@ class Uri implements UriInterface
             if (! is_numeric($port) || is_float($port)) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Invalid port "%s" specified; must be an integer, an integer string, or null',
-                    is_object($port) ? get_class($port) : gettype($port)
+                    is_object($port) ? $port::class : gettype($port)
                 ));
             }
 
@@ -411,7 +410,7 @@ class Uri implements UriInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a string argument; received %s',
                 __METHOD__,
-                is_object($fragment) ? get_class($fragment) : gettype($fragment)
+                is_object($fragment) ? $fragment::class : gettype($fragment)
             ));
         }
 

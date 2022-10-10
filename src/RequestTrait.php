@@ -9,7 +9,6 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 use function array_keys;
-use function get_class;
 use function gettype;
 use function is_object;
 use function is_string;
@@ -291,7 +290,7 @@ trait RequestTrait
         if (! is_string($method)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP method; must be a string, received %s',
-                is_object($method) ? get_class($method) : gettype($method)
+                is_object($method) ? $method::class : gettype($method)
             ));
         }
 
