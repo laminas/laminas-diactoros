@@ -123,7 +123,7 @@ final class HeaderSecurity
      * @param mixed $value Value to be tested. This method asserts it is a string or number.
      * @throws Exception\InvalidArgumentException For invalid values.
      */
-    public static function assertValid($value): void
+    public static function assertValid(mixed $value): void
     {
         if (! is_string($value) && ! is_numeric($value)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -144,10 +144,9 @@ final class HeaderSecurity
      *
      * @see http://tools.ietf.org/html/rfc7230#section-3.2
      *
-     * @param mixed $name
      * @throws Exception\InvalidArgumentException
      */
-    public static function assertValidName($name): void
+    public static function assertValidName(mixed $name): void
     {
         if (! is_string($name)) {
             throw new Exception\InvalidArgumentException(sprintf(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Diactoros;
 
 use Psr\Http\Message\StreamInterface;
+use Stringable;
 
 use function array_key_exists;
 
@@ -13,7 +14,7 @@ use const SEEK_SET;
 /**
  * Implementation of PSR HTTP streams
  */
-class CallbackStream implements StreamInterface
+class CallbackStream implements StreamInterface, Stringable
 {
     /** @var callable|null */
     protected $callback;

@@ -12,7 +12,7 @@ use function explode;
 use function filter_var;
 use function in_array;
 use function is_string;
-use function strpos;
+use function str_contains;
 use function strtolower;
 
 use const FILTER_FLAG_IPV4;
@@ -41,24 +41,14 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         self::HEADER_PROTO,
     ];
 
-    /** @var list<FilterUsingXForwardedHeaders::HEADER_*> */
-    private array $trustedHeaders;
-
-    /** @var list<non-empty-string> */
-    private array $trustedProxies;
-
     /**
      * Only allow construction via named constructors
      *
      * @param list<non-empty-string> $trustedProxies
      * @param list<FilterUsingXForwardedHeaders::HEADER_*> $trustedHeaders
      */
-    private function __construct(
-        array $trustedProxies = [],
-        array $trustedHeaders = []
-    ) {
-        $this->trustedProxies = $trustedProxies;
-        $this->trustedHeaders = $trustedHeaders;
+    private function __construct(private array $trustedProxies = [], private array $trustedHeaders = [])
+    {
     }
 
     public function __invoke(ServerRequestInterface $request): ServerRequestInterface
@@ -79,7 +69,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         $uri = $originalUri = $request->getUri();
         foreach ($this->trustedHeaders as $headerName) {
             $header = $request->getHeaderLine($headerName);
-            if ('' === $header || false !== strpos($header, ',')) {
+            if ('' === $header || str_contains($header, ',')) {
                 // Reject empty headers and/or headers with multiple values
                 continue;
             }
@@ -225,10 +215,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         return $proxyCIDRList;
     }
 
-    /**
-     * @param mixed $cidr
-     */
-    private static function validateProxyCIDR($cidr): bool
+    private static function validateProxyCIDR(mixed $cidr): bool
     {
         if (! is_string($cidr) || '' === $cidr) {
             return false;
@@ -236,12 +223,12 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 
         $address = $cidr;
         $mask    = null;
-        if (false !== strpos($cidr, '/')) {
+        if (str_contains($cidr, '/')) {
             [$address, $mask] = explode('/', $cidr, 2);
             $mask             = (int) $mask;
         }
 
-        if (false !== strpos($address, ':')) {
+        if (str_contains($address, ':')) {
             // is IPV6
             return filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
                 && (

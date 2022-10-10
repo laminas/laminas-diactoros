@@ -58,9 +58,8 @@ class JsonResponseTest extends TestCase
 
     /**
      * @dataProvider scalarValuesForJSON
-     * @param mixed $value
      */
-    public function testScalarValuePassedToConstructorJsonEncodesDirectly($value): void
+    public function testScalarValuePassedToConstructorJsonEncodesDirectly(mixed $value): void
     {
         $response = new JsonResponse($value);
         $this->assertSame(200, $response->getStatusCode());

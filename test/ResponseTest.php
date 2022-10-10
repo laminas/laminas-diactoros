@@ -35,7 +35,7 @@ use const LOCK_EX;
 
 final class ResponseTest extends TestCase
 {
-    protected Response $response;
+    private Response $response;
 
     protected function setUp(): void
     {
@@ -184,9 +184,8 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidReasonPhrases
-     * @param mixed $invalidReasonPhrase
      */
-    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases($invalidReasonPhrase): void
+    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases(mixed $invalidReasonPhrase): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -244,9 +243,8 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidStatusCodes
-     * @param mixed $code
      */
-    public function testCannotSetInvalidStatusCode($code): void
+    public function testCannotSetInvalidStatusCode(mixed $code): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -285,9 +283,8 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidResponseBody
-     * @param mixed $body
      */
-    public function testConstructorRaisesExceptionForInvalidBody($body): void
+    public function testConstructorRaisesExceptionForInvalidBody(mixed $body): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');

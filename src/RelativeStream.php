@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Diactoros;
 
 use Psr\Http\Message\StreamInterface;
+use Stringable;
 
 use const SEEK_SET;
 
@@ -14,16 +15,13 @@ use const SEEK_SET;
  *
  * @see AbstractSerializer::splitStream()
  */
-final class RelativeStream implements StreamInterface
+final class RelativeStream implements StreamInterface, Stringable
 {
-    private StreamInterface $decoratedStream;
-
     private int $offset;
 
-    public function __construct(StreamInterface $decoratedStream, ?int $offset)
+    public function __construct(private StreamInterface $decoratedStream, ?int $offset)
     {
-        $this->decoratedStream = $decoratedStream;
-        $this->offset          = (int) $offset;
+        $this->offset = (int) $offset;
     }
 
     /**

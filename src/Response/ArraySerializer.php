@@ -68,7 +68,6 @@ final class ArraySerializer
     }
 
     /**
-     * @param array $data
      * @return mixed
      * @throws Exception\DeserializationException
      */

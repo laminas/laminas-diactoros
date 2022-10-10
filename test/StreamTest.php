@@ -39,7 +39,7 @@ final class StreamTest extends TestCase
     /** @var string|null|false */
     private $tmpnam;
 
-    protected Stream $stream;
+    private Stream $stream;
 
     protected function setUp(): void
     {
@@ -483,9 +483,8 @@ final class StreamTest extends TestCase
 
     /**
      * @dataProvider invalidResources
-     * @param mixed $resource
      */
-    public function testAttachWithNonStringNonResourceRaisesException($resource): void
+    public function testAttachWithNonStringNonResourceRaisesException(mixed $resource): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid stream');

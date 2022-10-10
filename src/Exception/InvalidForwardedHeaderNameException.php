@@ -13,8 +13,7 @@ use function sprintf;
 
 class InvalidForwardedHeaderNameException extends RuntimeException implements ExceptionInterface
 {
-    /** @param mixed $name */
-    public static function forHeader($name): self
+    public static function forHeader(mixed $name): self
     {
         if (! is_string($name)) {
             $name = sprintf('(value of type %s)', is_object($name) ? $name::class : gettype($name));

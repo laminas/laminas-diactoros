@@ -10,8 +10,7 @@ use function sprintf;
 
 class InvalidProxyAddressException extends RuntimeException implements ExceptionInterface
 {
-    /** @param mixed $proxy */
-    public static function forInvalidProxyArgument($proxy): self
+    public static function forInvalidProxyArgument(mixed $proxy): self
     {
         $type = is_object($proxy) ? $proxy::class : gettype($proxy);
         return new self(sprintf(

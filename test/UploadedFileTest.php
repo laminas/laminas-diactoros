@@ -76,9 +76,8 @@ final class UploadedFileTest extends TestCase
 
     /**
      * @dataProvider invalidStreams
-     * @param mixed $streamOrFile
      */
-    public function testRaisesExceptionOnInvalidStreamOrFile($streamOrFile): void
+    public function testRaisesExceptionOnInvalidStreamOrFile(mixed $streamOrFile): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -186,9 +185,8 @@ final class UploadedFileTest extends TestCase
 
     /**
      * @dataProvider invalidMovePaths
-     * @param mixed $path
      */
-    public function testMoveRaisesExceptionForInvalidPath($path): void
+    public function testMoveRaisesExceptionForInvalidPath(mixed $path): void
     {
         $stream = new Stream('php://temp', 'wb+');
         $stream->write('Foo bar!');

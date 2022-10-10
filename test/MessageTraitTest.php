@@ -54,9 +54,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidProtocolVersionProvider
-     * @param mixed $version
      */
-    public function testWithProtocolVersionRaisesExceptionForInvalidVersion($version): void
+    public function testWithProtocolVersionRaisesExceptionForInvalidVersion(mixed $version): void
     {
         $request = new Request();
 
@@ -194,9 +193,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidGeneralHeaderValues
-     * @param mixed $value
      */
-    public function testWithHeaderRaisesExceptionForInvalidNestedHeaderValue($value): void
+    public function testWithHeaderRaisesExceptionForInvalidNestedHeaderValue(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid header value');
@@ -218,9 +216,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidHeaderValues
-     * @param mixed $value
      */
-    public function testWithHeaderRaisesExceptionForInvalidValueType($value): void
+    public function testWithHeaderRaisesExceptionForInvalidValueType(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid header value');
@@ -239,9 +236,8 @@ class MessageTraitTest extends TestCase
 
     /**
      * @dataProvider invalidGeneralHeaderValues
-     * @param mixed $value
      */
-    public function testWithAddedHeaderRaisesExceptionForNonStringNonArrayValue($value): void
+    public function testWithAddedHeaderRaisesExceptionForNonStringNonArrayValue(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('must be a string');
@@ -423,9 +419,8 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider invalidArrayHeaderValues
      * @group 99
-     * @param mixed $value
      */
-    public function testWithHeaderShouldRaiseExceptionForInvalidHeaderValuesInArrays($value): void
+    public function testWithHeaderShouldRaiseExceptionForInvalidHeaderValuesInArrays(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('header value type');
@@ -437,9 +432,8 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider invalidHeaderValueTypes
      * @group 99
-     * @param mixed $value
      */
-    public function testWithHeaderShouldRaiseExceptionForInvalidHeaderScalarValues($value): void
+    public function testWithHeaderShouldRaiseExceptionForInvalidHeaderScalarValues(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('header value type');

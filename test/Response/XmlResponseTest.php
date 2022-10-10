@@ -72,9 +72,8 @@ class XmlResponseTest extends TestCase
 
     /**
      * @dataProvider invalidContent
-     * @param mixed $body
      */
-    public function testRaisesExceptionforNonStringNonStreamBodyContent($body): void
+    public function testRaisesExceptionforNonStringNonStreamBodyContent(mixed $body): void
     {
         $this->expectException(InvalidArgumentException::class);
 
