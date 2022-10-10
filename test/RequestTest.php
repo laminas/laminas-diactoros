@@ -14,7 +14,7 @@ use Psr\Http\Message\UriInterface;
 
 final class RequestTest extends TestCase
 {
-    protected Request $request;
+    private Request $request;
 
     protected function setUp(): void
     {
@@ -44,9 +44,8 @@ final class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidMethod
-     * @param mixed $method
      */
-    public function testWithInvalidMethod($method): void
+    public function testWithInvalidMethod(mixed $method): void
     {
         $this->expectException(InvalidArgumentException::class);
         /** @psalm-suppress MixedArgument */
@@ -132,9 +131,8 @@ final class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidRequestUri
-     * @param mixed $uri
      */
-    public function testConstructorRaisesExceptionForInvalidUri($uri): void
+    public function testConstructorRaisesExceptionForInvalidUri(mixed $uri): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid URI');
@@ -207,9 +205,8 @@ final class RequestTest extends TestCase
 
     /**
      * @dataProvider invalidRequestBody
-     * @param mixed $body
      */
-    public function testConstructorRaisesExceptionForInvalidBody($body): void
+    public function testConstructorRaisesExceptionForInvalidBody(mixed $body): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
@@ -233,11 +230,10 @@ final class RequestTest extends TestCase
     /**
      * @dataProvider invalidHeaderTypes
      * @group 99
-     * @param mixed $headers
      * @param non-empty-string $contains
      */
     public function testConstructorRaisesExceptionForInvalidHeaders(
-        $headers,
+        mixed $headers,
         string $contains = 'header value type'
     ): void {
         $this->expectException(InvalidArgumentException::class);

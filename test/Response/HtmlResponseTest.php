@@ -70,9 +70,8 @@ class HtmlResponseTest extends TestCase
 
     /**
      * @dataProvider invalidHtmlContent
-     * @param mixed $body
      */
-    public function testRaisesExceptionForNonStringNonStreamBodyContent($body): void
+    public function testRaisesExceptionForNonStringNonStreamBodyContent(mixed $body): void
     {
         $this->expectException(InvalidArgumentException::class);
 

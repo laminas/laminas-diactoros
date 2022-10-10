@@ -189,9 +189,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider invalidPorts
-     * @param mixed $port
      */
-    public function testWithPortRaisesExceptionForInvalidPorts($port): void
+    public function testWithPortRaisesExceptionForInvalidPorts(mixed $port): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
 
@@ -236,9 +235,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider invalidPaths
-     * @param mixed $path
      */
-    public function testWithPathRaisesExceptionForInvalidPaths($path): void
+    public function testWithPathRaisesExceptionForInvalidPaths(mixed $path): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
 
@@ -273,9 +271,8 @@ class UriTest extends TestCase
 
     /**
      * @dataProvider invalidQueryStrings
-     * @param mixed $query
      */
-    public function testWithQueryRaisesExceptionForInvalidQueryStrings($query): void
+    public function testWithQueryRaisesExceptionForInvalidQueryStrings(mixed $query): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
 
@@ -622,9 +619,8 @@ class UriTest extends TestCase
     /**
      * @dataProvider invalidStringComponentValues
      * @param 'withScheme'|'withUserInfo'|'withHost'|'withPath'|'withQuery'|'withFragment' $method
-     * @param mixed $value
      */
-    public function testPassingInvalidValueToWithMethodRaisesException(string $method, $value): void
+    public function testPassingInvalidValueToWithMethodRaisesException(string $method, mixed $value): void
     {
         $uri = new Uri('https://example.com/');
 

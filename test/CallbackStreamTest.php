@@ -15,7 +15,7 @@ final class CallbackStreamTest extends TestCase
 {
     public function testToString(): void
     {
-        $stream = new CallbackStream(static fn() => 'foobarbaz');
+        $stream = new CallbackStream(static fn(): string => 'foobarbaz');
 
         $ret = $stream->__toString();
         $this->assertSame('foobarbaz', $ret);
@@ -138,7 +138,7 @@ final class CallbackStreamTest extends TestCase
 
     public function testGetContents(): void
     {
-        $stream = new CallbackStream(static fn() => 'foobarbaz');
+        $stream = new CallbackStream(static fn(): string => 'foobarbaz');
 
         $ret = $stream->getContents();
         $this->assertSame('foobarbaz', $ret);

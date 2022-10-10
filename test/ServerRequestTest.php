@@ -13,7 +13,7 @@ use ReflectionProperty;
 
 final class ServerRequestTest extends TestCase
 {
-    protected ServerRequest $request;
+    private ServerRequest $request;
 
     protected function setUp(): void
     {

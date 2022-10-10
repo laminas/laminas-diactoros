@@ -22,8 +22,8 @@ use function ltrim;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
+use function str_contains;
 use function strlen;
-use function strpos;
 use function strrpos;
 use function strtolower;
 use function substr;
@@ -158,7 +158,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
 
         // URI fragment
         $fragment = '';
-        if (strpos($path, '#') !== false) {
+        if (str_contains($path, '#')) {
             [$path, $fragment] = explode('#', $path, 2);
         }
 
@@ -267,10 +267,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         return $origPathInfo;
     }
 
-    /**
-     * @param mixed $https
-     */
-    private static function marshalHttpsValue($https): bool
+    private static function marshalHttpsValue(mixed $https): bool
     {
         if (is_bool($https)) {
             return $https;

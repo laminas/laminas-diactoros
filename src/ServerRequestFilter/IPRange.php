@@ -10,9 +10,9 @@ use function intval;
 use function ip2long;
 use function pack;
 use function sprintf;
+use function str_contains;
 use function str_pad;
 use function str_repeat;
-use function strpos;
 use function substr_compare;
 use function unpack;
 
@@ -29,7 +29,7 @@ final class IPRange
     /** @psalm-pure */
     public static function matches(string $ip, string $cidr): bool
     {
-        if (false !== strpos($ip, ':')) {
+        if (str_contains($ip, ':')) {
             return self::matchesIPv6($ip, $cidr);
         }
 
@@ -42,7 +42,7 @@ final class IPRange
         $mask   = 32;
         $subnet = $cidr;
 
-        if (false !== strpos($cidr, '/')) {
+        if (str_contains($cidr, '/')) {
             [$subnet, $mask] = explode('/', $cidr, 2);
             $mask            = (int) $mask;
         }
@@ -72,7 +72,7 @@ final class IPRange
         $mask   = 128;
         $subnet = $cidr;
 
-        if (false !== strpos($cidr, '/')) {
+        if (str_contains($cidr, '/')) {
             [$subnet, $mask] = explode('/', $cidr, 2);
             $mask            = (int) $mask;
         }

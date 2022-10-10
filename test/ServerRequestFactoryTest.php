@@ -21,8 +21,8 @@ use function Laminas\Diactoros\marshalUriFromSapi;
 use function Laminas\Diactoros\normalizeServer;
 use function Laminas\Diactoros\normalizeUploadedFiles;
 use function sprintf;
+use function str_contains;
 use function str_replace;
-use function strpos;
 use function strtolower;
 
 final class ServerRequestFactoryTest extends TestCase
@@ -290,7 +290,7 @@ final class ServerRequestFactoryTest extends TestCase
             $param = array_shift($data);
             foreach (['lowercase-off', 'uppercase-off'] as $type) {
                 $key   = sprintf('%s-%s', $key, $type);
-                $value = false !== strpos($type, 'lowercase') ? 'off' : 'OFF';
+                $value = str_contains($type, 'lowercase') ? 'off' : 'OFF';
                 yield $key => [$param, $value];
             }
         }
@@ -526,7 +526,7 @@ final class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
-        $server = normalizeServer([], static fn() => ['Authorization' => 'foobar']);
+        $server = normalizeServer([], static fn(): array => ['Authorization' => 'foobar']);
 
         $this->assertArrayHasKey('HTTP_AUTHORIZATION', $server);
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
@@ -534,7 +534,7 @@ final class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
-        $server = normalizeServer([], static fn() => ['authorization' => 'foobar']);
+        $server = normalizeServer([], static fn(): array => ['authorization' => 'foobar']);
 
         $this->assertArrayHasKey('HTTP_AUTHORIZATION', $server);
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
@@ -544,7 +544,7 @@ final class ServerRequestFactoryTest extends TestCase
     {
         $expected = ['FOO_BAR' => 'BAZ'];
 
-        $server = normalizeServer($expected, static fn() => []);
+        $server = normalizeServer($expected, static fn(): array => []);
 
         $this->assertSame($expected, $server);
     }
@@ -731,11 +731,8 @@ final class ServerRequestFactoryTest extends TestCase
     {
         $expectedRequest = new ServerRequest();
         $filter          = new class ($expectedRequest) implements FilterServerRequestInterface {
-            private ServerRequestInterface $request;
-
-            public function __construct(ServerRequestInterface $request)
+            public function __construct(private ServerRequestInterface $request)
             {
-                $this->request = $request;
             }
 
             public function __invoke(ServerRequestInterface $request): ServerRequestInterface
