@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
+<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|callable</code>
@@ -314,9 +314,6 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>gettype($port)</code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedAttributeClass occurrences="1">
-      <code>SensitiveParameter</code>
-    </UndefinedAttributeClass>
   </file>
   <file src="src/functions/create_uploaded_file.legacy.php">
     <MixedArgument occurrences="1">
@@ -542,7 +539,7 @@
       <code>setMethods</code>
     </DeprecatedMethod>
     <InvalidArgument occurrences="1">
-      <code>['  THIS WILL NOT WORK  ']</code>
+      <code>$resource</code>
     </InvalidArgument>
     <MixedAssignment occurrences="1">
       <code>$test</code>
