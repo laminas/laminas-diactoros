@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use CurlHandle;
+use GdImage;
 use InvalidArgumentException;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
@@ -57,7 +59,7 @@ final class StreamTest extends TestCase
         $this->assertInstanceOf(Stream::class, $this->stream);
     }
 
-    public function testCanInstantiteWithStreamResource(): void
+    public function testCanInstantiateWithStreamResource(): void
     {
         $resource = fopen('php://memory', 'wb+');
         $stream   = new Stream($resource);
@@ -67,7 +69,8 @@ final class StreamTest extends TestCase
     public function testCanInstantiateWithGDResource(): void
     {
         $resource = imagecreate(1, 1);
-        $stream   = new Stream($resource);
+        self::assertInstanceOf(GdImage::class, $resource);
+        $stream = new Stream($resource);
         $this->assertInstanceOf(Stream::class, $stream);
     }
 
@@ -102,6 +105,7 @@ final class StreamTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress InvalidArgument */
         new Stream(['  THIS WILL NOT WORK  ']);
     }
 
@@ -610,7 +614,7 @@ final class StreamTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
 
-        /** @psalm-suppress ImplicitToStringCast */
+        /** @psalm-suppress ImplicitToStringCast, PossiblyInvalidArgument */
         new Stream($resource);
     }
 
@@ -629,11 +633,11 @@ final class StreamTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
 
-        /** @psalm-suppress ImplicitToStringCast */
+        /** @psalm-suppress ImplicitToStringCast, PossiblyInvalidArgument */
         $stream->attach($resource);
     }
 
-    /** @return resource|false */
+    /** @return CurlHandle|GdImage|false|resource */
     public function getResourceFor67()
     {
         if (function_exists('curl_init')) {

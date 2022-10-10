@@ -24,7 +24,7 @@
         },
         "sort-packages": true,
         "platform": {
-            "php": "7.4.99"
+            "php": "8.0.99"
         }
     },
     "extra": {
@@ -34,7 +34,7 @@
         }
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0"
     },
@@ -46,9 +46,9 @@
         "http-interop/http-factory-tests": "^0.9.0",
         "laminas/laminas-coding-standard": "^2.4.0",
         "php-http/psr7-integration-tests": "^1.1.1",
-        "phpunit/phpunit": "^9.5.23",
+        "phpunit/phpunit": "^9.5.25",
         "psalm/plugin-phpunit": "^0.17.0",
-        "vimeo/psalm": "^4.24.0"
+        "vimeo/psalm": "^4.28"
     },
     "provide": {
         "psr/http-factory-implementation": "1.0",
