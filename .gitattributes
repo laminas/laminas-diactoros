@@ -3,9 +3,12 @@
 /.github/ export-ignore
 /.gitignore export-ignore
 /.laminas-ci.json export-ignore
+/composer.lock export-ignore
 /docs/ export-ignore
 /mkdocs.yml export-ignore
 /phpcs.xml export-ignore
 /phpunit.xml.dist export-ignore
+/psalm-baseline.xml export-ignore
+/psalm.xml.dist export-ignore
 /renovate.json export-ignore
 /test/ export-ignore
