@@ -144,7 +144,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
-    public function withStatus($code, $reasonPhrase = ''): Response
+    public function withStatus($code, $reasonPhrase = ''): static
     {
         $new = clone $this;
         $new->setStatusCode($code, $reasonPhrase);
