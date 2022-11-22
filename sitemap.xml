@@ -2,92 +2,92 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/api/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/custom-responses/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/emitting-responses/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/install/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/overview/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/serialization/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v1/usage/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/api/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/custom-responses/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/factories/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/forward-migration/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/install/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/migration/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/overview/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/serialization/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/server-request-filters/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-diactoros/v2/usage/</loc>
-         <lastmod>2022-11-11</lastmod>
+         <lastmod>2022-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
