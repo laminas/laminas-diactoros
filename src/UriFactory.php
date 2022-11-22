@@ -14,6 +14,7 @@ use function gettype;
 use function implode;
 use function is_array;
 use function is_bool;
+use function is_scalar;
 use function is_string;
 use function ltrim;
 use function preg_match;
@@ -40,24 +41,21 @@ class UriFactory implements UriFactoryInterface
     /**
      * Create a Uri instance based on the headers and $_SERVER data.
      *
+     * @param array<non-empty-string, list<string>|int|float|string> $server SAPI parameters
      * @param array<string, string|list<string>> $headers
-     * @param array $server SAPI parameters
      */
     public static function createFromSapi(array $server, array $headers): Uri
     {
         $uri = new Uri('');
 
-        // URI scheme
-        $https = false;
+        $isHttps = false;
         if (array_key_exists('HTTPS', $server)) {
-            $https = self::marshalHttpsValue($server['HTTPS']);
+            $isHttps = self::marshalHttpsValue($server['HTTPS']);
         } elseif (array_key_exists('https', $server)) {
-            $https = self::marshalHttpsValue($server['https']);
+            $isHttps = self::marshalHttpsValue($server['https']);
         }
+        $uri = $uri->withScheme($isHttps ? 'https' : 'http');
 
-        $uri = $uri->withScheme($https ? 'https' : 'http');
-
-        // Set the host
         [$host, $port] = self::marshalHostAndPort($server, $headers);
         if (! empty($host)) {
             $uri = $uri->withHost($host);
@@ -66,19 +64,16 @@ class UriFactory implements UriFactoryInterface
             }
         }
 
-        // URI path
         $path = self::marshalRequestPath($server);
 
         // Strip query string
         $path = explode('?', $path, 2)[0];
 
-        // URI query
         $query = '';
-        if (isset($server['QUERY_STRING'])) {
+        if (isset($server['QUERY_STRING']) && is_scalar($server['QUERY_STRING'])) {
             $query = ltrim((string) $server['QUERY_STRING'], '?');
         }
 
-        // URI fragment
         $fragment = '';
         if (str_contains($path, '#')) {
             [$path, $fragment] = explode('#', $path, 2);
@@ -122,6 +117,7 @@ class UriFactory implements UriFactoryInterface
      */
     private static function marshalHostAndPort(array $server, array $headers): array
     {
+        /** @var array{string, null} $defaults */
         static $defaults = ['', null];
 
         $host = self::getHeaderFromArray('host', $headers, false);
@@ -192,12 +188,15 @@ class UriFactory implements UriFactoryInterface
     {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
+        /** @var string|array<string>|null $iisUrlRewritten */
         $iisUrlRewritten = $server['IIS_WasUrlRewritten'] ?? null;
-        $unencodedUrl    = $server['UNENCODED_URL'] ?? '';
+        /** @var string|array<string> $unencodedUrl */
+        $unencodedUrl = $server['UNENCODED_URL'] ?? '';
         if ('1' === $iisUrlRewritten && is_string($unencodedUrl) && '' !== $unencodedUrl) {
             return $unencodedUrl;
         }
 
+        /** @var string|array<string>|null $requestUri */
         $requestUri = $server['REQUEST_URI'] ?? null;
 
         if (is_string($requestUri)) {
@@ -230,7 +229,7 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param string|list<string> $host
-     * @return array Array of two items, host and port, in that order (can be
+     * @return array{string, int|null} Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
      */
     private static function marshalHostAndPortFromHeader($host): array

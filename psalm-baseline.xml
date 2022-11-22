@@ -215,8 +215,9 @@
     <MixedArgument occurrences="1">
       <code>$headers['cookie']</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
+    <MixedArgumentTypeCoercion occurrences="2">
       <code>$headers</code>
+      <code>$server</code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="3">
       <code>$iisUrlRewritten</code>
