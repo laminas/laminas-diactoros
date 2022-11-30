@@ -75,6 +75,7 @@ class UriTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
 
+        /** @psalm-suppress InvalidArgument */
         $uri->withUserInfo('matthew', 1);
     }
 
@@ -152,7 +153,7 @@ class UriTest extends TestCase
     public function testWithPortReturnsNewInstanceWithProvidedPort($port): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress PossiblyInvalidArgument */
         $new = $uri->withPort($port);
         $this->assertNotSame($uri, $new);
         $this->assertEquals($port, $new->getPort());
@@ -165,7 +166,7 @@ class UriTest extends TestCase
     public function testWithPortReturnsSameInstanceWithProvidedPortIsSameAsBefore(): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress PossiblyInvalidArgument,InvalidArgument */
         $new = $uri->withPort('3001');
         $this->assertSame($uri, $new);
         $this->assertSame(3001, $new->getPort());

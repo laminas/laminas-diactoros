@@ -382,8 +382,9 @@ class MessageTraitTest extends TestCase
     /**
      * @dataProvider numericHeaderValuesProvider
      * @group 99
-     * @psalm-suppress InvalidScalarArgument this test explicitly verifies that pre-type-declaration
-     *                                       implicit type conversion semantics still apply, for BC Compliance
+     * @psalm-suppress InvalidArgument,InvalidScalarArgument this test
+     *     explicitly verifies that pre-type-declaration implicit type
+     *     conversion semantics still apply, for BC Compliance
      */
     public function testWithHeaderShouldAllowIntegersAndFloats(float $value): void
     {

@@ -79,8 +79,12 @@ final class ResponseTest extends TestCase
             }
             $xpath = new DOMXPath($ianaHttpStatusCodes);
             $xpath->registerNamespace('ns', 'http://www.iana.org/assignments');
-            $updated = $xpath->query('//ns:updated')->item(0)->nodeValue;
-            $updated = strtotime($updated);
+
+            $updatedQueryResult = $xpath->query('//ns:updated');
+            if ($updatedQueryResult !== false && $updatedQueryResult->length > 0) {
+                $updated = $updatedQueryResult->item(0)?->nodeValue ?: '';
+                $updated = strtotime((string) $updated);
+            }
         }
 
         $ch = curl_init('https://www.iana.org/assignments/http-status-codes/http-status-codes.xml');
@@ -131,12 +135,22 @@ final class ResponseTest extends TestCase
         $records = $xpath->query('//ns:record');
 
         foreach ($records as $record) {
-            $value       = $xpath->query('.//ns:value', $record)->item(0)->nodeValue;
-            $description = $xpath->query('.//ns:description', $record)->item(0)->nodeValue;
+            $valueQueryResult       = $xpath->query('.//ns:value', $record);
+            $descriptionQueryResult = $xpath->query('.//ns:description', $record);
 
-            if (in_array($description, ['Unassigned', '(Unused)'])) {
+            if (false === $valueQueryResult || false === $descriptionQueryResult) {
                 continue;
             }
+
+            $value       = $valueQueryResult->item(0)?->nodeValue ?: '';
+            $description = $descriptionQueryResult->item(0)?->nodeValue ?: '';
+
+            if (in_array($description, ['Unassigned', '(Unused)'], true)) {
+                continue;
+            }
+
+            $value       = (string) $value;
+            $description = (string) $description;
 
             if (preg_match('/^([0-9]+)\s*\-\s*([0-9]+)$/', $value, $matches)) {
                 for ($value = $matches[1]; $value <= $matches[2]; $value++) {
@@ -157,7 +171,7 @@ final class ResponseTest extends TestCase
      */
     public function testReasonPhraseDefaultsAgainstIana(string $code, string $reasonPhrase): void
     {
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress InvalidArgument */
         $response = $this->response->withStatus($code);
         $this->assertSame($reasonPhrase, $response->getReasonPhrase());
     }
@@ -221,7 +235,7 @@ final class ResponseTest extends TestCase
      */
     public function testCreateWithValidStatusCodes($code): void
     {
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress PossiblyInvalidArgument */
         $response = $this->response->withStatus($code);
 
         $result = $response->getStatusCode();
