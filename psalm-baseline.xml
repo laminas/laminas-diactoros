@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
+<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|callable</code>
@@ -9,16 +9,15 @@
     </MixedAssignment>
   </file>
   <file src="src/Exception/DeserializationException.php">
-    <InvalidScalarArgument occurrences="2">
+    <PossiblyInvalidArgument occurrences="2">
       <code>$previous-&gt;getCode()</code>
       <code>$previous-&gt;getCode()</code>
-    </InvalidScalarArgument>
+    </PossiblyInvalidArgument>
   </file>
   <file src="src/MessageTrait.php">
-    <DocblockTypeContradiction occurrences="3">
+    <DocblockTypeContradiction occurrences="2">
       <code>! is_string($name)</code>
       <code>! is_string($stream) &amp;&amp; ! is_resource($stream)</code>
-      <code>is_string($version)</code>
     </DocblockTypeContradiction>
     <InvalidArrayOffset occurrences="4">
       <code>$new-&gt;headerNames[$normalized]</code>
@@ -29,7 +28,12 @@
     <InvalidPropertyAssignmentValue occurrences="1">
       <code>$headerNames</code>
     </InvalidPropertyAssignmentValue>
-    <MixedArgumentTypeCoercion occurrences="2">
+    <MixedArgument occurrences="1">
+      <code>is_object($version) ? $version::class : gettype($version)</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="4">
+      <code>$header</code>
+      <code>$header</code>
       <code>$header</code>
       <code>$header</code>
     </MixedArgumentTypeCoercion>
@@ -48,6 +52,13 @@
       <code>$new-&gt;headerNames</code>
       <code>$new-&gt;headers</code>
     </PropertyTypeCoercion>
+    <RedundantCondition occurrences="1">
+      <code>gettype($version)</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="2">
+      <code>is_object($version)</code>
+      <code>is_string($version)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/PhpInputStream.php">
     <MissingParamType occurrences="1">
@@ -108,9 +119,6 @@
       <code>$this-&gt;uri-&gt;getPort()</code>
       <code>$uri-&gt;getPort()</code>
     </PossiblyNullOperand>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$uri === null</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Response.php">
     <DocblockTypeContradiction occurrences="5">
@@ -219,20 +227,6 @@
       <code>$headers</code>
       <code>$server</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="3">
-      <code>$iisUrlRewritten</code>
-      <code>$requestUri</code>
-      <code>$unencodedUrl</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>array{string, int|null}</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$defaults</code>
-    </MixedReturnStatement>
-    <MixedReturnTypeCoercion occurrences="1">
-      <code>self::marshalHostAndPortFromHeader($host)</code>
-    </MixedReturnTypeCoercion>
     <MoreSpecificReturnType occurrences="1">
       <code>ServerRequest</code>
     </MoreSpecificReturnType>
@@ -299,11 +293,10 @@
       <code>is_string($user)</code>
       <code>null !== $password &amp;&amp; ! is_string($password)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="5">
+    <MixedArgument occurrences="4">
       <code>$key</code>
       <code>$key</code>
       <code>$matches[0]</code>
-      <code>$port</code>
       <code>$value</code>
     </MixedArgument>
     <PossiblyNullOperand occurrences="1">
@@ -350,7 +343,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$server['REQUEST_METHOD'] ?? 'GET'</code>
       <code>$server['REQUEST_METHOD'] ?? 'GET'</code>
     </MixedReturnStatement>
   </file>
@@ -365,7 +359,8 @@
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument occurrences="2">
+      <code>func_get_args()</code>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
@@ -416,7 +411,8 @@
     </PossiblyFalseOperand>
   </file>
   <file src="src/functions/normalize_server.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument occurrences="2">
+      <code>func_get_args()</code>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
@@ -512,8 +508,15 @@
     <LessSpecificReturnStatement occurrences="1">
       <code>$ianaCodesReasonPhrases</code>
     </LessSpecificReturnStatement>
-    <MixedAssignment occurrences="1">
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$record</code>
+      <code>$record</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="4">
+      <code>$description</code>
       <code>$responseCode</code>
+      <code>$updated</code>
+      <code>$value</code>
     </MixedAssignment>
     <MoreSpecificReturnType occurrences="1">
       <code>list&lt;array{numeric-string, non-empty-string}&gt;</code>
@@ -524,6 +527,11 @@
     <StringIncrement occurrences="1">
       <code>$value</code>
     </StringIncrement>
+    <UndefinedPropertyFetch occurrences="3">
+      <code>$descriptionQueryResult-&gt;item(0)?-&gt;nodeValue</code>
+      <code>$updatedQueryResult-&gt;item(0)?-&gt;nodeValue</code>
+      <code>$valueQueryResult-&gt;item(0)?-&gt;nodeValue</code>
+    </UndefinedPropertyFetch>
   </file>
   <file src="test/ServerRequestFactoryTest.php">
     <InvalidArgument occurrences="1">
@@ -542,9 +550,9 @@
     <InvalidArgument occurrences="1">
       <code>$resource</code>
     </InvalidArgument>
-    <MixedAssignment occurrences="1">
-      <code>$test</code>
-    </MixedAssignment>
+    <UndefinedDocblockClass occurrences="1">
+      <code>CurlHandle|GdImage|false|resource</code>
+    </UndefinedDocblockClass>
   </file>
   <file src="test/UploadedFileTest.php">
     <MixedArgument occurrences="2">
@@ -553,9 +561,6 @@
     </MixedArgument>
   </file>
   <file src="test/UriTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>1</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="1">
       <code>$test</code>
     </MixedArgument>
@@ -568,15 +573,20 @@
       <code>$normalised['my-form']['details']['avatars']</code>
       <code>$normalised['slide-shows'][0]['slides']</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="8">
+    <MixedArrayAccess occurrences="13">
       <code>$normalised['my-form']['details']['avatar']</code>
       <code>$normalised['my-form']['details']['avatars']</code>
       <code>$normalised['my-form']['details']['avatars']</code>
       <code>$normalised['my-form']['details']['avatars']</code>
       <code>$normalised['my-form']['details']['avatars']</code>
+      <code>$normalised['my-form']['details']['avatars'][0]</code>
+      <code>$normalised['my-form']['details']['avatars'][1]</code>
+      <code>$normalised['my-form']['details']['avatars'][2]</code>
       <code>$normalised['slide-shows'][0]['slides']</code>
       <code>$normalised['slide-shows'][0]['slides']</code>
       <code>$normalised['slide-shows'][0]['slides']</code>
+      <code>$normalised['slide-shows'][0]['slides'][0]</code>
+      <code>$normalised['slide-shows'][0]['slides'][1]</code>
     </MixedArrayAccess>
     <MixedMethodCall occurrences="6">
       <code>getClientFilename</code>
