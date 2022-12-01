@@ -9,7 +9,7 @@ Common use cases include:
 - Generating and injecting a request ID.
 - Modifying the request URI based on headers provided (e.g., based on the `X-Forwarded-Host` or `X-Forwarded-Proto` headers).
 
-## FilerServerRequestInterface
+## FilterServerRequestInterface
 
 A request filter implements `Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface`:
 
