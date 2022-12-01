@@ -124,12 +124,13 @@ $request = ServerRequestFactory::fromGlobals(
     $_COOKIE,
     $_FILES
 );
+```
 
 ### Request Filters
 
 Since version 2.11.1, this method takes the additional optional argument `$requestFilter`.
 This should be a `null` value, or an instance of [`Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface`](server-request-filters.md).
-For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\FilerUsingXForwardedHeaders`](server-request-filters.md#filterusingxforwardedheaders) instance configured as follows:
+For version 2 releases, if a `null` is provided, internally the method will assign a [`Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders`](server-request-filters.md#filterusingxforwardedheaders) instance configured as follows:
 
 ```php
 $requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();
