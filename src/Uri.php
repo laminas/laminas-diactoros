@@ -573,19 +573,6 @@ class Uri implements UriInterface, Stringable
             [$this, 'urlEncodeChar'],
             $path
         );
-
-        if ('' === $path) {
-            // No path
-            return $path;
-        }
-
-        if ($path[0] !== '/') {
-            // Relative path
-            return $path;
-        }
-
-        // Ensure only one leading slash, to prevent XSS attempts.
-        return '/' . ltrim($path, '/');
     }
 
     /**
