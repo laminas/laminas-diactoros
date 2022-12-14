@@ -45,7 +45,7 @@
         "ext-libxml": "*",
         "http-interop/http-factory-tests": "^0.9.0",
         "laminas/laminas-coding-standard": "^2.4.0",
-        "php-http/psr7-integration-tests": "^1.1.1",
+        "php-http/psr7-integration-tests": "^1.2",
         "phpunit/phpunit": "^9.5.26",
         "psalm/plugin-phpunit": "^0.18.0",
         "vimeo/psalm": "^5.0.0"

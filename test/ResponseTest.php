@@ -83,7 +83,7 @@ final class ResponseTest extends TestCase
             $updatedQueryResult = $xpath->query('//ns:updated');
             if ($updatedQueryResult !== false && $updatedQueryResult->length > 0) {
                 $updated = $updatedQueryResult->item(0)?->nodeValue ?: '';
-                $updated = strtotime((string) $updated);
+                $updated = strtotime($updated);
             }
         }
 
@@ -149,8 +149,8 @@ final class ResponseTest extends TestCase
                 continue;
             }
 
-            $value       = (string) $value;
-            $description = (string) $description;
+            $value       = $value;
+            $description = $description;
 
             if (preg_match('/^([0-9]+)\s*\-\s*([0-9]+)$/', $value, $matches)) {
                 for ($value = $matches[1]; $value <= $matches[2]; $value++) {

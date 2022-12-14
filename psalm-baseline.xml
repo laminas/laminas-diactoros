@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
+<files psalm-version="5.2.0@fb685a16df3050d4c18d8a4100fe83abe6458cba">
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|callable</code>
@@ -512,11 +512,8 @@
       <code>$record</code>
       <code>$record</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="4">
-      <code>$description</code>
+    <MixedAssignment occurrences="1">
       <code>$responseCode</code>
-      <code>$updated</code>
-      <code>$value</code>
     </MixedAssignment>
     <MoreSpecificReturnType occurrences="1">
       <code>list&lt;array{numeric-string, non-empty-string}&gt;</code>
@@ -527,11 +524,6 @@
     <StringIncrement occurrences="1">
       <code>$value</code>
     </StringIncrement>
-    <UndefinedPropertyFetch occurrences="3">
-      <code>$descriptionQueryResult-&gt;item(0)?-&gt;nodeValue</code>
-      <code>$updatedQueryResult-&gt;item(0)?-&gt;nodeValue</code>
-      <code>$valueQueryResult-&gt;item(0)?-&gt;nodeValue</code>
-    </UndefinedPropertyFetch>
   </file>
   <file src="test/ServerRequestFactoryTest.php">
     <InvalidArgument occurrences="1">
@@ -550,9 +542,6 @@
     <InvalidArgument occurrences="1">
       <code>$resource</code>
     </InvalidArgument>
-    <UndefinedDocblockClass occurrences="1">
-      <code>CurlHandle|GdImage|false|resource</code>
-    </UndefinedDocblockClass>
   </file>
   <file src="test/UploadedFileTest.php">
     <MixedArgument occurrences="2">

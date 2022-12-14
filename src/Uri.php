@@ -113,7 +113,7 @@ class Uri implements UriInterface, Stringable
         $this->uriString = static::createUriString(
             $this->scheme,
             $this->getAuthority(),
-            $this->getPath(), // Absolute URIs should use a "/" for an empty path
+            $this->path, // Absolute URIs should use a "/" for an empty path
             $this->query,
             $this->fragment
         );
@@ -185,7 +185,18 @@ class Uri implements UriInterface, Stringable
      */
     public function getPath(): string
     {
-        return $this->path;
+        if ('' === $this->path) {
+            // No path
+            return $this->path;
+        }
+
+        if ($this->path[0] !== '/') {
+            // Relative path
+            return $this->path;
+        }
+
+        // Ensure only one leading slash, to prevent XSS attempts.
+        return '/' . ltrim($this->path, '/');
     }
 
     /**
@@ -557,24 +568,11 @@ class Uri implements UriInterface, Stringable
     {
         $path = $this->filterInvalidUtf8($path);
 
-        $path = preg_replace_callback(
+        return preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . ')(:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
             $path
         );
-
-        if ('' === $path) {
-            // No path
-            return $path;
-        }
-
-        if ($path[0] !== '/') {
-            // Relative path
-            return $path;
-        }
-
-        // Ensure only one leading slash, to prevent XSS attempts.
-        return '/' . ltrim($path, '/');
     }
 
     /**

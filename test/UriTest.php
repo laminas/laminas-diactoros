@@ -575,13 +575,6 @@ class UriTest extends TestCase
         $this->assertSame($expected, $uri->getFragment());
     }
 
-    public function testProperlyTrimsLeadingSlashesToPreventXSS(): void
-    {
-        $url = 'http://example.org//zend.com';
-        $uri = new Uri($url);
-        $this->assertSame('http://example.org/zend.com', (string) $uri);
-    }
-
     /** @return non-empty-array<string, array{'withScheme'|'withUserInfo'|'withHost'|'withPath'|'withQuery'|'withFragment', mixed}> */
     public function invalidStringComponentValues(): array
     {
