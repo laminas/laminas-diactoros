@@ -374,9 +374,7 @@ trait MessageTrait
         }
     }
 
-    /**
-     * @return string[]
-     */
+    /** @return list<string> */
     private function filterHeaderValue(mixed $values): array
     {
         if (! is_array($values)) {
