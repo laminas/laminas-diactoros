@@ -44,11 +44,11 @@ class Stream implements StreamInterface, Stringable
     /** @var resource|null */
     protected $resource;
 
-    /** @var string|resource */
+    /** @var string|object|resource|null */
     protected $stream;
 
     /**
-     * @param string|resource $stream
+     * @param string|object|resource $stream
      * @param string $mode Mode with which to open stream
      * @throws Exception\InvalidArgumentException
      */
@@ -103,7 +103,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * Attach a new stream/resource to the instance.
      *
-     * @param string|resource $resource
+     * @param string|object|resource $resource
      * @throws Exception\InvalidArgumentException For stream identifier that cannot be cast to a resource.
      * @throws Exception\InvalidArgumentException For non-resource stream.
      */
@@ -313,7 +313,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * Set the internal stream resource.
      *
-     * @param string|resource $stream String stream target or stream resource.
+     * @param string|object|resource $stream String stream target or stream resource.
      * @param string $mode Resource mode for stream target.
      * @throws Exception\InvalidArgumentException For invalid streams or resources.
      */
