@@ -119,6 +119,8 @@
   <file src="src/Response.php">
     <DocblockTypeContradiction>
       <code>! is_numeric($code)</code>
+      <code>! is_numeric($code)
+            || is_float($code)</code>
       <code>gettype($code)</code>
       <code>is_float($code)</code>
       <code>is_string($reasonPhrase)</code>
@@ -215,7 +217,20 @@
     </ParamNameMismatch>
   </file>
   <file src="src/ServerRequestFactory.php">
-    <LessSpecificReturnStatement/>
+    <LessSpecificReturnStatement>
+      <code>$requestFilter(new ServerRequest(
+            $server,
+            $files,
+            UriFactory::createFromSapi($server, $headers),
+            marshalMethodFromSapi($server),
+            'php://input',
+            $headers,
+            $cookies ?: $_COOKIE,
+            $query ?: $_GET,
+            $body ?: $_POST,
+            marshalProtocolVersionFromSapi($server)
+        ))</code>
+    </LessSpecificReturnStatement>
     <MixedArgument>
       <code>$headers['cookie']</code>
     </MixedArgument>
@@ -437,11 +452,34 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedFunctionCall/>
+    <MixedFunctionCall>
+      <code>$recursiveNormalize(
+                    $tmpNameTree[$key],
+                    $sizeTree[$key],
+                    $errorTree[$key],
+                    $nameTree[$key] ?? null,
+                    $typeTree[$key] ?? null
+                )</code>
+      <code>$recursiveNormalize(
+            $files['tmp_name'],
+            $files['size'],
+            $files['error'],
+            $files['name'] ?? null,
+            $files['type'] ?? null
+        )</code>
+    </MixedFunctionCall>
     <MixedInferredReturnType>
       <code>array</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement/>
+    <MixedReturnStatement>
+      <code>$recursiveNormalize(
+            $files['tmp_name'],
+            $files['size'],
+            $files['error'],
+            $files['name'] ?? null,
+            $files['type'] ?? null
+        )</code>
+    </MixedReturnStatement>
   </file>
   <file src="src/functions/parse_cookie_header.legacy.php">
     <MixedArgument>
