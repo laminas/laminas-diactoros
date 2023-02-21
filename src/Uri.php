@@ -220,7 +220,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function withScheme($scheme): UriInterface
+    public function withScheme(string $scheme): UriInterface
     {
         if (! is_string($scheme)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -255,9 +255,9 @@ class Uri implements UriInterface, Stringable
      * {@inheritdoc}
      */
     public function withUserInfo(
-        $user,
+        string $user,
         #[SensitiveParameter]
-        $password = null
+        ?string $password = null
     ): UriInterface {
         if (! is_string($user)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -295,7 +295,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function withHost($host): UriInterface
+    public function withHost(string $host): UriInterface
     {
         if (! is_string($host)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -319,7 +319,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function withPort($port): UriInterface
+    public function withPort(?int $port): UriInterface
     {
         if ($port !== null) {
             if (! is_numeric($port) || is_float($port)) {
@@ -353,7 +353,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function withPath($path): UriInterface
+    public function withPath(string $path): UriInterface
     {
         if (! is_string($path)) {
             throw new Exception\InvalidArgumentException(
@@ -389,7 +389,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function withQuery($query): UriInterface
+    public function withQuery(string $query): UriInterface
     {
         if (! is_string($query)) {
             throw new Exception\InvalidArgumentException(
@@ -419,7 +419,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function withFragment($fragment): UriInterface
+    public function withFragment(string $fragment): UriInterface
     {
         if (! is_string($fragment)) {
             throw new Exception\InvalidArgumentException(sprintf(

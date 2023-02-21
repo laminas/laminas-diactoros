@@ -197,7 +197,7 @@ trait RequestTrait
      * @throws Exception\InvalidArgumentException For invalid HTTP methods.
      * @return static
      */
-    public function withMethod($method): RequestInterface
+    public function withMethod(string $method): RequestInterface
     {
         $new = clone $this;
         $new->setMethod($method);
@@ -245,7 +245,7 @@ trait RequestTrait
      * @param bool $preserveHost Preserve the original state of the Host header.
      * @return static
      */
-    public function withUri(UriInterface $uri, $preserveHost = false): RequestInterface
+    public function withUri(UriInterface $uri, bool $preserveHost = false): RequestInterface
     {
         $new      = clone $this;
         $new->uri = $uri;

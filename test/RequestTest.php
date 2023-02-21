@@ -37,7 +37,6 @@ final class RequestTest extends TestCase
     public function invalidMethod()
     {
         return [
-            [null],
             [''],
         ];
     }

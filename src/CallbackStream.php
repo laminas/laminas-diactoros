@@ -102,7 +102,7 @@ class CallbackStream implements StreamInterface, Stringable
      * @param int $whence
      * @return void
      */
-    public function seek($offset, $whence = SEEK_SET)
+    public function seek(int $offset, int $whence = SEEK_SET)
     {
         throw Exception\UnseekableStreamException::forCallbackStream();
     }
@@ -126,7 +126,7 @@ class CallbackStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function write($string): void
+    public function write(string $string): int
     {
         throw Exception\UnwritableStreamException::forCallbackStream();
     }
@@ -142,7 +142,7 @@ class CallbackStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function read($length): string
+    public function read(int $length): string
     {
         throw Exception\UnreadableStreamException::forCallbackStream();
     }
@@ -160,7 +160,7 @@ class CallbackStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function getMetadata($key = null)
+    public function getMetadata(?string $key = null)
     {
         $metadata = [
             'eof'         => $this->eof(),

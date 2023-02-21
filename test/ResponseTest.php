@@ -154,10 +154,10 @@ final class ResponseTest extends TestCase
 
             if (preg_match('/^([0-9]+)\s*\-\s*([0-9]+)$/', $value, $matches)) {
                 for ($value = $matches[1]; $value <= $matches[2]; $value++) {
-                    $ianaCodesReasonPhrases[] = [$value, $description];
+                    $ianaCodesReasonPhrases[] = [(int) $value, $description];
                 }
             } else {
-                $ianaCodesReasonPhrases[] = [$value, $description];
+                $ianaCodesReasonPhrases[] = [(int) $value, $description];
             }
         }
 
@@ -166,10 +166,10 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider ianaCodesReasonPhrasesProvider
-     * @param numeric-string $code
+     * @param int $code
      * @param non-empty-string $reasonPhrase
      */
-    public function testReasonPhraseDefaultsAgainstIana(string $code, string $reasonPhrase): void
+    public function testReasonPhraseDefaultsAgainstIana(int $code, string $reasonPhrase): void
     {
         /** @psalm-suppress InvalidArgument */
         $response = $this->response->withStatus($code);
@@ -180,31 +180,6 @@ final class ResponseTest extends TestCase
     {
         $response = $this->response->withStatus(422, 'Foo Bar!');
         $this->assertSame('Foo Bar!', $response->getReasonPhrase());
-    }
-
-    /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidReasonPhrases(): array
-    {
-        return [
-            'true'    => [true],
-            'false'   => [false],
-            'array'   => [[200]],
-            'object'  => [(object) ['reasonPhrase' => 'Ok']],
-            'integer' => [99],
-            'float'   => [400.5],
-            'null'    => [null],
-        ];
-    }
-
-    /**
-     * @dataProvider invalidReasonPhrases
-     */
-    public function testWithStatusRaisesAnExceptionForNonStringReasonPhrases(mixed $invalidReasonPhrase): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        /** @psalm-suppress MixedArgument */
-        $this->response->withStatus(422, $invalidReasonPhrase);
     }
 
     public function testConstructorRaisesExceptionForInvalidStream(): void
@@ -231,7 +206,7 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider validStatusCodes
-     * @param int|numeric-string $code
+     * @param int $code
      */
     public function testCreateWithValidStatusCodes($code): void
     {
@@ -250,7 +225,6 @@ final class ResponseTest extends TestCase
         return [
             'minimum'        => [100],
             'middle'         => [300],
-            'string-integer' => ['300'],
             'maximum'        => [599],
         ];
     }
@@ -270,15 +244,8 @@ final class ResponseTest extends TestCase
     public function invalidStatusCodes(): array
     {
         return [
-            'true'     => [true],
-            'false'    => [false],
-            'array'    => [[200]],
-            'object'   => [(object) ['statusCode' => 200]],
             'too-low'  => [99],
-            'float'    => [400.5],
             'too-high' => [600],
-            'null'     => [null],
-            'string'   => ['foo'],
         ];
     }
 
