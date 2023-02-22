@@ -8,11 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
 use function gettype;
-use function is_float;
-use function is_numeric;
-use function is_object;
 use function is_scalar;
-use function is_string;
 use function sprintf;
 
 /**
@@ -154,16 +150,12 @@ class Response implements ResponseInterface
     /**
      * Set a valid status code.
      *
-     * @param int $code
-     * @param string $reasonPhrase
      * @throws Exception\InvalidArgumentException On an invalid status code.
      */
-    private function setStatusCode($code, $reasonPhrase = ''): void
+    private function setStatusCode(int $code, string $reasonPhrase = ''): void
     {
         if (
-            ! is_numeric($code)
-            || is_float($code)
-            || $code < static::MIN_STATUS_CODE_VALUE
+            $code < static::MIN_STATUS_CODE_VALUE
             || $code > static::MAX_STATUS_CODE_VALUE
         ) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -174,18 +166,11 @@ class Response implements ResponseInterface
             ));
         }
 
-        if (! is_string($reasonPhrase)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Unsupported response reason phrase; must be a string, received %s',
-                is_object($reasonPhrase) ? $reasonPhrase::class : gettype($reasonPhrase)
-            ));
-        }
-
         if ($reasonPhrase === '' && isset($this->phrases[$code])) {
             $reasonPhrase = $this->phrases[$code];
         }
 
         $this->reasonPhrase = $reasonPhrase;
-        $this->statusCode   = (int) $code;
+        $this->statusCode   = $code;
     }
 }

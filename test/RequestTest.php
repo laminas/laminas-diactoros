@@ -65,14 +65,6 @@ final class RequestTest extends TestCase
         $this->assertEmpty($uri->getFragment());
     }
 
-    public function testConstructorRaisesExceptionForInvalidStream(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        /** @psalm-suppress InvalidArgument */
-        new Request(['TOTALLY INVALID']);
-    }
-
     public function testWithUriReturnsNewInstanceWithNewUri(): void
     {
         $request = $this->request->withUri(new Uri('https://example.com:10082/foo/bar?baz=bat'));
@@ -113,31 +105,6 @@ final class RequestTest extends TestCase
         $request->getBody()->write("test");
 
         $this->assertSame("test", (string) $request->getBody());
-    }
-
-    /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidRequestUri(): array
-    {
-        return [
-            'true'     => [true],
-            'false'    => [false],
-            'int'      => [1],
-            'float'    => [1.1],
-            'array'    => [['http://example.com']],
-            'stdClass' => [(object) ['href' => 'http://example.com']],
-        ];
-    }
-
-    /**
-     * @dataProvider invalidRequestUri
-     */
-    public function testConstructorRaisesExceptionForInvalidUri(mixed $uri): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid URI');
-
-        /** @psalm-suppress MixedArgument */
-        new Request($uri);
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */

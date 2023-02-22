@@ -174,7 +174,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function seek($offset, $whence = SEEK_SET): void
+    public function seek(int $offset, int $whence = SEEK_SET): void
     {
         if (! $this->resource) {
             throw Exception\UnseekableStreamException::dueToMissingResource();
@@ -258,7 +258,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function read($length): string
+    public function read(int $length): string
     {
         if (! $this->resource) {
             throw Exception\UnreadableStreamException::dueToMissingResource();
@@ -296,7 +296,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function getMetadata($key = null)
+    public function getMetadata(?string $key = null)
     {
         if (null === $key) {
             return stream_get_meta_data($this->resource);

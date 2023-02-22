@@ -89,23 +89,19 @@ trait RequestTrait
      *
      * Otherwise, it raises an exception.
      *
-     * @param null|string|UriInterface $uri
      * @throws Exception\InvalidArgumentException
      */
-    private function createUri($uri): UriInterface
+    private function createUri(null|string|UriInterface $uri): UriInterface
     {
         if ($uri instanceof UriInterface) {
             return $uri;
         }
+
         if (is_string($uri)) {
             return new Uri($uri);
         }
-        if ($uri === null) {
-            return new Uri();
-        }
-        throw new Exception\InvalidArgumentException(
-            'Invalid URI provided; must be null, a string, or a Psr\Http\Message\UriInterface instance'
-        );
+
+        return new Uri();
     }
 
     /**
@@ -282,18 +278,10 @@ trait RequestTrait
     /**
      * Set and validate the HTTP method
      *
-     * @param string $method
      * @throws Exception\InvalidArgumentException On invalid HTTP method.
      */
-    private function setMethod($method): void
+    private function setMethod(string $method): void
     {
-        if (! is_string($method)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Unsupported HTTP method; must be a string, received %s',
-                is_object($method) ? $method::class : gettype($method)
-            ));
-        }
-
         if (! preg_match('/^[!#$%&\'*+.^_`\|~0-9a-z-]+$/i', $method)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP method "%s" provided',

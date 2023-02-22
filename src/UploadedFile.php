@@ -137,7 +137,7 @@ class UploadedFile implements UploadedFileInterface
             );
         }
 
-        if (! is_string($targetPath) || empty($targetPath)) {
+        if (empty($targetPath)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid path provided for move operation; must be a non-empty string'
             );

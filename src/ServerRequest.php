@@ -53,7 +53,7 @@ class ServerRequest implements ServerRequestInterface
     public function __construct(
         private array $serverParams = [],
         array $uploadedFiles = [],
-        $uri = null,
+        null|string|UriInterface $uri = null,
         ?string $method = null,
         $body = 'php://input',
         array $headers = [],
