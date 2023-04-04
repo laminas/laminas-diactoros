@@ -637,7 +637,7 @@ final class StreamTest extends TestCase
         $stream->attach($resource);
     }
 
-    /** @return CurlHandle|GdImage|Shmop|false */
+    /** @return CurlHandle|GdImage|Shmop|false|resource */
     public function getResourceFor67()
     {
         if (function_exists('curl_init')) {
