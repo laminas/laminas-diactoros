@@ -97,12 +97,8 @@ class CallbackStream implements StreamInterface, Stringable
 
     /**
      * {@inheritdoc}
-     *
-     * @param int $offset
-     * @param int $whence
-     * @return void
      */
-    public function seek(int $offset, int $whence = SEEK_SET)
+    public function seek(int $offset, int $whence = SEEK_SET): void
     {
         throw Exception\UnseekableStreamException::forCallbackStream();
     }

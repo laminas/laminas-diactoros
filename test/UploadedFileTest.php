@@ -172,7 +172,7 @@ final class UploadedFileTest extends TestCase
     public function invalidMovePaths(): array
     {
         return [
-            'empty'  => [''],
+            'empty' => [''],
         ];
     }
 

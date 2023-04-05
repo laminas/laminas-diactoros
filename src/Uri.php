@@ -10,12 +10,7 @@ use Stringable;
 
 use function array_keys;
 use function explode;
-use function gettype;
 use function implode;
-use function is_float;
-use function is_numeric;
-use function is_object;
-use function is_string;
 use function ltrim;
 use function parse_url;
 use function preg_match;

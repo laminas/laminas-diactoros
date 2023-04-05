@@ -166,7 +166,6 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider ianaCodesReasonPhrasesProvider
-     * @param int $code
      * @param non-empty-string $reasonPhrase
      */
     public function testReasonPhraseDefaultsAgainstIana(int $code, string $reasonPhrase): void
@@ -223,9 +222,9 @@ final class ResponseTest extends TestCase
     public function validStatusCodes(): array
     {
         return [
-            'minimum'        => [100],
-            'middle'         => [300],
-            'maximum'        => [599],
+            'minimum' => [100],
+            'middle'  => [300],
+            'maximum' => [599],
         ];
     }
 

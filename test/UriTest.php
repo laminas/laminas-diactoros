@@ -130,8 +130,8 @@ class UriTest extends TestCase
     public function validPorts(): array
     {
         return [
-            'null'       => [null],
-            'int'        => [3000],
+            'null' => [null],
+            'int'  => [3000],
         ];
     }
 
