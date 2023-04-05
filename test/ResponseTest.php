@@ -122,7 +122,7 @@ final class ResponseTest extends TestCase
         self::fail('Unable to retrieve IANA response status codes due to timeout or invalid XML');
     }
 
-    /** @return list<array{numeric-string, non-empty-string}> */
+    /** @return list<list{int, non-empty-string}> */
     public function ianaCodesReasonPhrasesProvider(): array
     {
         $ianaHttpStatusCodes = $this->fetchIanaStatusCodes();
@@ -151,6 +151,12 @@ final class ResponseTest extends TestCase
 
             $value       = $value;
             $description = $description;
+
+            if ($description === '') {
+                // This should not happen, but we want to ensure we get a
+                // non-empty-string only for the reason phrase.
+                continue;
+            }
 
             if (preg_match('/^([0-9]+)\s*\-\s*([0-9]+)$/', $value, $matches)) {
                 for ($value = $matches[1]; $value <= $matches[2]; $value++) {
@@ -205,20 +211,18 @@ final class ResponseTest extends TestCase
 
     /**
      * @dataProvider validStatusCodes
-     * @param int $code
      */
-    public function testCreateWithValidStatusCodes($code): void
+    public function testCreateWithValidStatusCodes(int $code): void
     {
         /** @psalm-suppress PossiblyInvalidArgument */
         $response = $this->response->withStatus($code);
 
         $result = $response->getStatusCode();
 
-        $this->assertSame((int) $code, $result);
-        $this->assertIsInt($result);
+        $this->assertSame($code, $result);
     }
 
-    /** @return non-empty-array<non-empty-string, array{int|numeric-string}> */
+    /** @return non-empty-array<non-empty-string, array{int}> */
     public function validStatusCodes(): array
     {
         return [

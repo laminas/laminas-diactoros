@@ -260,7 +260,7 @@ trait MessageTrait
      */
     public function withoutHeader(string $name): MessageInterface
     {
-        if (! is_string($name) || $name === '' || ! $this->hasHeader($name)) {
+        if ($name === '' || ! $this->hasHeader($name)) {
             return clone $this;
         }
 

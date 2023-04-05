@@ -160,7 +160,7 @@ class Response implements ResponseInterface
         ) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid status code "%s"; must be an integer between %d and %d, inclusive',
-                is_scalar($code) ? $code : gettype($code),
+                $code,
                 static::MIN_STATUS_CODE_VALUE,
                 static::MAX_STATUS_CODE_VALUE
             ));
