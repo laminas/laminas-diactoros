@@ -231,6 +231,7 @@ class UriFactory implements UriFactoryInterface
      *
      * @return array{string, int|null} Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
+     * @psalm-mutation-free
      */
     public static function marshalHostAndPortFromHeader(string $host): array
     {
