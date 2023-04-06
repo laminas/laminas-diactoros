@@ -403,7 +403,11 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $filteredRequest = $filter($request);
         $uri             = $filteredRequest->getUri();
         self::assertSame('example.org', $uri->getHost());
-        self::assertNull($uri->getPort(), 'Port is omitted due to the fact that `https` protocol was used and port 80 is being ignored due to the availability of `X-Forwarded-Port');
+        self::assertNull(
+            $uri->getPort(),
+            'Port is omitted due to the fact that `https` protocol was used and port 80 is being ignored due'
+            . ' to the availability of `X-Forwarded-Port'
+        );
     }
 
     public function testWillFilterXForwardedHostPort(): void
