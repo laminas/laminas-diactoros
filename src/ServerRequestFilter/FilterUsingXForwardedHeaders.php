@@ -81,7 +81,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
                     $uri           = $uri
                         ->withHost($host);
                     if ($port !== null) {
-                        $uri = $uri->withPort((int) $port);
+                        $uri = $uri->withPort($port);
                     }
                     break;
                 case self::HEADER_PORT:
