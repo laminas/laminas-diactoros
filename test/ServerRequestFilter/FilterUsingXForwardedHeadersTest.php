@@ -382,7 +382,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
      * @link https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#defaults
      * @link https://httpd.apache.org/docs/2.4/en/mod/mod_proxy.html#x-headers
      */
-    public function testWillFilterXForwardedHostPort(): void
+    public function testWillFilterXForwardedHostPortWithPreservingForwardedPort(): void
     {
         $request = new ServerRequest(
             ['REMOTE_ADDR' => '192.168.0.1'],
@@ -403,5 +403,29 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $filteredRequest = $filter($request);
         $uri             = $filteredRequest->getUri();
         self::assertSame('example.org', $uri->getHost());
+        self::assertNull($uri->getPort(), 'Port is omitted due to the fact that `https` protocol was used and port 80 is being ignored due to the availability of `X-Forwarded-Port');
+    }
+
+    public function testWillFilterXForwardedHostPort(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.0.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Proto' => 'https',
+                'X-Forwarded-Host'  => 'example.org:8080',
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustAny();
+
+        $filteredRequest = $filter($request);
+        $uri             = $filteredRequest->getUri();
+        self::assertSame('example.org', $uri->getHost());
+        self::assertSame(8080, $uri->getPort());
     }
 }
