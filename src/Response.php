@@ -7,8 +7,6 @@ namespace Laminas\Diactoros;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
-use function gettype;
-use function is_scalar;
 use function sprintf;
 
 /**
