@@ -38,6 +38,8 @@ use function substr;
  * might change state are implemented such that they retain the internal
  * state of the current instance and return a new instance that contains the
  * changed state.
+ *
+ * @psalm-immutable
  */
 class Uri implements UriInterface, Stringable
 {
@@ -67,8 +69,7 @@ class Uri implements UriInterface, Stringable
 
     private string $host = '';
 
-    /** @var int|null */
-    private $port;
+    private ?int $port = null;
 
     private string $path = '';
 

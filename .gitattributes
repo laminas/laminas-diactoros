@@ -12,3 +12,4 @@
 /psalm.xml.dist export-ignore
 /renovate.json export-ignore
 /test/ export-ignore
+/psalm/ export-ignore
