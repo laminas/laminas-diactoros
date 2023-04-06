@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|callable</code>
@@ -114,10 +114,6 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$requestTarget</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyNullOperand occurrences="2">
-      <code>$this-&gt;uri-&gt;getPort()</code>
-      <code>$uri-&gt;getPort()</code>
-    </PossiblyNullOperand>
   </file>
   <file src="src/Response.php">
     <DocblockTypeContradiction occurrences="5">
@@ -169,11 +165,6 @@
     <MixedAssignment occurrences="1">
       <code>$hasContentType</code>
     </MixedAssignment>
-  </file>
-  <file src="src/Response/JsonResponse.php">
-    <UnusedFunctionCall occurrences="1">
-      <code>json_encode</code>
-    </UnusedFunctionCall>
   </file>
   <file src="src/Response/RedirectResponse.php">
     <DocblockTypeContradiction occurrences="1">
@@ -234,21 +225,12 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ServerRequestFilter/FilterUsingXForwardedHeaders.php">
-    <ImpureMethodCall occurrences="7">
+    <ImpureMethodCall occurrences="4">
       <code>getHeaderLine</code>
       <code>getServerParams</code>
       <code>getUri</code>
-      <code>withHost</code>
-      <code>withPort</code>
-      <code>withScheme</code>
       <code>withUri</code>
     </ImpureMethodCall>
-    <LessSpecificReturnStatement occurrences="1">
-      <code>$proxyCIDRList</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
-      <code>list&lt;non-empty-string&gt;</code>
-    </MoreSpecificReturnType>
   </file>
   <file src="src/Stream.php">
     <PossiblyNullArgument occurrences="4">
