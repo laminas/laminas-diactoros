@@ -11,6 +11,7 @@ use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use RuntimeException;
+use Shmop;
 
 use function curl_init;
 use function feof;
@@ -636,7 +637,7 @@ final class StreamTest extends TestCase
         $stream->attach($resource);
     }
 
-    /** @return CurlHandle|GdImage|false|resource */
+    /** @return CurlHandle|GdImage|Shmop|false */
     public function getResourceFor67()
     {
         if (function_exists('curl_init')) {

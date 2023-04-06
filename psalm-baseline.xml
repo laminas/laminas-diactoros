@@ -1,85 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
+<files psalm-version="5.6.0@e784128902dfe01d489c4123d69918a9f3c1eac5">
   <file src="src/CallbackStream.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
+    <ImplementedReturnTypeMismatch>
       <code>null|callable</code>
     </ImplementedReturnTypeMismatch>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment>
       <code>$contents</code>
     </MixedAssignment>
   </file>
   <file src="src/Exception/DeserializationException.php">
-    <PossiblyInvalidArgument occurrences="2">
+    <PossiblyInvalidArgument>
       <code>$previous-&gt;getCode()</code>
       <code>$previous-&gt;getCode()</code>
     </PossiblyInvalidArgument>
   </file>
   <file src="src/MessageTrait.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction>
       <code>! is_string($name)</code>
       <code>! is_string($stream) &amp;&amp; ! is_resource($stream)</code>
     </DocblockTypeContradiction>
-    <InvalidArrayOffset occurrences="4">
+    <InvalidArrayOffset>
       <code>$new-&gt;headerNames[$normalized]</code>
       <code>$this-&gt;headerNames[strtolower($header)]</code>
       <code>$this-&gt;headerNames[strtolower($header)]</code>
       <code>$this-&gt;headerNames[strtolower($name)]</code>
     </InvalidArrayOffset>
-    <InvalidPropertyAssignmentValue occurrences="1">
+    <InvalidPropertyAssignmentValue>
       <code>$headerNames</code>
     </InvalidPropertyAssignmentValue>
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>is_object($version) ? $version::class : gettype($version)</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="4">
+    <MixedArgumentTypeCoercion>
       <code>$header</code>
       <code>$header</code>
       <code>$header</code>
       <code>$header</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment>
       <code>$value</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion occurrences="1">
+    <MixedPropertyTypeCoercion>
       <code>$headers</code>
     </MixedPropertyTypeCoercion>
-    <ParamNameMismatch occurrences="2">
+    <ParamNameMismatch>
       <code>$header</code>
       <code>$header</code>
     </ParamNameMismatch>
-    <PropertyTypeCoercion occurrences="2">
+    <PropertyTypeCoercion>
       <code>$new-&gt;headerNames</code>
       <code>$new-&gt;headers</code>
     </PropertyTypeCoercion>
-    <RedundantCondition occurrences="1">
+    <RedundantCondition>
       <code>gettype($version)</code>
     </RedundantCondition>
-    <TypeDoesNotContainType occurrences="2">
+    <TypeDoesNotContainType>
       <code>is_object($version)</code>
       <code>is_string($version)</code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/PhpInputStream.php">
-    <MissingParamType occurrences="1">
+    <MissingParamType>
       <code>$maxLength</code>
     </MissingParamType>
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>$maxLength</code>
     </MixedArgument>
-    <PossiblyNullArgument occurrences="1">
+    <PossiblyNullArgument>
       <code>$this-&gt;resource</code>
     </PossiblyNullArgument>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>PhpInputStream</code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/RelativeStream.php">
-    <PossiblyNullOperand occurrences="1">
+    <PossiblyNullOperand>
       <code>$this-&gt;decoratedStream-&gt;getSize()</code>
     </PossiblyNullOperand>
   </file>
   <file src="src/Request/ArraySerializer.php">
-    <MixedArgument occurrences="6">
+    <MixedArgument>
       <code>$headers</code>
       <code>$method</code>
       <code>$protocolVersion</code>
@@ -87,7 +84,7 @@
       <code>$uri</code>
       <code>self::getValueFromKey($serializedRequest, 'body')</code>
     </MixedArgument>
-    <MixedAssignment occurrences="5">
+    <MixedAssignment>
       <code>$headers</code>
       <code>$method</code>
       <code>$protocolVersion</code>
@@ -96,56 +93,58 @@
     </MixedAssignment>
   </file>
   <file src="src/Request/Serializer.php">
-    <MixedArgument occurrences="5">
+    <MixedArgument>
       <code>$body</code>
       <code>$headers</code>
       <code>$method</code>
       <code>$requestTarget</code>
       <code>$version</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
+    <MixedArgumentTypeCoercion>
       <code>$request-&gt;getHeaders()</code>
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/RequestTrait.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>is_string($method)</code>
     </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType occurrences="1">
+    <MoreSpecificImplementedParamType>
       <code>$requestTarget</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyNullOperand occurrences="2">
+    <PossiblyNullOperand>
       <code>$this-&gt;uri-&gt;getPort()</code>
       <code>$uri-&gt;getPort()</code>
     </PossiblyNullOperand>
   </file>
   <file src="src/Response.php">
-    <DocblockTypeContradiction occurrences="5">
+    <DocblockTypeContradiction>
       <code>! is_numeric($code)</code>
+      <code>! is_numeric($code)
+            || is_float($code)</code>
       <code>gettype($code)</code>
       <code>is_float($code)</code>
       <code>is_string($reasonPhrase)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="2">
+    <MixedArgument>
       <code>static::MAX_STATUS_CODE_VALUE</code>
       <code>static::MIN_STATUS_CODE_VALUE</code>
     </MixedArgument>
-    <RedundantCastGivenDocblockType occurrences="1">
+    <RedundantCastGivenDocblockType>
       <code>(int) $code</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType>
       <code>is_scalar($code)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Response/ArraySerializer.php">
-    <MixedArgument occurrences="5">
+    <MixedArgument>
       <code>$headers</code>
       <code>$protocolVersion</code>
       <code>$reasonPhrase</code>
       <code>$statusCode</code>
       <code>self::getValueFromKey($serializedResponse, 'body')</code>
     </MixedArgument>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment>
       <code>$headers</code>
       <code>$protocolVersion</code>
       <code>$reasonPhrase</code>
@@ -153,88 +152,101 @@
     </MixedAssignment>
   </file>
   <file src="src/Response/EmptyResponse.php">
-    <UnsafeInstantiation occurrences="1">
+    <UnsafeInstantiation>
       <code>new static(204, $headers)</code>
     </UnsafeInstantiation>
   </file>
   <file src="src/Response/HtmlResponse.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>is_string($html)</code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/Response/InjectContentTypeTrait.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>$item</code>
     </MixedArgument>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment>
       <code>$hasContentType</code>
     </MixedAssignment>
   </file>
   <file src="src/Response/JsonResponse.php">
-    <UnusedFunctionCall occurrences="1">
+    <UnusedFunctionCall>
       <code>json_encode</code>
     </UnusedFunctionCall>
   </file>
   <file src="src/Response/RedirectResponse.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>gettype($uri)</code>
     </DocblockTypeContradiction>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType>
       <code>is_object($uri)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Response/Serializer.php">
-    <MixedArgument occurrences="5">
+    <MixedArgument>
       <code>$body</code>
       <code>$headers</code>
       <code>$reasonPhrase</code>
       <code>$status</code>
       <code>$version</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
+    <MixedArgumentTypeCoercion>
       <code>$response-&gt;getHeaders()</code>
     </MixedArgumentTypeCoercion>
-    <RedundantCast occurrences="1">
+    <RedundantCast>
       <code>(int) $status</code>
     </RedundantCast>
   </file>
   <file src="src/Response/TextResponse.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>is_string($text)</code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/Response/XmlResponse.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>is_string($xml)</code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/ServerRequest.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>! is_array($data) &amp;&amp; ! is_object($data) &amp;&amp; null !== $data</code>
     </DocblockTypeContradiction>
-    <ParamNameMismatch occurrences="2">
+    <ParamNameMismatch>
       <code>$attribute</code>
       <code>$attribute</code>
     </ParamNameMismatch>
   </file>
   <file src="src/ServerRequestFactory.php">
-    <LessSpecificReturnStatement occurrences="1"/>
-    <MixedArgument occurrences="1">
+    <LessSpecificReturnStatement>
+      <code>$requestFilter(new ServerRequest(
+            $server,
+            $files,
+            UriFactory::createFromSapi($server, $headers),
+            marshalMethodFromSapi($server),
+            'php://input',
+            $headers,
+            $cookies ?: $_COOKIE,
+            $query ?: $_GET,
+            $body ?: $_POST,
+            marshalProtocolVersionFromSapi($server)
+        ))</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument>
       <code>$headers['cookie']</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
+    <MixedArgumentTypeCoercion>
       <code>$headers</code>
       <code>$server</code>
     </MixedArgumentTypeCoercion>
-    <MoreSpecificReturnType occurrences="1">
+    <MoreSpecificReturnType>
       <code>ServerRequest</code>
     </MoreSpecificReturnType>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType>
       <code>is_callable(self::$apacheRequestHeaders)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ServerRequestFilter/FilterUsingXForwardedHeaders.php">
-    <ImpureMethodCall occurrences="7">
+    <ImpureMethodCall>
       <code>getHeaderLine</code>
       <code>getServerParams</code>
       <code>getUri</code>
@@ -243,44 +255,41 @@
       <code>withScheme</code>
       <code>withUri</code>
     </ImpureMethodCall>
-    <LessSpecificReturnStatement occurrences="1">
+    <LessSpecificReturnStatement>
       <code>$proxyCIDRList</code>
     </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
+    <MoreSpecificReturnType>
       <code>list&lt;non-empty-string&gt;</code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Stream.php">
-    <PossiblyNullArgument occurrences="4">
+    <PossiblyNullArgument>
       <code>$resource</code>
       <code>$this-&gt;resource</code>
       <code>$this-&gt;resource</code>
       <code>$this-&gt;resource</code>
     </PossiblyNullArgument>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$stream</code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/StreamFactory.php">
-    <ParamNameMismatch occurrences="1">
+    <ParamNameMismatch>
       <code>$file</code>
     </ParamNameMismatch>
   </file>
   <file src="src/UploadedFile.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>! is_string($targetPath)</code>
     </DocblockTypeContradiction>
-    <PossiblyNullArgument occurrences="1">
+    <PossiblyNullArgument>
       <code>$this-&gt;file</code>
     </PossiblyNullArgument>
   </file>
   <file src="src/UploadedFileFactory.php">
-    <PossiblyNullArgument occurrences="1">
+    <PossiblyNullArgument>
       <code>$size</code>
     </PossiblyNullArgument>
   </file>
   <file src="src/Uri.php">
-    <DocblockTypeContradiction occurrences="10">
+    <DocblockTypeContradiction>
       <code>! is_numeric($port)</code>
       <code>is_float($port)</code>
       <code>is_object($port)</code>
@@ -292,29 +301,29 @@
       <code>is_string($user)</code>
       <code>null !== $password &amp;&amp; ! is_string($password)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="4">
+    <MixedArgument>
       <code>$key</code>
       <code>$key</code>
       <code>$matches[0]</code>
       <code>$value</code>
     </MixedArgument>
-    <PossiblyNullOperand occurrences="1">
+    <PossiblyNullOperand>
       <code>$this-&gt;port</code>
     </PossiblyNullOperand>
-    <RedundantCastGivenDocblockType occurrences="1">
+    <RedundantCastGivenDocblockType>
       <code>(int) $port</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType>
       <code>gettype($port)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/functions/create_uploaded_file.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/create_uploaded_file.php">
-    <MixedArgument occurrences="4">
+    <MixedArgument>
       <code>$spec['error']</code>
       <code>$spec['name'] ?? null</code>
       <code>$spec['tmp_name']</code>
@@ -322,58 +331,58 @@
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_headers_from_sapi.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_headers_from_sapi.php">
-    <MixedAssignment occurrences="3">
+    <MixedAssignment>
       <code>$headers[$name]</code>
       <code>$headers[$name]</code>
       <code>$value</code>
     </MixedAssignment>
   </file>
   <file src="src/functions/marshal_method_from_sapi.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_method_from_sapi.php">
-    <MixedInferredReturnType occurrences="1">
+    <MixedInferredReturnType>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
+    <MixedReturnStatement>
       <code>$server['REQUEST_METHOD'] ?? 'GET'</code>
       <code>$server['REQUEST_METHOD'] ?? 'GET'</code>
     </MixedReturnStatement>
   </file>
   <file src="src/functions/marshal_protocol_version_from_sapi.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_protocol_version_from_sapi.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>$server['SERVER_PROTOCOL']</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.legacy.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument>
       <code>func_get_args()</code>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.php">
-    <MissingClosureParamType occurrences="3">
+    <MissingClosureParamType>
       <code>$default</code>
       <code>$host</code>
       <code>$https</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="2">
+    <MissingClosureReturnType>
       <code>static function ($host) {</code>
       <code>static function (string $name, array $headers, $default = null) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="8">
+    <MixedArgument>
       <code>$getHeaderFromArray('x-forwarded-proto', $headers, '')</code>
       <code>$host</code>
       <code>$host</code>
@@ -383,185 +392,205 @@
       <code>$requestUri</code>
       <code>$server['QUERY_STRING']</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
+    <MixedArgumentTypeCoercion>
       <code>$headers[$header]</code>
       <code>$host</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment>
       <code>$host</code>
       <code>$iisUrlRewritten</code>
       <code>$origPathInfo</code>
       <code>$unencodedUrl</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
+    <MixedInferredReturnType>
       <code>array</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedOperand occurrences="1">
+    <MixedOperand>
       <code>$server['SERVER_ADDR']</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement>
       <code>$defaults</code>
       <code>$origPathInfo</code>
       <code>$unencodedUrl</code>
     </MixedReturnStatement>
-    <PossiblyFalseOperand occurrences="1">
+    <PossiblyFalseOperand>
       <code>strrpos($host, ':')</code>
     </PossiblyFalseOperand>
   </file>
   <file src="src/functions/normalize_server.legacy.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument>
       <code>func_get_args()</code>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/normalize_server.php">
-    <MixedArrayAccess occurrences="2">
+    <MixedArrayAccess>
       <code>$apacheRequestHeaders['Authorization']</code>
       <code>$apacheRequestHeaders['authorization']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment>
       <code>$apacheRequestHeaders</code>
       <code>$server['HTTP_AUTHORIZATION']</code>
       <code>$server['HTTP_AUTHORIZATION']</code>
     </MixedAssignment>
   </file>
   <file src="src/functions/normalize_uploaded_files.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/normalize_uploaded_files.php">
-    <InvalidReturnStatement occurrences="1">
+    <InvalidReturnStatement>
       <code>$normalized</code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
+    <InvalidReturnType>
       <code>UploadedFileInterface[]</code>
     </InvalidReturnType>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment>
       <code>$normalized[$key]</code>
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedFunctionCall occurrences="2"/>
-    <MixedInferredReturnType occurrences="1">
+    <MixedFunctionCall>
+      <code>$recursiveNormalize(
+                    $tmpNameTree[$key],
+                    $sizeTree[$key],
+                    $errorTree[$key],
+                    $nameTree[$key] ?? null,
+                    $typeTree[$key] ?? null
+                )</code>
+      <code>$recursiveNormalize(
+            $files['tmp_name'],
+            $files['size'],
+            $files['error'],
+            $files['name'] ?? null,
+            $files['type'] ?? null
+        )</code>
+    </MixedFunctionCall>
+    <MixedInferredReturnType>
       <code>array</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1"/>
+    <MixedReturnStatement>
+      <code>$recursiveNormalize(
+            $files['tmp_name'],
+            $files['size'],
+            $files['error'],
+            $files['name'] ?? null,
+            $files['type'] ?? null
+        )</code>
+    </MixedReturnStatement>
   </file>
   <file src="src/functions/parse_cookie_header.legacy.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/parse_cookie_header.php">
-    <LessSpecificReturnStatement occurrences="1">
+    <LessSpecificReturnStatement>
       <code>$cookies</code>
     </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
+    <MoreSpecificReturnType>
       <code>array&lt;non-empty-string, string&gt;</code>
     </MoreSpecificReturnType>
   </file>
   <file src="test/CallbackStreamTest.php">
-    <MixedAssignment occurrences="2">
+    <MixedAssignment>
       <code>$ret</code>
       <code>$ret</code>
     </MixedAssignment>
   </file>
   <file src="test/Integration/UploadedFileTest.php">
-    <PossiblyNullArgument occurrences="1">
+    <PossiblyNullArgument>
       <code>$stream-&gt;getSize()</code>
     </PossiblyNullArgument>
   </file>
   <file src="test/MessageTraitTest.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument>
       <code>$value</code>
       <code>$version</code>
     </MixedArgument>
   </file>
   <file src="test/RelativeStreamTest.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction>
       <code>assertSame</code>
     </DocblockTypeContradiction>
   </file>
   <file src="test/Request/SerializerTest.php">
-    <MissingClosureReturnType occurrences="1">
+    <MissingClosureReturnType>
       <code>static function () use ($payload) {</code>
     </MissingClosureReturnType>
-    <MixedArrayOffset occurrences="1">
+    <MixedArrayOffset>
       <code>$payload[$i++]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment>
       <code>$i</code>
     </MixedAssignment>
-    <MixedOperand occurrences="1">
+    <MixedOperand>
       <code>$i</code>
     </MixedOperand>
   </file>
   <file src="test/RequestTest.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>$headers</code>
     </MixedArgument>
   </file>
   <file src="test/ResponseTest.php">
-    <LessSpecificReturnStatement occurrences="1">
+    <LessSpecificReturnStatement>
       <code>$ianaCodesReasonPhrases</code>
     </LessSpecificReturnStatement>
-    <MixedArgumentTypeCoercion occurrences="2">
+    <MixedArgumentTypeCoercion>
       <code>$record</code>
       <code>$record</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment>
       <code>$responseCode</code>
     </MixedAssignment>
-    <MoreSpecificReturnType occurrences="1">
+    <MoreSpecificReturnType>
       <code>list&lt;array{numeric-string, non-empty-string}&gt;</code>
     </MoreSpecificReturnType>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType>
       <code>assertIsInt</code>
     </RedundantConditionGivenDocblockType>
-    <StringIncrement occurrences="1">
+    <StringIncrement>
       <code>$value</code>
     </StringIncrement>
   </file>
   <file src="test/ServerRequestFactoryTest.php">
-    <InvalidArgument occurrences="1">
+    <InvalidArgument>
       <code>$normalizedFiles['fooFiles']</code>
     </InvalidArgument>
   </file>
   <file src="test/ServerRequestTest.php">
-    <InvalidArgument occurrences="1">
+    <InvalidArgument>
       <code>$parsedBody</code>
     </InvalidArgument>
   </file>
   <file src="test/StreamTest.php">
-    <DeprecatedMethod occurrences="1">
+    <DeprecatedMethod>
       <code>setMethods</code>
     </DeprecatedMethod>
-    <InvalidArgument occurrences="1">
-      <code>$resource</code>
-    </InvalidArgument>
   </file>
   <file src="test/UploadedFileTest.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument>
       <code>$path</code>
       <code>$streamOrFile</code>
     </MixedArgument>
   </file>
   <file src="test/UriTest.php">
-    <MixedArgument occurrences="1">
+    <MixedArgument>
       <code>$test</code>
     </MixedArgument>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment>
       <code>$test</code>
     </MixedAssignment>
   </file>
   <file src="test/functions/NormalizeUploadedFilesTest.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument>
       <code>$normalised['my-form']['details']['avatars']</code>
       <code>$normalised['slide-shows'][0]['slides']</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="13">
+    <MixedArrayAccess>
       <code>$normalised['my-form']['details']['avatar']</code>
       <code>$normalised['my-form']['details']['avatars']</code>
       <code>$normalised['my-form']['details']['avatars']</code>
@@ -576,7 +605,7 @@
       <code>$normalised['slide-shows'][0]['slides'][0]</code>
       <code>$normalised['slide-shows'][0]['slides'][1]</code>
     </MixedArrayAccess>
-    <MixedMethodCall occurrences="6">
+    <MixedMethodCall>
       <code>getClientFilename</code>
       <code>getClientFilename</code>
       <code>getClientFilename</code>
@@ -584,7 +613,7 @@
       <code>getClientFilename</code>
       <code>getClientFilename</code>
     </MixedMethodCall>
-    <UndefinedInterfaceMethod occurrences="8">
+    <UndefinedInterfaceMethod>
       <code>$normalised['my-form']</code>
       <code>$normalised['my-form']</code>
       <code>$normalised['my-form']</code>

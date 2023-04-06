@@ -6,6 +6,8 @@ namespace Laminas\Diactoros;
 
 use function array_change_key_case;
 use function array_key_exists;
+use function assert;
+use function count;
 use function explode;
 use function gettype;
 use function implode;
@@ -219,7 +221,9 @@ function marshalUriFromSapi(array $server, array $headers): Uri
     // URI fragment
     $fragment = '';
     if (str_contains($path, '#')) {
-        [$path, $fragment] = explode('#', $path, 2);
+        $parts = explode('#', $path, 2);
+        assert(count($parts) >= 2);
+        [$path, $fragment] = $parts;
     }
 
     return $uri
