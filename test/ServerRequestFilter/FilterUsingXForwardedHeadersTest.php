@@ -368,4 +368,68 @@ class FilterUsingXForwardedHeadersTest extends TestCase
         $uri             = $filteredRequest->getUri();
         $this->assertSame($expectedScheme, $uri->getScheme());
     }
+
+    /**
+     * Caddy server and NGINX seem to strip ports from `X-Forwarded-Host` as it should only contain the `host` which
+     * was initially requested. Due to Mozilla, the `Host` header is allowed to contain a port. Apache2 does pass the
+     * `Host` header via `X-Forwarded-Host` and thus, it should be stripped. We should only trust the `X-Forwarded-Port`
+     * header which is provided by the proxy since the `Host` header could contain port `80` while the initial request
+     * was still sent to port `443`.
+     *
+     * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host
+     * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host
+     * @link https://www.nginx.com/resources/wiki/start/topics/examples/forwarded/
+     * @link https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#defaults
+     * @link https://httpd.apache.org/docs/2.4/en/mod/mod_proxy.html#x-headers
+     */
+    public function testWillFilterXForwardedHostPortWithPreservingForwardedPort(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.0.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Proto' => 'https',
+                'X-Forwarded-Host'  => 'example.org:80',
+                'X-Forwarded-Port'  => '443',
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustAny();
+
+        $filteredRequest = $filter($request);
+        $uri             = $filteredRequest->getUri();
+        self::assertSame('example.org', $uri->getHost());
+        self::assertNull(
+            $uri->getPort(),
+            'Port is omitted due to the fact that `https` protocol was used and port 80 is being ignored due'
+            . ' to the availability of `X-Forwarded-Port'
+        );
+    }
+
+    public function testWillFilterXForwardedHostPort(): void
+    {
+        $request = new ServerRequest(
+            ['REMOTE_ADDR' => '192.168.0.1'],
+            [],
+            'http://localhost:80/foo/bar',
+            'GET',
+            'php://temp',
+            [
+                'Host'              => 'localhost',
+                'X-Forwarded-Proto' => 'https',
+                'X-Forwarded-Host'  => 'example.org:8080',
+            ]
+        );
+
+        $filter = FilterUsingXForwardedHeaders::trustAny();
+
+        $filteredRequest = $filter($request);
+        $uri             = $filteredRequest->getUri();
+        self::assertSame('example.org', $uri->getHost());
+        self::assertSame(8080, $uri->getPort());
+    }
 }

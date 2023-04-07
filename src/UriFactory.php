@@ -12,7 +12,6 @@ use function array_key_exists;
 use function explode;
 use function gettype;
 use function implode;
-use function is_array;
 use function is_bool;
 use function is_scalar;
 use function is_string;
@@ -228,16 +227,14 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param string|list<string> $host
+     * @internal
+     *
      * @return array{string, int|null} Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
+     * @psalm-mutation-free
      */
-    private static function marshalHostAndPortFromHeader($host): array
+    public static function marshalHostAndPortFromHeader(string $host): array
     {
-        if (is_array($host)) {
-            $host = implode(', ', $host);
-        }
-
         $port = null;
 
         // works for regname, IPv4 & IPv6

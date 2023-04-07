@@ -613,7 +613,7 @@ final class StreamTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
 
-        /** @psalm-suppress ImplicitToStringCast, PossiblyInvalidArgument */
+        /** @psalm-suppress PossiblyInvalidArgument */
         new Stream($resource);
     }
 
@@ -632,7 +632,7 @@ final class StreamTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('stream');
 
-        /** @psalm-suppress ImplicitToStringCast, PossiblyInvalidArgument */
+        /** @psalm-suppress  PossiblyInvalidArgument */
         $stream->attach($resource);
     }
 

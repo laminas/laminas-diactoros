@@ -1,0 +1,18 @@
+<?php
+declare(strict_types=1);
+
+namespace Psr\Http\Message;
+
+/**
+ * [...]
+ * Instances of this interface are considered immutable; all methods that
+ * might change state MUST be implemented such that they retain the internal
+ * state of the current instance and return an instance that contains the
+ * changed state.
+ * [...]
+ * @psalm-immutable
+ */
+interface UriInterface
+{
+
+}

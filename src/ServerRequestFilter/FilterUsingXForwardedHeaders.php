@@ -6,6 +6,7 @@ namespace Laminas\Diactoros\ServerRequestFilter;
 
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
+use Laminas\Diactoros\UriFactory;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function explode;
@@ -76,7 +77,12 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 
             switch ($headerName) {
                 case self::HEADER_HOST:
-                    $uri = $uri->withHost($header);
+                    [$host, $port] = UriFactory::marshalHostAndPortFromHeader($header);
+                    $uri           = $uri
+                        ->withHost($host);
+                    if ($port !== null) {
+                        $uri = $uri->withPort($port);
+                    }
                     break;
                 case self::HEADER_PORT:
                     $uri = $uri->withPort((int) $header);
