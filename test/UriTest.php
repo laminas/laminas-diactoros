@@ -166,7 +166,7 @@ class UriTest extends TestCase
     public function testWithPortReturnsSameInstanceWithProvidedPortIsSameAsBefore(): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        /** @psalm-suppress PossiblyInvalidArgument,InvalidArgument */
+        /** @psalm-suppress InvalidArgument */
         $new = $uri->withPort('3001');
         $this->assertSame($uri, $new);
         $this->assertSame(3001, $new->getPort());

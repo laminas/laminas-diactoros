@@ -7,12 +7,26 @@
     <MixedAssignment>
       <code>$contents</code>
     </MixedAssignment>
+    <PossiblyUnusedReturnValue>
+      <code>int</code>
+      <code>string</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Exception/DeserializationException.php">
     <PossiblyInvalidArgument>
       <code><![CDATA[$previous->getCode()]]></code>
       <code><![CDATA[$previous->getCode()]]></code>
     </PossiblyInvalidArgument>
+  </file>
+  <file src="src/Exception/InvalidProxyAddressException.php">
+    <PossiblyUnusedMethod>
+      <code>forInvalidProxyArgument</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/HeaderSecurity.php">
+    <UnusedConstructor>
+      <code>__construct</code>
+    </UnusedConstructor>
   </file>
   <file src="src/MessageTrait.php">
     <DocblockTypeContradiction>
@@ -59,6 +73,11 @@
       <code>is_string($version)</code>
     </TypeDoesNotContainType>
   </file>
+  <file src="src/Module.php">
+    <UnusedClass>
+      <code>Module</code>
+    </UnusedClass>
+  </file>
   <file src="src/PhpInputStream.php">
     <MissingParamType>
       <code>$maxLength</code>
@@ -82,7 +101,7 @@
       <code>$protocolVersion</code>
       <code>$requestTarget</code>
       <code>$uri</code>
-      <code><![CDATA[self::getValueFromKey($serializedRequest, 'body')]]></code>
+      <code>self::getValueFromKey($serializedRequest, 'body')</code>
     </MixedArgument>
     <MixedAssignment>
       <code>$headers</code>
@@ -108,10 +127,6 @@
     <DocblockTypeContradiction>
       <code>is_string($method)</code>
     </DocblockTypeContradiction>
-    <PossiblyNullOperand>
-      <code><![CDATA[$this->uri->getPort()]]></code>
-      <code><![CDATA[$uri->getPort()]]></code>
-    </PossiblyNullOperand>
   </file>
   <file src="src/Response.php">
     <DocblockTypeContradiction>
@@ -139,7 +154,7 @@
       <code>$protocolVersion</code>
       <code>$reasonPhrase</code>
       <code>$statusCode</code>
-      <code><![CDATA[self::getValueFromKey($serializedResponse, 'body')]]></code>
+      <code>self::getValueFromKey($serializedResponse, 'body')</code>
     </MixedArgument>
     <MixedAssignment>
       <code>$headers</code>
@@ -215,7 +230,7 @@
   </file>
   <file src="src/ServerRequestFactory.php">
     <LessSpecificReturnStatement>
-      <code><![CDATA[$requestFilter(new ServerRequest(
+      <code>$requestFilter(new ServerRequest(
             $server,
             $files,
             UriFactory::createFromSapi($server, $headers),
@@ -226,10 +241,10 @@
             $query ?: $_GET,
             $body ?: $_POST,
             marshalProtocolVersionFromSapi($server)
-        ))]]></code>
+        ))</code>
     </LessSpecificReturnStatement>
     <MixedArgument>
-      <code><![CDATA[$headers['cookie']]]></code>
+      <code>$headers['cookie']</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$headers</code>
@@ -247,9 +262,6 @@
       <code>getHeaderLine</code>
       <code>getServerParams</code>
       <code>getUri</code>
-      <code>withHost</code>
-      <code>withPort</code>
-      <code>withScheme</code>
       <code>withUri</code>
     </ImpureMethodCall>
     <LessSpecificReturnStatement>
@@ -259,6 +271,11 @@
       <code><![CDATA[list<non-empty-string>]]></code>
     </MoreSpecificReturnType>
   </file>
+  <file src="src/ServerRequestFilter/IPRange.php">
+    <UnusedConstructor>
+      <code>__construct</code>
+    </UnusedConstructor>
+  </file>
   <file src="src/Stream.php">
     <PossiblyNullArgument>
       <code>$resource</code>
@@ -266,6 +283,9 @@
       <code><![CDATA[$this->resource]]></code>
       <code><![CDATA[$this->resource]]></code>
     </PossiblyNullArgument>
+    <PossiblyUnusedProperty>
+      <code>$stream</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/StreamFactory.php">
     <ParamNameMismatch>
@@ -334,6 +354,9 @@
     <UndefinedAttributeClass>
       <code>SensitiveParameter</code>
     </UndefinedAttributeClass>
+    <UnusedMethodCall>
+      <code>parseUri</code>
+    </UnusedMethodCall>
   </file>
   <file src="src/functions/create_uploaded_file.legacy.php">
     <MixedArgument>
@@ -342,10 +365,10 @@
   </file>
   <file src="src/functions/create_uploaded_file.php">
     <MixedArgument>
-      <code><![CDATA[$spec['error']]]></code>
-      <code><![CDATA[$spec['name'] ?? null]]></code>
-      <code><![CDATA[$spec['tmp_name']]]></code>
-      <code><![CDATA[$spec['type'] ?? null]]></code>
+      <code>$spec['error']</code>
+      <code>$spec['name'] ?? null</code>
+      <code>$spec['tmp_name']</code>
+      <code>$spec['type'] ?? null</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_headers_from_sapi.legacy.php">
@@ -370,8 +393,8 @@
       <code>string</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
-      <code><![CDATA[$server['REQUEST_METHOD'] ?? 'GET']]></code>
-      <code><![CDATA[$server['REQUEST_METHOD'] ?? 'GET']]></code>
+      <code>$server['REQUEST_METHOD'] ?? 'GET'</code>
+      <code>$server['REQUEST_METHOD'] ?? 'GET'</code>
     </MixedReturnStatement>
   </file>
   <file src="src/functions/marshal_protocol_version_from_sapi.legacy.php">
@@ -381,7 +404,7 @@
   </file>
   <file src="src/functions/marshal_protocol_version_from_sapi.php">
     <MixedArgument>
-      <code><![CDATA[$server['SERVER_PROTOCOL']]]></code>
+      <code>$server['SERVER_PROTOCOL']</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.legacy.php">
@@ -401,14 +424,14 @@
       <code>static function (string $name, array $headers, $default = null) {</code>
     </MissingClosureReturnType>
     <MixedArgument>
-      <code><![CDATA[$getHeaderFromArray('x-forwarded-proto', $headers, '')]]></code>
+      <code>$getHeaderFromArray('x-forwarded-proto', $headers, '')</code>
       <code>$host</code>
       <code>$host</code>
       <code>$host</code>
       <code>$host</code>
       <code>$port</code>
       <code>$requestUri</code>
-      <code><![CDATA[$server['QUERY_STRING']]]></code>
+      <code>$server['QUERY_STRING']</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$headers[$header]</code>
@@ -425,7 +448,7 @@
       <code>string</code>
     </MixedInferredReturnType>
     <MixedOperand>
-      <code><![CDATA[$server['SERVER_ADDR']]]></code>
+      <code>$server['SERVER_ADDR']</code>
     </MixedOperand>
     <MixedReturnStatement>
       <code>$defaults</code>
@@ -433,7 +456,7 @@
       <code>$unencodedUrl</code>
     </MixedReturnStatement>
     <PossiblyFalseOperand>
-      <code><![CDATA[strrpos($host, ':')]]></code>
+      <code>strrpos($host, ':')</code>
     </PossiblyFalseOperand>
   </file>
   <file src="src/functions/normalize_server.legacy.php">
@@ -444,13 +467,13 @@
   </file>
   <file src="src/functions/normalize_server.php">
     <MixedArrayAccess>
-      <code><![CDATA[$apacheRequestHeaders['Authorization']]]></code>
-      <code><![CDATA[$apacheRequestHeaders['authorization']]]></code>
+      <code>$apacheRequestHeaders['Authorization']</code>
+      <code>$apacheRequestHeaders['authorization']</code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$apacheRequestHeaders</code>
-      <code><![CDATA[$server['HTTP_AUTHORIZATION']]]></code>
-      <code><![CDATA[$server['HTTP_AUTHORIZATION']]]></code>
+      <code>$server['HTTP_AUTHORIZATION']</code>
+      <code>$server['HTTP_AUTHORIZATION']</code>
     </MixedAssignment>
   </file>
   <file src="src/functions/normalize_uploaded_files.legacy.php">
@@ -478,25 +501,25 @@
                     $nameTree[$key] ?? null,
                     $typeTree[$key] ?? null
                 )</code>
-      <code><![CDATA[$recursiveNormalize(
+      <code>$recursiveNormalize(
             $files['tmp_name'],
             $files['size'],
             $files['error'],
             $files['name'] ?? null,
             $files['type'] ?? null
-        )]]></code>
+        )</code>
     </MixedFunctionCall>
     <MixedInferredReturnType>
       <code>array</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
-      <code><![CDATA[$recursiveNormalize(
+      <code>$recursiveNormalize(
             $files['tmp_name'],
             $files['size'],
             $files['error'],
             $files['name'] ?? null,
             $files['type'] ?? null
-        )]]></code>
+        )</code>
     </MixedReturnStatement>
   </file>
   <file src="src/functions/parse_cookie_header.legacy.php">
@@ -576,7 +599,7 @@
   </file>
   <file src="test/ServerRequestFactoryTest.php">
     <InvalidArgument>
-      <code><![CDATA[$normalizedFiles['fooFiles']]]></code>
+      <code>$normalizedFiles['fooFiles']</code>
     </InvalidArgument>
   </file>
   <file src="test/ServerRequestTest.php">
@@ -584,10 +607,26 @@
       <code>$parsedBody</code>
     </InvalidArgument>
   </file>
+  <file src="test/StaticAnalysis/RequestInterfaceStaticReturnTypes.php">
+    <UnusedClass>
+      <code>RequestInterfaceStaticReturnTypes</code>
+    </UnusedClass>
+  </file>
   <file src="test/StreamTest.php">
     <DeprecatedMethod>
       <code>setMethods</code>
     </DeprecatedMethod>
+  </file>
+  <file src="test/TestAsset/CallbacksForCallbackStreamTest.php">
+    <PossiblyUnusedMethod>
+      <code>sampleCallback</code>
+      <code>sampleStaticCallback</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/TestAsset/HeaderStack.php">
+    <UnusedClass>
+      <code>HeaderStack</code>
+    </UnusedClass>
   </file>
   <file src="test/UploadedFileTest.php">
     <MixedArgument>
@@ -602,26 +641,32 @@
     <MixedAssignment>
       <code>$test</code>
     </MixedAssignment>
+    <PossiblyUnusedParam>
+      <code>$query</code>
+    </PossiblyUnusedParam>
+    <UnusedMethodCall>
+      <code>withUserInfo</code>
+    </UnusedMethodCall>
   </file>
   <file src="test/functions/NormalizeUploadedFilesTest.php">
     <MixedArgument>
-      <code><![CDATA[$normalised['my-form']['details']['avatars']]]></code>
-      <code><![CDATA[$normalised['slide-shows'][0]['slides']]]></code>
+      <code>$normalised['my-form']['details']['avatars']</code>
+      <code>$normalised['slide-shows'][0]['slides']</code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code><![CDATA[$normalised['my-form']['details']['avatar']]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars']]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars']]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars']]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars']]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars'][0]]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars'][1]]]></code>
-      <code><![CDATA[$normalised['my-form']['details']['avatars'][2]]]></code>
-      <code><![CDATA[$normalised['slide-shows'][0]['slides']]]></code>
-      <code><![CDATA[$normalised['slide-shows'][0]['slides']]]></code>
-      <code><![CDATA[$normalised['slide-shows'][0]['slides']]]></code>
-      <code><![CDATA[$normalised['slide-shows'][0]['slides'][0]]]></code>
-      <code><![CDATA[$normalised['slide-shows'][0]['slides'][1]]]></code>
+      <code>$normalised['my-form']['details']['avatar']</code>
+      <code>$normalised['my-form']['details']['avatars']</code>
+      <code>$normalised['my-form']['details']['avatars']</code>
+      <code>$normalised['my-form']['details']['avatars']</code>
+      <code>$normalised['my-form']['details']['avatars']</code>
+      <code>$normalised['my-form']['details']['avatars'][0]</code>
+      <code>$normalised['my-form']['details']['avatars'][1]</code>
+      <code>$normalised['my-form']['details']['avatars'][2]</code>
+      <code>$normalised['slide-shows'][0]['slides']</code>
+      <code>$normalised['slide-shows'][0]['slides']</code>
+      <code>$normalised['slide-shows'][0]['slides']</code>
+      <code>$normalised['slide-shows'][0]['slides'][0]</code>
+      <code>$normalised['slide-shows'][0]['slides'][1]</code>
     </MixedArrayAccess>
     <MixedMethodCall>
       <code>getClientFilename</code>
@@ -632,14 +677,14 @@
       <code>getClientFilename</code>
     </MixedMethodCall>
     <UndefinedInterfaceMethod>
-      <code><![CDATA[$normalised['my-form']]]></code>
-      <code><![CDATA[$normalised['my-form']]]></code>
-      <code><![CDATA[$normalised['my-form']]]></code>
-      <code><![CDATA[$normalised['my-form']]]></code>
-      <code><![CDATA[$normalised['my-form']]]></code>
-      <code><![CDATA[$normalised['slide-shows']]]></code>
-      <code><![CDATA[$normalised['slide-shows']]]></code>
-      <code><![CDATA[$normalised['slide-shows']]]></code>
+      <code>$normalised['my-form']</code>
+      <code>$normalised['my-form']</code>
+      <code>$normalised['my-form']</code>
+      <code>$normalised['my-form']</code>
+      <code>$normalised['my-form']</code>
+      <code>$normalised['slide-shows']</code>
+      <code>$normalised['slide-shows']</code>
+      <code>$normalised['slide-shows']</code>
     </UndefinedInterfaceMethod>
   </file>
 </files>

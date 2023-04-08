@@ -38,6 +38,8 @@ use function substr;
  * might change state are implemented such that they retain the internal
  * state of the current instance and return a new instance that contains the
  * changed state.
+ *
+ * @psalm-immutable
  */
 class Uri implements UriInterface, Stringable
 {
@@ -67,8 +69,7 @@ class Uri implements UriInterface, Stringable
 
     private string $host = '';
 
-    /** @var int|null */
-    private $port;
+    private ?int $port = null;
 
     private string $path = '';
 
@@ -110,6 +111,7 @@ class Uri implements UriInterface, Stringable
             return $this->uriString;
         }
 
+        /** @psalm-suppress ImpureMethodCall, InaccessibleProperty */
         $this->uriString = static::createUriString(
             $this->scheme,
             $this->getAuthority(),
@@ -442,6 +444,9 @@ class Uri implements UriInterface, Stringable
 
     /**
      * Parse a URI into its parts, and set the properties
+     *
+     * @psalm-suppress InaccessibleProperty Method is only called in {@see Uri::__construct} and thus immutability is
+     *                                      still given.
      */
     private function parseUri(string $uri): void
     {
@@ -552,8 +557,12 @@ class Uri implements UriInterface, Stringable
     {
         $part = $this->filterInvalidUtf8($part);
 
-        // Note the addition of `%` to initial charset; this allows `|` portion
-        // to match and thus prevent double-encoding.
+        /**
+         * @psalm-suppress ImpureFunctionCall Even tho the callback targets this immutable class,
+         *                                    psalm reports an issue here.
+         * Note the addition of `%` to initial charset; this allows `|` portion
+         * to match and thus prevent double-encoding.
+         */
         return preg_replace_callback(
             '/(?:[^%' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . ']+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
@@ -568,6 +577,10 @@ class Uri implements UriInterface, Stringable
     {
         $path = $this->filterInvalidUtf8($path);
 
+        /**
+         * @psalm-suppress ImpureFunctionCall Even tho the callback targets this immutable class,
+         *                                    psalm reports an issue here.
+         */
         return preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . ')(:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
@@ -656,6 +669,10 @@ class Uri implements UriInterface, Stringable
     {
         $value = $this->filterInvalidUtf8($value);
 
+        /**
+         * @psalm-suppress ImpureFunctionCall Even tho the callback targets this immutable class,
+         *                                    psalm reports an issue here.
+         */
         return preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
