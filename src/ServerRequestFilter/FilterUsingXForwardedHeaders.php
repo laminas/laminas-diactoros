@@ -9,6 +9,8 @@ use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Laminas\Diactoros\UriFactory;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function assert;
+use function count;
 use function explode;
 use function filter_var;
 use function in_array;
@@ -230,7 +232,9 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         $address = $cidr;
         $mask    = null;
         if (str_contains($cidr, '/')) {
-            [$address, $mask] = explode('/', $cidr, 2);
+            $parts = explode('/', $cidr, 2);
+            assert(count($parts) >= 2);
+            [$address, $mask] = $parts;
             $mask             = (int) $mask;
         }
 
