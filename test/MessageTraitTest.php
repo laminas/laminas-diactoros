@@ -282,6 +282,8 @@ class MessageTraitTest extends TestCase
             'name-with-lf'           => ["X-Foo\n-Bar", 'value'],
             'name-with-crlf'         => ["X-Foo\r\n-Bar", 'value'],
             'name-with-2crlf'        => ["X-Foo\r\n\r\n-Bar", 'value'],
+            'name-with-trailing-lf'  => ["X-Foo-Bar\n", 'value'],
+            'name-with-leading-lf'   => ["\nX-Foo-Bar", 'value'],
             'value-with-cr'          => ['X-Foo-Bar', "value\rinjection"],
             'value-with-lf'          => ['X-Foo-Bar', "value\ninjection"],
             'value-with-crlf'        => ['X-Foo-Bar', "value\r\ninjection"],
@@ -290,6 +292,8 @@ class MessageTraitTest extends TestCase
             'array-value-with-lf'    => ['X-Foo-Bar', ["value\ninjection"]],
             'array-value-with-crlf'  => ['X-Foo-Bar', ["value\r\ninjection"]],
             'array-value-with-2crlf' => ['X-Foo-Bar', ["value\r\n\r\ninjection"]],
+            'value-with-trailing-lf' => ['X-Foo-Bar', "value\n"],
+            'value-with-leading-lf'  => ['X-Foo-Bar', "\nvalue"],
         ];
     }
 
