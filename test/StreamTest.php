@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Diactoros;
 
 use CurlHandle;
+use Error;
 use GdImage;
 use InvalidArgumentException;
 use Laminas\Diactoros\Stream;
@@ -678,5 +679,19 @@ final class StreamTest extends TestCase
         $resource = fopen('php://input', 'r');
         $stream   = new Stream($resource);
         $this->assertNull($stream->getSize());
+    }
+
+    public function testStreamsAreUnclonable(): void
+    {
+        $stream = new Stream(fopen('php://temp', 'r+'));
+        $stream->write('foo');
+
+        $this->assertSame('foo', $stream->__toString());
+
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('private Laminas\Diactoros\Stream::__clone()');
+
+        /** @psalm-suppress InvalidClone */
+        clone $stream;
     }
 }

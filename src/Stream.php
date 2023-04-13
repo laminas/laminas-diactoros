@@ -364,4 +364,11 @@ class Stream implements StreamInterface, Stringable
 
         return false;
     }
+
+    /**
+     * Disallow stream cloning.
+     */
+    private function __clone()
+    {
+    }
 }
