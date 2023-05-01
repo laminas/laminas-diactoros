@@ -59,7 +59,7 @@ class UploadedFile implements UploadedFileInterface
      */
     public function __construct(
         $streamOrFile,
-        private int $size,
+        private ?int $size,
         int $errorStatus,
         private ?string $clientFilename = null,
         private ?string $clientMediaType = null
