@@ -149,9 +149,6 @@ final class ResponseTest extends TestCase
                 continue;
             }
 
-            $value       = $value;
-            $description = $description;
-
             if ($description === '') {
                 // This should not happen, but we want to ensure we get a
                 // non-empty-string only for the reason phrase.
