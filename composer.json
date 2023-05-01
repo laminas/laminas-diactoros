@@ -54,9 +54,6 @@
         "psr/http-factory-implementation": "1.0",
         "psr/http-message-implementation": "1.0"
     },
-    "conflict": {
-        "zendframework/zend-diactoros": "*"
-    },
     "autoload": {
         "files": [
             "src/functions/create_uploaded_file.php",
