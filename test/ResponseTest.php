@@ -173,7 +173,6 @@ final class ResponseTest extends TestCase
      */
     public function testReasonPhraseDefaultsAgainstIana(int $code, string $reasonPhrase): void
     {
-        /** @psalm-suppress InvalidArgument */
         $response = $this->response->withStatus($code);
         $this->assertSame($reasonPhrase, $response->getReasonPhrase());
     }
@@ -211,7 +210,6 @@ final class ResponseTest extends TestCase
      */
     public function testCreateWithValidStatusCodes(int $code): void
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
         $response = $this->response->withStatus($code);
 
         $result = $response->getStatusCode();

@@ -528,10 +528,6 @@
     <StringIncrement>
       <code>$value</code>
     </StringIncrement>
-    <UnusedPsalmSuppress>
-      <code>InvalidArgument</code>
-      <code>PossiblyInvalidArgument</code>
-    </UnusedPsalmSuppress>
   </file>
   <file src="test/ServerRequestFactoryTest.php">
     <InvalidArgument>
@@ -580,10 +576,6 @@
     <PossiblyUnusedParam>
       <code>$query</code>
     </PossiblyUnusedParam>
-    <UnusedPsalmSuppress>
-      <code>InvalidArgument</code>
-      <code>PossiblyInvalidArgument</code>
-    </UnusedPsalmSuppress>
   </file>
   <file src="test/functions/NormalizeUploadedFilesTest.php">
     <MixedArgument>
