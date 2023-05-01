@@ -347,21 +347,14 @@ trait MessageTrait
     /**
      * Validate the HTTP protocol version
      *
-     * @param string $version
      * @throws Exception\InvalidArgumentException On invalid HTTP protocol version.
      */
-    private function validateProtocolVersion($version): void
+    private function validateProtocolVersion(string $version): void
     {
         if (empty($version)) {
             throw new Exception\InvalidArgumentException(
                 'HTTP protocol version can not be empty'
             );
-        }
-        if (! is_string($version)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Unsupported HTTP protocol version; must be a string, received %s',
-                is_object($version) ? $version::class : gettype($version)
-            ));
         }
 
         // HTTP/1 uses a "<major>.<minor>" numbering scheme to indicate
