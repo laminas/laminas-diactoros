@@ -276,11 +276,6 @@
       <code>parseUri</code>
     </UnusedMethodCall>
   </file>
-  <file src="src/functions/create_uploaded_file.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-    </MixedArgument>
-  </file>
   <file src="src/functions/create_uploaded_file.php">
     <MixedArgument>
       <code><![CDATA[$spec['error']]]></code>
@@ -289,22 +284,12 @@
       <code><![CDATA[$spec['type'] ?? null]]></code>
     </MixedArgument>
   </file>
-  <file src="src/functions/marshal_headers_from_sapi.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-    </MixedArgument>
-  </file>
   <file src="src/functions/marshal_headers_from_sapi.php">
     <MixedAssignment>
       <code>$headers[$name]</code>
       <code>$headers[$name]</code>
       <code>$value</code>
     </MixedAssignment>
-  </file>
-  <file src="src/functions/marshal_method_from_sapi.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-    </MixedArgument>
   </file>
   <file src="src/functions/marshal_method_from_sapi.php">
     <MixedInferredReturnType>
@@ -315,20 +300,9 @@
       <code><![CDATA[$server['REQUEST_METHOD'] ?? 'GET']]></code>
     </MixedReturnStatement>
   </file>
-  <file src="src/functions/marshal_protocol_version_from_sapi.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-    </MixedArgument>
-  </file>
   <file src="src/functions/marshal_protocol_version_from_sapi.php">
     <MixedArgument>
       <code><![CDATA[$server['SERVER_PROTOCOL']]]></code>
-    </MixedArgument>
-  </file>
-  <file src="src/functions/marshal_uri_from_sapi.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-      <code>func_get_args()</code>
     </MixedArgument>
   </file>
   <file src="src/functions/marshal_uri_from_sapi.php">
@@ -377,12 +351,6 @@
       <code><![CDATA[strrpos($host, ':')]]></code>
     </PossiblyFalseOperand>
   </file>
-  <file src="src/functions/normalize_server.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-      <code>func_get_args()</code>
-    </MixedArgument>
-  </file>
   <file src="src/functions/normalize_server.php">
     <MixedArrayAccess>
       <code><![CDATA[$apacheRequestHeaders['Authorization']]]></code>
@@ -393,11 +361,6 @@
       <code><![CDATA[$server['HTTP_AUTHORIZATION']]]></code>
       <code><![CDATA[$server['HTTP_AUTHORIZATION']]]></code>
     </MixedAssignment>
-  </file>
-  <file src="src/functions/normalize_uploaded_files.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-    </MixedArgument>
   </file>
   <file src="src/functions/normalize_uploaded_files.php">
     <InvalidReturnStatement>
@@ -439,11 +402,6 @@
             $files['type'] ?? null
         )]]></code>
     </MixedReturnStatement>
-  </file>
-  <file src="src/functions/parse_cookie_header.legacy.php">
-    <MixedArgument>
-      <code>func_get_args()</code>
-    </MixedArgument>
   </file>
   <file src="src/functions/parse_cookie_header.php">
     <LessSpecificReturnStatement>
