@@ -173,22 +173,22 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function getAttribute(string $attribute, $default = null)
+    public function getAttribute(string $name, $default = null)
     {
-        if (! array_key_exists($attribute, $this->attributes)) {
+        if (! array_key_exists($name, $this->attributes)) {
             return $default;
         }
 
-        return $this->attributes[$attribute];
+        return $this->attributes[$name];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function withAttribute(string $attribute, $value): ServerRequest
+    public function withAttribute(string $name, $value): ServerRequest
     {
-        $new                         = clone $this;
-        $new->attributes[$attribute] = $value;
+        $new                    = clone $this;
+        $new->attributes[$name] = $value;
         return $new;
     }
 

@@ -194,10 +194,6 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($data) && ! is_object($data) && null !== $data]]></code>
     </DocblockTypeContradiction>
-    <ParamNameMismatch>
-      <code>$attribute</code>
-      <code>$attribute</code>
-    </ParamNameMismatch>
   </file>
   <file src="src/ServerRequestFactory.php">
     <LessSpecificReturnStatement>
@@ -257,11 +253,6 @@
     <PossiblyUnusedProperty>
       <code>$stream</code>
     </PossiblyUnusedProperty>
-  </file>
-  <file src="src/StreamFactory.php">
-    <ParamNameMismatch>
-      <code>$file</code>
-    </ParamNameMismatch>
   </file>
   <file src="src/UploadedFile.php">
     <PossiblyNullArgument>
