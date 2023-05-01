@@ -42,9 +42,6 @@
     <InvalidPropertyAssignmentValue>
       <code>$headerNames</code>
     </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code>is_object($version) ? $version::class : gettype($version)</code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$header</code>
       <code>$header</code>
@@ -65,13 +62,6 @@
       <code><![CDATA[$new->headerNames]]></code>
       <code><![CDATA[$new->headers]]></code>
     </PropertyTypeCoercion>
-    <RedundantCondition>
-      <code>gettype($version)</code>
-    </RedundantCondition>
-    <TypeDoesNotContainType>
-      <code>is_object($version)</code>
-      <code>is_string($version)</code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/Module.php">
     <UnusedClass>
@@ -278,11 +268,6 @@
       <code><![CDATA[$this->file]]></code>
     </PossiblyNullArgument>
   </file>
-  <file src="src/UploadedFileFactory.php">
-    <PossiblyNullArgument>
-      <code>$size</code>
-    </PossiblyNullArgument>
-  </file>
   <file src="src/Uri.php">
     <MixedArgument>
       <code>$key</code>
@@ -482,11 +467,6 @@
       <code>$ret</code>
       <code>$ret</code>
     </MixedAssignment>
-  </file>
-  <file src="test/Integration/UploadedFileTest.php">
-    <PossiblyNullArgument>
-      <code><![CDATA[$stream->getSize()]]></code>
-    </PossiblyNullArgument>
   </file>
   <file src="test/MessageTraitTest.php">
     <MixedArgument>
