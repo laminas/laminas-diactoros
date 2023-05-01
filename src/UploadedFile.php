@@ -59,7 +59,7 @@ class UploadedFile implements UploadedFileInterface
      */
     public function __construct(
         $streamOrFile,
-        private int $size,
+        private ?int $size,
         int $errorStatus,
         private ?string $clientFilename = null,
         private ?string $clientMediaType = null
@@ -125,7 +125,7 @@ class UploadedFile implements UploadedFileInterface
      * @throws Exception\UploadedFileErrorException On any error during the
      *     move operation, or on the second or subsequent call to the method.
      */
-    public function moveTo($targetPath): void
+    public function moveTo(string $targetPath): void
     {
         if ($this->moved) {
             throw new Exception\UploadedFileAlreadyMovedException('Cannot move file; already moved!');
@@ -137,7 +137,7 @@ class UploadedFile implements UploadedFileInterface
             );
         }
 
-        if (! is_string($targetPath) || empty($targetPath)) {
+        if (empty($targetPath)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid path provided for move operation; must be a non-empty string'
             );

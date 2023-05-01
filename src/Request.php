@@ -52,7 +52,7 @@ class Request implements RequestInterface
     /**
      * {@inheritdoc}
      */
-    public function getHeader($name): array
+    public function getHeader(string $name): array
     {
         if (empty($name) || ! $this->hasHeader($name)) {
             if (

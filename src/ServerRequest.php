@@ -53,7 +53,7 @@ class ServerRequest implements ServerRequestInterface
     public function __construct(
         private array $serverParams = [],
         array $uploadedFiles = [],
-        $uri = null,
+        null|string|UriInterface $uri = null,
         ?string $method = null,
         $body = 'php://input',
         array $headers = [],
@@ -173,29 +173,29 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
-    public function getAttribute($attribute, $default = null)
+    public function getAttribute(string $name, $default = null)
     {
-        if (! array_key_exists($attribute, $this->attributes)) {
+        if (! array_key_exists($name, $this->attributes)) {
             return $default;
         }
 
-        return $this->attributes[$attribute];
+        return $this->attributes[$name];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function withAttribute($attribute, $value): ServerRequest
+    public function withAttribute(string $name, $value): ServerRequest
     {
-        $new                         = clone $this;
-        $new->attributes[$attribute] = $value;
+        $new                    = clone $this;
+        $new->attributes[$name] = $value;
         return $new;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function withoutAttribute($name): ServerRequest
+    public function withoutAttribute(string $name): ServerRequest
     {
         $new = clone $this;
         unset($new->attributes[$name]);

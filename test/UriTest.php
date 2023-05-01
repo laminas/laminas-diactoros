@@ -69,16 +69,6 @@ class UriTest extends TestCase
         $this->assertSame('https://matthew:laminas@local.example.com:3001/foo?bar=baz#quz', (string) $new);
     }
 
-    public function testWithUserInfoThrowExceptionIfPasswordIsNotString(): void
-    {
-        $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-
-        $this->expectException(InvalidArgumentException::class);
-
-        /** @psalm-suppress InvalidArgument */
-        $uri->withUserInfo('matthew', 1);
-    }
-
     public function testWithUserInfoReturnsSameInstanceIfUserAndPasswordAreSameAsBefore(): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
@@ -140,9 +130,8 @@ class UriTest extends TestCase
     public function validPorts(): array
     {
         return [
-            'null'       => [null],
-            'int'        => [3000],
-            'string-int' => ['3000'],
+            'null' => [null],
+            'int'  => [3000],
         ];
     }
 
@@ -166,8 +155,7 @@ class UriTest extends TestCase
     public function testWithPortReturnsSameInstanceWithProvidedPortIsSameAsBefore(): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
-        /** @psalm-suppress InvalidArgument */
-        $new = $uri->withPort('3001');
+        $new = $uri->withPort(3001);
         $this->assertSame($uri, $new);
         $this->assertSame(3001, $new->getPort());
     }
@@ -176,12 +164,6 @@ class UriTest extends TestCase
     public function invalidPorts(): array
     {
         return [
-            'true'      => [true],
-            'false'     => [false],
-            'string'    => ['string'],
-            'float'     => [55.5],
-            'array'     => [[3000]],
-            'object'    => [(object) ['port' => 3000]],
             'zero'      => [0],
             'too-small' => [-1],
             'too-big'   => [65536],
@@ -224,11 +206,6 @@ class UriTest extends TestCase
     public function invalidPaths(): array
     {
         return [
-            'null'     => [null],
-            'true'     => [true],
-            'false'    => [false],
-            'array'    => [['/bar/baz']],
-            'object'   => [(object) ['/bar/baz']],
             'query'    => ['/bar/baz?bat=quz'],
             'fragment' => ['/bar/baz#bat'],
         ];
@@ -261,11 +238,6 @@ class UriTest extends TestCase
     public function invalidQueryStrings(): array
     {
         return [
-            'null'     => [null],
-            'true'     => [true],
-            'false'    => [false],
-            'array'    => [['baz=bat']],
-            'object'   => [(object) ['baz=bat']],
             'fragment' => ['baz=bat#quz'],
         ];
     }
@@ -573,54 +545,6 @@ class UriTest extends TestCase
         $expected = '/p%5Eth?key%5E=%60bar%23b@z';
         $uri      = (new Uri())->withFragment($expected);
         $this->assertSame($expected, $uri->getFragment());
-    }
-
-    /** @return non-empty-array<string, array{'withScheme'|'withUserInfo'|'withHost'|'withPath'|'withQuery'|'withFragment', mixed}> */
-    public function invalidStringComponentValues(): array
-    {
-        $methods = [
-            'withScheme',
-            'withUserInfo',
-            'withHost',
-            'withPath',
-            'withQuery',
-            'withFragment',
-        ];
-
-        $values = [
-            'null'       => null,
-            'true'       => true,
-            'false'      => false,
-            'zero'       => 0,
-            'int'        => 1,
-            'zero-float' => 0.0,
-            'float'      => 1.1,
-            'array'      => ['value'],
-            'object'     => (object) ['value' => 'value'],
-        ];
-
-        $combinations = [];
-        foreach ($methods as $method) {
-            foreach ($values as $type => $value) {
-                $key                = sprintf('%s-%s', $method, $type);
-                $combinations[$key] = [$method, $value];
-            }
-        }
-
-        return $combinations;
-    }
-
-    /**
-     * @dataProvider invalidStringComponentValues
-     * @param 'withScheme'|'withUserInfo'|'withHost'|'withPath'|'withQuery'|'withFragment' $method
-     */
-    public function testPassingInvalidValueToWithMethodRaisesException(string $method, mixed $value): void
-    {
-        $uri = new Uri('https://example.com/');
-
-        $this->expectException(InvalidArgumentException::class);
-
-        $uri->$method($value);
     }
 
     public function testUtf8Uri(): void

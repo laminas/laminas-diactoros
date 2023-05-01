@@ -86,7 +86,7 @@ final class RelativeStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function seek($offset, $whence = SEEK_SET): void
+    public function seek(int $offset, int $whence = SEEK_SET): void
     {
         if ($whence === SEEK_SET) {
             $this->decoratedStream->seek($offset + $this->offset, $whence);
@@ -114,7 +114,7 @@ final class RelativeStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function write($string): int
+    public function write(string $string): int
     {
         if ($this->tell() < 0) {
             throw new Exception\InvalidStreamPointerPositionException();
@@ -133,7 +133,7 @@ final class RelativeStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function read($length): string
+    public function read(int $length): string
     {
         if ($this->tell() < 0) {
             throw new Exception\InvalidStreamPointerPositionException();
@@ -155,7 +155,7 @@ final class RelativeStream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
-    public function getMetadata($key = null)
+    public function getMetadata(?string $key = null)
     {
         return $this->decoratedStream->getMetadata($key);
     }

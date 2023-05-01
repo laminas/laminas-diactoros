@@ -35,32 +35,21 @@ class MessageTraitTest extends TestCase
         $this->assertSame('1.0', $message->getProtocolVersion());
     }
 
-    /** @return non-empty-array<non-empty-string, array{mixed}> */
+    /** @return non-empty-array<non-empty-string, array{0: string}> */
     public function invalidProtocolVersionProvider(): array
     {
         return [
-            'null'                 => [null],
-            'true'                 => [true],
-            'false'                => [false],
-            'int'                  => [1],
-            'float'                => [1.1],
-            'array'                => [['1.1']],
-            'stdClass'             => [(object) ['version' => '1.0']],
             '1-without-minor'      => ['1'],
             '1-with-invalid-minor' => ['1.2'],
-            '1-with-hotfix'        => ['1.2.3'],
+            '1-with-hotfix'        => ['1.1.1'],
         ];
     }
 
-    /**
-     * @dataProvider invalidProtocolVersionProvider
-     */
-    public function testWithProtocolVersionRaisesExceptionForInvalidVersion(mixed $version): void
+    /** @dataProvider invalidProtocolVersionProvider */
+    public function testWithProtocolVersionRaisesExceptionForInvalidVersion(string $version): void
     {
         $request = new Request();
-
         $this->expectException(InvalidArgumentException::class);
-
         $request->withProtocolVersion($version);
     }
 

@@ -9,8 +9,6 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 use function array_keys;
-use function gettype;
-use function is_object;
 use function is_string;
 use function preg_match;
 use function sprintf;
@@ -89,23 +87,19 @@ trait RequestTrait
      *
      * Otherwise, it raises an exception.
      *
-     * @param null|string|UriInterface $uri
      * @throws Exception\InvalidArgumentException
      */
-    private function createUri($uri): UriInterface
+    private function createUri(null|string|UriInterface $uri): UriInterface
     {
         if ($uri instanceof UriInterface) {
             return $uri;
         }
+
         if (is_string($uri)) {
             return new Uri($uri);
         }
-        if ($uri === null) {
-            return new Uri();
-        }
-        throw new Exception\InvalidArgumentException(
-            'Invalid URI provided; must be null, a string, or a Psr\Http\Message\UriInterface instance'
-        );
+
+        return new Uri();
     }
 
     /**
@@ -155,11 +149,10 @@ trait RequestTrait
      * @link http://tools.ietf.org/html/rfc7230#section-2.7 (for the various
      *     request-target forms allowed in request messages)
      *
-     * @param string $requestTarget
      * @throws Exception\InvalidArgumentException If the request target is invalid.
      * @return static
      */
-    public function withRequestTarget($requestTarget): RequestInterface
+    public function withRequestTarget(string $requestTarget): RequestInterface
     {
         if (preg_match('#\s#', $requestTarget)) {
             throw new Exception\InvalidArgumentException(
@@ -197,7 +190,7 @@ trait RequestTrait
      * @throws Exception\InvalidArgumentException For invalid HTTP methods.
      * @return static
      */
-    public function withMethod($method): RequestInterface
+    public function withMethod(string $method): RequestInterface
     {
         $new = clone $this;
         $new->setMethod($method);
@@ -245,7 +238,7 @@ trait RequestTrait
      * @param bool $preserveHost Preserve the original state of the Host header.
      * @return static
      */
-    public function withUri(UriInterface $uri, $preserveHost = false): RequestInterface
+    public function withUri(UriInterface $uri, bool $preserveHost = false): RequestInterface
     {
         $new      = clone $this;
         $new->uri = $uri;
@@ -282,18 +275,10 @@ trait RequestTrait
     /**
      * Set and validate the HTTP method
      *
-     * @param string $method
      * @throws Exception\InvalidArgumentException On invalid HTTP method.
      */
-    private function setMethod($method): void
+    private function setMethod(string $method): void
     {
-        if (! is_string($method)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Unsupported HTTP method; must be a string, received %s',
-                is_object($method) ? $method::class : gettype($method)
-            ));
-        }
-
         if (! preg_match('/^[!#$%&\'*+.^_`\|~0-9a-z-]+$/i', $method)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP method "%s" provided',
