@@ -149,11 +149,10 @@ trait RequestTrait
      * @link http://tools.ietf.org/html/rfc7230#section-2.7 (for the various
      *     request-target forms allowed in request messages)
      *
-     * @param string $requestTarget
      * @throws Exception\InvalidArgumentException If the request target is invalid.
      * @return static
      */
-    public function withRequestTarget($requestTarget): RequestInterface
+    public function withRequestTarget(string $requestTarget): RequestInterface
     {
         if (preg_match('#\s#', $requestTarget)) {
             throw new Exception\InvalidArgumentException(
