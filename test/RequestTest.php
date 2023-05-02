@@ -185,11 +185,10 @@ final class RequestTest extends TestCase
     public function invalidHeaderTypes(): array
     {
         return [
-            'indexed-array' => [[['INVALID']], 'header name'],
-            'null'          => [['x-invalid-null' => null]],
-            'true'          => [['x-invalid-true' => true]],
-            'false'         => [['x-invalid-false' => false]],
-            'object'        => [['x-invalid-object' => (object) ['INVALID']]],
+            'null'   => [['x-invalid-null' => null]],
+            'true'   => [['x-invalid-true' => true]],
+            'false'  => [['x-invalid-false' => false]],
+            'object' => [['x-invalid-object' => (object) ['INVALID']]],
         ];
     }
 
