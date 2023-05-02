@@ -194,7 +194,7 @@ and provides a number of facilities around manipulating the composed PHP stream 
 constructor accepts a stream, which may be one of:
 
 - A stream identifier; e.g., `php://input`, a filename, etc.
-- A PHP stream resource; or
+- A PHP stream resource
 
 If a stream identifier is provided, an optional second parameter may be provided, the file mode by
 which to `fopen` the stream.
