@@ -153,9 +153,6 @@ and even the `Cookie` header. These include:
   when under Apache)
 - `Laminas\Diactoros\marshalProtocolVersionFromSapi(array $server) : string`
 - `Laminas\Diactoros\marshalMethodFromSapi(array $server) : string`.
-- `Laminas\Diactoros\marshalUriFromSapi(array $server, array $headers) : Uri`.
-  Please note: **this function is deprecated as of version 2.11.1**, and no longer used in `ServerRequestFactory::fromGlobals()`.
-  Use `ServerRequestFactory::fromGlobals()` instead.
 - `Laminas\Diactoros\marshalHeadersFromSapi(array $server) : array`
 - `Laminas\Diactoros\parseCookieHeader(string $header) : array`
 - `Laminas\Diactoros\createUploadedFile(array $spec) : UploadedFile` (creates the
