@@ -68,17 +68,6 @@
       <code>Module</code>
     </UnusedClass>
   </file>
-  <file src="src/PhpInputStream.php">
-    <MissingParamType>
-      <code>$maxLength</code>
-    </MissingParamType>
-    <MixedArgument>
-      <code>$maxLength</code>
-    </MixedArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$this->resource]]></code>
-    </PossiblyNullArgument>
-  </file>
   <file src="src/RelativeStream.php">
     <PossiblyNullOperand>
       <code><![CDATA[$this->decoratedStream->getSize()]]></code>
