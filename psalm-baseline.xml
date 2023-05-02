@@ -305,52 +305,6 @@
       <code><![CDATA[$server['SERVER_PROTOCOL']]]></code>
     </MixedArgument>
   </file>
-  <file src="src/functions/marshal_uri_from_sapi.php">
-    <MissingClosureParamType>
-      <code>$default</code>
-      <code>$host</code>
-      <code>$https</code>
-    </MissingClosureParamType>
-    <MissingClosureReturnType>
-      <code>static function ($host) {</code>
-      <code>static function (string $name, array $headers, $default = null) {</code>
-    </MissingClosureReturnType>
-    <MixedArgument>
-      <code><![CDATA[$getHeaderFromArray('x-forwarded-proto', $headers, '')]]></code>
-      <code>$host</code>
-      <code>$host</code>
-      <code>$host</code>
-      <code>$host</code>
-      <code>$port</code>
-      <code>$requestUri</code>
-      <code><![CDATA[$server['QUERY_STRING']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code>$headers[$header]</code>
-      <code>$host</code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code>$host</code>
-      <code>$iisUrlRewritten</code>
-      <code>$origPathInfo</code>
-      <code>$unencodedUrl</code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>array</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$server['SERVER_ADDR']]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code>$defaults</code>
-      <code>$origPathInfo</code>
-      <code>$unencodedUrl</code>
-    </MixedReturnStatement>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos($host, ':')]]></code>
-    </PossiblyFalseOperand>
-  </file>
   <file src="src/functions/normalize_server.php">
     <MixedArrayAccess>
       <code><![CDATA[$apacheRequestHeaders['Authorization']]]></code>
