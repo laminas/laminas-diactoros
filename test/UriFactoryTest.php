@@ -253,4 +253,17 @@ class UriFactoryTest extends TestCase
         $this->assertInstanceOf(Uri::class, $uri);
         $this->assertSame('foo', $uri->getFragment());
     }
+
+    public function testMarshalRequestUriPrefersRequestUriServerParamWhenXOriginalUrlButNoXRewriteUrlPresent(): void
+    {
+        $headers = [
+            'X-Original-URL' => '/hijack-attempt',
+        ];
+        $server  = [
+            'REQUEST_URI' => 'https://example.com/requested/path',
+        ];
+
+        $uri = UriFactory::createFromSapi($server, $headers);
+        $this->assertSame('/requested/path', $uri->getPath());
+    }
 }
