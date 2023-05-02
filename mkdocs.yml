@@ -2,12 +2,25 @@ docs_dir: docs/book
 site_dir: docs/html
 extra:
   project: Components
-  current_version: v2
+  current_version: v3
   versions:
+    - v3
     - v2
     - v1
 nav:
   - Home: index.md
+  - v3:
+    - Overview: v3/overview.md
+    - Installation: v3/install.md
+    - Usage: v3/usage.md
+    - Reference:
+      - Factories: v3/factories.md
+      - "Server Request Filters": v3/server-request-filters.md
+      - "Custom Responses": v3/custom-responses.md
+      - Serialization: v3/serialization.md
+      - API: v3/api.md
+    - Migration:
+      - "Migration to Version 3": v3/migration.md
   - v2:
     - Overview: v2/overview.md
     - Installation: v2/install.md
@@ -37,10 +50,10 @@ plugins:
   - search
   - redirects:
       redirect_maps:
-        overview.md: v2/overview.md
-        install.md: v2/install.md
-        usage.md: v2/usage.md
-        custom-responses.md: v2/custom-responses.md
+        overview.md: v3/overview.md
+        install.md: v3/install.md
+        usage.md: v3/usage.md
+        custom-responses.md: v3/custom-responses.md
         emitting-responses.md: v1/emitting-responses.md
-        serialization.md: v2/serialization.md
-        api.md: v2/api.md
+        serialization.md: v3/serialization.md
+        api.md: v3/api.md
