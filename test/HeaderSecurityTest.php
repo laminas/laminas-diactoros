@@ -130,4 +130,21 @@ final class HeaderSecurityTest extends TestCase
 
         HeaderSecurity::assertValidName($value);
     }
+
+    /** @psalm-return non-empty-array<non-empty-string, array{0: int|float}> */
+    public function provideValidNumericHeaderNameValues(): array
+    {
+        return [
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+        ];
+    }
+
+    /** @dataProvider provideValidNumericHeaderNameValues */
+    public function testAssertValidNameDoesNotRaiseExceptionForValidNumericValues(int|float $value): void
+    {
+        $this->assertNull(HeaderSecurity::assertValidName($value));
+    }
 }

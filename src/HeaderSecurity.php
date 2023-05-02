@@ -148,16 +148,16 @@ final class HeaderSecurity
      */
     public static function assertValidName(mixed $name): void
     {
-        if (! is_string($name)) {
+        if (! is_string($name) && ! is_numeric($name)) {
             throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid header name type; expected string; received %s',
+                'Invalid header name type; expected string or numeric value; received %s',
                 is_object($name) ? $name::class : gettype($name)
             ));
         }
-        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $name)) {
+        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', (string) $name)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" is not valid header name',
-                $name
+                (string) $name
             ));
         }
     }
