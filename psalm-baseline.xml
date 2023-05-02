@@ -632,6 +632,9 @@
     <DeprecatedMethod>
       <code>setMethods</code>
     </DeprecatedMethod>
+    <UnusedClosureParam>
+      <code>$errno</code>
+    </UnusedClosureParam>
   </file>
   <file src="test/TestAsset/CallbacksForCallbackStreamTest.php">
     <PossiblyUnusedMethod>

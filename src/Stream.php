@@ -28,7 +28,9 @@ use function sprintf;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function strstr;
+use function trigger_error;
 
+use const E_USER_DEPRECATED;
 use const SEEK_SET;
 
 /**
@@ -359,6 +361,14 @@ class Stream implements StreamInterface, Stringable
         }
 
         if ($resource instanceof GdImage) {
+            trigger_error(
+                sprintf(
+                    'When using GdImage resources, use %s; %s will drop support for GdImage in 3.0.0',
+                    ImageStream::class,
+                    self::class
+                ),
+                E_USER_DEPRECATED,
+            );
             return true;
         }
 

@@ -26,14 +26,18 @@ use function function_exists;
 use function fwrite;
 use function imagecreate;
 use function is_resource;
+use function restore_error_handler;
+use function set_error_handler;
 use function shmop_open;
 use function stream_get_meta_data;
+use function strpos;
 use function sys_get_temp_dir;
 use function tempnam;
 use function uniqid;
 use function unlink;
 
 use const DIRECTORY_SEPARATOR;
+use const E_USER_DEPRECATED;
 
 final class StreamTest extends TestCase
 {
@@ -67,12 +71,29 @@ final class StreamTest extends TestCase
         $this->assertInstanceOf(Stream::class, $stream);
     }
 
+    /**
+     * @todo For version 3, this test should verify that a GdImage raises an  exception.
+     */
     public function testCanInstantiateWithGDResource(): void
     {
         $resource = imagecreate(1, 1);
         self::assertInstanceOf(GdImage::class, $resource);
+
+        $spy = (object) ['caught' => false];
+        set_error_handler(function (int $errno, string $errstr) use ($spy): bool {
+            if (strpos($errstr, 'drop support for GdImage') !== false) {
+                $spy->caught = true;
+                return true;
+            }
+            return false;
+        }, E_USER_DEPRECATED);
+
         $stream = new Stream($resource);
+
+        restore_error_handler();
+
         $this->assertInstanceOf(Stream::class, $stream);
+        $this->assertTrue($spy->caught);
     }
 
     public function testIsReadableReturnsFalseIfStreamIsNotReadable(): void

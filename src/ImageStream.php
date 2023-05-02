@@ -33,6 +33,7 @@ class ImageStream extends Stream
 
     /**
      * {@inheritdoc}
+     *
      * @return null|GdImage
      */
     public function detach(): ?GdImage
