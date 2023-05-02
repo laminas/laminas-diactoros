@@ -22,12 +22,6 @@
     </stubs>
 
     <issueHandlers>
-        <DeprecatedFunction>
-            <errorLevel type="suppress">
-                <referencedFunction name="laminas\diactoros\marshalurifromsapi"/>
-            </errorLevel>
-        </DeprecatedFunction>
-
         <InternalClass>
             <errorLevel type="suppress">
                 <referencedClass name="Laminas\Diactoros\ServerRequestFilter\IPRange"/>
@@ -44,12 +38,6 @@
                 <referencedMethod name="Laminas\Diactoros\ServerRequestFilter\IPRange::matchesIPv6"/>
             </errorLevel>
         </InternalMethod>
-
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="GdImage" />
-            </errorLevel>
-        </UndefinedClass>
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
