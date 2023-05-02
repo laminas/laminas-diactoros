@@ -9,6 +9,15 @@ The following features were changed in version 3.
 The factory `Laminas\Diactoros\ServerRequestFactory::fromGlobals()` was modified such that passing empty array values for arguments that accept `null` or an array now will not use the associated superglobal in that scenario.
 Previously, an empty array value was treated as identical to `null`, and would cause the factory to fallback to superglobals; now, this is a way to provide an empty set for the associated value(s).
 
+### HeaderSecurity::assertValidName behavior
+
+Since it was introduced, `Laminas\Diactoros\HeaderSecurity::assertValidName()`, used in both request and response classes to validate header names, has considered numeric headers invalid.
+However [RFC 7230 Section 3.2.6](https://www.rfc-editor.org/rfc/rfc7230#section-3.2.6) illustrates that numeric values are allowed as header names.
+Unfortunately, the behavior of the PHP engine itself is such that string keys that contain integer values are cast to an integer, which would then cause this method to flag a header as invalid.
+
+Version 3 loosens the logic slightly, adding a check for a non-string, non-numeric value first.
+If the value is numeric, it is cast to a string, and then checked against a regular expression that matches the RFC 7230 ABNF for valid header values. This will allow float and integer values to be used as header names.
+
 ## Removed
 
 The following features were removed for version 3.
