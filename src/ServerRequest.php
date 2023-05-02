@@ -65,7 +65,7 @@ class ServerRequest implements ServerRequestInterface
         $this->validateUploadedFiles($uploadedFiles);
 
         if ($body === 'php://input') {
-            $body = new PhpInputStream();
+            $body = new Stream($body, 'r');
         }
 
         $this->initialize($uri, $method, $body, $headers);
