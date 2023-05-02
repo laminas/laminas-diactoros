@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use GdImage;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -35,9 +36,15 @@ class StreamFactory implements StreamFactoryInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @param resource|GdImage $resource
      */
     public function createStreamFromResource($resource): StreamInterface
     {
+        if ($resource instanceof GdImage) {
+            return new ImageStream($resource);
+        }
+
         return new Stream($resource);
     }
 }
