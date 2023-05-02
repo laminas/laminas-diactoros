@@ -18,3 +18,13 @@ If you need to stream an image, the recommendation is to use the functionality i
 The `Laminas\Diactoros\marshalUriFromSapi()` function was deprecated starting in version 2.11.0, and now removed.
 The functionality that was present in it was moved to `Laminas\Diactoros\UriFactory::createFromSapi()`.
 If you were using the function previously, use this static method instead.
+
+### PhpInputStream
+
+The class `Laminas\Diactoros\PhpInputStream` was originally developed prior to PHP 5.6, when `php://input` was _read-once_.
+As such, we needed to handle it specially to ensure it could be read multiple times.
+
+Since 5.6 and onwards, the stream is seekable and can be re-used.
+
+With version 3, we have removed it, and modified our `ServerRequest` such that it now uses a read-only `Stream` referencing `php://input` as its stream resource.
+If you were using the class directly, you can instead use `new Laminas\Diactoros\Stream('php://input', 'r')` to achieve the same result.
