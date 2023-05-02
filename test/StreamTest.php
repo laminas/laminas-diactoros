@@ -7,6 +7,7 @@ namespace LaminasTest\Diactoros;
 use CurlHandle;
 use GdImage;
 use InvalidArgumentException;
+use Laminas\Diactoros\Exception\InvalidArgumentException as DiactorosInvalidArgumentException;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
@@ -67,12 +68,13 @@ final class StreamTest extends TestCase
         $this->assertInstanceOf(Stream::class, $stream);
     }
 
-    public function testCanInstantiateWithGDResource(): void
+    public function testCannotInstantiateWithGDResource(): void
     {
         $resource = imagecreate(1, 1);
         self::assertInstanceOf(GdImage::class, $resource);
-        $stream = new Stream($resource);
-        $this->assertInstanceOf(Stream::class, $stream);
+
+        $this->expectException(DiactorosInvalidArgumentException::class);
+        new Stream($resource);
     }
 
     public function testIsReadableReturnsFalseIfStreamIsNotReadable(): void

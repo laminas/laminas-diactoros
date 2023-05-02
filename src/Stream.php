@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use GdImage;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use Stringable;
@@ -39,7 +38,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * A list of allowed stream resource types that are allowed to instantiate a Stream
      */
-    private const ALLOWED_STREAM_RESOURCE_TYPES = ['gd', 'stream'];
+    private const ALLOWED_STREAM_RESOURCE_TYPES = ['stream'];
 
     /** @var resource|null */
     protected $resource;
@@ -356,10 +355,6 @@ class Stream implements StreamInterface, Stringable
     {
         if (is_resource($resource)) {
             return in_array(get_resource_type($resource), self::ALLOWED_STREAM_RESOURCE_TYPES, true);
-        }
-
-        if ($resource instanceof GdImage) {
-            return true;
         }
 
         return false;
