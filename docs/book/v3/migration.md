@@ -1,5 +1,14 @@
 # Migration to Version 3
 
+## Changed
+
+The following features were changed in version 3.
+
+### ServerRequestFactory::fromGlobals
+
+The factory `Laminas\Diactoros\ServerRequestFactory::fromGlobals()` was modified such that passing empty array values for arguments that accept `null` or an array now will not use the associated superglobal in that scenario.
+Previously, an empty array value was treated as identical to `null`, and would cause the factory to fallback to superglobals; now, this is a way to provide an empty set for the associated value(s).
+
 ## Removed
 
 The following features were removed for version 3.

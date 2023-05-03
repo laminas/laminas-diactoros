@@ -19,6 +19,9 @@ use function Laminas\Diactoros\normalizeServer;
 use function Laminas\Diactoros\normalizeUploadedFiles;
 use function str_replace;
 
+/**
+ * @backupGlobals enabled
+ */
 final class ServerRequestFactoryTest extends TestCase
 {
     public function testReturnsServerValueUnchangedIfHttpAuthorizationHeaderIsPresent(): void
@@ -128,6 +131,44 @@ final class ServerRequestFactoryTest extends TestCase
         $this->assertEquals($expectedFiles, $request->getUploadedFiles());
         $this->assertEmpty($request->getAttributes());
         $this->assertSame('1.1', $request->getProtocolVersion());
+    }
+
+    public function testFromGlobalsShouldNotFallbackToSuperGlobalsWithEmptyArray(): void
+    {
+        $_SERVER = [
+            'SERVER_PROTOCOL' => '1',
+            'HTTP_HOST'       => 'example.com',
+            'HTTP_ACCEPT'     => 'application/json',
+            'REQUEST_METHOD'  => 'POST',
+            'REQUEST_URI'     => '/foo/bar',
+            'QUERY_STRING'    => 'bar=baz',
+        ];
+
+        $_COOKIE = $_GET = $_POST = [
+            'bar' => 'baz',
+        ];
+
+        $_COOKIE['cookies'] = true;
+        $_GET['query']      = true;
+        $_POST['body']      = true;
+        $_FILES             = [
+            'files' => [
+                'tmp_name' => 'php://temp',
+                'size'     => 0,
+                'error'    => 0,
+                'name'     => 'foo.bar',
+                'type'     => 'text/plain',
+            ],
+        ];
+
+        $request = ServerRequestFactory::fromGlobals([], [], [], [], []);
+        $this->assertEmpty($request->getServerParams(), 'Server params are not empty');
+        $this->assertEmpty($request->getQueryParams(), 'Query params are not empty');
+        $this->assertEmpty($request->getParsedBody(), 'Parsed body is not empty');
+        $this->assertEmpty($request->getCookieParams(), 'Cookies are not empty');
+        $this->assertEmpty($request->getUploadedFiles(), 'Uploaded files are not empty');
+        $defaults = new ServerRequest();
+        $this->assertSame($defaults->getProtocolVersion(), $request->getProtocolVersion());
     }
 
     public function testFromGlobalsUsesCookieHeaderInsteadOfCookieSuperGlobal(): void

@@ -53,14 +53,14 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         ?array $cookies = null,
         ?array $files = null,
         ?FilterServerRequestInterface $requestFilter = null
-    ): ServerRequest {
-        $requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();
+    ): ServerRequestInterface {
+        $requestFilter = $requestFilter ?? FilterUsingXForwardedHeaders::trustReservedSubnets();
 
         $server  = normalizeServer(
-            $server ?: $_SERVER,
+            $server ?? $_SERVER,
             is_callable(self::$apacheRequestHeaders) ? self::$apacheRequestHeaders : null
         );
-        $files   = normalizeUploadedFiles($files ?: $_FILES);
+        $files   = normalizeUploadedFiles($files ?? $_FILES);
         $headers = marshalHeadersFromSapi($server);
 
         if (null === $cookies && array_key_exists('cookie', $headers)) {
@@ -74,9 +74,9 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             marshalMethodFromSapi($server),
             'php://input',
             $headers,
-            $cookies ?: $_COOKIE,
-            $query ?: $_GET,
-            $body ?: $_POST,
+            $cookies ?? $_COOKIE,
+            $query ?? $_GET,
+            $body ?? $_POST,
             marshalProtocolVersionFromSapi($server)
         ));
     }
