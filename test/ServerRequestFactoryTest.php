@@ -19,6 +19,9 @@ use function Laminas\Diactoros\normalizeServer;
 use function Laminas\Diactoros\normalizeUploadedFiles;
 use function str_replace;
 
+/**
+ * @backupGlobals enabled
+ */
 final class ServerRequestFactoryTest extends TestCase
 {
     public function testReturnsServerValueUnchangedIfHttpAuthorizationHeaderIsPresent(): void
