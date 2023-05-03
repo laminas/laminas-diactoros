@@ -356,8 +356,12 @@ trait MessageTrait
      */
     private function arrayIsList(array $array): bool
     {
+        if (empty($array)) {
+            return false;
+        }
+
         if (function_exists('array_is_list')) {
-            return ! empty($array) && array_is_list($array);
+            return array_is_list($array);
         }
 
         $i = -1;
