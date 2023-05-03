@@ -185,20 +185,6 @@
     </DocblockTypeContradiction>
   </file>
   <file src="src/ServerRequestFactory.php">
-    <LessSpecificReturnStatement>
-      <code><![CDATA[$requestFilter(new ServerRequest(
-            $server,
-            $files,
-            UriFactory::createFromSapi($server, $headers),
-            marshalMethodFromSapi($server),
-            'php://input',
-            $headers,
-            $cookies ?: $_COOKIE,
-            $query ?: $_GET,
-            $body ?: $_POST,
-            marshalProtocolVersionFromSapi($server)
-        ))]]></code>
-    </LessSpecificReturnStatement>
     <MixedArgument>
       <code><![CDATA[$headers['cookie']]]></code>
     </MixedArgument>
@@ -206,9 +192,6 @@
       <code>$headers</code>
       <code>$server</code>
     </MixedArgumentTypeCoercion>
-    <MoreSpecificReturnType>
-      <code>ServerRequest</code>
-    </MoreSpecificReturnType>
     <RedundantConditionGivenDocblockType>
       <code>is_callable(self::$apacheRequestHeaders)</code>
     </RedundantConditionGivenDocblockType>
