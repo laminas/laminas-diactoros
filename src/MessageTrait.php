@@ -104,7 +104,7 @@ trait MessageTrait
      *
      * @return array Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
-     * @psalm-return array<non-empty-string, list<string>>
+     * @psalm-return array<non-empty-string|int, list<string>>
      */
     public function getHeaders(): array
     {
