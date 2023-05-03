@@ -49,6 +49,7 @@
       <code>$header</code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
+      <code>$v</code>
       <code>$value</code>
     </MixedAssignment>
     <MixedPropertyTypeCoercion>
@@ -62,6 +63,9 @@
       <code><![CDATA[$new->headerNames]]></code>
       <code><![CDATA[$new->headers]]></code>
     </PropertyTypeCoercion>
+    <UnusedForeachValue>
+      <code>$v</code>
+    </UnusedForeachValue>
   </file>
   <file src="src/Module.php">
     <UnusedClass>

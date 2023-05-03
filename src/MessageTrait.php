@@ -7,9 +7,11 @@ namespace Laminas\Diactoros;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
+use function array_is_list;
 use function array_map;
 use function array_merge;
 use function array_values;
+use function function_exists;
 use function implode;
 use function is_array;
 use function is_resource;
@@ -327,6 +329,10 @@ trait MessageTrait
      */
     private function setHeaders(array $originalHeaders): void
     {
+        if ($this->arrayIsList($originalHeaders)) {
+            throw new Exception\InvalidArgumentException('Header array must be an associative array');
+        }
+
         $headerNames = $headers = [];
 
         foreach ($originalHeaders as $header => $value) {
@@ -340,6 +346,27 @@ trait MessageTrait
 
         $this->headerNames = $headerNames;
         $this->headers     = $headers;
+    }
+
+    /**
+     * @todo Replace this method with a call to ! empty($array) &&
+     *     array_is_list once minimum PHP version is 8.1.
+     */
+    private function arrayIsList(array $array): bool
+    {
+        if (function_exists('array_is_list')) {
+            return ! empty($array) && array_is_list($array);
+        }
+
+        $i = -1;
+        foreach ($array as $k => $v) {
+            ++$i;
+            if ($k !== $i) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

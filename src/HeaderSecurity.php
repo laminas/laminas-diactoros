@@ -6,6 +6,7 @@ namespace Laminas\Diactoros;
 
 use function gettype;
 use function in_array;
+use function is_int;
 use function is_numeric;
 use function is_object;
 use function is_string;
@@ -148,16 +149,19 @@ final class HeaderSecurity
      */
     public static function assertValidName(mixed $name): void
     {
-        if (! is_string($name) && ! is_numeric($name)) {
+        if (! is_string($name) && ! is_int($name)) {
             throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid header name type; expected string or numeric value; received %s',
+                'Invalid header name type; expected string or integer value; received %s',
                 is_object($name) ? $name::class : gettype($name)
             ));
         }
-        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', (string) $name)) {
+
+        $name = is_int($name) ? (string) $name : $name;
+
+        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $name)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" is not valid header name',
-                (string) $name
+                $name
             ));
         }
     }
