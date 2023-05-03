@@ -14,6 +14,7 @@ use function array_values;
 use function function_exists;
 use function implode;
 use function is_array;
+use function is_int;
 use function is_resource;
 use function is_string;
 use function preg_match;
@@ -33,7 +34,7 @@ trait MessageTrait
      * List of all registered headers, as key => array of values.
      *
      * @var array
-     * @psalm-var array<non-empty-string, list<string>>
+     * @psalm-var array<non-empty-string|int, list<string>>
      */
     protected $headers = [];
 
@@ -340,6 +341,7 @@ trait MessageTrait
 
             $this->assertHeader($header);
 
+            $header                           = is_int($header) ? (string) $header : $header;
             $headerNames[strtolower($header)] = $header;
             $headers[$header]                 = $value;
         }

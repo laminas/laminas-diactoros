@@ -46,20 +46,17 @@
       <code>$header</code>
       <code>$header</code>
       <code>$header</code>
-      <code>$header</code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
       <code>$v</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion>
-      <code>$headers</code>
-    </MixedPropertyTypeCoercion>
     <ParamNameMismatch>
       <code>$header</code>
       <code>$header</code>
     </ParamNameMismatch>
     <PropertyTypeCoercion>
+      <code>$headers</code>
       <code><![CDATA[$new->headerNames]]></code>
       <code><![CDATA[$new->headers]]></code>
     </PropertyTypeCoercion>

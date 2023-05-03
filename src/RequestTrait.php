@@ -9,6 +9,7 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 use function array_keys;
+use function is_int;
 use function is_string;
 use function preg_match;
 use function sprintf;
@@ -262,6 +263,10 @@ trait RequestTrait
         // de-normalization of the header name.
         // @see https://github.com/zendframework/zend-diactoros/issues/91
         foreach (array_keys($new->headers) as $header) {
+            if (is_int($header)) {
+                continue;
+            }
+
             if (strtolower($header) === 'host') {
                 unset($new->headers[$header]);
             }

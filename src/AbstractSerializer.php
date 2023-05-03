@@ -8,6 +8,7 @@ use Psr\Http\Message\StreamInterface;
 
 use function array_pop;
 use function implode;
+use function is_int;
 use function preg_match;
 use function sprintf;
 use function str_replace;
@@ -137,11 +138,12 @@ abstract class AbstractSerializer
     /**
      * Filter a header name to wordcase
      *
-     * @param string $header
+     * @param string|int $header
      */
     protected static function filterHeader($header): string
     {
-        $filtered = str_replace('-', ' ', $header);
+        $filtered = is_int($header) ? (string) $header : $header;
+        $filtered = str_replace('-', ' ', $filtered);
         $filtered = ucwords($filtered);
         return str_replace(' ', '-', $filtered);
     }
