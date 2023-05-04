@@ -26,7 +26,7 @@ RFC-7230 defines an ABNF pattern for header field names that allows the possibil
 ```
 
 The PSR-7, `Psr\Http\MessageInterface::getHeaders()` method requires implementations to return an associative array, where the key is the header field name.
-This triggers an interesting quirk in PHP: when adding a value to an array using a string that consists of an integer value, PHP will convert this value to an integer.
+This triggers an interesting quirk in PHP: when adding a value to an array using a string that consists of an integer value, PHP will convert this value to an integer (see [PHP bug 80309](https://bugs.php.net/bug.php?id=80309) for more details).
 This presents several issues:
 
 - First, it means that consumers cannot depend on the header field name returned being a string.
