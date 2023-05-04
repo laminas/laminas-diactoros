@@ -43,6 +43,10 @@ final class ServerRequestFactoryTest extends TestCase
             'HTTP_X_FOO_BAR'     => 'FOOBAR',
             'CONTENT_MD5'        => 'CONTENT-MD5',
             'CONTENT_LENGTH'     => 'UNSPECIFIED',
+            123                  => 'integer',
+            '1'                  => 'string-integer',
+            '0'                  => 'string-zero',
+            '-1'                 => 'string-negative-integer',
         ];
 
         $expected = [
@@ -65,6 +69,10 @@ final class ServerRequestFactoryTest extends TestCase
             'HTTP_AUTHORIZATION' => 'token',
             'MD5'                => 'CONTENT-MD5',
             'CONTENT_LENGTH'     => 'UNSPECIFIED',
+            123                  => 'integer',
+            '1'                  => 'string-integer',
+            '0'                  => 'string-zero',
+            '-1'                 => 'string-negative-integer',
         ];
 
         //Headers that don't begin with HTTP_ or CONTENT_ will not be returned
