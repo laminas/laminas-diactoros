@@ -29,7 +29,6 @@ Previously, an empty array value was treated as identical to `null`, and would c
 The function `Laminas\Diactoros\marshalHeadersFromSapi()`, which is consumed by `Laminas\Diactoros\ServerRequestFactory::fromGlobals()`, was modified such that it will now filter out header field names that evaluate to integers.
 Please see the [Security Features](security-features.md) document for more details.
 
-
 ## Removed
 
 The following features were removed for version 3.
