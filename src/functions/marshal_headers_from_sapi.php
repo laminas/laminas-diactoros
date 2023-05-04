@@ -67,7 +67,7 @@ function marshalHeadersFromSapi(array $server): array
     }
 
     // Filter out integer keys.
-    // These can occor if the translated header name is a string integer.
+    // These can occur if the translated header name is a string integer.
     // PHP will cast those to integers when assigned to an array.
     // This filters them out.
     return array_filter($headers, fn(string|int $key): bool => is_string($key), ARRAY_FILTER_USE_KEY);
