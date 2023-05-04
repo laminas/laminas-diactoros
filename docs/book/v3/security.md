@@ -37,3 +37,7 @@ However, when using `Laminas\Diactoros\ServerRequestFactory::fromGlobals()`, it 
 
 To prevent issues, as of version 3.0.0, the `ServerRequestFactory` implementation in Diactoros filters out any headers that evaluate to integers.
 If you wish to accept these anyways, we strongly recommend that you modify your web server to rewrite the incoming header field name to add a prefix or suffix string (e.g., `X-Digit-1`, `1-Digit`).
+
+> NOTE: **Integer keys can still be returned from getHeaders()**
+> While `withHeader()` and `withHeaderLine()` require string name values, please be aware that these can be presented as string integers.
+> These names will be considered valid, and that means that when you call `getHeaders()`, any such names will become integers at this time.
