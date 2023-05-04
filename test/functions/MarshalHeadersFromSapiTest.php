@@ -34,6 +34,9 @@ class MarshalHeadersFromSapiTest extends TestCase
             'CONTENT_TEST_XY'      => '',
             'CONTENT_TEST_ZZ'      => null,
             123                    => 'integer',
+            '1'                    => 'string-integer',
+            '0'                    => 'string-zero',
+            '-1'                   => 'string-negative-integer',
         ];
 
         $expectedHeaders = [
