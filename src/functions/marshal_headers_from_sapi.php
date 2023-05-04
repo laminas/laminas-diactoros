@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function array_filter;
 use function array_key_exists;
 use function is_string;
 use function str_starts_with;
@@ -11,9 +12,11 @@ use function strtolower;
 use function strtr;
 use function substr;
 
+use const ARRAY_FILTER_USE_KEY;
+
 /**
  * @param array $server Values obtained from the SAPI (generally `$_SERVER`).
- * @return array Header/value pairs
+ * @return array<non-empty-string, mixed> Header/value pairs
  */
 function marshalHeadersFromSapi(array $server): array
 {
@@ -30,7 +33,7 @@ function marshalHeadersFromSapi(array $server): array
 
     $headers = [];
     foreach ($server as $key => $value) {
-        if (! is_string($key)) {
+        if (! is_string($key) || $key === '') {
             continue;
         }
 
@@ -63,5 +66,9 @@ function marshalHeadersFromSapi(array $server): array
         }
     }
 
-    return $headers;
+    // Filter out integer keys.
+    // These can occur if the translated header name is a string integer.
+    // PHP will cast those to integers when assigned to an array.
+    // This filters them out.
+    return array_filter($headers, fn(string|int $key): bool => is_string($key), ARRAY_FILTER_USE_KEY);
 }

@@ -24,6 +24,11 @@ For consumers, usage should be completely backwards compatible, however.
 The factory `Laminas\Diactoros\ServerRequestFactory::fromGlobals()` was modified such that passing empty array values for arguments that accept `null` or an array now will not use the associated superglobal in that scenario.
 Previously, an empty array value was treated as identical to `null`, and would cause the factory to fallback to superglobals; now, this is a way to provide an empty set for the associated value(s).
 
+### marshalHeadersFromSapi
+
+The function `Laminas\Diactoros\marshalHeadersFromSapi()`, which is consumed by `Laminas\Diactoros\ServerRequestFactory::fromGlobals()`, was modified such that it will now filter out header field names that evaluate to integers.
+Please see the [Security Features](security-features.md) document for more details.
+
 ## Removed
 
 The following features were removed for version 3.

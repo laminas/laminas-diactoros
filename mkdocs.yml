@@ -17,6 +17,7 @@ nav:
       - Factories: v3/factories.md
       - "Server Request Filters": v3/server-request-filters.md
       - "Custom Responses": v3/custom-responses.md
+      - "Security Features": v3/security.md
       - Serialization: v3/serialization.md
       - API: v3/api.md
     - Migration:
