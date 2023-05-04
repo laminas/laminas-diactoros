@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-diactoros">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v1/install/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v3/usage/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Installation - laminas-diactoros - Laminas Docs</title>
+    <title>Usage - laminas-diactoros - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,22 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -158,14 +142,14 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
                         
-    <li class="subnavigation__list-item ">
-        <a href="../usage/" class="subnavigation__link">Usage</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Usage</a>
     </li>
 
                     
@@ -176,13 +160,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -201,6 +197,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -249,13 +276,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/overview/" class="dropdown-item">
+                    <a href="../overview/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -271,7 +298,7 @@
                 
             
                 
-                    <a href="../overview/" class="dropdown-item active">
+                    <a href="../../v1/overview/" class="dropdown-item">
                         
                             v1
                         
@@ -306,6 +333,21 @@
 
     
     
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#http-clients" class="toc__link nav-link">HTTP Clients</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#server-side-applications" class="toc__link nav-link">Server-Side Applications</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
                 
 
@@ -326,7 +368,7 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Installation</li>
+                <li class="breadcrumb-item active" aria-current="page">Usage</li>
             
         
     </ol>
@@ -334,28 +376,121 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
 
-    <h1 id="installation">Installation</h1>
-<p>Install this library using composer:</p>
-<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^1.8.6"</code></pre>
-<p><code>laminas-diactoros</code> has the following dependencies (which are managed by Composer):</p>
+    <h1 id="usage">Usage</h1>
+<p>Usage will differ based on whether you are writing an HTTP client, or a server-side application.</p>
+<p>For HTTP client purposes, you will create and populate a <code>Request</code> instance, and the client should
+return a <code>Response</code> instance.</p>
+<p>For server-side applications, you will create a <code>ServerRequest</code> instance, and populate and return a
+<code>Response</code> instance.</p>
+<h2 id="http-clients">HTTP Clients</h2>
+<p>A client will <em>send</em> a request, and <em>return</em> a response. As a developer, you will <em>create</em> and
+<em>populate</em> the request, and then <em>introspect</em> the response.  Both requests and responses are
+immutable; if you make changes &mdash; e.g., by calling setter methods &mdash; you must capture the return
+value, as it is a new instance.</p>
+<pre class="highlight"><code class="language-php">// Create a request
+$request = (new Laminas\Diactoros\Request())
+    -&gt;withUri(new Laminas\Diactoros\Uri('http://example.com'))
+    -&gt;withMethod('PATCH')
+    -&gt;withAddedHeader('Authorization', 'Bearer ' . $token)
+    -&gt;withAddedHeader('Content-Type', 'application/json');
+
+// OR:
+$request = new Laminas\Diactoros\Request(
+    'http://example.com',
+    'PATCH',
+    'php://memory',
+    [
+        'Authorization' =&gt; 'Bearer ' . $token,
+        'Content-Type'  =&gt; 'application/json',
+    ]
+);
+
+// If you want to set a non-origin-form request target, set the
+// request-target explicitly:
+$request = $request-&gt;withRequestTarget((string) $uri);       // absolute-form
+$request = $request-&gt;withRequestTarget($uri-&gt;getAuthority()); // authority-form
+$request = $request-&gt;withRequestTarget('*');                 // asterisk-form
+
+// Once you have the instance:
+$request-&gt;getBody()-&gt;write(json_encode($data));
+$response = $client-&gt;send($request);
+
+printf("Response status: %d (%s)\n", $response-&gt;getStatusCode(), $response-&gt;getReasonPhrase());
+printf("Headers:\n");
+foreach ($response-&gt;getHeaders() as $header =&gt; $values) {
+    printf("    %s: %s\n", $header, implode(', ', $values));
+}
+printf("Message:\n%s\n", $response-&gt;getBody());</code></pre>
+<p>(Note: <code>laminas-diactoros</code> does NOT ship with a client implementation; the above is just an
+illustration of a possible implementation.)</p>
+<h2 id="server-side-applications">Server-Side Applications</h2>
+<p>Server-side applications will need to marshal the incoming request based on superglobals, and will
+then populate and send a response.</p>
+<h3 id="marshaling-an-incoming-request">Marshaling an incoming Request</h3>
+<p>PHP contains a plethora of information about the incoming request, and keeps that information in a
+variety of locations. <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals()</code> can simplify marshaling
+that information into a request instance.</p>
+<p>You can call the factory method with or without the following arguments, in the following order:</p>
 <ul>
-<li><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
-  <code>laminas-diactoros</code> provides implementations of each of these.</li>
+<li><code>$server</code>, typically <code>$_SERVER</code></li>
+<li><code>$query</code>, typically <code>$_GET</code></li>
+<li><code>$body</code>, typically <code>$_POST</code></li>
+<li><code>$cookies</code>, typically <code>$_COOKIE</code></li>
+<li><code>$files</code>, typically <code>$_FILES</code></li>
 </ul>
+<p>The method will then return a <code>Laminas\Diactoros\ServerRequest</code> instance. If any argument is omitted,
+the associated superglobal will be used.</p>
+<pre class="highlight"><code class="language-php">$request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
+    $_SERVER,
+    $_GET,
+    $_POST,
+    $_COOKIE,
+    $_FILES
+);</code></pre>
+<p>When no cookie array is supplied, <code>fromGlobals</code> will first try to parse the supplied <code>cookie</code> header
+before falling back to the <code>$_COOKIE</code> superglobal. This is done because PHP has some legacy handling
+for request parameters which were then registered as global variables. Due to this, cookies with a period
+in the name were renamed with underlines. By getting the cookies directly from the cookie header, you have
+access to the original cookies in the way you set them in your application and they are send by the user
+agent.</p>
+<blockquote>
+<h4 id="strict-content-header-matching">Strict Content- header matching</h4>
+<p>Available since version 2.6.0</p>
+<p>By default, Diactoros will resolve any <code>$_SERVER</code> keys matching the prefix <code>CONTENT_</code> as HTTP headers.
+However, the proper behavior is to only match <code>CONTENT_TYPE</code>, <code>CONTENT_LENGTH</code>, and <code>CONTENT_MD5</code>, mapping them to <code>Content-Type</code>, <code>Content-Length</code>, and <code>Content-MD5</code> headers, respectively.
+Since changing the existing behavior may break some applications, we will not make the functionality more restrictive before version 3.0.0.
+If you are running into issues whereby you have ENV variables that are being munged into request headers, you can define the following ENV variable in your application to enable the more strict behavior:</p>
+<ul>
+<li>LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP</li>
+</ul>
+<p>As an example, you could define it in your application's <code>.env</code> file if you are using <a href="https://github.com/vlucas/phpdotenv">vlucas/phpdotenv</a>:</p>
+<pre class="highlight"><code class="language-env">LAMINAS_DIACTOROS_STRICT_CONTENT_HEADER_LOOKUP=true</code></pre>
+<p>Alternately, you could define it as a php-fpm or Apache environment variable.</p>
+<p>Once this ENV variable is present, the logic for identifying <code>Content-*</code> headers will only look at the <code>CONTENT_TYPE</code>, <code>CONTENT_LENGTH</code>, and <code>CONTENT_MD5</code> variables in <code>$_SERVER</code>, and skip over any others.</p>
+</blockquote>
+<h3 id="manipulating-the-response">Manipulating the Response</h3>
+<p>Use the response object to add headers and provide content for the response.  Writing to the body
+does not create a state change in the response, so it can be done without capturing the return
+value. Manipulating headers does, however.</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response();
+
+// Write to the response body:
+$response-&gt;getBody()-&gt;write("some content\n");
+
+// Multiple calls to write() append:
+$response-&gt;getBody()-&gt;write("more content\n"); // now "some content\nmore content\n"
+
+// Add headers
+// Note: headers do not need to be added before data is written to the body!
+$response = $response
+    -&gt;withHeader('Content-Type', 'text/plain')
+    -&gt;withAddedHeader('X-Show-Something', 'something');</code></pre>
 
 
 
@@ -366,10 +501,10 @@
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../overview/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../install/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Overview
+                    Installation
                 </a>
             
         </li>
@@ -377,9 +512,9 @@
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../usage/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../factories/">
                     <small class="page-nav__label">Next</small>
-                    Usage
+                    Factories
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -422,22 +557,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -446,14 +565,14 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
                         
-    <li class="subnavigation__list-item ">
-        <a href="../usage/" class="subnavigation__link">Usage</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Usage</a>
     </li>
 
                     
@@ -464,13 +583,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -489,6 +620,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             

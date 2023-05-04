@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-diactoros">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v1/install/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v3/api/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Installation - laminas-diactoros - Laminas Docs</title>
+    <title>API - laminas-diactoros - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,22 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -158,8 +142,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -176,13 +160,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -193,14 +189,45 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../api/" class="subnavigation__link">API</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">API</a>
     </li>
 
             
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -249,13 +276,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/overview/" class="dropdown-item">
+                    <a href="../overview/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -271,7 +298,7 @@
                 
             
                 
-                    <a href="../overview/" class="dropdown-item active">
+                    <a href="../../v1/overview/" class="dropdown-item">
                         
                             v1
                         
@@ -306,6 +333,41 @@
 
     
     
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#request-message" class="toc__link nav-link">Request Message</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#serverrequest-message" class="toc__link nav-link">ServerRequest Message</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#response-message" class="toc__link nav-link">Response Message</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#serverrequestfactory" class="toc__link nav-link">ServerRequestFactory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#uri" class="toc__link nav-link">URI</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stream" class="toc__link nav-link">Stream</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#uploadedfile" class="toc__link nav-link">UploadedFile</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
                 
 
@@ -325,8 +387,15 @@
                         
                     
                 
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
 
-                <li class="breadcrumb-item active" aria-current="page">Installation</li>
+                <li class="breadcrumb-item active" aria-current="page">API</li>
             
         
     </ol>
@@ -334,28 +403,171 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
+        <h2 class="chapter__headline">Reference</h2>
+    
 
-    <h1 id="installation">Installation</h1>
-<p>Install this library using composer:</p>
-<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^1.8.6"</code></pre>
-<p><code>laminas-diactoros</code> has the following dependencies (which are managed by Composer):</p>
+    <h1 id="api">API</h1>
+<h2 id="request-message">Request Message</h2>
+<p><code>Laminas\Diactoros\Request</code> implements <a href="https://github.com/php-fig/http-message/blob/master/src/RequestInterface.php"><code>Psr\Http\Message\RequestInterface</code></a>,
+and is intended for client-side requests. It includes the following methods:</p>
+<pre class="highlight"><code class="language-php">class Request
+{
+    public function __construct(
+        $uri = null,
+        $method = null,
+        $body = 'php://memory',
+        array $headers = []
+    );
+
+    // See psr/http-message's RequestInterface for other methods
+}</code></pre>
+<p>Requests are immutable. Any methods that would change state &mdash; those prefixed with <code>with</code> and
+<code>without</code> &mdash; all return a new instance with the changes requested.</p>
+<h2 id="serverrequest-message">ServerRequest Message</h2>
+<p>For server-side applications, <code>Laminas\Diactoros\ServerRequest</code> implements
+<a href="https://github.com/php-fig/http-message/blob/master/src/ServerRequestInterface.php"><code>Psr\Http\Message\ServerRequestInterface</code></a>,
+which provides access to the elements of an HTTP request, as well as uniform access to the various
+elements of incoming data. The methods included are:</p>
+<pre class="highlight"><code class="language-php">class ServerRequest
+{
+    public function __construct(
+        array $serverParams = [],
+        array $fileParams = [],
+        $uri = null,
+        $method = null,
+        $body = 'php://input',
+        array $headers = []
+    );
+
+    // See psr/http-message's ServerRequestInterface for other methods.
+}</code></pre>
+<p>The <code>ServerRequest</code> is immutable. Any methods that would change state &mdash; those prefixed with <code>with</code>
+and <code>without</code> &mdash; all return a new instance with the changes requested. Server parameters are
+considered completely immutable, however, as they cannot be recalculated, and, rather, is a source
+for other values.</p>
+<h2 id="response-message">Response Message</h2>
+<p><code>Laminas\Diactoros\Response</code> provides an implementation of
+<a href="https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php"><code>Psr\Http\Message\ResponseInterface</code></a>,
+an object to be used to aggregate response information for both HTTP clients and server-side
+applications, including headers and message body content. It includes the following:</p>
+<pre class="highlight"><code class="language-php">class Response
+{
+    public function __construct(
+        $body = 'php://memory',
+        $statusCode = 200,
+        array $headers = []
+    );
+
+    // See psr/http-message's ResponseInterface for other methods
+}</code></pre>
+<p>Like the <code>Request</code> and <code>ServerRequest</code>, responses are immutable. Any methods that would change state
+&mdash; those prefixed with <code>with</code> and <code>without</code> &mdash; all return a new instance with the changes requested.</p>
+<h3 id="htmlresponse-and-jsonresponse">HtmlResponse and JsonResponse</h3>
+<p>The most common use case in server-side applications for generating responses is to provide a string
+to use for the response, typically HTML or data to serialize as JSON.  <code>Laminas\Diactoros\Response\HtmlResponse</code> and <code>Laminas\Diactoros\Response\JsonResponse</code> exist to facilitate these use cases:</p>
+<pre class="highlight"><code class="language-php">$htmlResponse = new HtmlResponse($html);
+
+$jsonResponse = new JsonResponse($data);</code></pre>
+<p>In the first example, you will receive a response with a stream containing the HTML; additionally,
+the <code>Content-Type</code> header will be set to <code>text/html</code>. In the second case, the stream will contain a
+stream containing the JSON-serialized <code>$data</code>, and have a <code>Content-Type</code> header set to
+<code>application/json</code>.</p>
+<p>Both objects allow passing the HTTP status, as well as any headers you want to specify,
+including the <code>Content-Type</code> header:</p>
+<pre class="highlight"><code class="language-php">$htmlResponse = new HtmlResponse($html, 404, [
+    'Content-Type' =&gt; [ 'application/xhtml+xml' ],
+]);
+
+$jsonResponse = new JsonResponse($data, 422, [
+    'Content-Type' =&gt; [ 'application/problem+json' ],
+]);</code></pre>
+<h2 id="serverrequestfactory">ServerRequestFactory</h2>
+<p>This static class can be used to marshal a <code>ServerRequest</code> instance from the PHP environment.
+The primary entry point is <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals(array $server, array $query, array $body, array $cookies, array $files, ?Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface $requestFilter)</code>.
+This method will create a new <code>ServerRequest</code> instance with the data provided.
+Examples of usage are:</p>
+<pre class="highlight"><code class="language-php">// Returns new ServerRequest instance, using values from superglobals:
+$request = ServerRequestFactory::fromGlobals();
+
+// or
+
+// Returns new ServerRequest instance, using values provided (in this
+// case, equivalent to the previous!)
+$request = ServerRequestFactory::fromGlobals(
+    $_SERVER,
+    $_GET,
+    $_POST,
+    $_COOKIE,
+    $_FILES
+);</code></pre>
+<h3 id="request-filters">Request Filters</h3>
+<p>Since version 2.11.1, this method takes the additional optional argument <code>$requestFilter</code>.
+This should be a <code>null</code> value, or an instance of <a href="../server-request-filters/"><code>Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface</code></a>.
+For version 2 releases, if a <code>null</code> is provided, internally the method will assign a <a href="../server-request-filters/#filterusingxforwardedheaders"><code>Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders</code></a> instance configured as follows:</p>
+<pre class="highlight"><code class="language-php">$requestFilter = $requestFilter ?: FilterUsingXForwardedHeaders::trustReservedSubnets();</code></pre>
+<p>The request filter is called on the generated server request instance, and its result is returned from <code>fromGlobals()</code>.</p>
+<p><strong>For version 3 releases, this method will switch to using a <code>Laminas\Diactoros\ServerRequestFilter\DoNotFilter</code> by default.</strong>
+If you are using this factory method directly, please be aware and update your code accordingly.</p>
+<h3 id="serverrequestfactory-helper-functions">ServerRequestFactory Helper Functions</h3>
+<p>In order to create the various artifacts required by a <code>ServerRequest</code> instance,
+Diactoros also provides a number of functions under the <code>Laminas\Diactoros</code>
+namespace for introspecting the SAPI <code>$_SERVER</code> parameters, headers, <code>$_FILES</code>,
+and even the <code>Cookie</code> header. These include:</p>
 <ul>
-<li><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
-  <code>laminas-diactoros</code> provides implementations of each of these.</li>
+<li><code>Laminas\Diactoros\normalizeServer(array $server, callable $apacheRequestHeaderCallback = null) : array</code>
+  (its main purpose is to aggregate the <code>Authorization</code> header in the SAPI params
+  when under Apache)</li>
+<li><code>Laminas\Diactoros\marshalProtocolVersionFromSapi(array $server) : string</code></li>
+<li><code>Laminas\Diactoros\marshalMethodFromSapi(array $server) : string</code>.</li>
+<li><code>Laminas\Diactoros\marshalHeadersFromSapi(array $server) : array</code></li>
+<li><code>Laminas\Diactoros\parseCookieHeader(string $header) : array</code></li>
+<li><code>Laminas\Diactoros\createUploadedFile(array $spec) : UploadedFile</code> (creates the
+  instance from a normal <code>$_FILES</code> entry)</li>
+<li><code>Laminas\Diactoros\normalizeUploadedFiles(array $files) : UploadedFileInterface[]</code>
+  (traverses a potentially nested array of uploaded file instances and/or
+  <code>$_FILES</code> entries, including those aggregated under mod_php, php-fpm, and
+  php-cgi in order to create a flat array of <code>UploadedFileInterface</code> instances
+  to use in a request)</li>
 </ul>
+<h2 id="uri">URI</h2>
+<p><code>Laminas\Diactoros\Uri</code> is an implementation of
+<a href="https://github.com/php-fig/http-message/blob/master/src/UriInterface.php"><code>Psr\Http\Message\UriInterface</code></a>,
+and models and validates URIs. It implements <code>__toString()</code>, allowing it to be represented as a
+string and <code>echo()</code>'d directly. The following methods are pertinent:</p>
+<pre class="highlight"><code class="language-php">class Uri
+{
+    public function __construct($uri = '');
+
+    // See psr/http-message's UriInterface for other methods.
+}</code></pre>
+<p>Like the various message objects, URIs are immutable. Any methods that would
+change state &mdash; those
+prefixed with <code>with</code> and <code>without</code> &mdash; all return a new instance with the changes requested.</p>
+<h2 id="stream">Stream</h2>
+<p><code>Laminas\Diactoros\Stream</code> is an implementation of
+<a href="https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php"><code>Psr\Http\Message\StreamInterface</code></a>,
+and provides a number of facilities around manipulating the composed PHP stream resource. The
+constructor accepts a stream, which may be one of:</p>
+<ul>
+<li>A stream identifier; e.g., <code>php://input</code>, a filename, etc.</li>
+<li>A PHP stream resource; or</li>
+</ul>
+<p>If a stream identifier is provided, an optional second parameter may be provided, the file mode by
+which to <code>fopen</code> the stream.</p>
+<p><code>ServerRequest</code> objects by default use a <code>php://input</code> stream set to read-only; <code>Response</code> objects
+by default use a <code>php://memory</code> with a mode of <code>wb+</code>, allowing binary read/write access.</p>
+<p>In most cases, you will not interact with the Stream object directly.</p>
+<h2 id="uploadedfile">UploadedFile</h2>
+<p><code>Laminas\Diactoros\UploadedFile</code> is an implementation of
+<a href="https://github.com/php-fig/http-message/blob/master/src/UploadedFileInterface.php"><code>Psr\Http\Message\UploadedFileInterface</code></a>,
+and provides abstraction around a single uploaded file, including behavior for interacting with it
+as a stream or moving it to a filesystem location.</p>
+<p>In most cases, you will only use the methods defined in the <code>UploadedFileInterface</code>.</p>
 
 
 
@@ -366,10 +578,10 @@
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../overview/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../serialization/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Overview
+                    Serialization
                 </a>
             
         </li>
@@ -377,9 +589,9 @@
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../usage/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../migration/">
                     <small class="page-nav__label">Next</small>
-                    Usage
+                    Migration to Version 3
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -422,22 +634,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -446,8 +642,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -464,13 +660,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -481,14 +689,45 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../api/" class="subnavigation__link">API</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">API</a>
     </li>
 
             
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             

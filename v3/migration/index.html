@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-diactoros">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v1/install/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v3/migration/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Installation - laminas-diactoros - Laminas Docs</title>
+    <title>Migration to Version 3 - laminas-diactoros - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,22 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -158,8 +142,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -176,13 +160,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -201,6 +197,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -249,13 +276,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/overview/" class="dropdown-item">
+                    <a href="../overview/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -271,7 +298,7 @@
                 
             
                 
-                    <a href="../overview/" class="dropdown-item active">
+                    <a href="../../v1/overview/" class="dropdown-item">
                         
                             v1
                         
@@ -306,6 +333,21 @@
 
     
     
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#changed" class="toc__link nav-link">Changed</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#removed" class="toc__link nav-link">Removed</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
                 
 
@@ -325,8 +367,15 @@
                         
                     
                 
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Migration</li>
+                        
+                    
+                
 
-                <li class="breadcrumb-item active" aria-current="page">Installation</li>
+                <li class="breadcrumb-item active" aria-current="page">Migration to Version 3</li>
             
         
     </ol>
@@ -334,28 +383,52 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
+        <h2 class="chapter__headline">Migration</h2>
+    
 
-    <h1 id="installation">Installation</h1>
-<p>Install this library using composer:</p>
-<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^1.8.6"</code></pre>
-<p><code>laminas-diactoros</code> has the following dependencies (which are managed by Composer):</p>
+    <h1 id="migration-to-version-3">Migration to Version 3</h1>
+<h2 id="changed">Changed</h2>
+<p>The following features were changed in version 3.</p>
+<h3 id="psr-7-v2-support">PSR-7 v2 support</h3>
+<p>This version adds support for PSR-7 version 2.</p>
+<p>Diactoros 2.25.0 added support for PSR-7 version 1.1, and at that time, already had return type declarations that would mostly fulfill PSR-7 version 2.
+However, there were two locations in PSR-7 where <code>void</code> returns were added:</p>
 <ul>
-<li><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
-  <code>laminas-diactoros</code> provides implementations of each of these.</li>
+<li><code>StreamInterface::seek()</code></li>
+<li><code>UploadedFileInterface::moveTo()</code></li>
 </ul>
+<p>Since absence of a return type declaration implies <code>mixed</code> in PHP, switching to <code>void</code> is always considered a BC break, as it reduces the allowed behavior.
+As such, any consumers <em>extending</em> our <code>Stream</code> or <code>UploadedFile</code> classes and overriding either of these methods would experience a BC breaking change due to types.</p>
+<p>For consumers, usage should be completely backwards compatible, however.</p>
+<h3 id="serverrequestfactoryfromglobals">ServerRequestFactory::fromGlobals</h3>
+<p>The factory <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals()</code> was modified such that passing empty array values for arguments that accept <code>null</code> or an array now will not use the associated superglobal in that scenario.
+Previously, an empty array value was treated as identical to <code>null</code>, and would cause the factory to fallback to superglobals; now, this is a way to provide an empty set for the associated value(s).</p>
+<h3 id="marshalheadersfromsapi">marshalHeadersFromSapi</h3>
+<p>The function <code>Laminas\Diactoros\marshalHeadersFromSapi()</code>, which is consumed by <code>Laminas\Diactoros\ServerRequestFactory::fromGlobals()</code>, was modified such that it will now filter out header field names that evaluate to integers.
+Please see the <a href="security-features.md">Security Features</a> document for more details.</p>
+<h2 id="removed">Removed</h2>
+<p>The following features were removed for version 3.</p>
+<h3 id="gdimage-support-in-stream">GdImage support in <code>Stream</code></h3>
+<p><code>Laminas\Diactoros\Stream</code> "supported" usage of resources created via the GD extension.
+However, this support was unstable, and largely did not work.
+With the update in PHP 8.0 to usage of opaque resource types for all GD resources, it did not work at all.
+As such, we have removed the feature entirely.</p>
+<p>If you need to stream an image, the recommendation is to use the functionality in the GD extension to write the image to a temporary file (e.g., <code>php://temp</code>), and then to pass that to <code>Laminas\Diactoros\Stream</code>.</p>
+<h3 id="marshalurifromsapi-function">marshalUriFromSapi function</h3>
+<p>The <code>Laminas\Diactoros\marshalUriFromSapi()</code> function was deprecated starting in version 2.11.0, and now removed.
+The functionality that was present in it was moved to <code>Laminas\Diactoros\UriFactory::createFromSapi()</code>.
+If you were using the function previously, use this static method instead.</p>
+<h3 id="phpinputstream">PhpInputStream</h3>
+<p>The class <code>Laminas\Diactoros\PhpInputStream</code> was originally developed prior to PHP 5.6, when <code>php://input</code> was <em>read-once</em>.
+As such, we needed to handle it specially to ensure it could be read multiple times.</p>
+<p>Since 5.6 and onwards, the stream is seekable and can be re-used.</p>
+<p>With version 3, we have removed it, and modified our <code>ServerRequest</code> such that it now uses a read-only <code>Stream</code> referencing <code>php://input</code> as its stream resource.
+If you were using the class directly, you can instead use <code>new Laminas\Diactoros\Stream('php://input', 'r')</code> to achieve the same result.</p>
 
 
 
@@ -366,10 +439,10 @@
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../overview/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../api/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Overview
+                    API
                 </a>
             
         </li>
@@ -377,9 +450,9 @@
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../usage/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../../v2/overview/">
                     <small class="page-nav__label">Next</small>
-                    Usage
+                    Overview
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -422,22 +495,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -446,8 +503,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -464,13 +521,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -489,6 +558,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             

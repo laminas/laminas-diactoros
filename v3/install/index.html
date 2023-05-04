@@ -15,7 +15,7 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-diactoros">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v1/install/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v3/install/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
     <title>Installation - laminas-diactoros - Laminas Docs</title>
@@ -134,22 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -176,13 +160,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -201,6 +197,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -249,13 +276,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/overview/" class="dropdown-item">
+                    <a href="../overview/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -271,7 +298,7 @@
                 
             
                 
-                    <a href="../overview/" class="dropdown-item active">
+                    <a href="../../v1/overview/" class="dropdown-item">
                         
                             v1
                         
@@ -334,14 +361,6 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
-
 
 
 
@@ -350,11 +369,17 @@
 
     <h1 id="installation">Installation</h1>
 <p>Install this library using composer:</p>
-<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^1.8.6"</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-diactoros</code></pre>
 <p><code>laminas-diactoros</code> has the following dependencies (which are managed by Composer):</p>
 <ul>
-<li><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
-  <code>laminas-diactoros</code> provides implementations of each of these.</li>
+<li>
+<p><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
+  <code>laminas-diactoros</code> provides implementations of each of these.</p>
+</li>
+<li>
+<p><code>psr/http-factory</code>, which defines interfaces for HTTP message factories.
+  <code>laminas-diactoros</code> provides implementations of each of these.</p>
+</li>
 </ul>
 
 
@@ -422,22 +447,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -464,13 +473,25 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -489,6 +510,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             

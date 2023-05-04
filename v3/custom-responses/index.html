@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-diactoros">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v1/install/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-diactoros/v3/custom-responses/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Installation - laminas-diactoros - Laminas Docs</title>
+    <title>Custom Responses - laminas-diactoros - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,22 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -158,8 +142,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -176,13 +160,25 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
+        <a href="../factories/" class="subnavigation__link">Factories</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Custom Responses</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -201,6 +197,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -249,13 +276,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/overview/" class="dropdown-item">
+                    <a href="../overview/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -271,7 +298,7 @@
                 
             
                 
-                    <a href="../overview/" class="dropdown-item active">
+                    <a href="../../v1/overview/" class="dropdown-item">
                         
                             v1
                         
@@ -306,6 +333,41 @@
 
     
     
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#text-responses" class="toc__link nav-link">Text Responses</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#html-responses" class="toc__link nav-link">HTML Responses</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#xml-responses" class="toc__link nav-link">XML Responses</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#json-responses" class="toc__link nav-link">JSON Responses</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#empty-responses" class="toc__link nav-link">Empty Responses</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#redirects" class="toc__link nav-link">Redirects</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#creating-custom-responses" class="toc__link nav-link">Creating custom Responses</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
                 
 
@@ -325,8 +387,15 @@
                         
                     
                 
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
 
-                <li class="breadcrumb-item active" aria-current="page">Installation</li>
+                <li class="breadcrumb-item active" aria-current="page">Custom Responses</li>
             
         
     </ol>
@@ -334,28 +403,196 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
+        <h2 class="chapter__headline">Reference</h2>
+    
 
-    <h1 id="installation">Installation</h1>
-<p>Install this library using composer:</p>
-<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-diactoros:^1.8.6"</code></pre>
-<p><code>laminas-diactoros</code> has the following dependencies (which are managed by Composer):</p>
+    <h1 id="custom-responses">Custom Responses</h1>
+<p>When developing server-side applications, the message type you're most likely to create manually is
+the response. In such cases, the standard signature can be an obstacle to usability. Let's review:</p>
+<pre class="highlight"><code class="language-php">namespace Laminas\Diactoros;
+
+use Psr\Http\Message\ResponseInterface;
+
+class Response implements ResponseInterface
+{
+    public function __construct($body = 'php://temp', $status = 200, array $headers = []);
+}</code></pre>
+<p>Some standard use cases, however, make this un-wieldy:</p>
 <ul>
-<li><code>psr/http-message</code>, which defines interfaces for HTTP messages, including requests and responses.
-  <code>laminas-diactoros</code> provides implementations of each of these.</li>
+<li>Returning a response containing HTML; in this case, you likely want to provide the HTML to the
+  constructor, not a stream with the HTML injected.</li>
+<li>Returning a response containing JSON; in this case, you likely want to provide the data to
+  serialize to JSON, not a stream containing serialized JSON.</li>
+<li>Returning a response with no content; in this case, you don't want to bother with the body at all.</li>
+<li>Returning a redirect response; in this case, you likely just want to specify the target for the
+  <code>Location</code> header, and optionally the status code.</li>
 </ul>
+<p>Starting with version 1.1, Diactoros offers several custom response types for simplifying these
+common tasks.</p>
+<h2 id="text-responses">Text Responses</h2>
+<p><code>Laminas\Diactoros\Response\TextResponse</code> creates a plain text response. It sets the
+<code>Content-Type</code> header to <code>text/plain</code> by default:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\TextResponse('Hello world!');</code></pre>
+<p>The constructor accepts two additional arguments: a status code and an array of headers.</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\TextResponse(
+    $text,
+    200,
+    ['Content-Type' =&gt; ['text/csv']]
+);</code></pre>
+<h2 id="html-responses">HTML Responses</h2>
+<p><code>Laminas\Diactoros\Response\HtmlResponse</code> allows specifying HTML as a payload, and sets the
+<code>Content-Type</code> header to <code>text/html</code> by default:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\HtmlResponse($htmlContent);</code></pre>
+<p>The constructor allows passing two additional arguments: a status code, and an array of headers.
+These allow you to further seed the initial state of the response, as well as to override the
+<code>Content-Type</code> header if desired:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\HtmlResponse(
+    $htmlContent,
+    200,
+    ['Content-Type' =&gt; ['application/xhtml+xml']]
+);</code></pre>
+<p>Headers must be in the same format as you would provide to the
+<a href="../api/#response-message">Response constructor</a>.</p>
+<h2 id="xml-responses">XML Responses</h2>
+<p><code>Laminas\Diactoros\Response\XmlResponse</code> allows specifying XML as a payload, and sets the
+<code>Content-Type</code> header to <code>application/xml</code> by default:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\XmlResponse($xml);</code></pre>
+<p>The constructor allows passing two additional arguments: a status code, and an array of headers.
+These allow you to further seed the initial state of the response, as well as to override the
+<code>Content-Type</code> header if desired:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\XmlResponse(
+    $xml,
+    200,
+    ['Content-Type' =&gt; ['application/hal+xml']]
+);</code></pre>
+<p>Headers must be in the same format as you would provide to the
+<a href="../api/#response-message">Response constructor</a>.</p>
+<h2 id="json-responses">JSON Responses</h2>
+<p><code>Laminas\Diactoros\Response\JsonResponse</code> accepts a data structure to convert to JSON, and sets
+the <code>Content-Type</code> header to <code>application/json</code>:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\JsonResponse($data);</code></pre>
+<p>If providing an object, we recommend implementing <a href="http://php.net/JsonSerializable">JsonSerializable</a>
+to ensure your object is correctly serialized.</p>
+<p>Just like the <code>HtmlResponse</code>, the <code>JsonResponse</code> allows passing two additional arguments — a
+status code, and an array of headers — to allow you to further seed the initial state of the
+response:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\JsonResponse(
+    $data,
+    200,
+    ['Content-Type' =&gt; ['application/hal+json']]
+);</code></pre>
+<p>Finally, <code>JsonResponse</code> allows a fourth optional argument, the flags to provide to <code>json_encode()</code>.
+By default, these are set to <code>JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT</code> (integer
+15), providing <a href="http://tools.ietf.org/html/rfc4627">RFC 4627</a> compliant JSON capable of embedding in
+HTML. If you want to specify a different set of flags, use the fourth constructor argument:</p>
+<pre class="highlight"><code class="language-php">$response = new Laminas\Diactoros\Response\JsonResponse(
+    $data,
+    200,
+    [],
+    JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT
+);</code></pre>
+<h2 id="empty-responses">Empty Responses</h2>
+<p>Many API actions allow returning empty responses:</p>
+<ul>
+<li><code>201 Created</code> responses are often empty, and only include a <code>Link</code> or <code>Location</code> header pointing
+  to the newly created resource.</li>
+<li><code>202 Accepted</code> responses are typically empty, indicating that the new entity has been received,
+  but not yet processed.</li>
+<li><code>204 No Content</code> responses are, by definition, empty, and often used as a success response when
+  deleting an entity.</li>
+</ul>
+<p><code>Laminas\Diactoros\Response\EmptyResponse</code> is a <code>Laminas\Diactoros\Response</code> extension that, by default,
+returns an empty response with a 204 status. Its constructor allows passing the status and headers
+only:</p>
+<pre class="highlight"><code class="language-php">namespace Laminas\Diactoros\Response;
+
+use Laminas\Diactoros\Response;
+
+class EmptyResponse extends Response
+{
+    public function __construct($status = 204, array $headers = []);
+}</code></pre>
+<p>An empty, read-only body is injected at instantiation, ensuring no write operations are possible on
+the response. Usage is typically one of the following forms:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Diactoros\Response\EmptyResponse;
+
+// Basic 204 response:
+$response = new EmptyResponse();
+
+// 201 response with location header:
+$response = new EmptyResponse(201, [
+    'Location' =&gt; [ $url ],
+]);
+
+// Alternately, set the header after instantiation:
+$response = (new EmptyResponse(201))-&gt;withHeader('Location', $url);</code></pre>
+<h2 id="redirects">Redirects</h2>
+<p><code>Laminas\Diactoros\Response\RedirectResponse</code> is a <code>Laminas\Diactoros\Response</code> extension for producing
+redirect responses. The only required argument is a URI, which may be provided as either a string or
+<code>Psr\Http\Message\UriInterface</code> instance. By default, the status 302 is used, and no other headers
+are produced; you may alter these via the additional optional arguments:</p>
+<pre class="highlight"><code class="language-php">namespace Laminas\Diactoros\Response;
+
+use Laminas\Diactoros\Response;
+
+class RedirectResponse extends Response
+{
+    public function __construct($uri, $status = 302, array $headers = []);
+}</code></pre>
+<p>Typical usage is:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Diactoros\Response\RedirectResponse;
+
+// 302 redirect:
+$response = new RedirectResponse('/user/login');
+
+// 301 redirect:
+$response = new RedirectResponse('/user/login', 301);
+
+// using a URI instance (e.g., by altering the request URI instance)
+$uri = $request-&gt;getUri();
+$response = new RedirectResponse($uri-&gt;withPath('/login'));</code></pre>
+<h2 id="creating-custom-responses">Creating custom Responses</h2>
+<p>PHP allows constructor overloading. What this means is that constructors of extending classes can
+define completely different argument sets without conflicting with the parent implementation.
+Considering that most custom response types do not need to change internal functionality, but
+instead focus on user experience (i.e., simplifying instantiation), this fact can be leveraged to
+create your custom types.</p>
+<p>The general pattern will be something like this:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Diactoros\Response;
+
+class MyCustomResponse extends Response
+{
+    public function __construct($data, $status = 200, array $headers = [])
+    {
+        // - Do something with $data, and create a Stream for the body (if necessary).
+        // - Maybe set some default headers.
+
+        parent::__construct($body, $status, $headers);
+    }
+}</code></pre>
+<p>Note the call to <code>parent::__construct()</code>. This is particularly relevant, as the implementation at
+the time of writing has all class properties marked as private, making them inaccessible to
+extensions; this is done to protect encapsulation and ensure consistency of operations between
+instances.</p>
+<p>If you don't want to go the extension route (perhaps you don't want another <code>ResponseInterface</code>
+implementation within your object graph) you can instead create a factory. As an example:</p>
+<pre class="highlight"><code class="language-php">$plainTextResponse = function ($text, $status = 200, array $headers = []) {
+    $response = new Laminas\Diactoros\Response('php://temp', $status, $headers);
+    $response-&gt;getBody()-&gt;write($text);
+    if (! $response-&gt;hasHeader('Content-Type')) {
+        $response = $response-&gt;withHeader('Content-Type', 'text/plain');
+    }
+    return $response;
+};
+
+$response = $plainTextResponse('Hello, world!');</code></pre>
+<p>We recommend following the semantic of providing the status and headers as the final two arguments
+for any factory or custom response extensions.</p>
 
 
 
@@ -366,10 +603,10 @@
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../overview/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../server-request-filters/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Overview
+                    Server Request Filters
                 </a>
             
         </li>
@@ -377,9 +614,9 @@
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../usage/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../security/">
                     <small class="page-nav__label">Next</small>
-                    Usage
+                    Security Features
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -422,22 +659,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -446,8 +667,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item ">
+        <a href="../install/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -464,13 +685,25 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../custom-responses/" class="subnavigation__link">Custom Responses</a>
+        <a href="../factories/" class="subnavigation__link">Factories</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../emitting-responses/" class="subnavigation__link">Emitting Responses</a>
+        <a href="../server-request-filters/" class="subnavigation__link">Server Request Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Custom Responses</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security Features</a>
     </li>
 
             
@@ -489,6 +722,37 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration to Version 3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
