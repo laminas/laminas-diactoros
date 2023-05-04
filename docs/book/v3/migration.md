@@ -4,6 +4,21 @@
 
 The following features were changed in version 3.
 
+### PSR-7 v2 support
+
+This version adds support for PSR-7 version 2.
+
+Diactoros 2.25.0 added support for PSR-7 version 1.1, and at that time, already had return type declarations that would mostly fulfill PSR-7 version 2.
+However, there were two locations in PSR-7 where `void` returns were added:
+
+- `StreamInterface::seek()`
+- `UploadedFileInterface::moveTo()`
+
+Since absence of a return type declaration implies `mixed` in PHP, switching to `void` is always considered a BC break, as it reduces the allowed behavior.
+As such, any consumers _extending_ our `Stream` or `UploadedFile` classes and overriding either of these methods would experience a BC breaking change due to types.
+
+For consumers, usage should be completely backwards compatible, however.
+
 ### ServerRequestFactory::fromGlobals
 
 The factory `Laminas\Diactoros\ServerRequestFactory::fromGlobals()` was modified such that passing empty array values for arguments that accept `null` or an array now will not use the associated superglobal in that scenario.
