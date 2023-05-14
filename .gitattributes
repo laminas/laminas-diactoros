@@ -13,3 +13,5 @@
 /renovate.json export-ignore
 /test/ export-ignore
 /psalm/ export-ignore
+
+*.phpstub linguist-language=PHP
