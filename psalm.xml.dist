@@ -10,6 +10,7 @@
     errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
+        <file name="rector.php"/>
         <directory name="src"/>
         <directory name="test"/>
         <ignoreFiles>

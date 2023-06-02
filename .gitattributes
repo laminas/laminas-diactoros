@@ -10,6 +10,7 @@
 /phpunit.xml.dist export-ignore
 /psalm-baseline.xml export-ignore
 /psalm.xml.dist export-ignore
+/rector.php export-ignore
 /renovate.json export-ignore
 /test/ export-ignore
 /psalm/ export-ignore
