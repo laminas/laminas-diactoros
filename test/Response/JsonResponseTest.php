@@ -19,6 +19,7 @@ use const JSON_HEX_APOS;
 use const JSON_HEX_QUOT;
 use const JSON_HEX_TAG;
 use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_SLASHES;
 
 class JsonResponseTest extends TestCase
@@ -139,7 +140,7 @@ class JsonResponseTest extends TestCase
         $json     = ['test' => 'data'];
         $response = new JsonResponse($json);
 
-        $actual = json_decode($response->getBody()->getContents(), true);
+        $actual = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         $this->assertSame($json, $actual);
     }
 
@@ -158,7 +159,7 @@ class JsonResponseTest extends TestCase
         $this->assertNotSame($response, $newResponse);
 
         $this->assertSame($json, $newResponse->getPayload());
-        $decodedBody = json_decode($newResponse->getBody()->getContents(), true);
+        $decodedBody = json_decode($newResponse->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         $this->assertSame($json, $decodedBody);
     }
 

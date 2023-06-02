@@ -27,6 +27,7 @@ use function function_exists;
 use function fwrite;
 use function imagecreate;
 use function is_resource;
+use function is_string;
 use function shmop_open;
 use function stream_get_meta_data;
 use function sys_get_temp_dir;
@@ -38,8 +39,7 @@ use const DIRECTORY_SEPARATOR;
 
 final class StreamTest extends TestCase
 {
-    /** @var string|null|false */
-    private $tmpnam;
+    private null|string|bool $tmpnam;
 
     private Stream $stream;
 
@@ -51,7 +51,7 @@ final class StreamTest extends TestCase
 
     protected function tearDown(): void
     {
-        if ($this->tmpnam && file_exists($this->tmpnam)) {
+        if (is_string($this->tmpnam) && $this->tmpnam !== '' && file_exists($this->tmpnam)) {
             unlink($this->tmpnam);
         }
     }
