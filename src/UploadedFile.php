@@ -50,8 +50,7 @@ class UploadedFile implements UploadedFileInterface
 
     private bool $moved = false;
 
-    /** @var null|StreamInterface */
-    private $stream;
+    private ?StreamInterface $stream = null;
 
     /**
      * @param string|resource|StreamInterface $streamOrFile

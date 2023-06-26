@@ -54,7 +54,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         ?array $files = null,
         ?FilterServerRequestInterface $requestFilter = null
     ): ServerRequestInterface {
-        $requestFilter = $requestFilter ?? FilterUsingXForwardedHeaders::trustReservedSubnets();
+        $requestFilter ??= FilterUsingXForwardedHeaders::trustReservedSubnets();
 
         $server  = normalizeServer(
             $server ?? $_SERVER,
