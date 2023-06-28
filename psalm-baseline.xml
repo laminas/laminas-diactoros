@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.10.0@a5effd2d2dddd1a7ea7a0f6a051ce63ff979e356">
+<files psalm-version="5.13.0@a0a9c27630bcf8301ee78cb06741d2907d8c9fef">
+  <file src="src/AbstractSerializer.php">
+    <RedundantCondition>
+      <code>! $crFound</code>
+      <code>! $crFound</code>
+    </RedundantCondition>
+  </file>
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch>
       <code>null|callable</code>
@@ -241,9 +247,6 @@
     <PossiblyNullOperand>
       <code><![CDATA[$this->port]]></code>
     </PossiblyNullOperand>
-    <UndefinedAttributeClass>
-      <code>SensitiveParameter</code>
-    </UndefinedAttributeClass>
     <UnusedMethodCall>
       <code>parseUri</code>
     </UnusedMethodCall>
