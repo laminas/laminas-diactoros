@@ -408,7 +408,7 @@ We use this filter by default, marked to trust <strong>only proxies on private s
 RFC-7230 defines an ABNF pattern for header field names that allows the possibility of using an integer as a header field; e.g.,</p>
 <pre class="highlight"><code class="language-http">1234: header value</code></pre>
 <p>The PSR-7, <code>Psr\Http\MessageInterface::getHeaders()</code> method requires implementations to return an associative array, where the key is the header field name.
-This triggers an interesting quirk in PHP: when adding a value to an array using a string that consists of an integer value, PHP will convert this value to an integer (see <a href="https://bugs.php.net/bug.php?id=80309">PHP bug 80309</a> for more details).
+This triggers an interesting quirk in PHP: when adding an element to an array with a string key that consists of an integer value, PHP will convert this key to an integer (see <a href="https://bugs.php.net/bug.php?id=80309">PHP bug 80309</a> for more details).
 This presents several issues:</p>
 <ul>
 <li>First, it means that consumers cannot depend on the header field name returned being a string.</li>
