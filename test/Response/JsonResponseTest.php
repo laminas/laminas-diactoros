@@ -19,6 +19,7 @@ use const JSON_HEX_APOS;
 use const JSON_HEX_QUOT;
 use const JSON_HEX_TAG;
 use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_SLASHES;
 
 class JsonResponseTest extends TestCase
@@ -101,6 +102,22 @@ class JsonResponseTest extends TestCase
         $this->expectExceptionMessage('Unable to encode');
 
         new JsonResponse($data);
+    }
+
+    public function testJsonErrorHandlingOfMalformedUtf8(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unable to encode');
+
+        new JsonResponse("\xff");
+    }
+
+    public function testJsonErrorHandlingOfMalformedUtf8IfExplicitlySettingThrowFlag(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unable to encode');
+
+        new JsonResponse("\xff", encodingOptions: JsonResponse::DEFAULT_JSON_FLAGS | JSON_THROW_ON_ERROR);
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
