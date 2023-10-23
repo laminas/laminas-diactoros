@@ -150,7 +150,6 @@ final class UploadedFileTest extends TestCase
         $upload        = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
         $uploadStream  = $upload->getStream();
         $r             = new ReflectionProperty($uploadStream, 'stream');
-        $r->setAccessible(true);
         $this->assertSame($stream, $r->getValue($uploadStream));
     }
 

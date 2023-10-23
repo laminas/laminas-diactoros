@@ -464,13 +464,11 @@ class UriTest extends TestCase
 
         $r = new ReflectionObject($uri);
         $p = $r->getProperty('uriString');
-        $p->setAccessible(true);
         $this->assertSame($string, $p->getValue($uri));
 
         $test = $uri->{$method}($value);
         $r2   = new ReflectionObject($uri);
         $p2   = $r2->getProperty('uriString');
-        $p2->setAccessible(true);
         $this->assertNull($p2->getValue($test));
 
         $this->assertSame($string, $p->getValue($uri));

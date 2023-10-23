@@ -165,9 +165,8 @@ final class ServerRequestTest extends TestCase
         $this->assertSame($parsedBody, $request->getParsedBody());
         $this->assertSame($protocol, $request->getProtocolVersion());
 
-        $body = $request->getBody();
-        $r    = new ReflectionProperty($body, 'stream');
-        $r->setAccessible(true);
+        $body   = $request->getBody();
+        $r      = new ReflectionProperty($body, 'stream');
         $stream = $r->getValue($body);
         $this->assertSame('php://memory', $stream);
     }
