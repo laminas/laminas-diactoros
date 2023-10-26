@@ -510,8 +510,7 @@ final class StreamTest extends TestCase
         $resource     = fopen($this->tmpnam, 'r+');
         $this->stream->attach($resource);
 
-        $r = new ReflectionProperty($this->stream, 'resource');
-        $r->setAccessible(true);
+        $r    = new ReflectionProperty($this->stream, 'resource');
         $test = $r->getValue($this->stream);
         $this->assertSame($resource, $test);
     }
