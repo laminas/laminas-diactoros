@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace LaminasTest\Diactoros;
 
 use CurlHandle;
+use Exception;
 use GdImage;
 use InvalidArgumentException;
 use Laminas\Diactoros\Exception\InvalidArgumentException as DiactorosInvalidArgumentException;
+use Laminas\Diactoros\Exception\RuntimeException as DiactorosRuntimeException;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
@@ -27,6 +29,8 @@ use function function_exists;
 use function fwrite;
 use function imagecreate;
 use function is_resource;
+use function restore_error_handler;
+use function set_error_handler;
 use function shmop_open;
 use function stream_get_meta_data;
 use function sys_get_temp_dir;
@@ -35,6 +39,7 @@ use function uniqid;
 use function unlink;
 
 use const DIRECTORY_SEPARATOR;
+use const E_WARNING;
 
 final class StreamTest extends TestCase
 {
@@ -66,6 +71,28 @@ final class StreamTest extends TestCase
         $resource = fopen('php://memory', 'wb+');
         $stream   = new Stream($resource);
         $this->assertInstanceOf(Stream::class, $stream);
+    }
+
+    public function testThatInstantiatingWithArbitraryStringCausesException(): void
+    {
+        $this->expectException(DiactorosRuntimeException::class);
+        $this->expectExceptionMessage('Invalid stream reference provided');
+        new Stream('foo');
+    }
+
+    public function testInvalidStringArgumentWithCustomErrorHandler(): void
+    {
+        set_error_handler(function (): never {
+            throw new Exception('Bad News');
+        }, E_WARNING);
+
+        try {
+            new Stream('foo');
+        } catch (DiactorosRuntimeException $error) {
+            self::assertStringContainsString('Invalid stream reference provided', $error->getMessage());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCannotInstantiateWithGDResource(): void
