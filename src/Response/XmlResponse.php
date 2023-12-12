@@ -9,8 +9,7 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
 use Psr\Http\Message\StreamInterface;
 
-use function gettype;
-use function is_object;
+use function get_debug_type;
 use function is_string;
 use function sprintf;
 
@@ -62,7 +61,7 @@ class XmlResponse extends Response
         if (! is_string($xml)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid content (%s) provided to %s',
-                is_object($xml) ? $xml::class : gettype($xml),
+                get_debug_type($xml),
                 self::class
             ));
         }

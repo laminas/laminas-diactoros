@@ -1,9 +1,10 @@
 .tmp/
+/.phpcs.cache
+/.phpunit.result.cache
+/.psalm-cache
 /doc/html/
 /laminas-mkdoc-theme.tgz
 /laminas-mkdoc-theme/
 /phpunit.xml
 /test/TestAsset/.cache/
 /vendor/
-.phpunit.result.cache
-.phpcs.cache
