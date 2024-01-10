@@ -1,6 +1,8 @@
 # laminas-diactoros
 
-[![Build Status](https://github.com/laminas/laminas-diactoros/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-diactoros/actions/workflows/continuous-integration.yml)
+[![Build Status](https://github.com/laminas/laminas-diactoros/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-diactoros/actions/workflows/continuous-integration.yml)
+[![type-coverage](https://shepherd.dev/github/laminas/laminas-diactoros/coverage.svg)](https://shepherd.dev/github/laminas/laminas-diactoros)
+[![Psalm level](https://shepherd.dev/github/laminas/laminas-diactoros/level.svg)](https://shepherd.dev/github/laminas/laminas-diactoros)
 
 > ## 🇷🇺 Русским гражданам
 >
