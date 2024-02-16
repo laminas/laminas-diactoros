@@ -252,7 +252,7 @@ trait RequestTrait
         }
 
         $host = $uri->getHost();
-        if ($uri->getPort()) {
+        if ($uri->getPort() !== null) {
             $host .= ':' . $uri->getPort();
         }
 
@@ -294,7 +294,7 @@ trait RequestTrait
     private function getHostFromUri(): string
     {
         $host  = $this->uri->getHost();
-        $host .= $this->uri->getPort() ? ':' . $this->uri->getPort() : '';
+        $host .= $this->uri->getPort() !== null ? ':' . $this->uri->getPort() : '';
         return $host;
     }
 }

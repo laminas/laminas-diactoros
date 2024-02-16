@@ -210,11 +210,11 @@ class Stream implements StreamInterface, Stringable
         $meta = stream_get_meta_data($this->resource);
         $mode = $meta['mode'];
 
-        return strstr($mode, 'x')
-            || strstr($mode, 'w')
-            || strstr($mode, 'c')
-            || strstr($mode, 'a')
-            || strstr($mode, '+');
+        return strstr($mode, 'x') !== false
+            || strstr($mode, 'w') !== false
+            || strstr($mode, 'c') !== false
+            || strstr($mode, 'a') !== false
+            || strstr($mode, '+') !== false;
     }
 
     /**
@@ -251,7 +251,7 @@ class Stream implements StreamInterface, Stringable
         $meta = stream_get_meta_data($this->resource);
         $mode = $meta['mode'];
 
-        return strstr($mode, 'r') || strstr($mode, '+');
+        return strstr($mode, 'r') !== false || strstr($mode, '+') !== false;
     }
 
     /**
