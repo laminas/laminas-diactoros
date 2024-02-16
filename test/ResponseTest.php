@@ -73,7 +73,7 @@ final class ResponseTest extends TestCase
             }
         }
         if ($ianaHttpStatusCodes) {
-            if (! getenv('ALWAYS_REFRESH_IANA_HTTP_STATUS_CODES')) {
+            if (getenv('ALWAYS_REFRESH_IANA_HTTP_STATUS_CODES') === 'false') {
                 // use cached codes
                 return $ianaHttpStatusCodes;
             }
@@ -82,7 +82,7 @@ final class ResponseTest extends TestCase
 
             $updatedQueryResult = $xpath->query('//ns:updated');
             if ($updatedQueryResult !== false && $updatedQueryResult->length > 0) {
-                $updated = $updatedQueryResult->item(0)?->nodeValue ?: '';
+                $updated = $updatedQueryResult->item(0)?->nodeValue ?? '';
                 $updated = strtotime($updated);
             }
         }
@@ -91,7 +91,7 @@ final class ResponseTest extends TestCase
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_USERAGENT, 'PHP Curl');
-        if ($updated) {
+        if ($updated !== null) {
             $ifModifiedSince = sprintf(
                 'If-Modified-Since: %s',
                 gmdate('D, d M Y H:i:s \G\M\T', $updated)
@@ -142,8 +142,8 @@ final class ResponseTest extends TestCase
                 continue;
             }
 
-            $value       = $valueQueryResult->item(0)?->nodeValue ?: '';
-            $description = $descriptionQueryResult->item(0)?->nodeValue ?: '';
+            $value       = $valueQueryResult->item(0)?->nodeValue ?? '';
+            $description = $descriptionQueryResult->item(0)?->nodeValue ?? '';
 
             if (in_array($description, ['Unassigned', '(Unused)'], true)) {
                 continue;

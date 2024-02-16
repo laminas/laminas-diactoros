@@ -46,9 +46,9 @@
         "http-interop/http-factory-tests": "^0.9.0",
         "laminas/laminas-coding-standard": "~2.5.0",
         "php-http/psr7-integration-tests": "^1.3",
-        "phpunit/phpunit": "^9.5.28",
+        "phpunit/phpunit": "^9.6.16",
         "psalm/plugin-phpunit": "^0.18.4",
-        "vimeo/psalm": "^5.17"
+        "vimeo/psalm": "^5.22.1"
     },
     "provide": {
         "psr/http-factory-implementation": "^1.1 || ^2.0",
