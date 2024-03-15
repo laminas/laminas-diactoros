@@ -13,17 +13,17 @@ options for doing so:
 
 - Update your constraint to allow either version:
   
-  - Edit the constraint in your `composer.json` to read:
+    - Edit the constraint in your `composer.json` to read:
 
-    ```json
-    "laminas/laminas-diactoros": "^1.8.6 || ^2.0"
-    ```
+      ```json
+      "laminas/laminas-diactoros": "^1.8.6 || ^2.0"
+      ```
 
-  - Update your dependencies:
+    - Update your dependencies:
 
-    ```bash
-    $ composer update
-    ```
+      ```bash
+      $ composer update
+      ```
 
 The first approach may fail if libraries you depend on specifically require a
 version 1 release. The second approach may leave you on a version 1 release in

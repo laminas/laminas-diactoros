@@ -55,13 +55,13 @@ These named constructors are:
   It is functionally equivalent to `FilterUsingXForwardedHeaders::trustProxies(['*'])`.
 - `FilterUsingXForwardedHeaders::trustReservedSubnets(): void`: when this method is called, the filter will trust requests made from reserved, private subnets.
   It is functionally equivalent to `FilterUsingXForwardedHeaders::trustProxies()` with the following elements in the `$proxyCIDRList`:
-  - 10.0.0.0/8
-  - 127.0.0.0/8
-  - 172.16.0.0/12
-  - 192.168.0.0/16
-  - ::1/128 (IPv6 localhost)
-  - fc00::/7 (IPv6 private networks)
-  - fe80::/10 (IPv6 local-link addresses)
+    - 10.0.0.0/8
+    - 127.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - ::1/128 (IPv6 localhost)
+    - fc00::/7 (IPv6 private networks)
+    - fe80::/10 (IPv6 local-link addresses)
 
 Internally, the filter checks the `REMOTE_ADDR` server parameter (as retrieved from `getServerParams()`) and compares it against each proxy listed; the first to match indicates trust.
 
