@@ -57,7 +57,7 @@ final class UploadedFileTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidStreams(): array
+    public static function invalidStreams(): array
     {
         return [
             'null'  => [null],
@@ -92,7 +92,7 @@ final class UploadedFileTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{int}> */
-    public function invalidErrorStatuses(): array
+    public static function invalidErrorStatuses(): array
     {
         return [
             'negative' => [-1],
@@ -168,7 +168,7 @@ final class UploadedFileTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidMovePaths(): array
+    public static function invalidMovePaths(): array
     {
         return [
             'empty' => [''],
@@ -225,7 +225,7 @@ final class UploadedFileTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{positive-int}> */
-    public function nonOkErrorStatus(): array
+    public static function nonOkErrorStatus(): array
     {
         return [
             'UPLOAD_ERR_INI_SIZE'   => [UPLOAD_ERR_INI_SIZE],
@@ -296,7 +296,7 @@ final class UploadedFileTest extends TestCase
     }
 
     /** @return iterable<int, array{int, non-empty-string}> */
-    public function errorConstantsAndMessages(): iterable
+    public static function errorConstantsAndMessages(): iterable
     {
         foreach (UploadedFile::ERROR_MESSAGES as $constant => $message) {
             if ($constant === UPLOAD_ERR_OK) {

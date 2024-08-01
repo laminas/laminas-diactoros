@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros\TestAsset;
 
-class CallbacksForCallbackStreamTest
+final class CallbacksForCallbackStream
 {
     /**
      * Sample callback to use with testing.

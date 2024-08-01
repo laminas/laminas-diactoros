@@ -47,7 +47,7 @@ class RedirectResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidUris(): array
+    public static function invalidUris(): array
     {
         return [
             'null'       => [null],

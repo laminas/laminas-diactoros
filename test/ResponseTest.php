@@ -60,7 +60,7 @@ final class ResponseTest extends TestCase
         $this->assertSame('Unprocessable Content', $response->getReasonPhrase());
     }
 
-    private function fetchIanaStatusCodes(): DOMDocument
+    private static function fetchIanaStatusCodes(): DOMDocument
     {
         $updated                 = null;
         $ianaHttpStatusCodesFile = __DIR__ . '/TestAsset/.cache/http-status-codes.xml';
@@ -123,9 +123,9 @@ final class ResponseTest extends TestCase
     }
 
     /** @return list<list{int, non-empty-string}> */
-    public function ianaCodesReasonPhrasesProvider(): array
+    public static function ianaCodesReasonPhrasesProvider(): array
     {
-        $ianaHttpStatusCodes = $this->fetchIanaStatusCodes();
+        $ianaHttpStatusCodes = self::fetchIanaStatusCodes();
 
         $ianaCodesReasonPhrases = [];
 
@@ -218,7 +218,7 @@ final class ResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{int}> */
-    public function validStatusCodes(): array
+    public static function validStatusCodes(): array
     {
         return [
             'minimum' => [100],
@@ -239,7 +239,7 @@ final class ResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidStatusCodes(): array
+    public static function invalidStatusCodes(): array
     {
         return [
             'too-low'  => [99],
@@ -248,7 +248,7 @@ final class ResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidResponseBody(): array
+    public static function invalidResponseBody(): array
     {
         return [
             'true'     => [true],
@@ -273,7 +273,7 @@ final class ResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{0: array<mixed>, 1?: non-empty-string}> */
-    public function invalidHeaderTypes(): array
+    public static function invalidHeaderTypes(): array
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
@@ -308,7 +308,7 @@ final class ResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string|non-empty-list<non-empty-string>}> */
-    public function headersWithInjectionVectors(): array
+    public static function headersWithInjectionVectors(): array
     {
         return [
             'name-with-cr'           => ["X-Foo\r-Bar", 'value'],

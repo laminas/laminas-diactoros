@@ -15,7 +15,7 @@ final class HeaderSecurityTest extends TestCase
      *
      * @return non-empty-list<array{non-empty-string, non-empty-string}>
      */
-    public function getFilterValues(): array
+    public static function getFilterValues(): array
     {
         return [
             ["This is a\n test", "This is a test"],
@@ -45,7 +45,7 @@ final class HeaderSecurityTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string, bool}> */
-    public function validateValues(): array
+    public static function validateValues(): array
     {
         return [
             ["This is a\n test", false],
@@ -77,7 +77,7 @@ final class HeaderSecurityTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string}> */
-    public function assertValues(): array
+    public static function assertValues(): array
     {
         return [
             ["This is a\n test"],
@@ -107,7 +107,7 @@ final class HeaderSecurityTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string}> */
-    public function assertNames(): array
+    public static function assertNames(): array
     {
         return [
             ["test\n"],

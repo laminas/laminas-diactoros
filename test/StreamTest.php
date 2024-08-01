@@ -42,6 +42,9 @@ final class StreamTest extends TestCase
     /** @var string|null|false */
     private $tmpnam;
 
+    /** @var list<string> */
+    private static $tempFiles = [];
+
     private Stream $stream;
 
     protected function setUp(): void
@@ -54,6 +57,14 @@ final class StreamTest extends TestCase
     {
         if (is_string($this->tmpnam) && file_exists($this->tmpnam)) {
             unlink($this->tmpnam);
+        }
+
+        foreach (self::$tempFiles as $tempFile) {
+            if (! file_exists($tempFile)) {
+                continue;
+            }
+
+            unlink($tempFile);
         }
     }
 
@@ -297,7 +308,7 @@ final class StreamTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string, bool, bool}> */
-    public function provideDataForIsWritable(): array
+    public static function provideDataForIsWritable(): array
     {
         return [
             ['a',   true,  true],
@@ -352,7 +363,7 @@ final class StreamTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string, bool, bool}> */
-    public function provideDataForIsReadable(): array
+    public static function provideDataForIsReadable(): array
     {
         return [
             ['a',   true,  false],
@@ -471,17 +482,20 @@ final class StreamTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidResources(): array
+    public static function invalidResources(): array
     {
-        $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        $file = tempnam(sys_get_temp_dir(), 'diac');
+        self::assertIsString($file);
+        self::$tempFiles[] = $file;
+
         return [
             'null'   => [null],
             'false'  => [false],
             'true'   => [true],
             'int'    => [1],
             'float'  => [1.1],
-            'array'  => [[fopen($this->tmpnam, 'r+')]],
-            'object' => [(object) ['resource' => fopen($this->tmpnam, 'r+')]],
+            'array'  => [[fopen($file, 'r+')]],
+            'object' => [(object) ['resource' => fopen($file, 'r+')]],
         ];
     }
 
@@ -663,11 +677,11 @@ final class StreamTest extends TestCase
         $stream   = $this
             ->getMockBuilder(Stream::class)
             ->setConstructorArgs([$resource])
-            ->setMethods(['isSeekable'])
+            ->onlyMethods(['isSeekable'])
             ->getMock();
 
         $stream->expects($this->any())->method('isSeekable')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->assertSame('FOO BAR', $stream->__toString());
     }

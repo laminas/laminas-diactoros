@@ -34,7 +34,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-list<array{mixed}> */
-    public function invalidMethod()
+    public static function invalidMethod(): array
     {
         return [
             [''],
@@ -108,7 +108,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function invalidRequestMethod(): array
+    public static function invalidRequestMethod(): array
     {
         return [
             'bad-string' => ['BOGUS METHOD'],
@@ -128,7 +128,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function customRequestMethods(): array
+    public static function customRequestMethods(): array
     {
         return [
             /* WebDAV methods */
@@ -157,7 +157,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidRequestBody(): array
+    public static function invalidRequestBody(): array
     {
         return [
             'true'     => [true],
@@ -182,7 +182,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{0: mixed, 1?: non-empty-string}> */
-    public function invalidHeaderTypes(): array
+    public static function invalidHeaderTypes(): array
     {
         return [
             'indexed-array' => [[['INVALID']], 'header name'],
@@ -222,7 +222,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{RequestInterface, non-empty-string}> */
-    public function requestsWithUri(): array
+    public static function requestsWithUri(): array
     {
         return [
             'absolute-uri'            => [
@@ -262,7 +262,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function validRequestTargets(): array
+    public static function validRequestTargets(): array
     {
         return [
             'asterisk-form'         => ['*'],
@@ -467,7 +467,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string|array{non-empty-string}}> */
-    public function headersWithInjectionVectors(): array
+    public static function headersWithInjectionVectors(): array
     {
         return [
             'name-with-cr'           => ["X-Foo\r-Bar", 'value'],
@@ -498,7 +498,7 @@ final class RequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function hostHeaderKeys(): array
+    public static function hostHeaderKeys(): array
     {
         return [
             'lowercase'         => ['host'],

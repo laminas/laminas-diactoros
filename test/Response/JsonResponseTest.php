@@ -42,7 +42,7 @@ class JsonResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function scalarValuesForJSON()
+    public static function scalarValuesForJSON()
     {
         return [
             'null'         => [null],
@@ -121,7 +121,7 @@ class JsonResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
-    public function valuesToJsonEncode(): array
+    public static function valuesToJsonEncode(): array
     {
         return [
             'uri'    => ['https://example.com/foo?bar=baz&baz=bat', 'uri'],

@@ -169,19 +169,22 @@ final class CallbackStreamTest extends TestCase
         $this->assertNull($notExists);
     }
 
-    /** @return non-empty-array<non-empty-string, array{callable(): string, non-empty-string}> */
-    public function phpCallbacksForStreams(): array
+    /**
+     * @link \LaminasTest\Diactoros\TestAsset\CallbacksForCallbackStream::sampleStaticCallback()
+     * @link \LaminasTest\Diactoros\TestAsset\CallbacksForCallbackStream::sampleCallback()
+     *
+     * @return non-empty-array<non-empty-string, array{callable(): string, non-empty-string}>
+     */
+    public static function phpCallbacksForStreams(): array
     {
-        $class = TestAsset\CallbacksForCallbackStreamTest::class;
+        $class = TestAsset\CallbacksForCallbackStream::class;
 
-        // phpcs:disable Generic.Files.LineLength.TooLong
-        // @codingStandardsIgnoreStart
+        // phpcs:disable Generic.Files.LineLength
         return [
-            'instance-method' => [[new TestAsset\CallbacksForCallbackStreamTest(), 'sampleCallback'], $class . '::sampleCallback'],
+            'instance-method' => [[new TestAsset\CallbacksForCallbackStream(), 'sampleCallback'], $class . '::sampleCallback'],
             'static-method'   => [[$class, 'sampleStaticCallback'], $class . '::sampleStaticCallback'],
         ];
-        // @codingStandardsIgnoreEnd
-        // phpcs:enable Generic.Files.LineLength.TooLong
+        // phpcs:enable Generic.Files.LineLength
     }
 
     /**

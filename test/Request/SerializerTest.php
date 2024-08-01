@@ -30,7 +30,7 @@ class SerializerTest extends TestCase
         $message = Serializer::toString($request);
         $this->assertSame(
             "GET /foo/bar?baz=bat HTTP/1.1\r\nHost: example.com\r\nAccept: text/html",
-            $message
+            $message,
         );
     }
 
@@ -66,7 +66,7 @@ class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string, array<non-empty-string, non-empty-string>}> */
-    public function originForms(): array
+    public static function originForms(): array
     {
         return [
             'path-only'      => [
@@ -122,7 +122,7 @@ class SerializerTest extends TestCase
      *     }
      * >
      */
-    public function absoluteForms(): array
+    public static function absoluteForms(): array
     {
         return [
             'path-only'      => [
@@ -223,7 +223,7 @@ class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function invalidRequestLines(): array
+    public static function invalidRequestLines(): array
     {
         return [
             'missing-method'   => ['/foo/bar HTTP/1.1'],
@@ -260,7 +260,7 @@ class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function headersWithContinuationLines(): array
+    public static function headersWithContinuationLines(): array
     {
         return [
             'space' => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz;\r\n Bat\r\n\r\nContent!"],
@@ -284,7 +284,7 @@ class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function headersWithWhitespace(): array
+    public static function headersWithWhitespace(): array
     {
         return [
             'no'       => ["POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz\r\n\r\nContent!"],
@@ -308,7 +308,7 @@ class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
-    public function messagesWithInvalidHeaders(): array
+    public static function messagesWithInvalidHeaders(): array
     {
         return [
             'invalid-name'         => [
@@ -347,7 +347,7 @@ class SerializerTest extends TestCase
         $stream
             ->expects($this->once())
             ->method('isReadable')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -360,11 +360,11 @@ class SerializerTest extends TestCase
         $stream
             ->expects($this->once())
             ->method('isReadable')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $stream
             ->expects($this->once())
             ->method('isSeekable')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -380,20 +380,20 @@ class SerializerTest extends TestCase
         $stream
             ->expects($this->once())
             ->method('isReadable')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $stream
             ->expects($this->once())
             ->method('isSeekable')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         // assert that full request body is not read, and returned as RelativeStream instead
         $stream->expects($this->exactly(strlen($headers)))
             ->method('read')
             ->with(1)
-            ->will($this->returnCallback(static function () use ($payload) {
+            ->willReturnCallback(static function () use ($payload) {
                 static $i = 0;
                 return $payload[$i++];
-            }));
+            });
 
         $stream = Serializer::fromStream($stream);
 

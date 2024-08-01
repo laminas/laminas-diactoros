@@ -3,23 +3,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     bootstrap="./vendor/autoload.php"
     colors="true"
-    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd">
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </coverage>
-
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    cacheDirectory=".phpunit.cache">
     <testsuites>
         <testsuite name="Laminas\\Diactoros Tests">
             <directory>./test</directory>
         </testsuite>
-
         <testsuite name="PSR-17 Integration Tests">
             <directory>./vendor/http-interop/http-factory-tests/test</directory>
         </testsuite>
     </testsuites>
-
     <php>
         <env name="ALWAYS_REFRESH_IANA_HTTP_STATUS_CODES" value="false"/>
         <const name="REQUEST_FACTORY" value="Laminas\Diactoros\RequestFactory"/>
@@ -29,4 +22,9 @@
         <const name="UPLOADED_FILE_FACTORY" value="Laminas\Diactoros\UploadedFileFactory"/>
         <const name="URI_FACTORY" value="Laminas\Diactoros\UriFactory"/>
     </php>
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
 </phpunit>
