@@ -4,7 +4,13 @@
     bootstrap="./vendor/autoload.php"
     colors="true"
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-    cacheDirectory=".phpunit.cache">
+    cacheDirectory=".phpunit.cache"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    displayDetailsOnTestsThatTriggerErrors="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
+    displayDetailsOnTestsThatTriggerWarnings="true"
+    displayDetailsOnSkippedTests="true"
+>
     <testsuites>
         <testsuite name="Laminas\\Diactoros Tests">
             <directory>./test</directory>
