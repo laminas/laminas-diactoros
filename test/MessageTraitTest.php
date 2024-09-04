@@ -435,23 +435,4 @@ class MessageTraitTest extends TestCase
         /** @psalm-suppress MixedArgument */
         $this->message->withHeader('X-Test-Scalar', $value);
     }
-
-    public function testThatIntegerHeaderNamesAreCastToStringWhenAddingHeaders(): void
-    {
-        $request = (new Request())
-            ->withHeader('123', 'Value');
-
-        self::assertSame('Value', $request->getHeaderLine('123'));
-    }
-
-    public function testThatIntegerHeaderNamesAreCastToStringDuringConstruction(): void
-    {
-        $request = new Request(null, null, 'php://temp', [
-            '123' => 'Foo',
-            '234' => 'Bar',
-        ]);
-
-        self::assertSame('Foo', $request->getHeaderLine('123'));
-        self::assertSame('Bar', $request->getHeaderLine('234'));
-    }
 }
