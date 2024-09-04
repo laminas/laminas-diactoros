@@ -58,7 +58,11 @@ final class StreamTest extends TestCase
         if (is_string($this->tmpnam) && file_exists($this->tmpnam)) {
             unlink($this->tmpnam);
         }
+    }
 
+    public static function tearDownAfterClass(): void
+    {
+        /** @see self::invalidResources() */
         foreach (self::$tempFiles as $tempFile) {
             if (! file_exists($tempFile)) {
                 continue;
