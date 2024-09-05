@@ -379,6 +379,14 @@
       <code><![CDATA[RequestInterfaceStaticReturnTypes]]></code>
     </UnusedClass>
   </file>
+  <file src="test/StreamTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[invalidResources]]></code>
+      <code><![CDATA[invalidStringResources]]></code>
+      <code><![CDATA[provideDataForIsReadable]]></code>
+      <code><![CDATA[provideDataForIsWritable]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/TestAsset/CallbacksForCallbackStream.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[sampleCallback]]></code>

@@ -329,7 +329,10 @@ class Stream implements StreamInterface, Stringable
 
             if (! is_resource($resource)) {
                 throw new Exception\RuntimeException(
-                    sprintf('Invalid stream reference provided: %s', (string) $error?->getMessage()),
+                    sprintf(
+                        'Empty or non-existent stream identifier or file path provided: "%s"',
+                        $stream,
+                    ),
                     0,
                     $error
                 );

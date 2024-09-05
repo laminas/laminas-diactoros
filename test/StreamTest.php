@@ -9,6 +9,7 @@ use GdImage;
 use InvalidArgumentException;
 use Laminas\Diactoros\Exception\InvalidArgumentException as DiactorosInvalidArgumentException;
 use Laminas\Diactoros\Stream;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use RuntimeException;
@@ -349,9 +350,9 @@ final class StreamTest extends TestCase
     }
 
     /**
-     * @dataProvider provideDataForIsWritable
      * @param non-empty-string $mode
      */
+    #[DataProvider('provideDataForIsWritable')]
     public function testIsWritableReturnsCorrectFlagForMode(string $mode, bool $fileShouldExist, bool $flag): void
     {
         if ($fileShouldExist) {
@@ -395,9 +396,9 @@ final class StreamTest extends TestCase
     }
 
     /**
-     * @dataProvider provideDataForIsReadable
      * @param non-empty-string $mode
      */
+    #[DataProvider('provideDataForIsReadable')]
     public function testIsReadableReturnsCorrectFlagForMode(string $mode, bool $fileShouldExist, bool $flag): void
     {
         if ($fileShouldExist) {
@@ -503,9 +504,7 @@ final class StreamTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidResources
-     */
+    #[DataProvider('invalidResources')]
     public function testAttachWithNonStringNonResourceRaisesException(mixed $resource): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -515,12 +514,22 @@ final class StreamTest extends TestCase
         $this->stream->attach($resource);
     }
 
-    public function testAttachWithInvalidStringResourceRaisesException(): void
+    public static function invalidStringResources(): array
+    {
+        return [
+            'Empty String'             => [''],
+            'File path does not exist' => ['/tmp/not-a-valid-file-path'],
+            'Invalid stream'           => ['php://mammary'],
+        ];
+    }
+
+    #[DataProvider('invalidStringResources')]
+    public function testAttachWithInvalidStringResourceRaisesException(string $stream): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Invalid stream');
+        $this->expectExceptionMessage('Empty or non-existent stream identifier or file path provided');
 
-        $this->stream->attach('foo-bar-baz');
+        $this->stream->attach($stream);
     }
 
     public function testAttachWithResourceAttachesResource(): void
