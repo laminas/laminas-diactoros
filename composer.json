@@ -43,12 +43,12 @@
         "ext-dom": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
-        "http-interop/http-factory-tests": "^0.9.0",
+        "http-interop/http-factory-tests": "^2.2.0",
         "laminas/laminas-coding-standard": "~2.5.0",
-        "php-http/psr7-integration-tests": "^1.3",
-        "phpunit/phpunit": "^9.6.16",
+        "php-http/psr7-integration-tests": "^1.4.0",
+        "phpunit/phpunit": "^10.5.31",
         "psalm/plugin-phpunit": "^0.19.0",
-        "vimeo/psalm": "^5.22.1"
+        "vimeo/psalm": "^5.25.0"
     },
     "provide": {
         "psr/http-factory-implementation": "^1.1 || ^2.0",

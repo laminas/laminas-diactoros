@@ -1,6 +1,6 @@
 .tmp/
 /.phpcs.cache
-/.phpunit.result.cache
+/.phpunit.cache
 /.psalm-cache
 /doc/html/
 /laminas-mkdoc-theme.tgz

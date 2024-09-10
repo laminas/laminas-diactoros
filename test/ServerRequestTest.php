@@ -101,7 +101,7 @@ final class ServerRequestTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string|null, non-empty-string}> */
-    public function provideMethods(): array
+    public static function provideMethods(): array
     {
         return [
             'post' => ['POST', 'POST'],

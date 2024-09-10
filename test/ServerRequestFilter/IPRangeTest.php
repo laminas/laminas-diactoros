@@ -16,7 +16,7 @@ class IPRangeTest extends TestCase
      *     2: string,
      * }>
      */
-    public function IPv4Data(): array
+    public static function IPv4Data(): array
     {
         return [
             'valid - exact (no mask; /32 equiv)'               => [true, '192.168.1.1', '192.168.1.1'],
@@ -50,7 +50,7 @@ class IPRangeTest extends TestCase
      *     2: string,
      * }>
      */
-    public function IPv6Data(): array
+    public static function IPv6Data(): array
     {
         // @codingStandardsIgnoreStart
         return [
@@ -83,14 +83,14 @@ class IPRangeTest extends TestCase
      *     2: string,
      * }>
      */
-    public function combinedData(): iterable
+    public static function combinedData(): iterable
     {
-        foreach ($this->IPv4Data() as $test => $data) {
+        foreach (self::IPv4Data() as $test => $data) {
             $name = "IPv4 - {$test}";
             yield $name => $data;
         }
 
-        foreach ($this->IPv6Data() as $test => $data) {
+        foreach (self::IPv6Data() as $test => $data) {
             $name = "IPv6 - {$test}";
             yield $name => $data;
         }

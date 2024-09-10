@@ -318,14 +318,21 @@ class Stream implements StreamInterface, Stringable
      */
     private function setStream($stream, string $mode = 'r'): void
     {
+        $error    = null;
         $resource = $stream;
 
         if (is_string($stream)) {
             try {
                 $resource = fopen($stream, $mode);
             } catch (Throwable $error) {
+            }
+
+            if (! is_resource($resource)) {
                 throw new Exception\RuntimeException(
-                    sprintf('Invalid stream reference provided: %s', $error->getMessage()),
+                    sprintf(
+                        'Empty or non-existent stream identifier or file path provided: "%s"',
+                        $stream,
+                    ),
                     0,
                     $error
                 );

@@ -234,7 +234,7 @@ final class ServerRequestFactoryTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, array<non-empty-string, non-empty-string>}> */
-    public function cookieHeaderValues(): array
+    public static function cookieHeaderValues(): array
     {
         return [
             'ows-without-fold'    => [
@@ -347,7 +347,7 @@ final class ServerRequestFactoryTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
-    public function marshalProtocolVersionProvider(): array
+    public static function marshalProtocolVersionProvider(): array
     {
         return [
             'HTTP/1.0' => ['HTTP/1.0', '1.0'],
@@ -375,7 +375,7 @@ final class ServerRequestFactoryTest extends TestCase
      *     3: string
      * }>
      */
-    public function serverContentMap(): iterable
+    public static function serverContentMap(): iterable
     {
         yield 'content-type' => [
             [
@@ -531,7 +531,7 @@ final class ServerRequestFactoryTest extends TestCase
      *     0: string
      * }>
      */
-    public function invalidHostHeaders(): iterable
+    public static function invalidHostHeaders(): iterable
     {
         return [
             'comma' => ['example.com,example.net'],

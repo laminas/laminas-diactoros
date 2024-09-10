@@ -152,7 +152,7 @@ class UriFactoryTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function httpsParamProvider(): array
+    public static function httpsParamProvider(): array
     {
         return [
             'lowercase' => ['https'],
@@ -178,9 +178,9 @@ class UriFactoryTest extends TestCase
     }
 
     /** @return iterable<string, array{non-empty-string, 'off'|'OFF'}> */
-    public function httpsDisableParamProvider(): iterable
+    public static function httpsDisableParamProvider(): iterable
     {
-        foreach ($this->httpsParamProvider() as $key => $data) {
+        foreach (self::httpsParamProvider() as $key => $data) {
             $param = array_shift($data);
             foreach (['lowercase-off', 'uppercase-off'] as $type) {
                 $key   = sprintf('%s-%s', $key, $type);

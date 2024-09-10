@@ -36,7 +36,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{0: string}> */
-    public function invalidProtocolVersionProvider(): array
+    public static function invalidProtocolVersionProvider(): array
     {
         return [
             '1-without-minor'      => ['1'],
@@ -54,7 +54,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<array{non-empty-string}> */
-    public function validProtocolVersionProvider(): array
+    public static function validProtocolVersionProvider(): array
     {
         return [
             '1.0' => ['1.0'],
@@ -169,7 +169,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidGeneralHeaderValues(): array
+    public static function invalidGeneralHeaderValues(): array
     {
         return [
             'null'   => [null],
@@ -193,7 +193,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidHeaderValues(): array
+    public static function invalidHeaderValues(): array
     {
         return [
             'null'   => [null],
@@ -260,7 +260,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string|array{non-empty-string}}> */
-    public function headersWithInjectionVectors(): array
+    public static function headersWithInjectionVectors(): array
     {
         return [
             'name-with-cr'           => ["X-Foo\r-Bar", 'value'],
@@ -321,7 +321,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function headersWithWhitespace(): array
+    public static function headersWithWhitespace(): array
     {
         return [
             'no'       => ["Baz"],
@@ -342,7 +342,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function headersWithContinuation(): array
+    public static function headersWithContinuation(): array
     {
         return [
             'space' => ["foo\r\n bar"],
@@ -364,7 +364,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{int|float}> */
-    public function numericHeaderValuesProvider(): array
+    public static function numericHeaderValuesProvider(): array
     {
         return [
             'integer' => [123],
@@ -392,7 +392,7 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidHeaderValueTypes(): array
+    public static function invalidHeaderValueTypes(): array
     {
         return [
             'null'   => [null],
@@ -403,9 +403,9 @@ class MessageTraitTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidArrayHeaderValues(): array
+    public static function invalidArrayHeaderValues(): array
     {
-        $values          = $this->invalidHeaderValueTypes();
+        $values          = self::invalidHeaderValueTypes();
         $values['array'] = [['INVALID']];
         return $values;
     }

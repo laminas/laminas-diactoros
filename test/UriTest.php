@@ -79,7 +79,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string, non-empty-string}> */
-    public function userInfoProvider(): array
+    public static function userInfoProvider(): array
     {
         // @codingStandardsIgnoreStart
         return [
@@ -127,7 +127,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{null|positive-int|numeric-string}> */
-    public function validPorts(): array
+    public static function validPorts(): array
     {
         return [
             'null' => [null],
@@ -161,7 +161,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidPorts(): array
+    public static function invalidPorts(): array
     {
         return [
             'zero'      => [0],
@@ -203,7 +203,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidPaths(): array
+    public static function invalidPaths(): array
     {
         return [
             'query'    => ['/bar/baz?bat=quz'],
@@ -235,7 +235,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidQueryStrings(): array
+    public static function invalidQueryStrings(): array
     {
         return [
             'fragment' => ['baz=bat#quz'],
@@ -275,7 +275,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
-    public function authorityInfo(): array
+    public static function authorityInfo(): array
     {
         return [
             'host-only'      => ['http://foo.com/bar',         'foo.com'],
@@ -350,7 +350,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function invalidSchemes(): array
+    public static function invalidSchemes(): array
     {
         return [
             'mailto' => ['mailto'],
@@ -416,7 +416,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, positive-int}> */
-    public function standardSchemePortCombinations(): array
+    public static function standardSchemePortCombinations(): array
     {
         return [
             'http'  => ['http', 80],
@@ -439,7 +439,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<string, array{'withScheme'|'withUserInfo'|'withHost'|'withPort'|'withPath'|'withQuery'|'withFragment', non-empty-string|positive-int}> */
-    public function mutations(): array
+    public static function mutations(): array
     {
         return [
             'scheme'    => ['withScheme', 'https'],
@@ -492,7 +492,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
-    public function queryStringsForEncoding(): array
+    public static function queryStringsForEncoding(): array
     {
         return [
             'key-only'        => ['k^ey', 'k%5Eey'],
@@ -565,7 +565,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string, non-empty-string}> */
-    public function utf8PathsDataProvider(): array
+    public static function utf8PathsDataProvider(): array
     {
         return [
             ['http://example.com/тестовый_путь/', '/тестовый_путь/'],
@@ -588,7 +588,7 @@ class UriTest extends TestCase
     }
 
     /** @return non-empty-list<array{non-empty-string, non-empty-string}> */
-    public function utf8QueryStringsDataProvider(): array
+    public static function utf8QueryStringsDataProvider(): array
     {
         return [
             ['http://example.com/?q=тестовый_путь', 'q=тестовый_путь'],

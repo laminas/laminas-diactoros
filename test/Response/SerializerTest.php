@@ -100,7 +100,7 @@ final class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function headersWithContinuationLines(): array
+    public static function headersWithContinuationLines(): array
     {
         return [
             'space' => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz;\r\n Bat\r\n\r\nContent!"],
@@ -124,7 +124,7 @@ final class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
-    public function headersWithWhitespace(): array
+    public static function headersWithWhitespace(): array
     {
         return [
             'no'       => ["HTTP/1.0 200 A-OK\r\nContent-Type: text/plain\r\nX-Foo-Bar:Baz\r\n\r\nContent!"],
@@ -199,7 +199,7 @@ final class SerializerTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string}> */
-    public function messagesWithInvalidHeaders(): array
+    public static function messagesWithInvalidHeaders(): array
     {
         return [
             'invalid-name'         => [
@@ -238,7 +238,7 @@ final class SerializerTest extends TestCase
         $stream
             ->expects($this->once())
             ->method('isReadable')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -251,11 +251,11 @@ final class SerializerTest extends TestCase
         $stream
             ->expects($this->once())
             ->method('isReadable')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $stream
             ->expects($this->once())
             ->method('isSeekable')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->expectException(InvalidArgumentException::class);
 

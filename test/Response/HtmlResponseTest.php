@@ -53,7 +53,7 @@ class HtmlResponseTest extends TestCase
     }
 
     /** @return array<non-empty-string, array{mixed}> */
-    public function invalidHtmlContent(): array
+    public static function invalidHtmlContent(): array
     {
         return [
             'null'       => [null],

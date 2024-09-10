@@ -91,7 +91,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     }
 
     /** @psalm-return iterable<string, array{0: string}> */
-    public function trustedProxyList(): iterable
+    public static function trustedProxyList(): iterable
     {
         yield 'private-class-a-subnet' => ['10.1.1.1'];
         yield 'private-class-c-subnet' => ['192.168.1.1'];
@@ -156,7 +156,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     }
 
     /** @psalm-return iterable<string, array{0: string}> */
-    public function untrustedProxyList(): iterable
+    public static function untrustedProxyList(): iterable
     {
         yield 'private-class-a-subnet' => ['10.0.0.1'];
         yield 'private-class-c-subnet' => ['192.168.168.1'];
@@ -257,7 +257,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     }
 
     /** @psalm-return iterable<string, array{0: string}> */
-    public function trustedReservedNetworkList(): iterable
+    public static function trustedReservedNetworkList(): iterable
     {
         yield 'ipv4-localhost' => ['127.0.0.1'];
         yield 'ipv4-class-a' => ['10.10.10.10'];
@@ -297,7 +297,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     }
 
     /** @psalm-return iterable<string, array{0: string}> */
-    public function unreservedNetworkAddressList(): iterable
+    public static function unreservedNetworkAddressList(): iterable
     {
         yield 'ipv4-no-localhost' => ['128.0.0.1'];
         yield 'ipv4-no-class-a' => ['19.10.10.10'];
@@ -333,7 +333,7 @@ class FilterUsingXForwardedHeadersTest extends TestCase
     }
 
     /** @psalm-return iterable<string, array{0: string, 1: string}> */
-    public function xForwardedProtoValues(): iterable
+    public static function xForwardedProtoValues(): iterable
     {
         yield 'https-lowercase'  => ['https', 'https'];
         yield 'https-uppercase'  => ['HTTPS', 'https'];

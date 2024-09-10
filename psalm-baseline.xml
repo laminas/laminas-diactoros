@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.17.0@c620f6e80d0abfca532b00bda366062aaedf6e5d">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/AbstractSerializer.php">
     <RedundantCondition>
-      <code>! $crFound</code>
-      <code>! $crFound</code>
+      <code><![CDATA[! $crFound]]></code>
+      <code><![CDATA[! $crFound]]></code>
     </RedundantCondition>
   </file>
   <file src="src/CallbackStream.php">
     <ImplementedReturnTypeMismatch>
-      <code>null|callable</code>
+      <code><![CDATA[null|callable]]></code>
     </ImplementedReturnTypeMismatch>
     <MixedAssignment>
-      <code>$contents</code>
+      <code><![CDATA[$contents]]></code>
     </MixedAssignment>
     <PossiblyUnusedReturnValue>
-      <code>int</code>
-      <code>int</code>
-      <code>string</code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[string]]></code>
     </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Exception/DeserializationException.php">
@@ -27,12 +27,12 @@
   </file>
   <file src="src/Exception/InvalidProxyAddressException.php">
     <PossiblyUnusedMethod>
-      <code>forInvalidProxyArgument</code>
+      <code><![CDATA[forInvalidProxyArgument]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/HeaderSecurity.php">
     <UnusedConstructor>
-      <code>__construct</code>
+      <code><![CDATA[__construct]]></code>
     </UnusedConstructor>
   </file>
   <file src="src/MessageTrait.php">
@@ -46,23 +46,23 @@
       <code><![CDATA[$this->headerNames[strtolower($name)]]]></code>
     </InvalidArrayOffset>
     <InvalidPropertyAssignmentValue>
-      <code>$headerNames</code>
+      <code><![CDATA[$headerNames]]></code>
     </InvalidPropertyAssignmentValue>
     <MixedArgumentTypeCoercion>
-      <code>$header</code>
-      <code>$header</code>
-      <code>$header</code>
-      <code>$header</code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedPropertyTypeCoercion>
-      <code>$headers</code>
+      <code><![CDATA[$headers]]></code>
     </MixedPropertyTypeCoercion>
     <ParamNameMismatch>
-      <code>$header</code>
-      <code>$header</code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
     </ParamNameMismatch>
     <PropertyTypeCoercion>
       <code><![CDATA[$new->headerNames]]></code>
@@ -71,7 +71,7 @@
   </file>
   <file src="src/Module.php">
     <UnusedClass>
-      <code>Module</code>
+      <code><![CDATA[Module]]></code>
     </UnusedClass>
   </file>
   <file src="src/RelativeStream.php">
@@ -81,28 +81,28 @@
   </file>
   <file src="src/Request/ArraySerializer.php">
     <MixedArgument>
-      <code>$headers</code>
-      <code>$method</code>
-      <code>$protocolVersion</code>
-      <code>$requestTarget</code>
-      <code>$uri</code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$protocolVersion]]></code>
+      <code><![CDATA[$requestTarget]]></code>
+      <code><![CDATA[$uri]]></code>
       <code><![CDATA[self::getValueFromKey($serializedRequest, 'body')]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$headers</code>
-      <code>$method</code>
-      <code>$protocolVersion</code>
-      <code>$requestTarget</code>
-      <code>$uri</code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$protocolVersion]]></code>
+      <code><![CDATA[$requestTarget]]></code>
+      <code><![CDATA[$uri]]></code>
     </MixedAssignment>
   </file>
   <file src="src/Request/Serializer.php">
     <MixedArgument>
-      <code>$body</code>
-      <code>$headers</code>
-      <code>$method</code>
-      <code>$requestTarget</code>
-      <code>$version</code>
+      <code><![CDATA[$body]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$method]]></code>
+      <code><![CDATA[$requestTarget]]></code>
+      <code><![CDATA[$version]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$request->getHeaders()]]></code>
@@ -110,71 +110,71 @@
   </file>
   <file src="src/Response.php">
     <MixedArgument>
-      <code>static::MAX_STATUS_CODE_VALUE</code>
-      <code>static::MIN_STATUS_CODE_VALUE</code>
+      <code><![CDATA[static::MAX_STATUS_CODE_VALUE]]></code>
+      <code><![CDATA[static::MIN_STATUS_CODE_VALUE]]></code>
     </MixedArgument>
   </file>
   <file src="src/Response/ArraySerializer.php">
     <MixedArgument>
-      <code>$headers</code>
-      <code>$protocolVersion</code>
-      <code>$reasonPhrase</code>
-      <code>$statusCode</code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$protocolVersion]]></code>
+      <code><![CDATA[$reasonPhrase]]></code>
+      <code><![CDATA[$statusCode]]></code>
       <code><![CDATA[self::getValueFromKey($serializedResponse, 'body')]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$headers</code>
-      <code>$protocolVersion</code>
-      <code>$reasonPhrase</code>
-      <code>$statusCode</code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$protocolVersion]]></code>
+      <code><![CDATA[$reasonPhrase]]></code>
+      <code><![CDATA[$statusCode]]></code>
     </MixedAssignment>
   </file>
   <file src="src/Response/EmptyResponse.php">
     <UnsafeInstantiation>
-      <code>new static(204, $headers)</code>
+      <code><![CDATA[new static(204, $headers)]]></code>
     </UnsafeInstantiation>
   </file>
   <file src="src/Response/HtmlResponse.php">
     <DocblockTypeContradiction>
-      <code>is_string($html)</code>
+      <code><![CDATA[is_string($html)]]></code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/Response/InjectContentTypeTrait.php">
     <MixedArgument>
-      <code>$item</code>
+      <code><![CDATA[$item]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$hasContentType</code>
+      <code><![CDATA[$hasContentType]]></code>
     </MixedAssignment>
   </file>
   <file src="src/Response/JsonResponse.php">
     <UnusedFunctionCall>
-      <code>json_encode</code>
+      <code><![CDATA[json_encode]]></code>
     </UnusedFunctionCall>
   </file>
   <file src="src/Response/Serializer.php">
     <MixedArgument>
-      <code>$body</code>
-      <code>$headers</code>
-      <code>$reasonPhrase</code>
-      <code>$status</code>
-      <code>$version</code>
+      <code><![CDATA[$body]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$reasonPhrase]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$version]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$response->getHeaders()]]></code>
     </MixedArgumentTypeCoercion>
     <RedundantCast>
-      <code>(int) $status</code>
+      <code><![CDATA[(int) $status]]></code>
     </RedundantCast>
   </file>
   <file src="src/Response/TextResponse.php">
     <DocblockTypeContradiction>
-      <code>is_string($text)</code>
+      <code><![CDATA[is_string($text)]]></code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/Response/XmlResponse.php">
     <DocblockTypeContradiction>
-      <code>is_string($xml)</code>
+      <code><![CDATA[is_string($xml)]]></code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/ServerRequest.php">
@@ -187,22 +187,22 @@
       <code><![CDATA[$headers['cookie']]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$headers</code>
-      <code>$server</code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$server]]></code>
     </MixedArgumentTypeCoercion>
     <RedundantConditionGivenDocblockType>
-      <code>is_callable(self::$apacheRequestHeaders)</code>
+      <code><![CDATA[is_callable(self::$apacheRequestHeaders)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ServerRequestFilter/FilterUsingXForwardedHeaders.php">
     <ImpureMethodCall>
-      <code>getHeaderLine</code>
-      <code>getServerParams</code>
-      <code>getUri</code>
-      <code>withUri</code>
+      <code><![CDATA[getHeaderLine]]></code>
+      <code><![CDATA[getServerParams]]></code>
+      <code><![CDATA[getUri]]></code>
+      <code><![CDATA[withUri]]></code>
     </ImpureMethodCall>
     <LessSpecificReturnStatement>
-      <code>$proxyCIDRList</code>
+      <code><![CDATA[$proxyCIDRList]]></code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
       <code><![CDATA[list<non-empty-string>]]></code>
@@ -210,18 +210,18 @@
   </file>
   <file src="src/ServerRequestFilter/IPRange.php">
     <UnusedConstructor>
-      <code>__construct</code>
+      <code><![CDATA[__construct]]></code>
     </UnusedConstructor>
   </file>
   <file src="src/Stream.php">
     <PossiblyNullArgument>
-      <code>$resource</code>
+      <code><![CDATA[$resource]]></code>
       <code><![CDATA[$this->resource]]></code>
       <code><![CDATA[$this->resource]]></code>
       <code><![CDATA[$this->resource]]></code>
     </PossiblyNullArgument>
     <PossiblyUnusedProperty>
-      <code>$stream</code>
+      <code><![CDATA[$stream]]></code>
     </PossiblyUnusedProperty>
   </file>
   <file src="src/UploadedFile.php">
@@ -231,16 +231,16 @@
   </file>
   <file src="src/Uri.php">
     <MixedArgument>
-      <code>$key</code>
-      <code>$key</code>
-      <code>$matches[0]</code>
-      <code>$value</code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$matches[0]]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <PossiblyNullOperand>
       <code><![CDATA[$this->port]]></code>
     </PossiblyNullOperand>
     <UnusedMethodCall>
-      <code>parseUri</code>
+      <code><![CDATA[parseUri]]></code>
     </UnusedMethodCall>
   </file>
   <file src="src/functions/create_uploaded_file.php">
@@ -256,20 +256,20 @@
       <code><![CDATA[array_filter($headers, fn(string|int $key): bool => is_string($key), ARRAY_FILTER_USE_KEY)]]></code>
     </LessSpecificReturnStatement>
     <MixedAssignment>
-      <code>$headers[$name]</code>
-      <code>$headers[$name]</code>
-      <code>$value</code>
+      <code><![CDATA[$headers[$name]]]></code>
+      <code><![CDATA[$headers[$name]]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MoreSpecificReturnType>
       <code><![CDATA[array<non-empty-string, mixed>]]></code>
     </MoreSpecificReturnType>
     <RedundantCondition>
-      <code>is_string($key)</code>
+      <code><![CDATA[is_string($key)]]></code>
     </RedundantCondition>
   </file>
   <file src="src/functions/marshal_method_from_sapi.php">
     <MixedInferredReturnType>
-      <code>string</code>
+      <code><![CDATA[string]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$server['REQUEST_METHOD'] ?? 'GET']]></code>
@@ -287,31 +287,31 @@
       <code><![CDATA[$apacheRequestHeaders['authorization']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$apacheRequestHeaders</code>
+      <code><![CDATA[$apacheRequestHeaders]]></code>
       <code><![CDATA[$server['HTTP_AUTHORIZATION']]]></code>
       <code><![CDATA[$server['HTTP_AUTHORIZATION']]]></code>
     </MixedAssignment>
   </file>
   <file src="src/functions/normalize_uploaded_files.php">
     <InvalidReturnStatement>
-      <code>$normalized</code>
+      <code><![CDATA[$normalized]]></code>
     </InvalidReturnStatement>
     <InvalidReturnType>
-      <code>UploadedFileInterface[]</code>
+      <code><![CDATA[UploadedFileInterface[]]]></code>
     </InvalidReturnType>
     <MixedArgument>
       <code><![CDATA[$files['name'] ?? null]]></code>
       <code><![CDATA[$files['type'] ?? null]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$normalized[$key]</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$normalized[$key]]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
   </file>
   <file src="src/functions/parse_cookie_header.php">
     <LessSpecificReturnStatement>
-      <code>$cookies</code>
+      <code><![CDATA[$cookies]]></code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
       <code><![CDATA[array<non-empty-string, string>]]></code>
@@ -319,49 +319,49 @@
   </file>
   <file src="test/CallbackStreamTest.php">
     <MixedAssignment>
-      <code>$ret</code>
-      <code>$ret</code>
+      <code><![CDATA[$ret]]></code>
+      <code><![CDATA[$ret]]></code>
     </MixedAssignment>
   </file>
   <file src="test/MessageTraitTest.php">
     <MixedArgument>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
   <file src="test/RelativeStreamTest.php">
     <DocblockTypeContradiction>
-      <code>assertSame</code>
+      <code><![CDATA[assertSame]]></code>
     </DocblockTypeContradiction>
   </file>
   <file src="test/Request/SerializerTest.php">
     <MissingClosureReturnType>
-      <code>static function () use ($payload) {</code>
+      <code><![CDATA[static function () use ($payload) {]]></code>
     </MissingClosureReturnType>
     <MixedArrayOffset>
-      <code>$payload[$i++]</code>
+      <code><![CDATA[$payload[$i++]]]></code>
     </MixedArrayOffset>
     <MixedAssignment>
-      <code>$i</code>
+      <code><![CDATA[$i]]></code>
     </MixedAssignment>
     <MixedOperand>
-      <code>$i</code>
+      <code><![CDATA[$i]]></code>
     </MixedOperand>
   </file>
   <file src="test/RequestTest.php">
     <MixedArgument>
-      <code>$headers</code>
+      <code><![CDATA[$headers]]></code>
     </MixedArgument>
   </file>
   <file src="test/ResponseTest.php">
     <MixedArgumentTypeCoercion>
-      <code>$record</code>
-      <code>$record</code>
+      <code><![CDATA[$record]]></code>
+      <code><![CDATA[$record]]></code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$responseCode</code>
+      <code><![CDATA[$responseCode]]></code>
     </MixedAssignment>
     <StringIncrement>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </StringIncrement>
   </file>
   <file src="test/ServerRequestFactoryTest.php">
@@ -371,45 +371,48 @@
   </file>
   <file src="test/ServerRequestTest.php">
     <InvalidArgument>
-      <code>$parsedBody</code>
+      <code><![CDATA[$parsedBody]]></code>
     </InvalidArgument>
   </file>
   <file src="test/StaticAnalysis/RequestInterfaceStaticReturnTypes.php">
     <UnusedClass>
-      <code>RequestInterfaceStaticReturnTypes</code>
+      <code><![CDATA[RequestInterfaceStaticReturnTypes]]></code>
     </UnusedClass>
   </file>
   <file src="test/StreamTest.php">
-    <DeprecatedMethod>
-      <code>setMethods</code>
-    </DeprecatedMethod>
-  </file>
-  <file src="test/TestAsset/CallbacksForCallbackStreamTest.php">
     <PossiblyUnusedMethod>
-      <code>sampleCallback</code>
-      <code>sampleStaticCallback</code>
+      <code><![CDATA[invalidResources]]></code>
+      <code><![CDATA[invalidStringResources]]></code>
+      <code><![CDATA[provideDataForIsReadable]]></code>
+      <code><![CDATA[provideDataForIsWritable]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/TestAsset/CallbacksForCallbackStream.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[sampleCallback]]></code>
+      <code><![CDATA[sampleStaticCallback]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/HeaderStack.php">
     <UnusedClass>
-      <code>HeaderStack</code>
+      <code><![CDATA[HeaderStack]]></code>
     </UnusedClass>
   </file>
   <file src="test/UploadedFileTest.php">
     <MixedArgument>
-      <code>$path</code>
-      <code>$streamOrFile</code>
+      <code><![CDATA[$path]]></code>
+      <code><![CDATA[$streamOrFile]]></code>
     </MixedArgument>
   </file>
   <file src="test/UriTest.php">
     <MixedArgument>
-      <code>$test</code>
+      <code><![CDATA[$test]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$test</code>
+      <code><![CDATA[$test]]></code>
     </MixedAssignment>
     <PossiblyUnusedParam>
-      <code>$query</code>
+      <code><![CDATA[$query]]></code>
     </PossiblyUnusedParam>
   </file>
   <file src="test/functions/NormalizeUploadedFilesTest.php">
@@ -433,12 +436,12 @@
       <code><![CDATA[$normalised['slide-shows'][0]['slides'][1]]]></code>
     </MixedArrayAccess>
     <MixedMethodCall>
-      <code>getClientFilename</code>
-      <code>getClientFilename</code>
-      <code>getClientFilename</code>
-      <code>getClientFilename</code>
-      <code>getClientFilename</code>
-      <code>getClientFilename</code>
+      <code><![CDATA[getClientFilename]]></code>
+      <code><![CDATA[getClientFilename]]></code>
+      <code><![CDATA[getClientFilename]]></code>
+      <code><![CDATA[getClientFilename]]></code>
+      <code><![CDATA[getClientFilename]]></code>
+      <code><![CDATA[getClientFilename]]></code>
     </MixedMethodCall>
     <UndefinedInterfaceMethod>
       <code><![CDATA[$normalised['my-form']]]></code>

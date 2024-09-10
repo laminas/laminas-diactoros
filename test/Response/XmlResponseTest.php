@@ -55,7 +55,7 @@ class XmlResponseTest extends TestCase
     }
 
     /** @return non-empty-array<non-empty-string, array{mixed}> */
-    public function invalidContent(): array
+    public static function invalidContent(): array
     {
         return [
             'null'       => [null],
