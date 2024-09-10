@@ -297,11 +297,15 @@ class Stream implements StreamInterface, Stringable
      */
     public function getMetadata(?string $key = null)
     {
-        if (null === $key) {
-            return stream_get_meta_data($this->resource);
+        $metadata = [];
+        if (null !== $this->resource) {
+            $metadata = stream_get_meta_data($this->resource);
         }
 
-        $metadata = stream_get_meta_data($this->resource);
+        if (null === $key) {
+            return $metadata;
+        }
+
         if (! array_key_exists($key, $metadata)) {
             return null;
         }
