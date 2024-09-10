@@ -214,8 +214,6 @@
     <PossiblyNullArgument>
       <code><![CDATA[$resource]]></code>
       <code><![CDATA[$this->resource]]></code>
-      <code><![CDATA[$this->resource]]></code>
-      <code><![CDATA[$this->resource]]></code>
     </PossiblyNullArgument>
     <PossiblyUnusedProperty>
       <code><![CDATA[$stream]]></code>

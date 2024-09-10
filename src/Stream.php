@@ -24,9 +24,9 @@ use function is_int;
 use function is_resource;
 use function is_string;
 use function sprintf;
+use function str_contains;
 use function stream_get_contents;
 use function stream_get_meta_data;
-use function strstr;
 
 use const SEEK_SET;
 
@@ -210,11 +210,11 @@ class Stream implements StreamInterface, Stringable
         $meta = stream_get_meta_data($this->resource);
         $mode = $meta['mode'];
 
-        return strstr($mode, 'x') !== false
-            || strstr($mode, 'w') !== false
-            || strstr($mode, 'c') !== false
-            || strstr($mode, 'a') !== false
-            || strstr($mode, '+') !== false;
+        return str_contains($mode, 'x')
+            || str_contains($mode, 'w')
+            || str_contains($mode, 'c')
+            || str_contains($mode, 'a')
+            || str_contains($mode, '+');
     }
 
     /**
@@ -251,7 +251,7 @@ class Stream implements StreamInterface, Stringable
         $meta = stream_get_meta_data($this->resource);
         $mode = $meta['mode'];
 
-        return strstr($mode, 'r') !== false || strstr($mode, '+') !== false;
+        return str_contains($mode, 'r') || str_contains($mode, '+');
     }
 
     /**
