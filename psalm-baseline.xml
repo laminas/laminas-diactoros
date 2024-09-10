@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="5.26.0@4787eaf414e16c661902b94dfe5d882223e5b513">
   <file src="src/AbstractSerializer.php">
     <RedundantCondition>
       <code><![CDATA[! $crFound]]></code>
@@ -190,9 +190,6 @@
       <code><![CDATA[$headers]]></code>
       <code><![CDATA[$server]]></code>
     </MixedArgumentTypeCoercion>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_callable(self::$apacheRequestHeaders)]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ServerRequestFilter/FilterUsingXForwardedHeaders.php">
     <ImpureMethodCall>

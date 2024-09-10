@@ -243,7 +243,7 @@ final class ServerRequestFactoryTest extends TestCase
             ],
             'url-encoded-value'   => [
                 'foo=bar%3B+',
-                ['foo' => 'bar; '],
+                ['foo' => 'bar;+'],
             ],
             'double-quoted-value' => [
                 'foo="bar"',
