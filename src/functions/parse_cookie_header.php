@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Diactoros;
 
 use function preg_match_all;
-use function urldecode;
+use function rawurldecode;
 
 use const PREG_SET_ORDER;
 
@@ -33,7 +33,7 @@ function parseCookieHeader($cookieHeader): array
     $cookies = [];
 
     foreach ($matches as $match) {
-        $cookies[$match['name']] = urldecode($match['value']);
+        $cookies[$match['name']] = rawurldecode($match['value']);
     }
 
     return $cookies;
