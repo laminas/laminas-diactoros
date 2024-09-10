@@ -20,7 +20,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Function to use to get apache request headers; present only to simplify mocking.
      *
-     * @var callable
+     * @var callable|string
      */
     private static $apacheRequestHeaders = 'apache_request_headers';
 
@@ -35,11 +35,11 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      *
      * @see fromServer()
      *
-     * @param array $server $_SERVER superglobal
-     * @param array $query $_GET superglobal
-     * @param array $body $_POST superglobal
-     * @param array $cookies $_COOKIE superglobal
-     * @param array $files $_FILES superglobal
+     * @param null|array $server $_SERVER superglobal
+     * @param null|array $query $_GET superglobal
+     * @param null|array $body $_POST superglobal
+     * @param null|array $cookies $_COOKIE superglobal
+     * @param null|array $files $_FILES superglobal
      * @param null|FilterServerRequestInterface $requestFilter If present, the
      *     generated request will be passed to this instance and the result
      *     returned by this method. When not present, a default instance of
