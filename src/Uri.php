@@ -10,6 +10,7 @@ use Stringable;
 
 use function array_keys;
 use function explode;
+use function filter_var;
 use function implode;
 use function ltrim;
 use function parse_url;
@@ -19,10 +20,14 @@ use function preg_replace_callback;
 use function rawurlencode;
 use function sprintf;
 use function str_contains;
+use function str_ends_with;
 use function str_split;
 use function str_starts_with;
 use function strtolower;
 use function substr;
+
+use const FILTER_FLAG_IPV6;
+use const FILTER_VALIDATE_IP;
 
 /**
  * Implementation of Psr\Http\UriInterface.
@@ -274,8 +279,10 @@ class Uri implements UriInterface, Stringable
             return $this;
         }
 
+        $host = $this->filterHost($host);
+
         $new       = clone $this;
-        $new->host = strtolower($host);
+        $new->host = $host;
 
         return $new;
     }
@@ -290,11 +297,8 @@ class Uri implements UriInterface, Stringable
             return $this;
         }
 
-        if ($port !== null && ($port < 1 || $port > 65535)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid port "%d" specified; must be a valid TCP/UDP port',
-                $port
-            ));
+        if (null !== $port) {
+            $port = $this->filterPort($port);
         }
 
         $new       = clone $this;
@@ -393,8 +397,8 @@ class Uri implements UriInterface, Stringable
 
         $this->scheme   = isset($parts['scheme']) ? $this->filterScheme($parts['scheme']) : '';
         $this->userInfo = isset($parts['user']) ? $this->filterUserInfoPart($parts['user']) : '';
-        $this->host     = isset($parts['host']) ? strtolower($parts['host']) : '';
-        $this->port     = $parts['port'] ?? null;
+        $this->host     = isset($parts['host']) ? $this->filterHost($parts['host']) : '';
+        $this->port     = isset($parts['port']) ? $this->filterPort($parts['port']) : null;
         $this->path     = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
         $this->query    = isset($parts['query']) ? $this->filterQuery($parts['query']) : '';
         $this->fragment = isset($parts['fragment']) ? $this->filterFragment($parts['fragment']) : '';
@@ -501,6 +505,63 @@ class Uri implements UriInterface, Stringable
             [$this, 'urlEncodeChar'],
             $part
         );
+    }
+
+    /**
+     * Valid host subcomponent can be IP-literal, dotted IPv4 or reg-name
+     */
+    private function filterHost(string $host): string
+    {
+        if ($host === '') {
+            return $host;
+        }
+        $host = strtolower($host);
+
+        // only IP-literal is allowed colon
+        if (str_contains($host, ':')) {
+            /**
+             * RFC3986 defines IP-literal in the host subcomponent as an IPv6 address enclosed in brackets.
+             * While implementations are somewhat lenient, particularly php's parse_url(), enclosing IPv6
+             * into the brackets here ensures uri authority is always valid even if assembled manually
+             * outside of this implementation. This would prevent last IPv6 segment from being treated
+             * as a port number.
+             */
+            $ipv6 = $host;
+            if (str_starts_with($ipv6, '[') && str_ends_with($ipv6, ']')) {
+                $ipv6 = substr($ipv6, 1, -1);
+            }
+            $ipv6 = filter_var($ipv6, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+            if (false === $ipv6) {
+                throw new Exception\InvalidArgumentException($host . ' Host contains invalid IPv6 address');
+            }
+
+            return '[' . $ipv6 . ']';
+        }
+
+        /**
+         * @todo consult with interop tests for a stricter validation across implementations.
+         *
+         * Check for forbidden RFC3986 gen-delims = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+         */
+        if (preg_match('~[:/?#\[\]@]~', $host)) {
+            throw new Exception\InvalidArgumentException('Host contains forbidden characters');
+        }
+
+        return $host;
+    }
+
+    private function filterPort(int $port): int
+    {
+        if ($port < 1 || $port > 65535) {
+            throw new Exception\InvalidArgumentException(
+                sprintf(
+                    'Invalid port "%d" specified; must be a valid TCP/UDP port',
+                    $port
+                )
+            );
+        }
+
+        return $port;
     }
 
     /**
