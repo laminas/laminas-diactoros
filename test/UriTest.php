@@ -27,6 +27,45 @@ class UriTest extends TestCase
         $this->assertSame('quz', $uri->getFragment());
     }
 
+    public function testConstructorSetsAllPropertiesWithIPv6(): void
+    {
+        $uri = new Uri('https://user:pass@[fe80::200:5aee:feaa:20a2]:3001/foo?bar=baz#quz');
+        $this->assertSame('https', $uri->getScheme());
+        $this->assertSame('user:pass', $uri->getUserInfo());
+        $this->assertSame('[fe80::200:5aee:feaa:20a2]', $uri->getHost());
+        $this->assertSame(3001, $uri->getPort());
+        $this->assertSame('user:pass@[fe80::200:5aee:feaa:20a2]:3001', $uri->getAuthority());
+        $this->assertSame('/foo', $uri->getPath());
+        $this->assertSame('bar=baz', $uri->getQuery());
+        $this->assertSame('quz', $uri->getFragment());
+    }
+
+    public function testConstructorSetsAllPropertiesWithShorthandIPv6(): void
+    {
+        $uri = new Uri('https://user:pass@[::1]:3001/foo?bar=baz#quz');
+        $this->assertSame('https', $uri->getScheme());
+        $this->assertSame('user:pass', $uri->getUserInfo());
+        $this->assertSame('[::1]', $uri->getHost());
+        $this->assertSame(3001, $uri->getPort());
+        $this->assertSame('user:pass@[::1]:3001', $uri->getAuthority());
+        $this->assertSame('/foo', $uri->getPath());
+        $this->assertSame('bar=baz', $uri->getQuery());
+        $this->assertSame('quz', $uri->getFragment());
+    }
+
+    public function testConstructorSetsAllPropertiesWithMalformedBracketlessIPv6(): void
+    {
+        $uri = new Uri('https://user:pass@fe80::200:5aee:feaa:20a2:3001/foo?bar=baz#quz');
+        $this->assertSame('https', $uri->getScheme());
+        $this->assertSame('user:pass', $uri->getUserInfo());
+        $this->assertSame('[fe80::200:5aee:feaa:20a2]', $uri->getHost());
+        $this->assertSame(3001, $uri->getPort());
+        $this->assertSame('user:pass@[fe80::200:5aee:feaa:20a2]:3001', $uri->getAuthority());
+        $this->assertSame('/foo', $uri->getPath());
+        $this->assertSame('bar=baz', $uri->getQuery());
+        $this->assertSame('quz', $uri->getFragment());
+    }
+
     /** @return iterable<non-empty-string, array{non-empty-string}> */
     public static function invalidUriProvider(): iterable
     {
@@ -38,7 +77,15 @@ class UriTest extends TestCase
             yield 'Invalid port ' . $key => ["https://user:pass@local.example.com:${port[0]}/foo?bar=baz#quz"];
         }
 
-        yield 'Malformed URI' => ["http://invalid:%20https://example.com"];
+        yield from [
+            'Malformed URI'             => ["http://invalid:%20https://example.com"],
+            'Colon in non-IPv6 host'    => ["https://user:pass@local:example.com:3001/foo?bar=baz#quz"],
+            'Wrong bracket in the IPv6' => ["https://user:pass@fe80[::200:5aee:feaa:20a2]:3001/foo?bar=baz#quz"],
+            // percent encoding is allowed in URI but not in web urls particularly with idn encoding for dns.
+            // no validation for correct percent encoding either
+            // 'Percent in the host' => ["https://user:pass@local%example.com:3001/foo?bar=baz#quz"],
+            'Bracket in the host' => ["https://user:pass@[local.example.com]:3001/foo?bar=baz#quz"],
+        ];
     }
 
     #[DataProvider('invalidUriProvider')]
@@ -146,6 +193,36 @@ class UriTest extends TestCase
         $this->assertSame($uri, $new);
         $this->assertSame('local.example.com', $new->getHost());
         $this->assertSame('https://user:pass@local.example.com:3001/foo?bar=baz#quz', (string) $new);
+    }
+
+    public function testWithHostEnclosesIPv6WithBrackets(): void
+    {
+        $uri = new Uri();
+        $new = $uri->withHost('fe80::200:5aee:feaa:20a2');
+        self::assertSame('[fe80::200:5aee:feaa:20a2]', $new->getHost());
+    }
+
+    /** @return iterable<non-empty-string, array{string}> */
+    public static function invalidHosts(): iterable
+    {
+        // RFC3986 gen-delims = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+        $forbiddenDelimeters = [':', '/', '?', '#', '[', ']', '@'];
+
+        foreach ($forbiddenDelimeters as $delimeter) {
+            yield "Forbidden delimeter {$delimeter}" => ["example{$delimeter}localhost"];
+        }
+
+        yield "Double bracket IPv6" => ['[[::1]]'];
+    }
+
+    #[DataProvider('invalidHosts')]
+    public function testWithHostRaisesExceptionForInvalidHost(string $host): void
+    {
+        $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $uri->withHost($host);
     }
 
     /** @return non-empty-array<non-empty-string, array{null|positive-int|numeric-string}> */

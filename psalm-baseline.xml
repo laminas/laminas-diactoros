@@ -408,6 +408,7 @@
     </MixedAssignment>
     <PossiblyUnusedMethod>
       <code><![CDATA[authorityInfo]]></code>
+      <code><![CDATA[invalidHosts]]></code>
       <code><![CDATA[invalidPaths]]></code>
       <code><![CDATA[invalidQueryStrings]]></code>
       <code><![CDATA[invalidUriProvider]]></code>
