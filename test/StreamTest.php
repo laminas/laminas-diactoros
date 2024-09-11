@@ -596,6 +596,16 @@ final class StreamTest extends TestCase
         $this->assertSame($expected, $test);
     }
 
+    public function testGetMetadataReturnsEmptyArrayAfterDetach(): void
+    {
+        self::assertNotEmpty($this->stream->getMetadata());
+        self::assertNotEmpty($this->stream->getMetadata('mode'));
+
+        $this->stream->detach();
+        self::assertSame([], $this->stream->getMetadata());
+        self::assertNull($this->stream->getMetadata('mode'));
+    }
+
     public function testGetMetadataReturnsDataForSpecifiedKey(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
