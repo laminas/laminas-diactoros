@@ -406,6 +406,19 @@
     <MixedAssignment>
       <code><![CDATA[$test]]></code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[authorityInfo]]></code>
+      <code><![CDATA[invalidPaths]]></code>
+      <code><![CDATA[invalidQueryStrings]]></code>
+      <code><![CDATA[invalidUriProvider]]></code>
+      <code><![CDATA[mutations]]></code>
+      <code><![CDATA[queryStringsForEncoding]]></code>
+      <code><![CDATA[standardSchemePortCombinations]]></code>
+      <code><![CDATA[userInfoProvider]]></code>
+      <code><![CDATA[utf8PathsDataProvider]]></code>
+      <code><![CDATA[utf8QueryStringsDataProvider]]></code>
+      <code><![CDATA[validPorts]]></code>
+    </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code><![CDATA[$query]]></code>
     </PossiblyUnusedParam>
