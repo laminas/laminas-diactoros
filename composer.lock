@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5b673582a8569a858a0298c119d3a96",
+    "content-hash": "3977b4548a12421312674ea6336eeb5b",
     "packages": [
         {
             "name": "psr/http-factory",
@@ -1830,16 +1830,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.35",
+            "version": "10.5.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7ac8b4e63f456046dcb4c9787da9382831a1874b"
+                "reference": "aa0a8ce701ea7ee314b0dfaa8970dc94f3f8c870"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7ac8b4e63f456046dcb4c9787da9382831a1874b",
-                "reference": "7ac8b4e63f456046dcb4c9787da9382831a1874b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/aa0a8ce701ea7ee314b0dfaa8970dc94f3f8c870",
+                "reference": "aa0a8ce701ea7ee314b0dfaa8970dc94f3f8c870",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1911,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.35"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.36"
             },
             "funding": [
                 {
@@ -1927,7 +1927,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-19T10:52:21+00:00"
+            "time": "2024-10-08T15:36:51+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
@@ -4211,7 +4211,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
     },
     "platform-dev": {
         "ext-curl": "*",
