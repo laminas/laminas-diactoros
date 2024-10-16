@@ -44,7 +44,7 @@
         "ext-gd": "*",
         "ext-libxml": "*",
         "http-interop/http-factory-tests": "^2.2.0",
-        "laminas/laminas-coding-standard": "~2.5.0",
+        "laminas/laminas-coding-standard": "~3.0.0",
         "php-http/psr7-integration-tests": "^1.4.0",
         "phpunit/phpunit": "^10.5.36",
         "psalm/plugin-phpunit": "^0.19.0",
