@@ -43,8 +43,7 @@ class JsonResponse extends Response
         | JSON_HEX_QUOT
         | JSON_UNESCAPED_SLASHES;
 
-    /** @var mixed */
-    private $payload;
+    private mixed $payload;
 
     /**
      * Create a JSON response with the given data.

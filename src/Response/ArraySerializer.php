@@ -68,10 +68,9 @@ final class ArraySerializer
     }
 
     /**
-     * @return mixed
      * @throws Exception\DeserializationException
      */
-    private static function getValueFromKey(array $data, string $key, ?string $message = null)
+    private static function getValueFromKey(array $data, string $key, ?string $message = null): mixed
     {
         if (isset($data[$key])) {
             return $data[$key];

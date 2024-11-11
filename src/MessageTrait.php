@@ -30,16 +30,14 @@ trait MessageTrait
     /**
      * List of all registered headers, as key => array of values.
      *
-     * @var array
-     * @psalm-var array<non-empty-string, list<string>>
+     * @var array<non-empty-string, list<string>>
      */
     protected $headers = [];
 
     /**
      * Map of normalized header name to original name used to register header.
      *
-     * @var array
-     * @psalm-var array<non-empty-string, non-empty-string>
+     * @var array<non-empty-string, non-empty-string>
      */
     protected $headerNames = [];
 
