@@ -234,29 +234,37 @@ final class ServerRequestFactoryTest extends TestCase
     public static function cookieHeaderValues(): array
     {
         return [
-            'ows-without-fold'    => [
+            'ows-without-fold'        => [
                 "\tfoo=bar ",
                 ['foo' => 'bar'],
             ],
-            'url-encoded-value'   => [
+            'url-encoded-value'       => [
                 'foo=bar%3B+',
                 ['foo' => 'bar;+'],
             ],
-            'double-quoted-value' => [
+            'double-quoted-value'     => [
                 'foo="bar"',
                 ['foo' => 'bar'],
             ],
-            'multiple-pairs'      => [
+            'multiple-pairs'          => [
                 'foo=bar; baz="bat"; bau=bai',
                 ['foo' => 'bar', 'baz' => 'bat', 'bau' => 'bai'],
             ],
-            'same-name-pairs'     => [
+            'same-name-pairs'         => [
                 'foo=bar; foo="bat"',
                 ['foo' => 'bat'],
             ],
-            'period-in-name'      => [
+            'period-in-name'          => [
                 'foo.bar=baz',
                 ['foo.bar' => 'baz'],
+            ],
+            'no-space-separator'      => [
+                'foo=bar;bar=baz',
+                ['foo' => 'bar', 'bar' => 'baz'],
+            ],
+            'square-brackets-in-name' => [
+                'foo[bar]=bar;foo[baz]=baz',
+                ['foo[bar]' => 'bar', 'foo[baz]' => 'baz'],
             ],
         ];
     }

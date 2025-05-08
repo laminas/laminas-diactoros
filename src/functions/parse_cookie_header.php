@@ -21,13 +21,13 @@ use const PREG_SET_ORDER;
 function parseCookieHeader($cookieHeader): array
 {
     preg_match_all('(
-        (?:^\\n?[ \t]*|;[ ])
-        (?P<name>[!#$%&\'*+-.0-9A-Z^_`a-z|~]+)
+        (?:^\\n?[ \t]*|;[ \t]*)
+        (?P<name>[!#$%&\'*+-.0-9A-Z^_`a-z|~\[\]]+)
         =
         (?P<DQUOTE>"?)
             (?P<value>[\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)
         (?P=DQUOTE)
-        (?=\\n?[ \t]*$|;[ ])
+        (?=\\n?[ \t]*$|;[ \t]*)
     )x', $cookieHeader, $matches, PREG_SET_ORDER);
 
     $cookies = [];
