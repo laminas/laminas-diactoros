@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function assert;
-use function curl_close;
 use function curl_exec;
 use function curl_getinfo;
 use function curl_init;
@@ -109,7 +108,6 @@ final class ResponseTest extends TestCase
         }
         $response     = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
 
         if ($responseCode === 304 && $ianaHttpStatusCodes) {
             // status codes did not change
