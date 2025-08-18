@@ -9,14 +9,13 @@ use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Laminas\Diactoros\UriFactory;
 use Psr\Http\Message\ServerRequestInterface;
 
-use function assert;
-use function count;
-use function explode;
 use function filter_var;
 use function in_array;
 use function is_string;
 use function str_contains;
+use function strpos;
 use function strtolower;
+use function substr;
 
 use const FILTER_FLAG_IPV4;
 use const FILTER_FLAG_IPV6;
@@ -233,7 +232,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 
         $address = $cidr;
         $mask    = null;
-        $pos = strpos($cidr, '/');
+        $pos     = strpos($cidr, '/');
         if ($pos !== false) {
             $address = substr($cidr, 0, $pos);
             $mask    = (int) substr($cidr, $pos + 1);
