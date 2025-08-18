@@ -235,7 +235,6 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         $mask    = null;
         if (str_contains($cidr, '/')) {
             $parts = explode('/', $cidr, 2);
-            assert(count($parts) >= 2);
             [$address, $mask] = $parts;
             $mask             = (int) $mask;
         }
