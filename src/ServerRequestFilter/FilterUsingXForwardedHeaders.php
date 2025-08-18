@@ -233,10 +233,10 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 
         $address = $cidr;
         $mask    = null;
-        if (str_contains($cidr, '/')) {
-            $parts = explode('/', $cidr, 2);
-            [$address, $mask] = $parts;
-            $mask             = (int) $mask;
+        $pos = strpos($cidr, '/');
+        if ($pos !== false) {
+            $address = substr($cidr, 0, $pos);
+            $mask    = (int) substr($cidr, $pos + 1);
         }
 
         if (str_contains($address, ':')) {
