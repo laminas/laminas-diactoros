@@ -10,7 +10,7 @@ use Laminas\Diactoros\Stream;
 /**
  * A class representing empty HTTP responses.
  */
-final class EmptyResponse extends Response
+class EmptyResponse extends Response
 {
     /**
      * Create an empty response with the given status code.
