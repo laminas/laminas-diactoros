@@ -31,7 +31,7 @@ use const FILTER_VALIDATE_IP;
  * those headers.
  *
  * @psalm-immutable
-*/
+ */
 final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 {
     public const HEADER_HOST  = 'X-FORWARDED-HOST';
