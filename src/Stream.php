@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use Stringable;
@@ -59,6 +60,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function __toString(): string
     {
         if (! $this->isReadable()) {
@@ -79,6 +81,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function close(): void
     {
         if (! $this->resource) {
@@ -92,6 +95,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function detach()
     {
         $resource       = $this->resource;
@@ -114,6 +118,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getSize(): ?int
     {
         if (null === $this->resource) {
@@ -131,6 +136,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function tell(): int
     {
         if (! $this->resource) {
@@ -148,6 +154,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function eof(): bool
     {
         if (! $this->resource) {
@@ -160,6 +167,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isSeekable(): bool
     {
         if (! $this->resource) {
@@ -173,6 +181,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function seek(int $offset, int $whence = SEEK_SET): void
     {
         if (! $this->resource) {
@@ -193,6 +202,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function rewind(): void
     {
         $this->seek(0);
@@ -201,6 +211,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isWritable(): bool
     {
         if (! $this->resource) {
@@ -220,6 +231,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function write($string): int
     {
         if (! $this->resource) {
@@ -242,6 +254,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isReadable(): bool
     {
         if (! $this->resource) {
@@ -257,6 +270,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function read(int $length): string
     {
         if (! $this->resource) {
@@ -279,6 +293,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getContents(): string
     {
         if (! $this->isReadable()) {
@@ -295,6 +310,7 @@ class Stream implements StreamInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getMetadata(?string $key = null)
     {
         $metadata = [];

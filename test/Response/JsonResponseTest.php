@@ -23,7 +23,7 @@ use const JSON_PRETTY_PRINT;
 use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_SLASHES;
 
-class JsonResponseTest extends TestCase
+final class JsonResponseTest extends TestCase
 {
     public function testConstructorAcceptsDataAndCreatesJsonEncodedMessageBody(): void
     {

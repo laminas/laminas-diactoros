@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\UriInterface;
 use SensitiveParameter;
 use Stringable;
@@ -100,6 +101,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function __toString(): string
     {
         if (null !== $this->uriString) {
@@ -121,6 +123,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getScheme(): string
     {
         return $this->scheme;
@@ -129,6 +132,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAuthority(): string
     {
         if ('' === $this->host) {
@@ -154,6 +158,7 @@ class Uri implements UriInterface, Stringable
      *
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserInfo(): string
     {
         return $this->userInfo;
@@ -162,6 +167,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getHost(): string
     {
         return $this->host;
@@ -170,6 +176,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPort(): ?int
     {
         return $this->isNonStandardPort($this->scheme, $this->host, $this->port)
@@ -180,6 +187,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPath(): string
     {
         if ('' === $this->path) {
@@ -199,6 +207,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getQuery(): string
     {
         return $this->query;
@@ -207,6 +216,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getFragment(): string
     {
         return $this->fragment;
@@ -215,6 +225,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withScheme(string $scheme): UriInterface
     {
         $scheme = $this->filterScheme($scheme);
@@ -241,6 +252,7 @@ class Uri implements UriInterface, Stringable
      *
      * {@inheritdoc}
      */
+    #[Override]
     public function withUserInfo(
         string $user,
         #[SensitiveParameter]
@@ -267,6 +279,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withHost(string $host): UriInterface
     {
         if ($host === $this->host) {
@@ -283,6 +296,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withPort(?int $port): UriInterface
     {
         if ($port === $this->port) {
@@ -306,6 +320,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withPath(string $path): UriInterface
     {
         if (str_contains($path, '?')) {
@@ -336,6 +351,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withQuery(string $query): UriInterface
     {
         if (str_contains($query, '#')) {
@@ -360,6 +376,7 @@ class Uri implements UriInterface, Stringable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withFragment(string $fragment): UriInterface
     {
         $fragment = $this->filterFragment($fragment);

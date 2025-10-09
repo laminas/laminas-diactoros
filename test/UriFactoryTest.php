@@ -14,7 +14,7 @@ use function sprintf;
 use function str_contains;
 use function strtolower;
 
-class UriFactoryTest extends TestCase
+final class UriFactoryTest extends TestCase
 {
     public function testCreateFromSapiUsesIISUnencodedUrlValueIfPresentAndUrlWasRewritten(): void
     {

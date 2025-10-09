@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 
-class TextResponseTest extends TestCase
+final class TextResponseTest extends TestCase
 {
     public function testConstructorAcceptsBodyAsString(): void
     {

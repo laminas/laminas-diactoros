@@ -7,6 +7,7 @@ namespace LaminasTest\Diactoros;
 use InvalidArgumentException;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\UploadedFile;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -41,12 +42,14 @@ final class UploadedFileTest extends TestCase
     /** @var mixed */
     private $tmpFile;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->tmpFile = null;
         $this->orgFile = null;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (is_string($this->tmpFile) && file_exists($this->tmpFile)) {

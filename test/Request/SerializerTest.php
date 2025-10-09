@@ -19,7 +19,7 @@ use UnexpectedValueException;
 use function json_encode;
 use function strlen;
 
-class SerializerTest extends TestCase
+final class SerializerTest extends TestCase
 {
     public function testSerializesBasicRequest(): void
     {

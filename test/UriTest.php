@@ -13,7 +13,7 @@ use ReflectionObject;
 
 use function sprintf;
 
-class UriTest extends TestCase
+final class UriTest extends TestCase
 {
     public function testConstructorSetsAllProperties(): void
     {

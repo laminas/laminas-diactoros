@@ -11,7 +11,7 @@ use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class FilterUsingXForwardedHeadersTest extends TestCase
+final class FilterUsingXForwardedHeadersTest extends TestCase
 {
     public function testTrustingStringProxyWithoutSpecifyingTrustedHeadersTrustsAllForwardedHeadersForThatProxy(): void
     {

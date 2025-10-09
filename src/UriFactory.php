@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -34,6 +35,7 @@ class UriFactory implements UriFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function createUri(string $uri = ''): UriInterface
     {
         return new Uri($uri);

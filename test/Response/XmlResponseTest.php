@@ -13,7 +13,7 @@ use Psr\Http\Message\StreamInterface;
 
 use const PHP_EOL;
 
-class XmlResponseTest extends TestCase
+final class XmlResponseTest extends TestCase
 {
     public function testConstructorAcceptsBodyAsString(): void
     {

@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\UploadedFile;
 use Laminas\Diactoros\Uri;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
@@ -18,6 +19,7 @@ final class ServerRequestTest extends TestCase
 {
     private ServerRequest $request;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->request = new ServerRequest();

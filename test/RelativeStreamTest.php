@@ -13,7 +13,7 @@ use RuntimeException;
 use const SEEK_SET;
 
 #[CoversClass(RelativeStream::class)]
-class RelativeStreamTest extends TestCase
+final class RelativeStreamTest extends TestCase
 {
     public function testToString(): void
     {

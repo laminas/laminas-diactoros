@@ -9,6 +9,7 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
 use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Laminas\Diactoros\UploadedFile;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -470,6 +471,7 @@ final class ServerRequestFactoryTest extends TestCase
             {
             }
 
+            #[Override]
             public function __invoke(ServerRequestInterface $request): ServerRequestInterface
             {
                 return $this->request;

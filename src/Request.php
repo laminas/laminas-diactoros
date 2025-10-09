@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -36,6 +37,7 @@ class Request implements RequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getHeaders(): array
     {
         $headers = $this->headers;
@@ -52,6 +54,7 @@ class Request implements RequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getHeader(string $name): array
     {
         if (empty($name) || ! $this->hasHeader($name)) {

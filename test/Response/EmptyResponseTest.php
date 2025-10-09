@@ -8,7 +8,7 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
 use PHPUnit\Framework\TestCase;
 
-class EmptyResponseTest extends TestCase
+final class EmptyResponseTest extends TestCase
 {
     public function testConstructor(): void
     {

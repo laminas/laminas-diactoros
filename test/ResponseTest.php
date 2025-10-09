@@ -9,6 +9,7 @@ use DOMXPath;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -39,6 +40,7 @@ final class ResponseTest extends TestCase
 {
     private Response $response;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->response = new Response();

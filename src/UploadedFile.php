@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -92,6 +93,7 @@ class UploadedFile implements UploadedFileInterface
      *
      * @throws Exception\UploadedFileAlreadyMovedException If the upload was not successful.
      */
+    #[Override]
     public function getStream(): StreamInterface
     {
         if ($this->error !== UPLOAD_ERR_OK) {
@@ -124,6 +126,7 @@ class UploadedFile implements UploadedFileInterface
      * @throws Exception\UploadedFileErrorException On any error during the
      *     move operation, or on the second or subsequent call to the method.
      */
+    #[Override]
     public function moveTo(string $targetPath): void
     {
         if ($this->moved) {
@@ -179,6 +182,7 @@ class UploadedFile implements UploadedFileInterface
      *
      * @return int|null The file size in bytes or null if unknown.
      */
+    #[Override]
     public function getSize(): ?int
     {
         return $this->size;
@@ -191,6 +195,7 @@ class UploadedFile implements UploadedFileInterface
      *
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
+    #[Override]
     public function getError(): int
     {
         return $this->error;
@@ -202,6 +207,7 @@ class UploadedFile implements UploadedFileInterface
      * @return string|null The filename sent by the client or null if none
      *     was provided.
      */
+    #[Override]
     public function getClientFilename(): ?string
     {
         return $this->clientFilename;
@@ -210,6 +216,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getClientMediaType(): ?string
     {
         return $this->clientMediaType;

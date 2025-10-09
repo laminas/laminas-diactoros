@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -124,6 +125,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getStatusCode(): int
     {
         return $this->statusCode;
@@ -132,6 +134,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getReasonPhrase(): string
     {
         return $this->reasonPhrase;
@@ -140,6 +143,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withStatus(int $code, string $reasonPhrase = ''): Response
     {
         $new = clone $this;

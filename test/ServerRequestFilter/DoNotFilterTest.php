@@ -8,7 +8,7 @@ use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
 use PHPUnit\Framework\TestCase;
 
-class DoNotFilterTest extends TestCase
+final class DoNotFilterTest extends TestCase
 {
     public function testReturnsSameInstanceItWasProvided(): void
     {

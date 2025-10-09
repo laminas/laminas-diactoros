@@ -10,7 +10,7 @@ use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
-class ArraySerializerTest extends TestCase
+final class ArraySerializerTest extends TestCase
 {
     public function testSerializeToArray(): void
     {

@@ -6,6 +6,7 @@ namespace LaminasTest\Diactoros;
 
 use InvalidArgumentException;
 use Laminas\Diactoros\Request;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -15,11 +16,12 @@ use Psr\Http\Message\StreamInterface;
 use function count;
 use function trim;
 
-class MessageTraitTest extends TestCase
+final class MessageTraitTest extends TestCase
 {
     /** @var MessageInterface */
     protected $message;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->message = new Request(null, null, $this->createMock(StreamInterface::class));

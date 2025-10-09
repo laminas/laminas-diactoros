@@ -7,6 +7,7 @@ namespace Laminas\Diactoros\ServerRequestFilter;
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Laminas\Diactoros\UriFactory;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function assert;
@@ -56,6 +57,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     ) {
     }
 
+    #[Override]
     public function __invoke(ServerRequestInterface $request): ServerRequestInterface
     {
         $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';

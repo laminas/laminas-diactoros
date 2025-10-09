@@ -9,6 +9,7 @@ use GdImage;
 use InvalidArgumentException;
 use Laminas\Diactoros\Exception\InvalidArgumentException as DiactorosInvalidArgumentException;
 use Laminas\Diactoros\Stream;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -49,12 +50,14 @@ final class StreamTest extends TestCase
 
     private Stream $stream;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->tmpnam = null;
         $this->stream = new Stream('php://memory', 'wb+');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (is_string($this->tmpnam) && file_exists($this->tmpnam)) {
@@ -62,6 +65,7 @@ final class StreamTest extends TestCase
         }
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         /** @see self::invalidResources() */
