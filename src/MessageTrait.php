@@ -308,6 +308,7 @@ trait MessageTrait
             return $stream;
         }
 
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($stream) && ! is_resource($stream)) {
             throw new Exception\InvalidArgumentException(
                 'Stream must be a string stream resource identifier, '
@@ -324,7 +325,7 @@ trait MessageTrait
      *
      * Used by message constructors to allow setting all initial headers at once.
      *
-     * @param array $originalHeaders Headers to filter.
+     * @param array<non-empty-string, string|string[]> $originalHeaders Headers to filter.
      */
     private function setHeaders(array $originalHeaders): void
     {

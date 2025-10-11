@@ -8,8 +8,10 @@ use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
+use function assert;
 use function fopen;
 use function fwrite;
+use function is_resource;
 use function rewind;
 
 class StreamFactory implements StreamFactoryInterface
@@ -21,6 +23,7 @@ class StreamFactory implements StreamFactoryInterface
     public function createStream(string $content = ''): StreamInterface
     {
         $resource = fopen('php://temp', 'r+');
+        assert(is_resource($resource), 'Something is really wrong if PHP failed to open stream in memory');
         fwrite($resource, $content);
         rewind($resource);
 

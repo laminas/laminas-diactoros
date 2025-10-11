@@ -19,6 +19,8 @@ use UnexpectedValueException;
 use function json_encode;
 use function strlen;
 
+use const JSON_THROW_ON_ERROR;
+
 final class SerializerTest extends TestCase
 {
     public function testSerializesBasicRequest(): void
@@ -37,7 +39,7 @@ final class SerializerTest extends TestCase
 
     public function testSerializesRequestWithBody(): void
     {
-        $body   = json_encode(['test' => 'value']);
+        $body   = json_encode(['test' => 'value'], JSON_THROW_ON_ERROR);
         $stream = new Stream('php://memory', 'wb+');
         $stream->write($body);
 

@@ -59,9 +59,13 @@ final class RelativeStream implements StreamInterface, Stringable
      * {@inheritdoc}
      */
     #[Override]
-    public function getSize(): int
+    public function getSize(): ?int
     {
-        return $this->decoratedStream->getSize() - $this->offset;
+        $size = $this->decoratedStream->getSize();
+        if ($size === null) {
+            return null;
+        }
+        return $size - $this->offset;
     }
 
     /**

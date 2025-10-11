@@ -164,8 +164,7 @@ class CallbackStream implements StreamInterface, Stringable
     public function getContents(): string
     {
         $callback = $this->detach();
-        $contents = $callback !== null ? $callback() : '';
-        return (string) $contents;
+        return $callback !== null ? (string) $callback() : '';
     }
 
     /**

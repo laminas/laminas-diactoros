@@ -31,7 +31,7 @@ class XmlResponse extends Response
      *
      * @param string|StreamInterface $xml String or stream for the message body.
      * @param int $status Integer status code for the response; 200 by default.
-     * @param array $headers Array of headers to use at initialization.
+     * @param array<non-empty-string, string|string[]> $headers Array of headers to use at initialization.
      * @throws Exception\InvalidArgumentException If $text is neither a string or stream.
      */
     public function __construct(
@@ -58,6 +58,7 @@ class XmlResponse extends Response
             return $xml;
         }
 
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($xml)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid content (%s) provided to %s',

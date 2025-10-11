@@ -142,7 +142,7 @@ final class JsonResponseTest extends TestCase
         $stream   = $response->getBody();
         $contents = (string) $stream;
 
-        $expected = json_encode($value, $defaultFlags);
+        $expected = json_encode($value, $defaultFlags | JSON_THROW_ON_ERROR);
         $this->assertStringContainsString(
             $expected,
             $contents,

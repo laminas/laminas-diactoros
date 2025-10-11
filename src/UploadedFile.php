@@ -8,6 +8,7 @@ use Override;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
+use function assert;
 use function dirname;
 use function fclose;
 use function file_exists;
@@ -110,6 +111,7 @@ class UploadedFile implements UploadedFileInterface
             return $this->stream;
         }
 
+        assert($this->file !== null, 'Always true condition for psalm type safety');
         $this->stream = new Stream($this->file);
         return $this->stream;
     }

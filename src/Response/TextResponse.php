@@ -32,7 +32,7 @@ class TextResponse extends Response
      *
      * @param string|StreamInterface $text String or stream for the message body.
      * @param int $status Integer status code for the response; 200 by default.
-     * @param array $headers Array of headers to use at initialization.
+     * @param array<non-empty-string, string|string[]> $headers Array of headers to use at initialization.
      * @throws Exception\InvalidArgumentException If $text is neither a string or stream.
      */
     public function __construct($text, int $status = 200, array $headers = [])
@@ -56,6 +56,7 @@ class TextResponse extends Response
             return $text;
         }
 
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($text)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid content (%s) provided to %s',

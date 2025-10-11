@@ -44,7 +44,7 @@ class ServerRequest implements ServerRequestInterface
      * @param null|string|UriInterface $uri URI for the request, if any.
      * @param null|string $method HTTP method for the request, if any.
      * @param string|resource|StreamInterface $body Message body, if any.
-     * @param array $headers Headers for the message, if any.
+     * @param array<non-empty-string, string|string[]> $headers Headers for the message, if any.
      * @param array $cookieParams Cookies for the message, if any.
      * @param array $queryParams Query params for the message, if any.
      * @param null|array|object $parsedBody The deserialized body parameters, if any.
@@ -159,6 +159,7 @@ class ServerRequest implements ServerRequestInterface
     #[Override]
     public function withParsedBody($data): ServerRequest
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_array($data) && ! is_object($data) && null !== $data) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a null, array, or object argument; received %s',

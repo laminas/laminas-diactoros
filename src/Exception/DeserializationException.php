@@ -21,12 +21,12 @@ class DeserializationException extends UnexpectedValueException implements Excep
 
     public static function forRequestFromArray(Throwable $previous): self
     {
-        return new self('Cannot deserialize request', $previous->getCode(), $previous);
+        return new self('Cannot deserialize request', (int) $previous->getCode(), $previous);
     }
 
     public static function forResponseFromArray(Throwable $previous): self
     {
-        return new self('Cannot deserialize response', $previous->getCode(), $previous);
+        return new self('Cannot deserialize response', (int) $previous->getCode(), $previous);
     }
 
     public static function forUnexpectedCarriageReturn(): self

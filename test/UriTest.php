@@ -515,7 +515,7 @@ final class UriTest extends TestCase
     #[DataProvider('queryStringsForEncoding')]
     public function testQueryIsNotDoubleEncoded(string $query, string $expected): void
     {
-        $uri = (new Uri())->withQuery($expected);
+        $uri = (new Uri())->withQuery($query);
         $this->assertSame($expected, $uri->getQuery());
     }
 

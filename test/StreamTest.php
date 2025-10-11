@@ -17,6 +17,7 @@ use ReflectionProperty;
 use RuntimeException;
 use Shmop;
 
+use function assert;
 use function curl_init;
 use function feof;
 use function file_exists;
@@ -86,7 +87,8 @@ final class StreamTest extends TestCase
     public function testCanInstantiateWithStreamResource(): void
     {
         $resource = fopen('php://memory', 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertInstanceOf(Stream::class, $stream);
     }
 
@@ -102,7 +104,8 @@ final class StreamTest extends TestCase
     public function testIsReadableReturnsFalseIfStreamIsNotReadable(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $stream       = new Stream($this->tmpnam, 'w');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($this->tmpnam, 'w');
         $this->assertFalse($stream->isReadable());
     }
 
@@ -122,7 +125,8 @@ final class StreamTest extends TestCase
     public function testDetachReturnsResource(): void
     {
         $resource = fopen('php://memory', 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertSame($resource, $stream->detach());
     }
 
@@ -137,6 +141,7 @@ final class StreamTest extends TestCase
     public function testStringSerializationReturnsEmptyStringWhenStreamIsNotReadable(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $stream = new Stream($this->tmpnam, 'w');
 
@@ -146,8 +151,10 @@ final class StreamTest extends TestCase
     public function testCloseClosesResource(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'wb+');
-        $stream       = new Stream($resource);
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->close();
         $this->assertFalse(is_resource($resource));
     }
@@ -155,8 +162,10 @@ final class StreamTest extends TestCase
     public function testCloseUnsetsResource(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'wb+');
-        $stream       = new Stream($resource);
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->close();
 
         $this->assertNull($stream->detach());
@@ -165,9 +174,11 @@ final class StreamTest extends TestCase
     public function testCloseDoesNothingAfterDetach(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'wb+');
-        $stream       = new Stream($resource);
-        $detached     = $stream->detach();
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream   = new Stream($resource);
+        $detached = $stream->detach();
 
         $stream->close();
         $this->assertTrue(is_resource($detached));
@@ -184,9 +195,11 @@ final class StreamTest extends TestCase
     public function testTellReportsCurrentPositionInResource(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
 
         fseek($resource, 2);
 
@@ -196,9 +209,11 @@ final class StreamTest extends TestCase
     public function testTellRaisesExceptionIfResourceIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
 
         fseek($resource, 2);
         $stream->detach();
@@ -212,9 +227,11 @@ final class StreamTest extends TestCase
     public function testEofReportsFalseWhenNotAtEndOfStream(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
 
         fseek($resource, 2);
         $this->assertFalse($stream->eof());
@@ -223,9 +240,11 @@ final class StreamTest extends TestCase
     public function testEofReportsTrueWhenAtEndOfStream(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
 
         while (! feof($resource)) {
             fread($resource, 4096);
@@ -236,9 +255,11 @@ final class StreamTest extends TestCase
     public function testEofReportsTrueWhenStreamIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
 
         fseek($resource, 2);
         $stream->detach();
@@ -248,18 +269,22 @@ final class StreamTest extends TestCase
     public function testIsSeekableReturnsTrueForReadableStreams(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertTrue($stream->isSeekable());
     }
 
     public function testIsSeekableReturnsFalseForDetachedStreams(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->detach();
         $this->assertFalse($stream->isSeekable());
     }
@@ -267,9 +292,11 @@ final class StreamTest extends TestCase
     public function testSeekAdvancesToGivenOffsetOfStream(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertNull($stream->seek(2));
         $this->assertSame(2, $stream->tell());
     }
@@ -277,9 +304,11 @@ final class StreamTest extends TestCase
     public function testRewindResetsToStartOfStream(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertNull($stream->seek(2));
         $stream->rewind();
         $this->assertSame(0, $stream->tell());
@@ -288,9 +317,11 @@ final class StreamTest extends TestCase
     public function testSeekRaisesExceptionWhenStreamIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->detach();
 
         $this->expectException(RuntimeException::class);
@@ -302,9 +333,11 @@ final class StreamTest extends TestCase
     public function testIsWritableReturnsFalseWhenStreamIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->detach();
         $this->assertFalse($stream->isWritable());
     }
@@ -360,13 +393,15 @@ final class StreamTest extends TestCase
     {
         if ($fileShouldExist) {
             $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+            assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
             file_put_contents($this->tmpnam, 'FOO BAR');
         } else {
             // "x" modes REQUIRE that file doesn't exist, so we need to find random file name
             $this->tmpnam = $this->findNonExistentTempName();
         }
         $resource = fopen($this->tmpnam, $mode);
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertSame($flag, $stream->isWritable());
     }
 
@@ -406,22 +441,26 @@ final class StreamTest extends TestCase
     {
         if ($fileShouldExist) {
             $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+            assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
             file_put_contents($this->tmpnam, 'FOO BAR');
         } else {
             // "x" modes REQUIRE that file doesn't exist, so we need to find random file name
             $this->tmpnam = $this->findNonExistentTempName();
         }
         $resource = fopen($this->tmpnam, $mode);
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertSame($flag, $stream->isReadable());
     }
 
     public function testWriteRaisesExceptionWhenStreamIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->detach();
 
         $this->expectException(RuntimeException::class);
@@ -443,9 +482,11 @@ final class StreamTest extends TestCase
     public function testIsReadableReturnsFalseWhenStreamIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'wb+');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->detach();
 
         $this->assertFalse($stream->isReadable());
@@ -454,9 +495,11 @@ final class StreamTest extends TestCase
     public function testReadRaisesExceptionWhenStreamIsDetached(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'r');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $stream->detach();
 
         $this->expectException(RuntimeException::class);
@@ -468,9 +511,11 @@ final class StreamTest extends TestCase
     public function testReadReturnsEmptyStringWhenAtEndOfFile(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'r');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         while (! feof($resource)) {
             fread($resource, 4096);
         }
@@ -480,9 +525,11 @@ final class StreamTest extends TestCase
     public function testGetContentsRisesExceptionIfStreamIsNotReadable(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'w');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
 
         $this->expectException(RuntimeException::class);
 
@@ -517,6 +564,9 @@ final class StreamTest extends TestCase
         $this->stream->attach($resource);
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public static function invalidStringResources(): array
     {
         return [
@@ -538,7 +588,9 @@ final class StreamTest extends TestCase
     public function testAttachWithResourceAttachesResource(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'r+');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($resource);
 
         $r    = new ReflectionProperty($this->stream, 'resource');
@@ -549,9 +601,11 @@ final class StreamTest extends TestCase
     public function testAttachWithStringRepresentingResourceCreatesAndAttachesResource(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($this->tmpnam);
 
         $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         fwrite($resource, 'FooBar');
 
         $this->stream->rewind();
@@ -562,7 +616,9 @@ final class StreamTest extends TestCase
     public function testGetContentsShouldGetFullStreamContents(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'r+');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($resource);
 
         fwrite($resource, 'FooBar');
@@ -576,7 +632,9 @@ final class StreamTest extends TestCase
     public function testGetContentsShouldReturnStreamContentsFromCurrentPointer(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'r+');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($resource);
 
         fwrite($resource, 'FooBar');
@@ -590,7 +648,9 @@ final class StreamTest extends TestCase
     public function testGetMetadataReturnsAllMetadataWhenNoKeyPresent(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'r+');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($resource);
 
         $expected = stream_get_meta_data($resource);
@@ -612,7 +672,9 @@ final class StreamTest extends TestCase
     public function testGetMetadataReturnsDataForSpecifiedKey(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'r+');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($resource);
 
         $metadata = stream_get_meta_data($resource);
@@ -626,7 +688,9 @@ final class StreamTest extends TestCase
     public function testGetMetadataReturnsNullIfNoDataExistsForKey(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
-        $resource     = fopen($this->tmpnam, 'r+');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
+        $resource = fopen($this->tmpnam, 'r+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $this->stream->attach($resource);
 
         $this->assertNull($this->stream->getMetadata('TOTALLY_MADE_UP'));
@@ -636,8 +700,10 @@ final class StreamTest extends TestCase
     public function testGetSizeReturnsStreamSize(): void
     {
         $resource = fopen(__FILE__, 'r');
+        assert($resource !== false, 'Always true condition for psalm type safety');
         $expected = fstat($resource);
-        $stream   = new Stream($resource);
+        assert($expected !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertSame($expected['size'], $stream->getSize());
     }
 
@@ -692,9 +758,11 @@ final class StreamTest extends TestCase
     public function testCanReadContentFromNotSeekableResource(): void
     {
         $this->tmpnam = tempnam(sys_get_temp_dir(), 'diac');
+        assert($this->tmpnam !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->tmpnam, 'FOO BAR');
         $resource = fopen($this->tmpnam, 'r');
-        $stream   = $this
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = $this
             ->getMockBuilder(Stream::class)
             ->setConstructorArgs([$resource])
             ->onlyMethods(['isSeekable'])
@@ -710,7 +778,8 @@ final class StreamTest extends TestCase
     public function testSizeReportsNullForPhpInputStreams(): void
     {
         $resource = fopen('php://input', 'r');
-        $stream   = new Stream($resource);
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $stream = new Stream($resource);
         $this->assertNull($stream->getSize());
     }
 }

@@ -11,6 +11,7 @@ use Stringable;
 use Throwable;
 
 use function array_key_exists;
+use function assert;
 use function fclose;
 use function feof;
 use function fopen;
@@ -89,6 +90,7 @@ class Stream implements StreamInterface, Stringable
         }
 
         $resource = $this->detach();
+        assert(is_resource($resource), 'Always true condition for psalm type safety');
         fclose($resource);
     }
 
@@ -300,6 +302,7 @@ class Stream implements StreamInterface, Stringable
             throw Exception\UnreadableStreamException::dueToConfiguration();
         }
 
+        assert($this->resource !== null, 'Always true condition for psalm type safety');
         $result = stream_get_contents($this->resource);
         if (false === $result) {
             throw Exception\UnreadableStreamException::dueToPhpError();

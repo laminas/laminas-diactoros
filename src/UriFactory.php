@@ -205,7 +205,9 @@ class UriFactory implements UriFactoryInterface
         $requestUri = $server['REQUEST_URI'] ?? null;
 
         if (is_string($requestUri)) {
-            return preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
+            $result = preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
+            assert($result !== null, 'Always true condition for psalm type safety');
+            return $result;
         }
 
         $origPathInfo = $server['ORIG_PATH_INFO'] ?? '';

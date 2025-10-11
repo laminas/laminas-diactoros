@@ -10,8 +10,10 @@ use SensitiveParameter;
 use Stringable;
 
 use function array_keys;
+use function assert;
 use function explode;
 use function implode;
+use function is_string;
 use function ltrim;
 use function parse_url;
 use function preg_match;
@@ -84,6 +86,7 @@ class Uri implements UriInterface, Stringable
             return;
         }
 
+        /** @psalm-suppress UnusedMethodCall Called method is not mutation free. Psalm has no impure annotation */
         $this->parseUri($uri);
     }
 
@@ -460,6 +463,8 @@ class Uri implements UriInterface, Stringable
 
     /**
      * Is a given port non-standard for the current scheme?
+     *
+     * @psalm-assert-if-true int $port
      */
     private function isNonStandardPort(string $scheme, string $host, ?int $port): bool
     {
@@ -484,6 +489,7 @@ class Uri implements UriInterface, Stringable
     {
         $scheme = strtolower($scheme);
         $scheme = preg_replace('#:(//)?$#', '', $scheme);
+        assert(is_string($scheme));
 
         if ('' === $scheme) {
             return '';
@@ -508,16 +514,16 @@ class Uri implements UriInterface, Stringable
         $part = $this->filterInvalidUtf8($part);
 
         /**
-         * @psalm-suppress ImpureFunctionCall Even tho the callback targets this immutable class,
-         *                                    psalm reports an issue here.
          * Note the addition of `%` to initial charset; this allows `|` portion
          * to match and thus prevent double-encoding.
          */
-        return preg_replace_callback(
+        $result = preg_replace_callback(
             '/(?:[^%' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . ']+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
             $part
         );
+        assert($result !== null, 'Always true condition for psalm type safety');
+        return $result;
     }
 
     /**
@@ -527,15 +533,13 @@ class Uri implements UriInterface, Stringable
     {
         $path = $this->filterInvalidUtf8($path);
 
-        /**
-         * @psalm-suppress ImpureFunctionCall Even tho the callback targets this immutable class,
-         *                                    psalm reports an issue here.
-         */
-        return preg_replace_callback(
+        $result = preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . ')(:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
             $path
         );
+        assert($result !== null, 'Always true condition for psalm type safety');
+        return $result;
     }
 
     /**
@@ -589,13 +593,13 @@ class Uri implements UriInterface, Stringable
     /**
      * Split a query value into a key/value tuple.
      *
-     * @return array A value with exactly two elements, key and value
+     * @return array{0:string, 1:string|null} A value with exactly two elements, key and value
      */
     private function splitQueryValue(string $value): array
     {
         $data = explode('=', $value, 2);
         if (! isset($data[1])) {
-            $data[] = null;
+            $data[1] = null;
         }
         return $data;
     }
@@ -619,19 +623,20 @@ class Uri implements UriInterface, Stringable
     {
         $value = $this->filterInvalidUtf8($value);
 
-        /**
-         * @psalm-suppress ImpureFunctionCall Even tho the callback targets this immutable class,
-         *                                    psalm reports an issue here.
-         */
-        return preg_replace_callback(
+        $result = preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/u',
             [$this, 'urlEncodeChar'],
             $value
         );
+        assert($result !== null, 'Always true condition for psalm type safety');
+        return $result;
     }
 
     /**
      * URL encode a character returned by a regex.
+     *
+     * @param array<string> $matches
+     * @psalm-pure
      */
     private function urlEncodeChar(array $matches): string
     {
