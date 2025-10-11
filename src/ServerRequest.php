@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -43,7 +44,7 @@ class ServerRequest implements ServerRequestInterface
      * @param null|string|UriInterface $uri URI for the request, if any.
      * @param null|string $method HTTP method for the request, if any.
      * @param string|resource|StreamInterface $body Message body, if any.
-     * @param array $headers Headers for the message, if any.
+     * @param array<non-empty-string, string|string[]> $headers Headers for the message, if any.
      * @param array $cookieParams Cookies for the message, if any.
      * @param array $queryParams Query params for the message, if any.
      * @param null|array|object $parsedBody The deserialized body parameters, if any.
@@ -76,6 +77,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getServerParams(): array
     {
         return $this->serverParams;
@@ -84,6 +86,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUploadedFiles(): array
     {
         return $this->uploadedFiles;
@@ -92,6 +95,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withUploadedFiles(array $uploadedFiles): ServerRequest
     {
         $this->validateUploadedFiles($uploadedFiles);
@@ -103,6 +107,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getCookieParams(): array
     {
         return $this->cookieParams;
@@ -111,6 +116,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withCookieParams(array $cookies): ServerRequest
     {
         $new               = clone $this;
@@ -121,6 +127,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getQueryParams(): array
     {
         return $this->queryParams;
@@ -129,6 +136,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withQueryParams(array $query): ServerRequest
     {
         $new              = clone $this;
@@ -139,6 +147,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParsedBody()
     {
         return $this->parsedBody;
@@ -147,8 +156,10 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withParsedBody($data): ServerRequest
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_array($data) && ! is_object($data) && null !== $data) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a null, array, or object argument; received %s',
@@ -165,6 +176,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAttributes(): array
     {
         return $this->attributes;
@@ -173,6 +185,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAttribute(string $name, $default = null)
     {
         if (! array_key_exists($name, $this->attributes)) {
@@ -185,6 +198,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withAttribute(string $name, $value): ServerRequest
     {
         $new                    = clone $this;
@@ -195,6 +209,7 @@ class ServerRequest implements ServerRequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withoutAttribute(string $name): ServerRequest
     {
         $new = clone $this;

@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Laminas\Diactoros\Request;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\Uri;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -18,6 +19,7 @@ final class RequestTest extends TestCase
 {
     private Request $request;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->request = new Request();

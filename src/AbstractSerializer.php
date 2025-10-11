@@ -7,7 +7,9 @@ namespace Laminas\Diactoros;
 use Psr\Http\Message\StreamInterface;
 
 use function array_pop;
+use function assert;
 use function implode;
+use function is_string;
 use function preg_match;
 use function sprintf;
 use function str_replace;
@@ -108,7 +110,8 @@ abstract class AbstractSerializer
             }
 
             // Append continuation to last header value found
-            $value                     = array_pop($headers[$currentHeader]);
+            $value = array_pop($headers[$currentHeader]);
+            assert(is_string($value));
             $headers[$currentHeader][] = $value . ' ' . trim($line, "\t ");
         }
 
@@ -119,7 +122,7 @@ abstract class AbstractSerializer
     /**
      * Serialize headers to string values.
      *
-     * @psalm-param array<string, string[]> $headers
+     * @psalm-param array<non-empty-string, string[]> $headers
      */
     protected static function serializeHeaders(array $headers): string
     {

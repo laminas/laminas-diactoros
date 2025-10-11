@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -111,7 +112,7 @@ class Response implements ResponseInterface
     /**
      * @param string|resource|StreamInterface $body Stream identifier and/or actual stream resource
      * @param int $status Status code for the response, if any.
-     * @param array $headers Headers for the response, if any.
+     * @param array<non-empty-string, string|string[]> $headers Headers for the response, if any.
      * @throws Exception\InvalidArgumentException On any invalid element.
      */
     public function __construct($body = 'php://memory', int $status = 200, array $headers = [])
@@ -124,6 +125,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getStatusCode(): int
     {
         return $this->statusCode;
@@ -132,6 +134,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getReasonPhrase(): string
     {
         return $this->reasonPhrase;
@@ -140,6 +143,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function withStatus(int $code, string $reasonPhrase = ''): Response
     {
         $new = clone $this;
@@ -161,8 +165,8 @@ class Response implements ResponseInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid status code "%s"; must be an integer between %d and %d, inclusive',
                 $code,
-                static::MIN_STATUS_CODE_VALUE,
-                static::MAX_STATUS_CODE_VALUE
+                self::MIN_STATUS_CODE_VALUE,
+                self::MAX_STATUS_CODE_VALUE
             ));
         }
 

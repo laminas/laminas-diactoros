@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -25,7 +26,7 @@ class Request implements RequestInterface
      * @param null|string|UriInterface $uri URI for the request, if any.
      * @param null|string $method HTTP method for the request, if any.
      * @param string|resource|StreamInterface $body Message body, if any.
-     * @param array $headers Headers for the message, if any.
+     * @param array<non-empty-string, string|string[]> $headers Headers for the message, if any.
      * @throws Exception\InvalidArgumentException For any invalid value.
      */
     public function __construct($uri = null, ?string $method = null, $body = 'php://temp', array $headers = [])
@@ -36,6 +37,7 @@ class Request implements RequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getHeaders(): array
     {
         $headers = $this->headers;
@@ -52,6 +54,7 @@ class Request implements RequestInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getHeader(string $name): array
     {
         if (empty($name) || ! $this->hasHeader($name)) {

@@ -7,8 +7,10 @@ namespace Laminas\Diactoros\ServerRequestFilter;
 use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
 use Laminas\Diactoros\Exception\InvalidProxyAddressException;
 use Laminas\Diactoros\UriFactory;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_values;
 use function assert;
 use function count;
 use function explode;
@@ -29,8 +31,6 @@ use const FILTER_VALIDATE_IP;
  * various X-Forwarded-* headers, if any, and if they are marked as trusted,
  * in order to return a new request that composes a URI instance that reflects
  * those headers.
- *
- * @psalm-immutable
  */
 final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 {
@@ -56,6 +56,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
     ) {
     }
 
+    #[Override]
     public function __invoke(ServerRequestInterface $request): ServerRequestInterface
     {
         $remoteAddress = $request->getServerParams()['REMOTE_ADDR'] ?? '';
@@ -222,7 +223,7 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
             $proxyCIDRList[] = '::/0';
         }
 
-        return $proxyCIDRList;
+        return array_values($proxyCIDRList);
     }
 
     private static function validateProxyCIDR(mixed $cidr): bool

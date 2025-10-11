@@ -10,7 +10,7 @@ use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class RedirectResponseTest extends TestCase
+final class RedirectResponseTest extends TestCase
 {
     public function testConstructorAcceptsStringUriAndProduces302ResponseWithLocationHeader(): void
     {

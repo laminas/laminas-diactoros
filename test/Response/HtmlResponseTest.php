@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 
-class HtmlResponseTest extends TestCase
+final class HtmlResponseTest extends TestCase
 {
     public function testConstructorAcceptsHtmlString(): void
     {

@@ -8,7 +8,7 @@ use Laminas\Diactoros\ServerRequestFilter\IPRange;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class IPRangeTest extends TestCase
+final class IPRangeTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{

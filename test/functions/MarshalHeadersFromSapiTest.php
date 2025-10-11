@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use function Laminas\Diactoros\marshalHeadersFromSapi;
 
-class MarshalHeadersFromSapiTest extends TestCase
+final class MarshalHeadersFromSapiTest extends TestCase
 {
     public function testReturnsHeaders(): void
     {

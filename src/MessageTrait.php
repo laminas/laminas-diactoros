@@ -112,14 +112,14 @@ trait MessageTrait
     /**
      * Checks if a header exists by the given case-insensitive name.
      *
-     * @param string $header Case-insensitive header name.
+     * @param string $name Case-insensitive header name.
      * @return bool Returns true if any header names match the given header
      *     name using a case-insensitive string comparison. Returns false if
      *     no matching header name is found in the message.
      */
-    public function hasHeader(string $header): bool
+    public function hasHeader(string $name): bool
     {
-        return isset($this->headerNames[strtolower($header)]);
+        return isset($this->headerNames[strtolower($name)]);
     }
 
     /**
@@ -131,20 +131,21 @@ trait MessageTrait
      * If the header does not appear in the message, this method MUST return an
      * empty array.
      *
-     * @param string $header Case-insensitive header field name.
+     * @param string $name Case-insensitive header field name.
      * @return string[] An array of string values as provided for the given
      *    header. If the header does not appear in the message, this method MUST
      *    return an empty array.
      */
-    public function getHeader(string $header): array
+    public function getHeader(string $name): array
     {
-        if (! $this->hasHeader($header)) {
+        if (! $this->hasHeader($name)) {
             return [];
         }
 
-        $header = $this->headerNames[strtolower($header)];
+        /** @psalm-suppress PossiblyInvalidArrayOffset */
+        $name = $this->headerNames[strtolower($name)];
 
-        return $this->headers[$header];
+        return $this->headers[$name];
     }
 
     /**
@@ -307,6 +308,7 @@ trait MessageTrait
             return $stream;
         }
 
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($stream) && ! is_resource($stream)) {
             throw new Exception\InvalidArgumentException(
                 'Stream must be a string stream resource identifier, '
@@ -323,7 +325,7 @@ trait MessageTrait
      *
      * Used by message constructors to allow setting all initial headers at once.
      *
-     * @param array $originalHeaders Headers to filter.
+     * @param array<non-empty-string, string|string[]> $originalHeaders Headers to filter.
      */
     private function setHeaders(array $originalHeaders): void
     {
@@ -395,10 +397,10 @@ trait MessageTrait
     /**
      * Ensure header name and values are valid.
      *
-     * @param string $name
+     * @psalm-assert non-empty-string $name
      * @throws Exception\InvalidArgumentException
      */
-    private function assertHeader($name): void
+    private function assertHeader(mixed $name): void
     {
         HeaderSecurity::assertValidName($name);
     }

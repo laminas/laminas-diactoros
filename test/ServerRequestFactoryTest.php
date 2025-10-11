@@ -9,11 +9,10 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
 use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Laminas\Diactoros\UploadedFile;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
@@ -193,8 +192,6 @@ final class ServerRequestFactoryTest extends TestCase
         $this->assertSame(['foo_bar' => 'baz'], $request->getCookieParams());
     }
 
-    #[PreserveGlobalState(true)]
-    #[RunInSeparateProcess]
     public function testCreateFromGlobalsShouldPreserveKeysWhenCreatedWithAZeroValue(): void
     {
         $_SERVER['HTTP_ACCEPT']    = '0';
@@ -205,8 +202,6 @@ final class ServerRequestFactoryTest extends TestCase
         $this->assertSame('0', $request->getHeaderLine('content-length'));
     }
 
-    #[PreserveGlobalState(true)]
-    #[RunInSeparateProcess]
     public function testCreateFromGlobalsShouldNotPreserveKeysWhenCreatedWithAnEmptyValue(): void
     {
         $_SERVER['HTTP_ACCEPT']    = '';
@@ -218,8 +213,6 @@ final class ServerRequestFactoryTest extends TestCase
         $this->assertFalse($request->hasHeader('content-length'));
     }
 
-    #[PreserveGlobalState(false)]
-    #[RunInSeparateProcess]
     public function testFromGlobalsUsesCookieSuperGlobalWhenCookieHeaderIsNotSet(): void
     {
         $_COOKIE = [
@@ -470,6 +463,7 @@ final class ServerRequestFactoryTest extends TestCase
             {
             }
 
+            #[Override]
             public function __invoke(ServerRequestInterface $request): ServerRequestInterface
             {
                 return $this->request;

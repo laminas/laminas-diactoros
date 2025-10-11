@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace LaminasTest\Diactoros;
 
 use DOMDocument;
+use DOMNode;
 use DOMXPath;
 use InvalidArgumentException;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
 use function curl_close;
 use function curl_exec;
 use function curl_getinfo;
@@ -23,6 +26,7 @@ use function file_put_contents;
 use function getenv;
 use function gmdate;
 use function in_array;
+use function is_int;
 use function is_string;
 use function preg_match;
 use function sprintf;
@@ -39,6 +43,7 @@ final class ResponseTest extends TestCase
 {
     private Response $response;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->response = new Response();
@@ -86,10 +91,12 @@ final class ResponseTest extends TestCase
             if ($updatedQueryResult !== false && $updatedQueryResult->length > 0) {
                 $updated = $updatedQueryResult->item(0)?->nodeValue ?? '';
                 $updated = strtotime($updated);
+                assert(is_int($updated), 'Always true condition for psalm type safety');
             }
         }
 
         $ch = curl_init('https://www.iana.org/assignments/http-status-codes/http-status-codes.xml');
+        assert($ch !== false, 'Always true condition for psalm type safety');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_USERAGENT, 'PHP Curl');
@@ -134,6 +141,7 @@ final class ResponseTest extends TestCase
         $xpath = new DOMXPath($ianaHttpStatusCodes);
         $xpath->registerNamespace('ns', 'http://www.iana.org/assignments');
 
+        /** @var DOMNode[] $records */
         $records = $xpath->query('//ns:record');
 
         foreach ($records as $record) {
@@ -293,6 +301,7 @@ final class ResponseTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);
 
+        /** @psalm-suppress MixedArgumentTypeCoercion */
         new Response('php://memory', 200, $headers);
     }
 
@@ -323,6 +332,7 @@ final class ResponseTest extends TestCase
     }
 
     /**
+     * @param non-empty-string $name
      * @param string|non-empty-list<non-empty-string> $value
      */
     #[DataProvider('headersWithInjectionVectors')]

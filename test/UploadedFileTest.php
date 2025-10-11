@@ -7,12 +7,14 @@ namespace LaminasTest\Diactoros;
 use InvalidArgumentException;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\UploadedFile;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use RuntimeException;
 
+use function assert;
 use function basename;
 use function file_exists;
 use function file_get_contents;
@@ -41,12 +43,14 @@ final class UploadedFileTest extends TestCase
     /** @var mixed */
     private $tmpFile;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->tmpFile = null;
         $this->orgFile = null;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (is_string($this->tmpFile) && file_exists($this->tmpFile)) {
@@ -86,7 +90,9 @@ final class UploadedFileTest extends TestCase
 
     public function testValidSize(): void
     {
-        $uploaded = new UploadedFile(fopen('php://temp', 'wb+'), 123, UPLOAD_ERR_OK);
+        $resource = fopen('php://temp', 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $uploaded = new UploadedFile($resource, 123, UPLOAD_ERR_OK);
 
         $this->assertSame(123, $uploaded->getSize());
     }
@@ -106,24 +112,32 @@ final class UploadedFileTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('status');
 
-        new UploadedFile(fopen('php://temp', 'wb+'), 0, $status);
+        $resource = fopen('php://temp', 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        new UploadedFile($resource, 0, $status);
     }
 
     public function testValidClientFilename(): void
     {
-        $file = new UploadedFile(fopen('php://temp', 'wb+'), 0, UPLOAD_ERR_OK, 'boo.txt');
+        $resource = fopen('php://temp', 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $file = new UploadedFile($resource, 0, UPLOAD_ERR_OK, 'boo.txt');
         $this->assertSame('boo.txt', $file->getClientFilename());
     }
 
     public function testValidNullClientFilename(): void
     {
-        $file = new UploadedFile(fopen('php://temp', 'wb+'), 0, UPLOAD_ERR_OK, null);
+        $resource = fopen('php://temp', 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $file = new UploadedFile($resource, 0, UPLOAD_ERR_OK, null);
         $this->assertSame(null, $file->getClientFilename());
     }
 
     public function testValidClientMediaType(): void
     {
-        $file = new UploadedFile(fopen('php://temp', 'wb+'), 0, UPLOAD_ERR_OK, 'foobar.baz', 'mediatype');
+        $resource = fopen('php://temp', 'wb+');
+        assert($resource !== false, 'Always true condition for psalm type safety');
+        $file = new UploadedFile($resource, 0, UPLOAD_ERR_OK, 'foobar.baz', 'mediatype');
         $this->assertSame('mediatype', $file->getClientMediaType());
     }
 
@@ -136,7 +150,8 @@ final class UploadedFileTest extends TestCase
 
     public function testGetStreamReturnsWrappedPhpStream(): void
     {
-        $stream       = fopen('php://temp', 'wb+');
+        $stream = fopen('php://temp', 'wb+');
+        assert($stream !== false, 'Always true condition for psalm type safety');
         $upload       = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
         $uploadStream = $upload->getStream()->detach();
         $this->assertSame($stream, $uploadStream);
@@ -145,9 +160,10 @@ final class UploadedFileTest extends TestCase
     public function testGetStreamReturnsStreamForFile(): void
     {
         $this->tmpFile = $stream = tempnam(sys_get_temp_dir(), 'diac');
-        $upload        = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
-        $uploadStream  = $upload->getStream();
-        $r             = new ReflectionProperty($uploadStream, 'stream');
+        assert($stream !== false, 'Always true condition for psalm type safety');
+        $upload       = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
+        $uploadStream = $upload->getStream();
+        $r            = new ReflectionProperty($uploadStream, 'stream');
         $this->assertSame($stream, $r->getValue($uploadStream));
     }
 
@@ -159,6 +175,7 @@ final class UploadedFileTest extends TestCase
         $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
 
         $this->tmpFile = $to = tempnam(sys_get_temp_dir(), 'diac');
+        assert($to !== false, 'Always true condition for psalm type safety');
         $upload->moveTo($to);
         $this->assertTrue(file_exists($to));
         $contents = file_get_contents($to);
@@ -185,6 +202,7 @@ final class UploadedFileTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('path');
 
+        /** @psalm-suppress MixedArgument  */
         $upload->moveTo($path);
     }
 
@@ -195,6 +213,7 @@ final class UploadedFileTest extends TestCase
         $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
 
         $this->tmpFile = $to = tempnam(sys_get_temp_dir(), 'diac');
+        assert($to !== false, 'Always true condition for psalm type safety');
         $upload->moveTo($to);
         $this->assertTrue(file_exists($to));
 
@@ -211,6 +230,7 @@ final class UploadedFileTest extends TestCase
         $upload = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
 
         $this->tmpFile = $to = tempnam(sys_get_temp_dir(), 'diac');
+        assert($to !== false, 'Always true condition for psalm type safety');
         $upload->moveTo($to);
         $this->assertTrue(file_exists($to));
 
@@ -270,7 +290,9 @@ final class UploadedFileTest extends TestCase
     public function testMoveToCreatesStreamIfOnlyAFilenameWasProvided(): void
     {
         $this->orgFile = tempnam(sys_get_temp_dir(), 'ORG');
+        assert($this->orgFile !== false, 'Always true condition for psalm type safety');
         $this->tmpFile = tempnam(sys_get_temp_dir(), 'DIA');
+        assert($this->tmpFile !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->orgFile, 'Hello');
 
         $original = file_get_contents($this->orgFile);
@@ -319,10 +341,12 @@ final class UploadedFileTest extends TestCase
     public function testMoveToInCLIShouldRemoveOriginalFile(): void
     {
         $this->orgFile = tempnam(sys_get_temp_dir(), 'ORG');
+        assert($this->orgFile !== false, 'Always true condition for psalm type safety');
         file_put_contents($this->orgFile, 'Hello');
         $upload = new UploadedFile($this->orgFile, 0, UPLOAD_ERR_OK);
 
         $this->tmpFile = $to = tempnam(sys_get_temp_dir(), 'diac');
+        assert($to !== false, 'Always true condition for psalm type safety');
         $upload->moveTo($to);
         $this->assertFalse(file_exists($this->orgFile));
         $this->assertTrue(file_exists($to));

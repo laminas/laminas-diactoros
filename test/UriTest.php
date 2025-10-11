@@ -13,7 +13,7 @@ use ReflectionObject;
 
 use function sprintf;
 
-class UriTest extends TestCase
+final class UriTest extends TestCase
 {
     public function testConstructorSetsAllProperties(): void
     {
@@ -515,7 +515,7 @@ class UriTest extends TestCase
     #[DataProvider('queryStringsForEncoding')]
     public function testQueryIsNotDoubleEncoded(string $query, string $expected): void
     {
-        $uri = (new Uri())->withQuery($expected);
+        $uri = (new Uri())->withQuery($query);
         $this->assertSame($expected, $uri->getQuery());
     }
 

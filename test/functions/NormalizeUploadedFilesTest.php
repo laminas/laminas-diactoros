@@ -9,7 +9,7 @@ use Psr\Http\Message\UploadedFileInterface;
 
 use function Laminas\Diactoros\normalizeUploadedFiles;
 
-class NormalizeUploadedFilesTest extends TestCase
+final class NormalizeUploadedFilesTest extends TestCase
 {
     public function testCreatesUploadedFileFromFlatFileSpecification(): void
     {

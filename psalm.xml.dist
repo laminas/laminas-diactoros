@@ -24,6 +24,12 @@
     </stubs>
 
     <issueHandlers>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="src" />
+            </errorLevel>
+        </ClassMustBeFinal>
+
         <InternalClass>
             <errorLevel type="suppress">
                 <referencedClass name="Laminas\Diactoros\ServerRequestFilter\IPRange"/>

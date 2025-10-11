@@ -7,7 +7,7 @@ namespace LaminasTest\Diactoros\TestAsset;
 /**
  * Store output artifacts
  */
-class HeaderStack
+final class HeaderStack
 {
     /** @var string[][] */
     private static array $data = [];

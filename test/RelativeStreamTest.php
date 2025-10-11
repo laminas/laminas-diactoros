@@ -10,10 +10,12 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
+use function fopen;
+
 use const SEEK_SET;
 
 #[CoversClass(RelativeStream::class)]
-class RelativeStreamTest extends TestCase
+final class RelativeStreamTest extends TestCase
 {
     public function testToString(): void
     {
@@ -39,10 +41,11 @@ class RelativeStreamTest extends TestCase
     public function testDetach(): void
     {
         $decorated = $this->createMock(Stream::class);
-        $decorated->expects(self::once())->method('detach')->willReturn(250);
+        $resource  = fopen('php://memory', 'r+');
+        $decorated->expects(self::once())->method('detach')->willReturn($resource);
         $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->detach();
-        $this->assertSame(250, $ret);
+        $this->assertSame($resource, $ret);
     }
 
     public function testGetSize(): void

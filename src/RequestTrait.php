@@ -49,7 +49,7 @@ trait RequestTrait
      * @param null|string|UriInterface $uri URI for the request, if any.
      * @param null|string $method HTTP method for the request, if any.
      * @param string|resource|StreamInterface $body Message body, if any.
-     * @param array $headers Headers for the message, if any.
+     * @param array<non-empty-string, string|string[]> $headers Headers for the message, if any.
      * @throws Exception\InvalidArgumentException For any invalid value.
      */
     private function initialize(

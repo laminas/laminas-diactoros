@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use Override;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -15,6 +16,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function createUploadedFile(
         StreamInterface $stream,
         ?int $size = null,
