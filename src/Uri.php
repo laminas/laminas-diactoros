@@ -55,7 +55,11 @@ class Uri implements UriInterface, Stringable
      */
     public const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~\pL';
 
-    /** @var int[] Array indexed by valid scheme names to their corresponding ports. */
+    /**
+     * Array indexed by valid scheme names to their corresponding ports.
+     *
+     * @var array<string, positive-int>
+     */
     protected $allowedSchemes = [
         'http'  => 80,
         'https' => 443,
