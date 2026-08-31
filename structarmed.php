@@ -34,14 +34,14 @@ return Architecture::define()
     ->ruleset([
         'Config'              => ['Request', 'Response', 'ServerRequest', 'Stream', 'UploadedFile', 'Uri'],
         'Exception'           => [],
-        'Message'             => ['Exception', 'Stream'],
-        'Request'             => ['Exception', 'Message', 'Stream', 'Uri'],
-        'Response'            => ['Exception', 'Message', 'Stream'],
+        'Message'             => ['+Stream'],
+        'Request'             => ['+Message', 'Uri'],
+        'Response'            => ['+Message'],
         'Serialization'       => ['Exception', 'Request', 'Response', 'Stream', 'Uri'],
-        'ServerRequest'       => ['Exception', 'Message', 'Request', 'ServerRequestFilter', 'Stream', 'Uri'],
-        'ServerRequestFilter' => ['Exception', 'Uri'],
+        'ServerRequest'       => ['+Request', 'ServerRequestFilter'],
+        'ServerRequestFilter' => ['+Uri'],
         'Stream'              => ['Exception'],
-        'UploadedFile'        => ['Exception', 'Stream'],
+        'UploadedFile'        => ['+Stream'],
         'Uri'                 => ['Exception'],
     ])
     ->skipPathsForRuleset(['*test*'])
