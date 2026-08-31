@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use Boundwize\StructArmed\Architecture;
 use Boundwize\StructArmed\Preset\Preset;
-use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
-use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 
 return Architecture::define()
     ->withPreset(Preset::PSR4())
@@ -33,7 +31,7 @@ return Architecture::define()
     ->layerPattern('Uri', '/^Laminas\\\\Diactoros\\\\Uri(?:Factory)?$/')
     ->ruleset([
         'Config'              => ['Request', 'Response', 'ServerRequest', 'Stream', 'UploadedFile', 'Uri'],
-        'Exception'           => [],
+        'Exception'           => ['ServerRequestFilter'],
         'Message'             => ['+Stream'],
         'Request'             => ['+Message', 'Uri'],
         'Response'            => ['+Message'],
@@ -44,8 +42,4 @@ return Architecture::define()
         'UploadedFile'        => ['+Stream'],
         'Uri'                 => ['Exception'],
     ])
-    ->skipPathsForRuleset(['*test*'])
-    ->skipClassViolation(
-        InvalidForwardedHeaderNameException::class,
-        FilterUsingXForwardedHeaders::class
-    );
+    ->skipPathsForRuleset(['*test*']);
