@@ -41,5 +41,4 @@ return Architecture::define()
         'Stream'              => ['Exception'],
         'UploadedFile'        => ['+Stream'],
         'Uri'                 => ['Exception'],
-    ])
-    ->skipPathsForRuleset(['*test*']);
+    ]);
