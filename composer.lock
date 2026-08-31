@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a45f5bb3bfcb8f7cfd061b374f4d4630",
+    "content-hash": "20cd58995e80efc46e137b22d67dc50e",
     "packages": [
         {
             "name": "psr/http-factory",
@@ -1004,16 +1004,16 @@
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.16.30",
+            "version": "0.16.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "4539690168666475a40ab910a024546e0bd3dfcc"
+                "reference": "a23c7cb9ea0a5dfa0e16186ef32bb02ad20161ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/4539690168666475a40ab910a024546e0bd3dfcc",
-                "reference": "4539690168666475a40ab910a024546e0bd3dfcc",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/a23c7cb9ea0a5dfa0e16186ef32bb02ad20161ad",
+                "reference": "a23c7cb9ea0a5dfa0e16186ef32bb02ad20161ad",
                 "shasum": ""
             },
             "require": {
@@ -1070,7 +1070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.16.30"
+                "source": "https://github.com/boundwize/structarmed/tree/0.16.31"
             },
             "funding": [
                 {
@@ -1078,7 +1078,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-31T03:06:35+00:00"
+            "time": "2026-08-31T15:52:51+00:00"
         },
         {
             "name": "composer/pcre",
@@ -2559,16 +2559,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "fb19eedd2bb67ff8cf7a5502ad329e701d6398a3"
+                "reference": "98dbc9412932af5825e6d5aa5d6bc4de7d82538a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/fb19eedd2bb67ff8cf7a5502ad329e701d6398a3",
-                "reference": "fb19eedd2bb67ff8cf7a5502ad329e701d6398a3",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/98dbc9412932af5825e6d5aa5d6bc4de7d82538a",
+                "reference": "98dbc9412932af5825e6d5aa5d6bc4de7d82538a",
                 "shasum": ""
             },
             "require": {
@@ -2600,9 +2600,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.3"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.4"
             },
-            "time": "2026-07-08T07:01:06+00:00"
+            "time": "2026-08-30T16:25:38+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
