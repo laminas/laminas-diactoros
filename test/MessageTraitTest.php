@@ -46,6 +46,8 @@ final class MessageTraitTest extends TestCase
             '1-without-minor'      => ['1'],
             '1-with-invalid-minor' => ['1.2'],
             '1-with-hotfix'        => ['1.1.1'],
+            '3-with-invalid-minor' => ['3.1'],
+            '3-with-hotfix'        => ['3.0.1'],
         ];
     }
 
@@ -65,6 +67,7 @@ final class MessageTraitTest extends TestCase
             '1.1' => ['1.1'],
             '2'   => ['2'],
             '2.0' => ['2.0'],
+            '3.0' => ['3.0'],
         ];
     }
 
