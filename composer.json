@@ -43,7 +43,7 @@
         "ext-dom": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
-        "boundwize/structarmed": "^0.16.31",
+        "boundwize/structarmed": "^0.17.0",
         "http-interop/http-factory-tests": "^2.2.0",
         "laminas/laminas-coding-standard": "~3.1.0",
         "php-http/psr7-integration-tests": "^1.4.0",
