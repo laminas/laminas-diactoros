@@ -47,7 +47,7 @@
         "laminas/laminas-coding-standard": "~3.1.0",
         "php-http/psr7-integration-tests": "^1.4.0",
         "phpunit/phpunit": "^10.5.36",
-        "psalm/plugin-phpunit": "^0.19.5",
+        "psalm/plugin-phpunit": "^0.20.0",
         "vimeo/psalm": "^6.13"
     },
     "provide": {
