@@ -6,7 +6,7 @@ use Boundwize\StructArmed\Architecture;
 use Boundwize\StructArmed\Preset\Preset;
 
 return Architecture::define()
-    ->withPreset(Preset::PSR4())
+    ->withPresets(Preset::PSR4(), Preset::CODEQUALITY())
     ->layerPattern('Config', '/^Laminas\\\\Diactoros\\\\(?:ConfigProvider|Module)$/')
     ->layerPattern('Exception', '/^Laminas\\\\Diactoros\\\\Exception\\\\.*$/')
     ->layerPattern('Message', '/^Laminas\\\\Diactoros\\\\(?:HeaderSecurity|MessageTrait)$/')
