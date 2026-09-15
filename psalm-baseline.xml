@@ -133,7 +133,7 @@
   </file>
   <file src="src/functions/marshal_headers_from_sapi.php">
     <LessSpecificReturnStatement>
-      <code><![CDATA[array_filter($headers, fn(string|int $key): bool => is_string($key), ARRAY_FILTER_USE_KEY)]]></code>
+      <code><![CDATA[array_filter($headers, static fn(string|int $key): bool => is_string($key), ARRAY_FILTER_USE_KEY)]]></code>
     </LessSpecificReturnStatement>
     <MixedAssignment>
       <code><![CDATA[$headers[$name]]]></code>
