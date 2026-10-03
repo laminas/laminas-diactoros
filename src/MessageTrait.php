@@ -355,9 +355,9 @@ trait MessageTrait
             );
         }
 
-        // HTTP/1 uses a "<major>.<minor>" numbering scheme to indicate
-        // versions of the protocol, while HTTP/2 does not.
-        if (! preg_match('#^(1\.[01]|2(\.0)?)$#', $version)) {
+        // HTTP/1 uses a "<major>.<minor>" version schema while
+        // HTTP/2 and HTTP/3 use just "<major>" or "<major>.0".
+        if (! preg_match('#^(?:1\.[01]|[23](?:\.0)?)\z#', $version)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP protocol version "%s" provided',
                 $version
