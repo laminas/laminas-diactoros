@@ -92,7 +92,8 @@ class UploadedFile implements UploadedFileInterface
     /**
      * {@inheritdoc}
      *
-     * @throws Exception\UploadedFileAlreadyMovedException If the upload was not successful.
+     * @throws Exception\UploadedFileErrorException If the upload was not successful.
+     * @throws Exception\UploadedFileAlreadyMovedException If file was already moved.
      */
     #[Override]
     public function getStream(): StreamInterface
