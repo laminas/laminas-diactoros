@@ -3,7 +3,7 @@
         "gd"
     ],
     "ignore_php_platform_requirements": {
-        "8.5": true
+        "8.6": true
     },
     "backwardCompatibilityCheck": true
 }
