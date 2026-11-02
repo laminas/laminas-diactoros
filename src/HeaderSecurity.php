@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function addcslashes;
 use function get_debug_type;
 use function in_array;
 use function is_numeric;
@@ -50,6 +51,9 @@ final class HeaderSecurity
 
             // Detect continuation sequences
             if ($ascii === 13) {
+                if ($i + 2 >= $length) {
+                    continue;
+                }
                 $lf = ord($value[$i + 1]);
                 $ws = ord($value[$i + 2]);
                 if ($lf === 10 && in_array($ws, [9, 32], true)) {
@@ -133,7 +137,7 @@ final class HeaderSecurity
         if (! self::isValid($value)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" is not valid header value',
-                $value
+                addcslashes((string) $value, "\0..\37\177")
             ));
         }
     }
@@ -156,7 +160,7 @@ final class HeaderSecurity
         if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $name)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" is not valid header name',
-                $name
+                addcslashes($name, "\0..\37\177")
             ));
         }
     }
