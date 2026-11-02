@@ -20,6 +20,7 @@ use function is_string;
 use function is_writable;
 use function move_uploaded_file;
 use function str_starts_with;
+use function strlen;
 use function unlink;
 
 use const PHP_SAPI;
@@ -238,9 +239,16 @@ class UploadedFile implements UploadedFileInterface
         $stream = $this->getStream();
         $stream->rewind();
         while (! $stream->eof()) {
-            fwrite($handle, $stream->read(4096));
+            $chunk  = $stream->read(4096);
+            $length = strlen($chunk);
+            if ($length > 0 && fwrite($handle, $chunk) !== $length) {
+                fclose($handle);
+                throw Exception\UploadedFileErrorException::dueToUnwritablePath();
+            }
         }
 
-        fclose($handle);
+        if (! fclose($handle)) {
+            throw Exception\UploadedFileErrorException::dueToUnwritablePath();
+        }
     }
 }
