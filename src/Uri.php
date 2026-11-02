@@ -424,7 +424,7 @@ class Uri implements UriInterface, Stringable
         $this->fragment = isset($parts['fragment']) ? $this->filterFragment($parts['fragment']) : '';
 
         if (isset($parts['pass'])) {
-            $this->userInfo .= ':' . $parts['pass'];
+            $this->userInfo .= ':' . $this->filterUserInfoPart($parts['pass']);
         }
     }
 
