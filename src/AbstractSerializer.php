@@ -91,7 +91,7 @@ abstract class AbstractSerializer
         $headers       = [];
         $currentHeader = false;
 
-        while ($line = self::getLine($stream)) {
+        while ('' !== ($line = self::getLine($stream))) {
             if (preg_match(';^(?P<name>[!#$%&\'*+.^_`\|~0-9a-zA-Z-]+):(?P<value>.*)$;', $line, $matches)) {
                 $currentHeader = $matches['name'];
                 if (! isset($headers[$currentHeader])) {
