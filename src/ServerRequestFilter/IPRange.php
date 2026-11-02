@@ -15,6 +15,7 @@ use function sprintf;
 use function str_contains;
 use function str_pad;
 use function str_repeat;
+use function strlen;
 use function substr_compare;
 use function unpack;
 
@@ -90,8 +91,8 @@ final class IPRange
         $ip     = inet_pton($ip);
         $subnet = inet_pton($subnet);
 
-        if (false === $ip || false === $subnet) {
-            // Invalid data
+        if (false === $ip || false === $subnet || strlen($ip) !== strlen($subnet)) {
+            // Invalid data, or address families differ
             return false;
         }
 
@@ -119,6 +120,8 @@ final class IPRange
         $binMask = str_pad($binMask, 32, '0');
         $binMask = pack("H*", $binMask);
 
-        return ($ip & $binMask) === $subnet;
+        $network = $subnet & $binMask;
+
+        return ($ip & $binMask) === $network;
     }
 }
