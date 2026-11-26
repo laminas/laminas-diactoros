@@ -22,10 +22,12 @@ use function preg_replace_callback;
 use function rawurlencode;
 use function sprintf;
 use function str_contains;
+use function str_ends_with;
 use function str_split;
 use function str_starts_with;
 use function strtolower;
 use function substr;
+use function substr_count;
 
 /**
  * Implementation of Psr\Http\UriInterface.
@@ -417,7 +419,7 @@ class Uri implements UriInterface, Stringable
 
         $this->scheme   = isset($parts['scheme']) ? $this->filterScheme($parts['scheme']) : '';
         $this->userInfo = isset($parts['user']) ? $this->filterUserInfoPart($parts['user']) : '';
-        $this->host     = isset($parts['host']) ? strtolower($parts['host']) : '';
+        $this->host     = isset($parts['host']) ? $this->filterHost($parts['host']) : '';
         $this->port     = $parts['port'] ?? null;
         $this->path     = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
         $this->query    = isset($parts['query']) ? $this->filterQuery($parts['query']) : '';
@@ -481,6 +483,50 @@ class Uri implements UriInterface, Stringable
         }
 
         return ! isset($this->allowedSchemes[$scheme]) || $port !== $this->allowedSchemes[$scheme];
+    }
+
+    /**
+     * Filters the host parsed out of a URI string.
+     *
+     * parse_url() is lenient and returns hosts a URI cannot carry, such as
+     * "invalid:%20https" for "http://invalid:%20https://example.com". Writing
+     * such a host back out produces a string this class rejects, so the host is
+     * validated here and the constructor throws instead.
+     *
+     * @param string $host Host name.
+     * @return string Filtered host.
+     * @throws Exception\InvalidArgumentException If the host is malformed.
+     */
+    private function filterHost(string $host): string
+    {
+        if ('' === $host) {
+            return '';
+        }
+
+        // An IPv6 literal is bracketed, and the closing bracket has to be
+        // there for the authority to be parseable when it is written back out.
+        if ('[' === $host[0]) {
+            if (1 !== substr_count($host, '[') || 1 !== substr_count($host, ']') || ! str_ends_with($host, ']')) {
+                throw new Exception\InvalidArgumentException(sprintf(
+                    'The host "%s" is malformed; a bracketed host must be an IP literal with its closing bracket',
+                    $host
+                ));
+            }
+
+            return strtolower($host);
+        }
+
+        // Anything allowed in a reg-name, plus the non-ASCII bytes of an
+        // internationalized host name. A colon, a slash, a space or a control
+        // character would change how the URI reads when it is rebuilt.
+        if (1 === preg_match('/[^\x80-\xFFa-zA-Z0-9\-._~!$&\'()*+,;=%]/', $host)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                'The host "%s" contains characters that are not allowed in a host',
+                $host
+            ));
+        }
+
+        return strtolower($host);
     }
 
     /**

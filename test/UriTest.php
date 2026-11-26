@@ -110,6 +110,34 @@ final class UriTest extends TestCase
         $this->assertSame($expected, $new->getUserInfo());
     }
 
+    /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
+    public static function malformedHostProvider(): array
+    {
+        return [
+            'colon in an unbracketed host' => ['http://invalid:%20https://example.com'],
+            'several ports'                => ['http://example.com:80:90:8080/'],
+            'space in the host'            => ['http://a b/'],
+            'unclosed IPv6 literal'        => ['http://[::1/'],
+        ];
+    }
+
+    #[DataProvider('malformedHostProvider')]
+    public function testConstructorRejectsAHostThatWouldNotParseBack(string $uri): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The host');
+
+        new Uri($uri);
+    }
+
+    public function testConstructorKeepsAHostThatParsesBack(): void
+    {
+        foreach (['http://[::1]/', 'http://[::1]:8080/', 'http://example.com/', 'http://a_b.example.com/'] as $value) {
+            $uri = new Uri($value);
+            $this->assertSame((string) $uri, (string) new Uri((string) $uri));
+        }
+    }
+
     public function testWithHostReturnsNewInstanceWithProvidedHost(): void
     {
         $uri = new Uri('https://user:pass@local.example.com:3001/foo?bar=baz#quz');
